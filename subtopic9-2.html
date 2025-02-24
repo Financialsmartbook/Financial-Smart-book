@@ -21,7 +21,6 @@
             --error: #ef4444;
         }
 
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -147,7 +146,7 @@
         }
 
         .accordion-item {
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .accordion-item:last-child {
@@ -206,6 +205,14 @@
             align-items: center;
             margin-bottom: 10px;
             cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f9f9fb;
+            transition: background 0.3s ease;
+        }
+
+        .quiz-options label:hover {
+            background: #f0f0f2;
         }
 
         .quiz-options input {
@@ -233,6 +240,17 @@
             padding: 15px;
             border-radius: 5px;
             font-weight: 500;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .success {
@@ -256,6 +274,7 @@
             text-decoration: underline;
         }
 
+        /* Адаптация для планшетов и телефонов */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -269,11 +288,8 @@
 
             .hero-image {
                 width: 100%;
+                max-width: 300px;
                 margin-top: 20px;
-            }
-
-            .section-card {
-                padding: 20px;
             }
 
             .hero-title {
@@ -283,16 +299,82 @@
             .hero-description {
                 font-size: 16px;
             }
-        }
 
-        @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
+            .section-card {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 24px;
             }
 
             .features-item {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .quiz-options label {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 24px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .features-item {
+                padding: 15px;
+            }
+
+            .accordion-header {
+                .accordion-header {
+                padding: 15px 20px;
+                font-size: 16px;
+            }
+
+            .accordion-content {
+                padding: 0 20px;
+            }
+
+            .accordion-content.active {
+                padding: 20px;
+            }
+
+            .quiz-container {
+                padding: 15px;
+            }
+
+            .quiz-question {
+                font-size: 16px;
+            }
+
+            .quiz-options label {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            #quiz-result {
+                padding: 10px;
+                font-size: 14px;
             }
         }
 
@@ -308,7 +390,7 @@
         .animated-image {
             animation: float 3s ease-in-out infinite;
         }
-    </style>
+                </style>
 </head>
 <body>
     <div class="container">
@@ -320,154 +402,157 @@
             <img src="growing.png" alt="Финансовые пирамиды" class="hero-image animated-image">
         </section>
 
-        <h2 class="section-title"><i class="fas fa-info-circle"></i> Финансовые пирамиды: основная информация</h2>
-        <p>Одним из популярных и давно функционирующих видов финансового мошенничества на рынке являются финансовые пирамиды. Финансовыми пирамидами называют псевдоинвестиционную мошенническую деятельность организаций на финансовом рынке, направленную на получение доходов одними участниками за счет потери своих доходов другими ее участниками.</p>
-        <p>Свое название финансовые пирамиды получили потому, что в результате выстроенной мошеннической схемы ее организаторами, находящимися на вершине пирамиды, денежные средства остальных участников, находящихся на нижних ее ступенях, перетекают на более высокие уровни или сразу на ее вершину.</p>
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> Финансовые пирамиды: основная информация</h2>
+            <p>Одним из популярных и давно функционирующих видов финансового мошенничества на рынке являются финансовые пирамиды. Финансовыми пирамидами называют псевдоинвестиционную мошенническую деятельность организаций на финансовом рынке, направленную на получение доходов одними участниками за счет потери своих доходов другими ее участниками.</p>
+            <p>Свое название финансовые пирамиды получили потому, что в результате выстроенной мошеннической схемы ее организаторами, находящимися на вершине пирамиды, денежные средства остальных участников, находящихся на нижних ее ступенях, перетекают на более высокие уровни или сразу на ее вершину.</p>
+        </div>
 
-        <div class="accordion">
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span><i class="fas fa-chevron-down"></i> Виды финансовых пирамид</span>
+        <div class="section-card">
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-chevron-down"></i> Виды финансовых пирамид</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Существуют одноуровневые и многоуровневые финансовые пирамиды:</p>
+                        <ul class="features-list">
+                            <li class="features-item"><i class="fas fa-level-up-alt"></i> <strong>Одноуровневая финансовая пирамида</strong> (по принципу пирамиды Понци) — привлечение вкладчиков обещаниями высокой доходности, доходы первых вкладчиков оплачиваются за счет новых участников. Пример: МММ, ущерб до 80 млрд долларов.</li>
+                            <li class="features-item"><i class="fas fa-sitemap"></i> <strong>Многоуровневая финансовая пирамида</strong> — первоначальные вкладчики привлекают новых для обеспечения дохода, средства распределяются между верхними уровнями. Функционирует несколько месяцев.</li>
+                            <li class="features-item"><i class="fas fa-th"></i> <strong>Матричная финансовая пирамида</strong> — многоступенчатая модель, где участники делятся на матрицы. Доход выплачивается при достижении верхнего уровня, может существовать дольше.</li>
+                        </ul>
+                        <p>Современные пирамиды используют цифровые активы, например, криптопирамиды или онлайн-игры с выводом денег.</p>
+                    </div>
                 </div>
-                <div class="accordion-content">
-                    <p>Существуют одноуровневые и многоуровневые финансовые пирамиды:</p>
-                    <ul class="features-list">
-                        <li class="features-item"><i class="fas fa-level-up-alt"></i> <strong>Одноуровневая финансовая пирамида</strong> (по принципу пирамиды Понци) — привлечение вкладчиков обещаниями высокой доходности, доходы первых вкладчиков оплачиваются за счет новых участников. Пример: МММ, ущерб до 80 млрд долларов.</li>
-                        <li class="features-item"><i class="fas fa-sitemap"></i> <strong>Многоуровневая финансовая пирамида</strong> — первоначальные вкладчики привлекают новых для обеспечения дохода, средства распределяются между верхними уровнями. Функционирует несколько месяцев.</li>
-                        <li class="features-item"><i class="fas fa-th"></i> <strong>Матричная финансовая пирамида</strong> — многоступенчатая модель, где участники делятся на матрицы. Доход выплачивается при достижении верхнего уровня, может существовать дольше.</li>
-                    </ul>
-                    <p>Современные пирамиды используют цифровые активы, например, криптопирамиды или онлайн-игры с выводом денег.</p>
-                </div>
-            </div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span><i class="fas fa-chevron-down"></i> Как распознать финансовую пирамиду</span>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-chevron-down"></i> Как распознать финансовую пирамиду</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Общие признаки финансовых пирамид (по данным Банка России):</p>
+                        <ul class="features-list">
+                            <li class="features-item"><i class="fas fa-chart-line"></i> Обещание высокой доходности, в несколько раз превышающей рыночный уровень.</li>
+                            <li class="features-item"><i class="fas fa-check-circle"></i> Гарантирование доходности (запрещено на рынке ценных бумаг).</li>
+                            <li class="features-item"><i class="fas fa-ad"></i> Агрессивная реклама с обещанием высокой доходности.</li>
+                            <li class="features-item"><i class="fas fa-question"></i> Отсутствие информации о финансовом положении организации.</li>
+                            <li class="features-item"><i class="fas fa-money-bill-wave"></i> Выплата средств за счет новых участников.</li>
+                            <li class="features-item"><i class="fas fa-building"></i> Отсутствие собственных активов.</li>
+                            <li class="features-item"><i class="fas fa-info-circle"></i> Нет точного определения деятельности организации.</li>
+                            <li class="features-item"><i class="fas fa-file-alt"></i> Отсутствие лицензии или информации в реестрах Банка России.</li>
+                        </ul>
+                        <p>Проверьте наличие лицензии на сайте Банка России перед вложением средств.</p>
+                    </div>
                 </div>
-                <div class="accordion-content">
-                    <p>Общие признаки финансовых пирамид (по данным Банка России):</p>
-                    <ul class="features-list">
-                        <li class="features-item"><i class="fas fa-chart-line"></i> Обещание высокой доходности, в несколько раз превышающей рыночный уровень</li>
-                        <li class="features-item"><i class="fas fa-check-circle"></i> Гарантирование доходности (запрещено на рынке ценных бумаг)</li>
-                        <li class="features-item"><i class="fas fa-ad"></i> Агрессивная реклама с обещанием высокой доходности</li>
-                        <li class="features-item"><i class="fas fa-question"></i> Отсутствие информации о финансовом положении организации</li>
-                        <li class="features-item"><i class="fas fa-money-bill-wave"></i> Выплата средств за счет новых участников</li>
-                        <li class="features-item"><i class="fas fa-building"></i> Отсутствие собственных активов</li>
-                        <li class="features-item"><i class="fas fa-info-circle"></i> Нет точного определения деятельности организации</li>
-                        <li class="features-item"><i class="fas fa-file-alt"></i> Отсутствие лицензии или информации в реестрах Банка России</li>
-                    </ul>
-                    <p>Проверьте наличие лицензии на сайте Банка России перед инвестированием. В 2024 году выявлено 5,5 тыс. компаний с признаками пирамид.</p>
-                </div>
-            </div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span><i class="fas fa-chevron-down"></i> Что делать, если стал участником финансовой пирамиды</span>
-                </div>
-                <div class="accordion-content">
-                    <p>Если вы поняли, что стали участником финансовой пирамиды, действуйте быстро:</p>
-                    <ul class="features-list">
-                        <li class="features-item"><i class="fas fa-file-alt"></i> Напишите претензию организаторам с требованием вернуть деньги</li>
-                        <li class="features-item"><i class="fas fa-receipt"></i> Соберите доказательства участия (платежные документы, выписки из банка)</li>
-                        <li class="features-item"><i class="fas fa-balance-scale"></i> Напишите заявление в полицию и прокуратуру</li>
-                        <li class="features-item"><i class="fas fa-gavel"></i> Обратитесь в арбитражный суд с иском о взыскании средств</li>
-                        <li class="features-item"><i class="fas fa-share-alt"></i> Распространите информацию о мошенниках в соцсетях и мессенджерах</li>
-                    </ul>
-                    <p>Также можно обратиться:</p>
-                    <ul class="features-list">
-                        <li class="features-item"><i class="fas fa-university"></i> В Банк России через интернет-приемную или форму анонимного информирования</li>
-                        <li class="features-item"><i class="fas fa-shield-alt"></i> В Федеральный фонд по защите прав вкладчиков и акционеров (Федфонд)</li>
-                        <li class="features-item"><i class="fas fa-users"></i> В Союз защиты прав потребителей финансовых услуг (ФинПотребСоюз)</li>
-                    </ul>
-                    <p>Организаторов пирамиды можно привлечь к уголовной ответственности, а рекламодателям грозит штраф до 450 000 рублей.</p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <span><i class="fas fa-chevron-down"></i> Тест для самопроверки</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="quiz-container">
-                        <form id="quiz-form">
-                            <div class="quiz-question">
-                                <p>1. Какой признак указывает на финансовую пирамиду?</p>
-                                <div class="quiz-options">
-                                    <label><input type="radio" name="q1" value="a"> Наличие лицензии Банка России</label>
-                                    <label><input type="radio" name="q1" value="b"> Обещание высокой доходности</label>
-                                    <label><input type="radio" name="q1" value="c"> Прозрачная финансовая отчетность</label>
-                                    <label><input type="radio" name="q1" value="d"> Инвестиции в реальные активы</label>
-                                </div>
-                            </div>
-                            <div class="quiz-question">
-                                <p>2. Что такое многоуровневая финансовая пирамида?</p>
-                                <div class="quiz-options">
-                                    <label><input type="radio" name="q2" value="a"> Пирамида, где доходы первых вкладчиков оплачиваются новыми участниками</label>
-                                    <label><input type="radio" name="q2" value="b"> Пирамида, где участники привлекают новых для получения дохода</label>
-                                    <label><input type="radio" name="q2" value="c"> Пирамида с матричной структурой</label>
-                                    <label><input type="radio" name="q2" value="d"> Пирамида, основанная на криптовалюте</label>
-                                </div>
-                            </div>
-                            <div class="quiz-question">
-                                <p>3. Что делать, если вы стали участником финансовой пирамиды?</p>
-                                <div class="quiz-options">
-                                    <label><input type="radio" name="q3" value="a"> Продолжать привлекать новых участников</label>
-                                    <label><input type="radio" name="q3" value="b"> Написать заявление в полицию</label>
-                                    <label><input type="radio" name="q3" value="c"> Инвестировать больше средств</label>
-                                    <label><input type="radio" name="q3" value="d"> Игнорировать ситуацию</label>
-                                </div>
-                            </div>
-                            <button type="button" class="submit-btn" onclick="checkQuiz()">Проверить</button>
-                        </form>
-                        <div id="quiz-result"></div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-chevron-down"></i> Что делать, если вы стали участником финансовой пирамиды</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Если вы подозреваете, что стали участником финансовой пирамиды, действуйте следующим образом:</p>
+                        <ul class="features-list">
+                            <li class="features-item"><i class="fas fa-phone"></i> <strong>Прекратите вложения</strong> — не вкладывайте дополнительные средства, чтобы минимизировать потери.</li>
+                            <li class="features-item"><i class="fas fa-file-alt"></i> <strong>Соберите доказательства</strong> — сохраните все документы, скриншоты, переписки и реквизиты, связанные с пирамидой.</li>
+                            <li class="features-item"><i class="fas fa-balance-scale"></i> <strong>Обратитесь в правоохранительные органы</strong> — подайте заявление в полицию или в специализированные подразделения по борьбе с финансовыми преступлениями.</li>
+                            <li class="features-item"><i class="fas fa-headset"></i> <strong>Свяжитесь с финансовыми консультантами</strong> — получите профессиональную помощь для оценки ситуации и дальнейших действий.</li>
+                            <li class="features-item"><i class="fas fa-exclamation-triangle"></i> <strong>Предупредите других</strong> — расскажите о своем опыте, чтобы предотвратить участие других людей в пирамиде.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="section-card">
+            <h2 class="section-title"><i class="fas fa-question-circle"></i> Проверьте свои знания</h2>
+            <div class="quiz-container">
+                <div class="quiz-question">
+                    <p>1. Какой из перечисленных признаков характерен для финансовой пирамиды?</p>
+                    <div class="quiz-options">
+                        <label>
+                            <input type="radio" name="q1" value="correct"> Обещание высокой доходности без рисков.
+                        </label>
+                        <label>
+                            <input type="radio" name="q1" value="incorrect"> Наличие лицензии Банка России.
+                        </label>
+                        <label>
+                            <input type="radio" name="q1" value="incorrect"> Прозрачная информация о финансовом положении.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>2. Что делать, если вы стали участником финансовой пирамиды?</p>
+                    <div class="quiz-options">
+                        <label>
+                            <input type="radio" name="q2" value="incorrect"> Продолжать вкладывать средства, чтобы вернуть свои деньги.
+                        </label>
+                        <label>
+                            <input type="radio" name="q2" value="correct"> Прекратить вложения и обратиться в правоохранительные органы.
+                        </label>
+                        <label>
+                            <input type="radio" name="q2" value="incorrect"> Ничего не делать, чтобы не привлекать внимание.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>3. Какой вид финансовой пирамиды функционирует дольше всего?</p>
+                    <div class="quiz-options">
+                        <label>
+                            <input type="radio" name="q3" value="incorrect"> Одноуровневая пирамида.
+                        </label>
+                        <label>
+                            <input type="radio" name="q3" value="correct"> Матричная финансовая пирамида.
+                        </label>
+                        <label>
+                            <input type="radio" name="q3" value="incorrect"> Многоуровневая пирамида.
+                        </label>
+                    </div>
+                </div>
+
+                <button class="submit-btn" onclick="checkQuiz()">Проверить ответы</button>
+                <div id="quiz-result"></div>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-    // Аккордеон
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const content = header.nextElementSibling;
-            const icon = header.querySelector('i');
-            const isActive = content.classList.contains('active');
-
-            // Закрыть все открытые аккордеоны
-            document.querySelectorAll('.accordion-content.active').forEach(activeContent => {
-                activeContent.classList.remove('active');
-                activeContent.previousElementSibling.querySelector('i').classList.remove('active');
+    <script>
+        // Аккордеон
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                header.classList.toggle('active');
+                content.classList.toggle('active');
             });
-
-            // Открыть текущий аккордеон, если он не был активен
-            if (!isActive) {
-                content.classList.add('active');
-                icon.classList.add('active');
-            }
         });
-    });
 
-    // Проверка теста
-    function checkQuiz() {
-        const form = document.getElementById('quiz-form');
-        const resultDiv = document.getElementById('quiz-result');
-        let score = 0;
+        // Проверка теста
+        function checkQuiz() {
+            const answers = {
+                q1: 'correct',
+                q2: 'correct',
+                q3: 'correct'
+            };
+            let correctCount = 0;
 
-        const q1 = form.q1.value;
-        const q2 = form.q2.value;
-        const q3 = form.q3.value;
+            for (const question in answers) {
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                if (selected && selected.value === answers[question]) {
+                    correctCount++;
+                }
+            }
 
-        // Правильные ответы
-        if (q1 === 'b') score++; // Обещание высокой доходности
-        if (q2 === 'b') score++; // Пирамида, где участники привлекают новых для получения дохода
-        if (q3 === 'b') score++; // Написать заявление в полицию
-
-        resultDiv.innerHTML = `Вы набрали ${score} из 3 баллов.`;
-        resultDiv.className = score === 3 ? 'success' : 'error';
-    }
-</script>
+            const result = document.getElementById('quiz-result');
+            if (correctCount === Object.keys(answers).length) {
+                result.textContent = 'Поздравляем! Все ответы верны.';
+                result.className = 'success';
+            } else {
+                result.textContent = `Правильных ответов: ${correctCount} из ${Object.keys(answers).length}. Попробуйте еще раз!`;
+                result.className = 'error';
+            }
+        }
+    </script>
 </body>
 </html>
