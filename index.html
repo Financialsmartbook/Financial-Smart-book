@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смарт Учебник: Финансовая Грамотность</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <style>
+            /* Глобальные стили */
+            :root {
+                --primary-color: #4361ee;
+                --secondary-color: #3f37c9;
+                --accent-color: #4895ef;
+                --text-dark: #2b2d42;
+                --text-light: #edf2f4;
+                --gradient-blue: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
+            }
+        
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+        
+            body {
+                font-family: 'Inter', system-ui, -apple-system, sans-serif;
+                line-height: 1.7;
+                background: #f8f9ff;
+                color: var(--text-dark);
+            }
+        
+            .container {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                gap: 2.5rem;
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+        
+            /* Шапка */
+            .header {
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 4rem 0;
+                background: var(--gradient-blue);
+                border-radius: 1rem;
+                color: white;
+                margin-bottom: 2rem;
+                box-shadow: 0 10px 20px rgba(67, 97, 238, 0.15);
+            }
+        
+            .header h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                font-weight: 800;
+            }
+        
+            /* Боковая панель */
+            .sidebar {
+                position: sticky;
+                top: 2rem;
+                height: fit-content;
+                background: white;
+                border-radius: 1.5rem;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            }
+        
+            .sidebar h2 {
+                font-size: 1.25rem;
+                margin-bottom: 1.5rem;
+                color: var(--text-dark);
+                font-weight: 700;
+            }
+        
+            .nav-list {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        
+            .nav-link {
+                display: block;
+                padding: 1rem 1.5rem;
+                text-decoration: none;
+                color: var(--text-dark);
+                border-radius: 0.75rem;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                font-weight: 500;
+                position: relative;
+                overflow: hidden;
+            }
+        
+            .nav-link::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 3px;
+                height: 100%;
+                background: var(--primary-color);
+                transform: scaleY(0);
+                transition: transform 0.3s ease;
+            }
+        
+            .nav-link:hover {
+                background: #f4f6ff;
+                transform: translateX(8px);
+            }
+        
+            .nav-link:hover::before {
+                transform: scaleY(1);
+            }
+        
+            .active {
+                background: var(--gradient-blue);
+                color: white !important;
+            }
+        
+            /* Основной контент */
+            .content {
+                background: white;
+                border-radius: 1.5rem;
+                padding: 3rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            }
+        
+            .chapter {
+                margin-bottom: 3rem;
+            }
+        
+            .chapter-title {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+                position: relative;
+                padding-bottom: 1rem;
+                color: var(--text-dark);
+            }
+        
+            .chapter-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--primary-color);
+                border-radius: 2px;
+            }
+        
+            /* Кнопки подтем */
+            .subtopics {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.25rem;
+            }
+        
+            .subtopic-btn {
+                display: flex;
+                align-items: center;
+                padding: 1.5rem;
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: left;
+                color: var(--text-dark);
+                position: relative;
+                overflow: hidden;
+            }
+        
+            .subtopic-btn i {
+                font-size: 1.5rem;
+                margin-right: 1rem;
+                color: var(--primary-color);
+                transition: transform 0.3s ease;
+            }
+        
+            .subtopic-btn:hover {
+                transform: translateY(-3px);
+                border-color: var(--primary-color);
+                box-shadow: 0 8px 20px rgba(67, 97, 238, 0.12);
+            }
+        
+            .subtopic-btn:hover i {
+                transform: scale(1.1);
+            }
+        
+            /* Футер */
+            .footer {
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 2rem;
+                background: var(--gradient-blue);
+                border-radius: 1rem;
+                color: white;
+                margin-top: 3rem;
+            }
+        
+            /* Адаптивность */
+            @media (max-width: 1024px) {
+                .container {
+                    grid-template-columns: 1fr;
+                    padding: 1.5rem;
+                }
+        
+                .sidebar {
+                    position: static;
+                    margin-bottom: 2rem;
+                }
+        
+                .content {
+                    padding: 2rem;
+                }
+            }
+        
+            @media (max-width: 640px) {
+                .header h1 {
+                    font-size: 2rem;
+                }
+        
+                .subtopics {
+                    grid-template-columns: 1fr;
+                }
+        
+                .subtopic-btn {
+                    padding: 1.25rem;
+                }
+            }
+       
+       </style>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="text-container">
+                    <h1>Смарт Учебник: Финансовая Грамотность</h1>
+                    <p>Изучите основы управления финансами в цифровую эпоху</p>
+                </div>
+                <div class="img-3d-container">
+                    <img src="money-icon2.png" 
+                         alt="Финансовая грамотность"
+                         class="floating-img">
+                </div>
+            </div>
+            <style>
+                header {
+                position: relative;
+                overflow: hidden;
+                padding: 2rem 1rem;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                
+            }
+    
+            .header-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;s
+            }
+    
+            .text-container {
+                flex: 1 1 60%;
+                min-width: 300px;
+                padding-right: 2rem;
+            }
+    
+            .img-3d-container {
+                flex: 0 1 35%;
+                position: relative;
+                perspective: 1000px;
+                transform-style: preserve-3d;
+            }
+    
+            .floating-img {
+                width: 100%;
+                max-width: 400px;
+                transform: rotateY(-15deg) rotateX(5deg) translateZ(20px);
+                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                filter: drop-shadow(15px 15px 20px rgba(0,0,0,0.15));
+            }
+    
+            /* 3D Эффект при наведении */
+            .img-3d-container:hover .floating-img {
+                transform: rotateY(-25deg) rotateX(10deg) translateZ(30px);
+                filter: drop-shadow(20px 25px 25px rgba(0,0,0,0.2));
+            }
+    
+            /* Адаптация для телефонов */
+            @media (max-width: 768px) {
+                .header-content {
+                    flex-direction: column;
+                    text-align: center;
+                }
+    
+                .text-container {
+                    padding-right: 0;
+                    margin-bottom: 2rem;
+                }
+    
+                .img-3d-container {
+                    flex: 0 1 auto;
+                    max-width: 300px;
+                }
+    
+                .floating-img {
+                    transform: rotateY(-10deg) rotateX(5deg) translateZ(15px);
+                }
+            }
+    
+            @media (max-width: 480px) {
+                .floating-img {
+                    max-width: 250px;
+                    transform: rotateY(-5deg) translateZ(10px);
+                }
+            }</style>        
+        </header>
+
+        <!-- Sidebar (Оглавление) -->
+        <nav class="sidebar">
+            <h2>Оглавление</h2>
+            <ul class="nav-list">
+                <li><a href="#chapter1" class="nav-link">Глава 1. Деньги: слуга или хозяин</a></li>
+                <li><a href="#chapter2" class="nav-link">Глава 2. Личный бюджет: зачем вести и как управлять</a></li>
+                <li><a href="#chapter3" class="nav-link">Глава 3. Банковские вклады: копим с умом</a></li>
+                <li><a href="#chapter4" class="nav-link">Глава 4. Как правильно брать и отдавать кредиты</a></li>
+                <li><a href="#chapter5" class="nav-link">Глава 5. Долгосрочные инвестиции</a></li>
+                <li><a href="#chapter6" class="nav-link">Глава 6. Страхуем себя от рисков</a></li>
+                <li><a href="#chapter7" class="nav-link">Глава 7. Как платить и возвращать налоги</a></li>
+                <li><a href="#chapter8" class="nav-link">Глава 8. Получаем социальные выплаты от государства</a></li>
+                <li><a href="#chapter9" class="nav-link">Глава 9. Защищаем себя от финансовых мошенников</a></li>
+                <li><a href="#chapter9" class="nav-link">Итоговое тестирование</a></li>
+            </ul>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Глава 1 -->
+            <article id="chapter1" class="chapter">
+                <h2 class="chapter-title">Глава 1. Деньги: слуга или хозяин</h2>
+                <div class="subtopics">
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic1-1.html')">
+                        <i class="fas fa-money-bill"></i> 1.1. Зачем нужны деньги и как их использовать
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic1-2.html')">
+                        <i class="fas fa-coins"></i> 1.2. Современные деньги: какие они бывают
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic1-3.html')">
+                        <i class="fas fa-credit-card"></i> 1.3. Банковские карты и их использование для платежей
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic1-4.html')">
+                        <i class="fas fa-globe"></i> 1.4. Иностранная валюта как деньги: зачем она нужна
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic1-5.html')">
+                        <i class="fas fa-chart-line"></i> 1.5. Деньги и цены. Как инфляция обесценивает деньги
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic1-6.html')">
+                        <i class="fas fa-piggy-bank"></i> 1.6. Деньги рождают деньги: как их накапливать
+                    </button>
+                </div>
+            </article>
+
+            <!-- Глава 2 -->
+            <article id="chapter2" class="chapter">
+                <h2 class="chapter-title">Глава 2. Личный бюджет: зачем вести и как управлять</h2>
+                <div class="subtopics">
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic2-1.html')">
+                        <i class="fas fa-hand-holding-usd"></i> 2.1. Откуда берутся доходы и какие они бывают
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic2-2.html')">
+                        <i class="fas fa-receipt"></i> 2.2. Личные расходы: тратим осознанно
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic2-3.html')">
+                        <i class="fas fa-wallet"></i> 2.3. Что такое бюджет и зачем его вести
+                    </button>
+                    <button class="subtopic-btn" onclick="openSubtopic('subtopic2-4.html')">
+                        <i class="fas fa-chart-bar"></i> 2.4. Что такое финансовое положение и зачем его оценивать
+                    </button>
+                </div>
+            </article>
+
+        <!-- Глава 3 -->
+        <article id="chapter3" class="chapter">
+            <h2 class="chapter-title">Глава 3. Банковские вклады: копим с умом</h2>
+            <div class="subtopics">
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic3-1.html')">
+                    <i class="fas fa-piggy-bank"></i> 3.1. Банковский вклад: как открыть и какой выбрать
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic3-2.html')">
+                    <i class="fas fa-percentage"></i> 3.2. Разбираемся с процентами по вкладу
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic3-3.html')">
+                    <i class="fas fa-shield-alt"></i> 3.3. Система страхования банковских вкладов
+                </button>
+            </div>
+        </article>
+
+         <!-- Глава 4 -->
+         <article id="chapter4" class="chapter">
+            <h2 class="chapter-title">Глава 4. Как правильно брать и отдавать кредиты</h2>
+            <div class="subtopics">
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic4-1.html')">
+                    <i class="fas fa-handshake"></i> 4.1. Кредит и заем – в чем разница. Когда кредит благо
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic4-2.html')">
+                    <i class="fas fa-users"></i> 4.2. У кого можно получить деньги в долг
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic4-3.html')">
+                    <i class="fas fa-university"></i> 4.3. Какие кредиты дает банк
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic4-4.html')">
+                    <i class="fas fa-percentage"></i> 4.4. Проценты и платежи по кредиту
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic4-5.html')">
+                    <i class="fas fa-file-invoice-dollar"></i> 4.5. Полная стоимость кредита
+                </button>
+            </div>
+        </article>
+
+        <!-- Глава 5 -->
+<article id="chapter5" class="chapter">
+    <h2 class="chapter-title">Глава 5. Долгосрочные инвестиции</h2>
+    <div class="subtopics">
+        <button class="subtopic-btn" onclick="openSubtopic('subtopic5-1.html')">
+            <i class="fas fa-chart-line"></i> 5.1. Что такое инвестиции
+        </button>
+        <button class="subtopic-btn" onclick="openSubtopic('subtopic5-2.html')">
+            <i class="fas fa-coins"></i> 5.2. Инвестируем в ценные бумаги
+        </button>
+        <button class="subtopic-btn" onclick="openSubtopic('subtopic5-3.html')">
+            <i class="fas fa-users"></i> 5.3. Инвестируем коллективно: паевые и другие инвестиционные фонды
+        </button>
+        <button class="subtopic-btn" onclick="openSubtopic('subtopic5-4.html')">
+            <i class="fas fa-piggy-bank"></i> 5.4. Программа долгосрочных сбережений
+        </button>
+    </div>
+</article>
+
+        <!-- Глава 6 -->
+        <article id="chapter6" class="chapter">
+            <h2 class="chapter-title">Глава 6. Страхуем себя от рисков</h2>
+            <div class="subtopics">
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic6-1.html')">
+                    <i class="fas fa-shield-alt"></i> 6.1. Страхование как способ защиты от рисков
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic6-2.html')">
+                    <i class="fas fa-handshake"></i> 6.2. Кто участвует в страховании и как работает страховка
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic6-3.html')">
+                    <i class="fas fa-file-contract"></i> 6.3. Обязательное страхование для физических лиц
+                </button>
+                <button class="subtopic-btn" onclick="openSubtopic('subtopic6-4.html')">
+                    <i class="fas fa-heart"></i> 6.4. Добровольное страхование
+                </button>
+            </div>
+        </article>
+
+                <!-- Глава 7 -->
+                <article id="chapter7" class="chapter">
+                    <h2 class="chapter-title">Глава 7. Как платить и возвращать налоги</h2>
+                    <div class="subtopics">
+                        <button class="subtopic-btn" onclick="openSubtopic('subtopic7-1.html')">
+                            <i class="fas fa-file-invoice-dollar"></i> 7.1. Зачем мы платим налоги и какие они бывают
+                        </button>
+                        <button class="subtopic-btn" onclick="openSubtopic('subtopic7-2.html')">
+                            <i class="fas fa-users"></i> 7.2. Какие налоги платит население
+                        </button>
+                        <button class="subtopic-btn" onclick="openSubtopic('subtopic7-3.html')">
+                            <i class="fas fa-building"></i> 7.3. Какие налоги платят организации
+                        </button>
+                        <button class="subtopic-btn" onclick="openSubtopic('subtopic7-4.html')">
+                            <i class="fas fa-id-card"></i> 7.4. Что такое ИНН и как платить налоги
+                            <button class="subtopic-btn" onclick="openSubtopic('subtopic7-5.html')">
+                                <i class="fas fa-id-card"></i> 7.5. Как платить налогов меньше. Налоговые вычеты
+                        </button>
+                    </div>
+                </article> 
+
+                 <!-- Глава 8 -->
+    <article id="chapter8" class="chapter">
+        <h2 class="chapter-title">Глава 8. Получаем социальные выплаты от государства</h2>
+        <div class="subtopics">
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic8-1.html')">
+                <i class="fas fa-hand-holding-heart"></i> 8.1. Кому и когда положены социальные выплаты
+            </button>
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic8-2.html')">
+                <i class="fas fa-coins"></i> 8.2. Пенсия: какая она бывает и как ее накопить
+            </button>
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic8-3.html')">
+                <i class="fas fa-baby"></i> 8.3. Материнский капитал
+            </button>
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic8-4.html')">
+                <i class="fas fa-piggy-bank"></i> 8.4. Субсидии и их виды
+            </button>
+        </div>
+    </article>
+
+    <!-- Глава 9 -->
+    <article id="chapter9" class="chapter">
+        <h2 class="chapter-title">Глава 9. Защищаем себя от финансовых мошенников</h2>
+        <div class="subtopics">
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic9-1.html')">
+                <i class="fas fa-shield-alt"></i> 9.1. Мошенничество с деньгами и платежными картами
+            </button>
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic9-2.html')">
+                <i class="fas fa-exclamation-triangle"></i> 9.2. Финансовые пирамиды: как не стать участником
+            </button>
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic9-3.html')">
+                <i class="fas fa-lock"></i> 9.3. Защищаем финансовую информацию о себе
+            </button>
+        </div>
+    </article>
+
+     <!-- Итоговое тестирование -->
+     <article id="chapter10" class="chapter">
+        <h2 class="chapter-title">Итоговое тестирование</h2>
+        <div class="subtopics">
+            <button class="subtopic-btn" onclick="openSubtopic('subtopic10-1.html')">
+                <i class="fas fa-id-card"></i> Итоговое тестирование
+            </button>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+         <img src="money-icon.png" alt="image-1">   
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

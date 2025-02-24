@@ -1,0 +1,175 @@
+/* Общие стили */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+    text-align: center;
+    position: relative;
+}
+
+.hero h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #666;
+}
+
+.footer {
+    background-color: #f4f4f4;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Анимация PNG-изображений */
+.animated-image {
+    position: absolute;
+    animation: float 5s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.image-1 { top: 20%; left: 10%; }
+.image-2 { top: 30%; right: 20%; }
+.image-3 { bottom: 10%; left: 30%; }
+.image-4 { top: 40%; right: 5%; }
+.image-5 { bottom: 20%; left: 50%; }
+.image-6 { top: 10%; right: 30%; }
+.image-16 { bottom: 5%; right: 10%; }
+
+/* Аккордеон */
+.accordion-item {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    background-color: #f7f7f7;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.accordion-header.active {
+    background-color: #e0f7fa;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #fff;
+    padding: 0 15px;
+}
+
+.accordion-content ul {
+    list-style: none;
+    padding: 15px 0;
+}
+
+.accordion-content li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.accordion-content li a:hover {
+    color: #007bff;
+}
+
+/* Темная тема */
+body[data-theme="dark"] {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body[data-theme="dark"] .hero {
+    background-color: #1c1c1c;
+}
+
+body[data-theme="dark"] .footer {
+    background-color: #121212;
+}
+
+body[data-theme="dark"] .accordion-header {
+    background-color: #2b2b2b;
+}
+
+body[data-theme="dark"] .accordion-header.active {
+    background-color: #3a3a3a;
+}
+
+body[data-theme="dark"] .accordion-content {
+    background-color: #2b2b2b;
+}
+
+body[data-theme="dark"] .accordion-content li a {
+    color: #ffffff;
+}
+
+body[data-theme="dark"] .accordion-content li a:hover {
+    color: #00bfff;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .hero h2 {
+        font-size: 24px;
+    }
+
+    .accordion-header {
+        font-size: 16px;
+    }
+
+    .accordion-content li a {
+        font-size: 14px;
+    }
+}
+document.querySelectorAll('.open-subtopic').forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const href = button.getAttribute('data-href');
+        if (href) {
+            window.open(href, '_blank');
+        } else {
+            console.error('Ошибка: атрибут data-href отсутствует или пустой.');
+        }
+    });
+});

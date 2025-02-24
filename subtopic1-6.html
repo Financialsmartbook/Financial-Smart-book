@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.6. Деньги рождают деньги: как их накапливать</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --text-dark: #2b2d42;
+            --text-light: #edf2f4;
+            --gradient: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            background: #f8f9ff;
+            color: var(--text-dark);
+            position: relative; /* Для корректного позиционирования анимированного изображения */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 2rem;
+            background: var(--gradient);
+            border-radius: 1.5rem;
+            color: white;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: headerFadeIn 1s ease-in-out;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            z-index: 1;
+        }
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            animation: slideIn 1s ease-out;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            animation: slideIn 1.2s ease-out;
+        }
+        /* Анимированная PNG-картинка в баннере */
+        .header-image {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            z-index: 2;
+            animation: coinRotate 4s linear infinite;
+        }
+        /* Анимированное изображение поверх всех контейнеров */
+        .floating-image {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            z-index: 1000; /* Выше всех элементов */
+            pointer-events: none; /* Чтобы не мешало взаимодействию */
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes headerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes coinRotate {
+            from {
+                transform: translateY(-50%) rotate(0deg);
+            }
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        /* Sections */
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        h2, h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        h2::after, h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #4a5568;
+        }
+        /* Accordion */
+        .accordion-item {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .accordion-header {
+            padding: 1.5rem;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background 0.3s ease;
+        }
+        .accordion-header::before {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.open .accordion-header::before {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-item.open .accordion-content {
+            max-height: 1000px;
+            padding: 1.5rem;
+        }
+        /* Lists */
+        .features {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9ff;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            transition: transform 0.2s ease;
+        }
+        .features li:hover {
+            transform: translateX(5px);
+        }
+        .features li i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        /* Interactive Tasks */
+        .interactive-tasks {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .task-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.15);
+        }
+        .task-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .task-card label {
+            display: block;
+            margin: 0.5rem 0;
+            cursor: pointer;
+        }
+        .task-card input[type="radio"],
+        .task-card input[type="checkbox"] {
+            margin-right: 0.8rem;
+        }
+        .task-card button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 1rem;
+        }
+        .task-card button:hover {
+            transform: translateY(-2px);
+        }
+        .task-card input[type="number"] {
+                padding: 0.8rem;
+                border: 2px solid #e2e8f0;
+                border-radius: 0.75rem;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            /* Footer */
+            .footer {
+                text-align: center;
+                margin-top: 4rem;
+                padding: 2rem;
+                background: var(--gradient);
+                color: white;
+                border-radius: 1rem;
+                box-shadow: var(--shadow);
+            }
+            @media (max-width: 640px) {
+                .container {
+                    padding: 1rem;
+                }
+                .header {
+                    padding: 2rem 1rem;
+                }
+                .header h1 {
+                    font-size: 1.5rem;
+                }
+                .header-image {
+                    width: 80px;
+                    height: 80px;
+                    right: 10px;
+                }
+                .floating-image {
+                    width: 60px;
+                    height: 60px;
+                    top: 10px;
+                    right: 10px;
+                }
+                h2 {
+                    font-size: 1.25rem;
+                }
+                .accordion-content {
+                    padding: 1rem;
+                }
+                .task-card {
+                    padding: 1rem;
+                }
+                .task-card h4 {
+                    font-size: 1rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Анимированное изображение поверх всех контейнеров -->
+        <img src="floating-coin.png" alt="Плавающая монета" class="floating-image">
+
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <h1>1.6. Деньги рождают деньги: как их накапливать</h1>
+                <p>Узнайте о способах защиты сбережений от инфляции и методах получения дополнительного дохода.</p>
+                <!-- Анимированная PNG-картинка в баннере -->
+                <img src="animated-coin.png" alt="Анимированная монета" class="header-image">
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <!-- Раздел: Что такое финансовые инструменты? -->
+                <section class="section">
+                    <h2>Что такое финансовые инструменты?</h2>
+                    <p style="text-align: justify;">
+                        Финансовые инструменты — это специальные формы вложения денежных средств в продукты, предлагаемые финансовыми организациями. Например, банковские вклады, накопительные счета, золотые слитки и ценные бумаги.
+                    </p>
+                </section>
+
+                <!-- Аккордеон: Вложения в инструменты, защищаемые государством -->
+                <section class="accordion-section">
+                    <div class="accordion-item">
+                        <div class="accordion-header">Вложения в инструменты, защищаемые государством</div>
+                        <div class="accordion-content">
+                            <ul class="features">
+                                <li><i class="fas fa-university"></i> <strong>Банковские вклады:</strong> гарантируются системой страхования вкладов до 1 400 000 рублей.</li>
+                                <li><i class="fas fa-piggy-bank"></i> <strong>Накопительные счета:</strong> также попадают под защиту системы страхования вкладов.</li>
+                            </ul>
+                            <p style="text-align: justify;">
+                                Сравнить условия банковских вкладов можно с помощью приложений banki.ru или sravni.ru, выбрав нужный регион.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Раздел: Инвестиции в золото -->
+                <section class="section">
+                    <h3>Инвестиции в золото</h3>
+                    <p style="text-align: justify;">
+                        Золотые слитки являются популярным инвестиционным активом. Их стоимость формируется на мировом рынке драгоценных металлов и может меняться в течение дня. Однако они не защищены государством, как банковские вклады.
+                    </p>
+                </section>
+
+                <!-- Раздел: Ценные бумаги -->
+                <section class="section">
+                    <h3>Ценные бумаги</h3>
+                    <p style="text-align: justify;">
+                        Акции и облигации — это более сложные финансовые инструменты, которые могут принести высокий доход, но связаны с рисками. Подробнее об этих инструментах будет рассказано в следующих параграфах.
+                    </p>
+                </section>
+
+                <!-- Интерактивные практические задания -->
+                <section class="interactive-tasks">
+                    <h3 class="chapter-title">Интерактивные практические задания</h3>
+
+                    <!-- Задание 1: Тест -->
+                    <div class="task-card">
+                        <h4>Задание 1: Какие финансовые инструменты защищаются государством?</h4>
+                        <form id="protected-instruments-form">
+                            <label>
+                                <input type="checkbox" name="protected-instruments" value="deposits"> a) Банковские вклады.
+                            </label><br>
+                            <label>
+                                <input type="checkbox" name="protected-instruments" value="savings-accounts"> b) Накопительные счета.
+                            </label><br>
+                            <label>
+                                <input type="checkbox" name="protected-instruments" value="gold"> c) Золотые слитки.
+                            </label><br>
+                            <button type="button" onclick="checkTask1()">Проверить ответ</button>
+                            <p id="protected-instruments-result"></p>
+                        </form>
+                    </div>
+
+                    <!-- Задание 2: Расчет -->
+                    <div class="task-card">
+                        <h4>Задание 2: Рассчитайте доход по банковскому вкладу</h4>
+                        <p>
+                            Предположим, вы положили 100 000 рублей на вклад сроком на 1 год под 8% годовых. Какую сумму вы получите через год?
+                        </p>
+                        <form id="deposit-calculation-form">
+                            <input type="number" id="deposit-calculation-answer" placeholder="Введите ваш ответ">
+                            <button type="button" onclick="checkTask2()">Проверить ответ</button>
+                            <p id="deposit-calculation-result"></p>
+                        </form>
+                    </div>
+
+                    <!-- Задание 3: Выбор варианта -->
+                    <div class="task-card">
+                        <h4>Задание 3: Что такое система страхования вкладов?</h4>
+                        <form id="deposit-insurance-form">
+                            <label>
+                                <input type="radio" name="deposit-insurance" value="a"> a) Программа лояльности банка.
+                            </label><br>
+                            <label>
+                                <input type="radio" name="deposit-insurance" value="b"> b) Государственная программа защиты сбережений граждан.
+                            </label><br>
+                            <button type="button" onclick="checkTask3()">Проверить ответ</button>
+                            <p id="deposit-insurance-result"></p>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Раздел: Интересный факт -->
+                <section class="section tips-section">
+                    <h3>Знаете ли вы?</h3>
+                    <ul class="features">
+                        <li><i class="fas fa-info-circle"></i> Система страхования вкладов гарантирует возмещение до 1 400 000 рублей.</li>
+                        <li><i class="fas fa-info-circle"></i> Золотые слитки не попадают под систему страхования вкладов.</li>
+                        <li><i class="fas fa-info-circle"></i> Доход от банковских вкладов облагается налогом, если ставка превышает ключевую ставку ЦБ РФ на 5%.</li>
+                    </ul>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>&copy; 2023 Финансовая грамотность. Все права защищены.</p>
+            </footer>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            // Аккордеон
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordionItem = header.parentElement;
+                    const isOpen = accordionItem.classList.contains('open');
+                    document.querySelectorAll('.accordion-item').forEach(item => {
+                        item.classList.remove('open');
+                    });
+                    if (!isOpen) {
+                        accordionItem.classList.add('open');
+                    }
+                });
+            });
+
+            // Интерактивные задания
+            function checkTask1() {
+                const correctAnswers = ['deposits', 'savings-accounts'];
+                const selectedAnswers = Array.from(document.querySelectorAll('input[name="protected-instruments"]:checked'))
+                    .map(input => input.value);
+                const resultElement = document.getElementById('protected-instruments-result');
+                const isCorrect = correctAnswers.length === selectedAnswers.length &&
+                correctAnswers.every(answer => selectedAnswers.includes(answer));
+
+if (isCorrect) {
+    resultElement.style.color = 'green';
+    resultElement.textContent = 'Правильно! Банковские вклады и накопительные счета защищаются государством.';
+} else {
+    resultElement.style.color = 'red';
+    resultElement.textContent = 'Неправильно. Правильные ответы: a) Банковские вклады, b) Накопительные счета.';
+}
+}
+
+function checkTask2() {
+const userAnswer = document.getElementById('deposit-calculation-answer').value;
+const resultElement = document.getElementById('deposit-calculation-result');
+
+if (userAnswer === '') {
+    resultElement.style.color = 'red';
+    resultElement.textContent = 'Пожалуйста, введите ответ.';
+    return;
+}
+
+const correctAnswer = 108000;
+const parsedAnswer = parseFloat(userAnswer);
+
+if (parsedAnswer === correctAnswer) {
+    resultElement.style.color = 'green';
+    resultElement.textContent = 'Правильно! Через год вы получите 108 000 рублей.';
+} else {
+    resultElement.style.color = 'red';
+    resultElement.textContent = 'Неправильно. Правильный ответ: 108 000 рублей (100 000 + 8%).';
+}
+}
+
+function checkTask3() {
+const correctAnswer = 'b';
+const selectedAnswer = document.querySelector('input[name="deposit-insurance"]:checked')?.value;
+const resultElement = document.getElementById('deposit-insurance-result');
+
+if (!selectedAnswer) {
+    resultElement.style.color = 'red';
+    resultElement.textContent = 'Пожалуйста, выберите ответ.';
+    return;
+}
+
+if (selectedAnswer === correctAnswer) {
+    resultElement.style.color = 'green';
+    resultElement.textContent = 'Правильно! Это государственная программа защиты сбережений граждан.';
+} else {
+    resultElement.style.color = 'red';
+    resultElement.textContent = 'Неправильно. Правильный ответ: b) Государственная программа защиты сбережений граждан.';
+}
+}
+</script>
+</body>
+</html>
