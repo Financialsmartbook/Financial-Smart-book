@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Виды социальных выплат и как их получить - Смарт-учебник</title>
-    <!-- Подключение Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
@@ -14,11 +14,24 @@
             --background: #f8fafc;
             --text-dark: #1e293b;
             --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
+            --glass: rgba(255, 255, 255, 0.25);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
             --success: #10b981;
             --error: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --background: #1e293b;
+            --text-dark: #e5e7eb;
+            --text-light: #9ca3af;
+            --glass: rgba(31, 41, 55, 0.25);
+            --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
         }
 
         * {
@@ -28,125 +41,210 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
             color: var(--text-dark);
             overflow-x: hidden;
+            transition: background 0.5s ease;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(79, 70, 229, 0.5);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .fixed-image {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            left: clamp(20px, 3vw, 30px);
+            width: clamp(100px, 15vw, 200px);
+            height: auto;
+            z-index: 2000; /* Выше всех элементов */
+            transition: transform 0.3s ease;
+        }
+
+        .fixed-image:hover {
+            transform: scale(1.1);
         }
 
         .hero-section {
             position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 4vw, 4rem);
+            padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow-sm);
+            animation: gradientShift 10s ease infinite;
+            background-size: 200% 200%;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
         }
 
         .hero-title {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.5rem, 1vw, 1rem);
             line-height: 1.2;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .hero-description {
-            font-size: 18px;
+            font-size: clamp(0.9rem, 1.5vw, 1.25rem);
             opacity: 0.9;
+            font-weight: 300;
         }
 
         .hero-image {
-            width: 400px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            width: clamp(150px, 25vw, 300px);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: clamp(0.75rem, 1.5vw, 1.5rem);
+            left: clamp(0.75rem, 1.5vw, 2rem);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: clamp(0.9rem, 1.5vw, 1.5rem);
+            padding: clamp(0.4rem, 0.8vw, 0.75rem);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+            gap: clamp(1rem, 2vw, 2rem);
+            margin-bottom: clamp(2rem, 4vw, 4rem);
+            align-items: start;
+        }
+
+        .main-content {
+            display: grid;
+            gap: clamp(1rem, 2vw, 2rem);
         }
 
         .section-card {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: clamp(1rem, 2vw, 2rem);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
         }
 
         .section-title {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--primary);
+            font-size: clamp(1.25rem, 2.5vw, 2rem);
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .features-list {
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 20px;
+            gap: clamp(0.75rem, 1.5vw, 1rem);
         }
 
         .features-item {
-            padding: 20px;
-            background: #f9f9fb;
-            border-radius: 10px;
+            padding: clamp(0.75rem, 1.5vw, 1rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: flex-start;
-            gap: 15px;
-            transition: transform 0.2s ease, background 0.2s ease;
+            gap: clamp(0.75rem, 1.5vw, 1rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
         }
 
         .features-item:hover {
             transform: translateX(5px);
-            background: #f0f0f2;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .features-item i {
             color: var(--primary);
-            font-size: 20px;
-            margin-top: 5px;
+            font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+            margin-top: 3px;
             flex-shrink: 0;
+            transition: transform 0.4s ease;
+        }
+
+        .features-item:hover i {
+            transform: scale(1.2);
         }
 
         .accordion {
-            background: #ffffff;
-            border-radius: 15px;
+            background: var(--glass);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: var(--shadow);
+            margin-top: clamp(0.75rem, 1.5vw, 1rem);
+            box-shadow: var(--shadow-xs);
         }
 
         .accordion-item {
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -154,22 +252,23 @@
         }
 
         .accordion-header {
-            padding: 20px 30px;
+            padding: clamp(0.75rem, 1.5vw, 1.25rem);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f9f9fb;
-            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.4s ease, transform 0.4s ease;
         }
 
         .accordion-header:hover {
-            background: #f0f0f2;
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
         }
 
         .accordion-header i {
             color: var(--primary);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
 
         .accordion-header.active i {
@@ -177,54 +276,206 @@
         }
 
         .accordion-content {
-            padding: 0 30px;
+            padding: 0 clamp(0.75rem, 1.5vw, 1.25rem);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            transition: max-height 0.4s ease, padding 0.4s ease;
         }
 
         .accordion-content.active {
-            padding: 30px;
-            max-height: 1000px;
+            padding: clamp(0.75rem, 1.5vw, 1.25rem);
+            max-height: 1200px;
+        }
+
+        .test-section {
+            position: sticky;
+            top: clamp(1rem, 2vw, 2rem);
+            max-width: clamp(300px, 35vw, 450px);
+        }
+
+        .test-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
+        }
+
+        .test-card h3 {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--secondary);
+            margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+            font-weight: 700;
+        }
+
+        .question {
+            margin: clamp(0.75rem, 1.5vw, 1rem) 0;
+        }
+
+        .question p {
+            font-weight: 600;
+            margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+        }
+
+        .question label {
+            display: flex;
+            align-items: center;
+            margin: clamp(0.5rem, 1vw, 0.75rem) 0;
+            padding: clamp(0.5rem, 1vw, 0.75rem);
+            cursor: pointer;
+            transition: background 0.4s ease, transform 0.4s ease;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .question label:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(5px);
+        }
+
+        .question input[type="radio"] {
+            margin-right: clamp(0.5rem, 1vw, 0.75rem);
+            accent-color: var(--secondary);
+        }
+
+        .button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 2vw, 2rem);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1vw, 0.75rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background: var(--secondary);
+            box-shadow: 6px 6px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .test-result {
+            margin-top: clamp(0.75rem, 1.5vw, 1rem);
+            padding: clamp(0.75rem, 1.5vw, 1rem);
+            border-radius: var(--radius-md);
+            display: none;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-xs);
         }
 
         a {
             color: var(--primary);
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         a:hover {
             color: var(--secondary);
-            text-decoration: underline;
+            text-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
+        #to-top-btn {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            right: clamp(20px, 3vw, 30px);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            font-size: clamp(1rem, 2vw, 1.75rem);
+            cursor: pointer;
+            display: none;
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        #to-top-btn:hover {
+            transform: scale(1.15);
+            background: var(--secondary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (min-width: 1440px) {
+            .content-grid {
+                grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: clamp(1.5rem, 3vw, 3rem);
+            }
+
+            .test-section {
+                position: static;
+                max-width: 700px;
+                margin: 0 auto;
             }
 
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 40px 20px;
+            }
+
+            .hero-content {
+                max-width: 100%;
             }
 
             .hero-image {
-                width: 100%;
-                margin-top: 20px;
+                margin-top: clamp(1rem, 2vw, 2rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: clamp(0.75rem, 2vw, 1.5rem);
             }
 
-            .section-card {
-                padding: 20px;
+            .hero-section {
+                padding: clamp(1.5rem, 3vw, 3rem) clamp(0.75rem, 1.5vw, 1.5rem);
+            }
+
+            .section-card, .test-card {
+                padding: clamp(0.75rem, 1.5vw, 1.5rem);
             }
 
             .hero-title {
-                font-size: 28px;
+                font-size: clamp(1.25rem, 3vw, 2rem);
             }
 
             .hero-description {
-                font-size: 16px;
+                font-size: clamp(0.8rem, 1.5vw, 1rem);
             }
         }
 
@@ -237,175 +488,153 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-        }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
+            .section-title {
+                font-size: clamp(1rem, 2vw, 1.5rem);
             }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
 
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
+            .test-card h3 {
+                font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+            }
+
+            #to-top-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .fixed-image {
+                width: clamp(80px, 12vw, 100px);
+            }
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
     <div class="container">
         <section class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title"><i class="fas fa-hand-holding-usd"></i> Виды социальных выплат и как их получить</h1>
                 <p class="hero-description">Узнайте, какие федеральные и региональные выплаты доступны, зачем нужен прожиточный минимум и как начать получать социальные выплаты.</p>
             </div>
-            <img src="via.placeholder.png" alt="Социальные выплаты" class="hero-image animated-image">
+            <img src="calc.png" alt="Социальные выплаты" class="hero-image">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fa-solid fa-moon"></i>
+            </button>
         </section>
 
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-info-circle"></i> Виды социальных выплат</h2>
-            <p>Теперь разберемся с видами социальных выплат от государства.</p>
+        <p>Социальные выплаты – это важный инструмент государственной поддержки, который помогает гражданам в различных жизненных ситуациях. Давайте разберем, какие виды выплат существуют и как их получить.</p>
 
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i class="fas fa-chevron-down"></i> Федеральные и региональные выплаты</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Социальные выплаты прежде всего различаются по уровню введения и действия на федеральные и субфедеральные (региональные).</p>
-                        <h3>Федеральные выплаты</h3>
-                        <p>Федеральные социальные выплаты вводятся на общегосударственном уровне, то есть их получение не зависит от региона вашей регистрации и проживания. Такие выплаты чаще всего устанавливаются федеральными законами, постановлениями федерального правительства и указами Президента страны.</p>
-                        <p>К основным федеральным выплатам, которые введены на территории новых субъектов России, относятся:</p>
-                        <ul class="features-list">
-                            <li class="features-item"><i class="fas fa-user-clock"></i> Государственная пенсия</li>
-                            <li class="features-item"><i class="fas fa-hand-holding-heart"></i> Ежемесячная выплата ветеранам, гражданам с инвалидностью, включая детей-инвалидов, лицам, подвергшимся воздействию радиации и др., родителям на первого ребенка до трех лет и по уходу за ребенком до 1,5 лет</li>
-                            <li class="features-item"><i class="fas fa-baby-carriage"></i> Единовременное пособие при рождении ребенка</li>
-                            <li class="features-item"><i class="fas fa-baby"></i> Материнский капитал</li>
-                            <li class="features-item"><i class="fas fa-female"></i> Пособие по беременности и родам</li>
-                            <li class="features-item"><i class="fas fa-users"></i> Единое пособие на детей и беременных женщин</li>
-                        </ul>
-                        <p>Информацию об основных видах федеральных выплат и условиях их получения жителями новых регионов смотрите <a href="#">ЗДЕСЬ</a>.</p>
-                        <p>Все федеральные меры поддержки, действующие в Российской Федерации, будут доступны и гражданам, проживающим в Донецкой и Луганской народных республиках, Херсонской и Запорожской областях.</p>
-                        <p>Размер федеральных социальных выплат ежегодно индексируется с 1 февраля. На 2025 год коэффициент индексации установлен в размере 1,095, что соответствует уровню инфляции за 2024 год. Это значит, что размер социальных пенсий и пособий вырастет на 9,5%.</p>
+        <div class="content-grid">
+            <div class="main-content">
+                <div class="section-card">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> Федеральные и региональные выплаты</h2>
+                    <p>Социальные выплаты делятся на федеральные и региональные в зависимости от уровня их введения и действия.</p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span><i class="fas fa-chevron-down"></i> Подробности</span>
+                            </div>
+                            <div class="accordion-content">
+                                <h3>Федеральные выплаты</h3>
+                                <p>Эти выплаты действуют на всей территории России и не зависят от региона проживания. Они устанавливаются федеральными законами, постановлениями правительства и указами Президента.</p>
+                                <ul class="features-list">
+                                    <li class="features-item"><i class="fas fa-user-clock"></i> Государственная пенсия</li>
+                                    <li class="features-item"><i class="fas fa-hand-holding-heart"></i> Ежемесячная выплата ветеранам, инвалидам и др.</li>
+                                    <li class="features-item"><i class="fas fa-baby-carriage"></i> Единовременное пособие при рождении ребенка</li>
+                                    <li class="features-item"><i class="fas fa-baby"></i> Материнский капитал</li>
+                                </ul>
+                                <p>С 1 февраля 2025 года выплаты проиндексированы на 9,5%.</p>
 
-                        <h3>Региональные выплаты</h3>
-                        <p>Региональные социальные выплаты вводятся в действие нормативными актами субъектов федерации и, как правило, являются дополняющими к существующим федеральным выплатам. Их получение связано с непосредственной регистрацией получателя выплат на территории субъекта, который эти выплаты осуществляет.</p>
-                        <p>Большинство региональных социальных выплат, прежде всего, компенсационного характера, привязаны к прожиточному минимуму на душу населения (ПМ), утвержденному в данном субъекте Российской Федерации.</p>
-                        <p>Например, от прожиточного минимума (ПМ) в регионе зависят такие соцвыплаты, как:</p>
-                        <ul class="features-list">
-                            <li class="features-item"><i class="fas fa-users"></i> Единое пособие для беременных и семей с детьми, размер которого устанавливается в определенном проценте от регионального ПМ</li>
-                            <li class="features-item"><i class="fas fa-baby"></i> Ежемесячная выплата из средств материнского семейного капитала</li>
-                            <li class="features-item"><i class="fas fa-user-clock"></i> Доплата к пенсии до прожиточного минимума</li>
-                        </ul>
-                        <p>Прожиточный минимум в каждом регионе ежегодно устанавливается постановлением правительства субъекта Федерации. Прожиточные минимумы и доходы семьи на 2025 год по всем субъектам Российской Федерации можно посмотреть <a href="#">ЗДЕСЬ</a>.</p>
+                                <h3>Региональные выплаты</h3>
+                                <p>Устанавливаются субъектами РФ и зависят от региона регистрации. Часто привязаны к прожиточному минимуму (ПМ).</p>
+                                <ul class="features-list">
+                                    <li class="features-item"><i class="fas fa-users"></i> Единое пособие для семей с детьми</li>
+                                    <li class="features-item"><i class="fas fa-user-clock"></i> Доплата к пенсии до ПМ</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i class="fas fa-chevron-down"></i> Социальные пособия и компенсационные выплаты</span>
-                    </div>
-                    <div class="accordion-content">
-                        <h3>Социальные пособия</h3>
-                        <p>Основными видами федеральных социальных пособий в Российской Федерации являются следующие:</p>
-                        <ul class="features-list">
-                            <li class="features-item"><i class="fas fa-file-medical"></i> Пособие по временной нетрудоспособности</li>
-                            <li class="features-item"><i class="fas fa-briefcase"></i> Пособие по безработице</li>
-                            <li class="features-item"><i class="fas fa-baby-carriage"></i> Пособия на детей и уходу за ними:
-                                <ul>
-                                    <li>Пособие по беременности и родам</li>
-                                    <li>Единовременное пособие женщинам, вставшим на учет в медицинских учреждениях в ранние сроки беременности</li>
-                                    <li>Единовременное пособие при рождении ребенка</li>
-                                    <li>Ежемесячное пособие по уходу за ребенком до 1,5 лет</li>
-                                    <li>Ежемесячное пособие на ребенка, установленное в субъекте РФ</li>
-                                    <li>Материнский капитал</li>
-                                    <li>Единовременное пособие при передаче ребенка на воспитание в семью</li>
-                                    <li>Единовременное пособие беременной жене военнослужащего, проходящего военную службу по призыву</li>
-                                    <li>Ежемесячное пособие на ребенка военнослужащего, проходящего военную службу по призыву</li>
+                <div class="section-card">
+                    <h2 class="section-title"><i class="fas fa-hand-holding-heart"></i> Социальные пособия и компенсации</h2>
+                    <p>Социальные пособия и компенсационные выплаты помогают в разных ситуациях. Вот основные виды:</p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span><i class="fas fa-chevron-down"></i> Подробности</span>
+                            </div>
+                            <div class="accordion-content">
+                                <h3>Социальные пособия</h3>
+                                <ul class="features-list">
+                                    <li class="features-item"><i class="fas fa-file-medical"></i> Пособие по временной нетрудоспособности</li>
+                                    <li class="features-item"><i class="fas fa-briefcase"></i> Пособие по безработице</li>
+                                    <li class="features-item"><i class="fas fa-baby-carriage"></i> Пособия на детей</li>
+                                    <li class="features-item"><i class="fas fa-cross"></i> Пособие на погребение</li>
                                 </ul>
-                            </li>
-                            <li class="features-item"><i class="fas fa-wheelchair"></i> Ежемесячная денежная выплата (пособие) инвалидам, в том числе детям-инвалидам</li>
-                            <li class="features-item"><i class="fas fa-graduation-cap"></i> Государственная социальная стипендия</li>
-                            <li class="features-item"><i class="fas fa-shield-alt"></i> Пособия защитникам отечества</li>
-                            <li class="features-item"><i class="fas fa-cross"></i> Социальное пособие на погребение</li>
-                        </ul>
-                        <p>Подробную информацию о действующих социальных пособиях на территории вашего региона можно узнать на официальной странице регионального министерства труда и социальной политики (МТСП).</p>
 
-                        <h3>Компенсационные выплаты</h3>
-                        <p>Компенсационные выплаты в рамках социального обеспечения дополняют перечень выплат, осуществляемых через социальные пособия. Они предназначены для лиц, которые при определенных обстоятельствах нуждаются в социальной поддержке.</p>
-                        <p>Виды компенсационных выплат группируются в зависимости от их предназначения:</p>
-                        <ul class="features-list">
-                            <li class="features-item"><i class="fas fa-user-clock"></i> Пенсионерам:
-                                <ul>
-                                    <li>Социальная доплата до уровня прожиточного минимума пенсионера</li>
-                                    <li>Компенсация проезда к месту отдыха на территории РФ и обратно</li>
-                                    <li>Выплата в связи с юбилеем супружеской жизни на круглые даты начиная с 50 лет брака</li>
-                                    <li>Доплата пенсионерам с иждивенцами</li>
-                                    <li>Ежемесячная компенсационная выплата Героям Советского Союза, Героям Российской Федерации и др.</li>
+                                <h3>Компенсационные выплаты</h3>
+                                <ul class="features-list">
+                                    <li class="features-item"><i class="fas fa-user-clock"></i> Доплата к пенсии</li>
+                                    <li class="features-item"><i class="fas fa-hands-helping"></i> Уход за инвалидами</li>
+                                    <li class="features-item"><i class="fas fa-radiation"></i> Пострадавшим от техногенных аварий</li>
                                 </ul>
-                            </li>
-                            <li class="features-item"><i class="fas fa-hands-helping"></i> Ухаживающим за нетрудоспособным человеком:
-                                <ul>
-                                    <li>Ежемесячная выплата по уходу за детьми с инвалидностью или инвалидами с детства I группы (10 000 руб.)</li>
-                                </ul>
-                            </li>
-                            <li class="features-item"><i class="fas fa-radiation"></i> Пострадавшим при техногенных авариях:
-                                <ul>
-                                    <li>Ежемесячная компенсация за проживание или работу в зонах радиоактивного загрязнения</li>
-                                    <li>Компенсации пострадавшим вследствие аварии на Чернобыльской АЭС</li>
-                                    <li>Дополнительное ежегодное вознаграждение за выслугу лет работникам организаций, расположенных в зонах радиоактивного загрязнения</li>
-                                    <li>Ежемесячная компенсация в возмещение вреда здоровью инвалидам и нетрудоспособным</li>
-                                    <li>Оплата дополнительного отпуска и единовременная компенсация на оздоровление</li>
-                                    <li>Сохранение среднего заработка на период обучения новым профессиям и трудоустройства</li>
-                                    <li>Ежемесячная компенсация на приобретение продовольственных товаров, на питание детей в образовательных учреждениях</li>
-                                    <li>Единовременная компенсация утраченного имущества и др.</li>
-                                </ul>
-                            </li>
-                            <li class="features-item"><i class="fas fa-graduation-cap"></i> Обучающимся в учебном заведении (стипендии):
-                                <ul>
-                                    <li>Государственная социальная стипендия</li>
-                                    <li>Повышенная государственная стипендия</li>
-                                </ul>
-                            </li>
-                            <li class="features-item"><i class="fas fa-user-shield"></i> Военнослужащим и членам их семей:
-                                <ul>
-                                    <li>Единовременная выплата в случае гибели военнослужащего</li>
-                                    <li>Ежемесячная компенсация членам семьи погибшего военнослужащего-инвалида</li>
-                                    <li>Единовременная компенсация при признании военнослужащего негодным к дальнейшей службе</li>
-                                    <li>Единовременная выплата на ремонт дома</li>
-                                    <li>Ежегодная выплата на летний оздоровительный отдых ребенка</li>
-                                    <li>Ежемесячная компенсация инвалидам вследствие военной травмы и членам семьи погибшего (умершего) военнослужащего и др.</li>
-                                </ul>
-                            </li>
-                            <li class="features-item"><i class="fas fa-user-lock"></i> Реабилитированным жертвам политических репрессий</li>
-                            <li class="features-item"><i class="fas fa-users"></i> Оказавшимся вынужденно переселенным, в том числе выплаты гражданам, вынужденно покинувшим территории Украины, ДНР, ЛНР, Запорожской или Херсонской областей</li>
-                        </ul>
-                        <p>Большинство социальных выплат государство ежегодно индексирует (увеличивает) в соответствии с уровнем инфляции за прошлый год, определенным Росстатом. С 1 февраля 2025 года социальные пособия и меры социальной поддержки проиндексированы на 9,5%.</p>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i class="fas fa-chevron-down"></i> Как узнать о положенных социальных выплатах</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Чтобы узнать о положенных социальных выплатах, можно воспользоваться следующими способами:</p>
-                        <ul class="features-list">
-                            <li class="features-item"><i class="fas fa-laptop"></i> В личном кабинете на «Госуслугах», в том числе на региональном портале госуслуг. Можно заказать выписку из Единой государственной информационной системы социального обеспечения (ЕГИССО), в которой будут данные о необходимых выплатах, их размере, сроке, на который они назначены, а также периодичность выплат.</li>
-                            <li class="features-item"><i class="fas fa-globe"></i> На официальных сайтах органа власти (правительства субъекта Федерации), регионального министерства труда и социальной политики.</li>
-                            <li class="features-item"><i class="fas fa-phone"></i> В Центре консультирования Социального фонда. На официальной странице Центра можно узнать о федеральных выплатах, которые действуют для каждого гражданина Российской Федерации, и о выплатах, которые есть в разных регионах.</li>
-                            <li class="features-item"><i class="fas fa-building"></i> В МФЦ.</li>
-                        </ul>
-                        <p>На официальном портале «Госуслуги» можно настроить автоматическое оповещение о праве на выплаты. При изменении ваших жизненных обстоятельств (рождении ребенка, достижение пенсионного возраста и др.) у вас автоматически возникнет право на назначение соответствующих выплат.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="test-section">
+                <div class="test-card">
+                    <h3>Тест: Виды выплат</h3>
+                    <div class="question">
+                        <p>1. Какие выплаты действуют по всей России?</p>
+                        <label><input type="radio" name="q1" value="a"> Региональные</label>
+                        <label><input type="radio" name="q1" value="b"> Федеральные</label>
+                    </div>
+                    <div class="question">
+                        <p>2. Что влияет на региональные выплаты?</p>
+                        <label><input type="radio" name="q2" value="a"> Прожиточный минимум</label>
+                        <label><input type="radio" name="q2" value="b"> Инфляция</label>
+                    </div>
+                    <button class="button" onclick="checkQuiz(this)"><i class="fas fa-check"></i> Проверить</button>
+                    <div class="test-result"></div>
+                </div>
+            </div>
         </div>
+
+        <h2 class="section-title"><i class="fas fa-question-circle"></i> Как узнать о положенных выплатах</h2>
+        <p>Чтобы узнать о положенных социальных выплатах, можно воспользоваться следующими способами:</p>
+        <ul class="features-list">
+            <li class="features-item"><i class="fas fa-laptop"></i> Личный кабинет на «Госуслугах» или региональном портале.</li>
+            <li class="features-item"><i class="fas fa-globe"></i> Официальные сайты органов власти региона.</li>
+            <li class="features-item"><i class="fas fa-phone"></i> Центр консультирования Социального фонда.</li>
+            <li class="features-item"><i class="fas fa-building"></i> МФЦ.</li>
+        </ul>
     </div>
+    <img src="decor1.png" alt="Фиксированное изображение" class="fixed-image">
+    <button id="to-top-btn"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
-        // Аккордеон
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = `${scrollPercent}%`;
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-card').forEach(card => observer.observe(card));
+
         const accordionHeaders = document.querySelectorAll('.accordion-header');
         accordionHeaders.forEach(header => {
             header.addEventListener('click', () => {
@@ -413,19 +642,54 @@
                 const icon = header.querySelector('i');
                 const isActive = content.classList.contains('active');
 
-                // Закрыть все открытые аккордеоны
-                document.querySelectorAll('.accordion-content.active').forEach(activeContent => {
-                    activeContent.classList.remove('active');
-                    activeContent.previousElementSibling.querySelector('i').classList.remove('active');
+                document.querySelectorAll('.accordion-content.active').forEach(active => {
+                    active.classList.remove('active');
+                    active.previousElementSibling.querySelector('i').classList.remove('active');
                 });
 
-                // Открыть текущий аккордеон, если он не был активен
                 if (!isActive) {
                     content.classList.add('active');
                     icon.classList.add('active');
                 }
             });
         });
+
+        function checkQuiz(button) {
+            const card = button.closest('.test-card');
+            const resultDiv = card.querySelector('.test-result');
+            let score = 0;
+            const answers = { q1: 'b', q2: 'a' };
+
+            const q1 = card.querySelector('input[name="q1"]:checked')?.value;
+            const q2 = card.querySelector('input[name="q2"]:checked')?.value;
+
+            if (q1 === answers.q1) score++;
+            if (q2 === answers.q2) score++;
+
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <p>Вы набрали ${score} из 2 баллов.</p>
+                <p>Вопрос 1: ${q1 === answers.q1 ? '<i class="fa-solid fa-check"></i> Правильно' : '<i class="fa-solid fa-times"></i> Неправильно, правильный ответ: Федеральные'}</p>
+                <p>Вопрос 2: ${q2 === answers.q2 ? '<i class="fa-solid fa-check"></i> Правильно' : '<i class="fa-solid fa-times"></i> Неправильно, правильный ответ: Прожиточный минимум'}</p>
+            `;
+            resultDiv.style.background = score === 2 ? '#dcfce7' : '#fee2e2';
+            resultDiv.style.color = score === 2 ? 'var(--success)' : 'var(--error)';
+        }
+
+        const toTopBtn = document.getElementById('to-top-btn');
+        window.addEventListener('scroll', () => {
+            toTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+
+        toTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+        }
     </script>
 </body>
 </html>

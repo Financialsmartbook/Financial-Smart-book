@@ -1,151 +1,499 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Проверим усвоенный материал - Смарт-учебник</title>
-    <!-- Подключение Font Awesome -->
+    <title>FinCheck - Тестирование финансовой грамотности</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0071e3; /* Основной синий цвет, как на сайте ПСБ */
-            --secondary: #005bb5; /* Темно-синий для hover */
-            --background: #f5f5f7; /* Светлый фон */
-            --text-dark: #333333; /* Темный текст */
-            --text-light: #ffffff; /* Белый текст */
-            --accent: #ff9500; /* Акцентный оранжевый */
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --border: #e0e0e0; /* Светлая граница */
-            --success: #28a745; /* Зеленый для успешного результата теста */
-            --error: #dc3545; /* Красный для ошибки в тесте */
+            /* Основные цвета - светлая тема */
+            --bg-primary: #f3f5f9;
+            --bg-secondary: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --warn: #f59e0b;
+            --error: #ef4444;
+            --success: #10b981;
+            
+            /* Градиенты */
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #fcd34d 100%);
+            --gradient-bg: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent), 
+                           radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.03), transparent);
+            
+            /* Тени */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+            
+            /* Тени неоморфизм */
+            --neomorphism-light: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff;
+            --neomorphism-dark: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff, 
+                               inset 5px 5px 10px rgba(255, 255, 255, 0.5),
+                               inset -5px -5px 10px rgba(0, 0, 0, 0.02);
+            --neomorphism-pressed: inset 5px 5px 10px rgba(0, 0, 0, 0.05),
+                               inset -5px -5px 10px rgba(255, 255, 255, 0.8);
+            
+            /* Скругления */
+            --radius-sm: 0.5rem;
+            --radius-md: 1rem;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+            --radius-full: 9999px;
+            
+            /* Стеклянный эффект */
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-hover: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(17, 24, 39, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            
+            /* Анимации */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --easing: cubic-bezier(0.65, 0, 0.35, 1);
+            
+            /* Типографика */
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
         }
 
-        * {
+        /* Переменные для темного режима */
+        [data-theme="dark"] {
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --primary: #3b82f6;
+            --primary-light: #60a5fa;
+            --accent: #34d399;
+            --accent-light: #6ee7b7;
+            
+            /* Тени для темной темы */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.5);
+            
+            /* Тени неоморфизм для темной темы */
+            --neomorphism-light: 10px 10px 20px #0c111b, -10px -10px 20px #1a202c;
+            --neomorphism-dark: 5px 5px 10px #0c111b, -5px -5px 10px #1a202c,
+                                inset 5px 5px 10px rgba(26, 32, 44, 0.5),
+                                inset -5px -5px 10px rgba(12, 17, 27, 0.8);
+            --neomorphism-pressed: inset 5px 5px 10px rgba(12, 17, 27, 0.8),
+                                   inset -5px -5px 10px rgba(26, 32, 44, 0.5);
+            
+            /* Стеклянный эффект для темной темы */
+            --glass: rgba(31, 41, 55, 0.7);
+            --glass-hover: rgba(31, 41, 55, 0.9);
+            --glass-dark: rgba(17, 24, 39, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            
+            /* Градиенты для темной темы */
+            --gradient-bg: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 60%),
+                          radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent 60%);
+        }
+
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            background: var(--background);
-            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            transition: background-color var(--transition-normal);
+            background-image: var(--gradient-bg);
+            background-attachment: fixed;
+            min-height: 100vh;
         }
 
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: clamp(1rem, 5vw, 3rem);
+            position: relative;
+        }
+
+        .progress-bar-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            z-index: 999;
+            transition: width var(--transition-normal);
+        }
+
+        .fixed-image {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: clamp(80px, 10vw, 120px);
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.1));
+            z-index: 90;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            overflow: hidden;
+            margin-bottom: clamp(1.5rem, 4vw, 3rem);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .neomorphic-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neomorphism-light);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 4vw, 3rem);
+            position: relative;
+            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+        }
+
+        .neomorphic-card:hover {
+            box-shadow: var(--neomorphism-dark);
+            transform: translateY(-5px);
         }
 
         .hero-section {
             position: relative;
-            margin: 40px 0;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, #0071e3 0%, #005bb5 100%);
-            border-radius: 20px;
-            color: var(--text-light);
+            margin: clamp(1rem, 3vw, 2rem) 0 clamp(2rem, 5vw, 4rem);
+            padding: clamp(2rem, 6vw, 4rem);
+            background-image: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            color: white;
+            overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,224L60,229.3C120,235,240,245,360,218.7C480,192,600,128,720,117.3C840,107,960,149,1080,160C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
+            position: relative;
         }
 
         .hero-title {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
             line-height: 1.2;
         }
 
+        .hero-title span {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 0.125em;
+            left: 0;
+            width: 100%;
+            height: 0.2em;
+            background-color: var(--accent);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
         .hero-description {
-            font-size: 18px;
+            font-size: clamp(1rem, 1.8vw, 1.25rem);
             opacity: 0.9;
+            max-width: 90%;
         }
 
         .hero-image {
-            width: 400px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .section-card {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .section-card:hover {
-            transform: translateY(-5px);
+            width: clamp(220px, 35vw, 400px);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: transform var(--transition-normal);
+            z-index: 2;
+            position: relative;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            animation: float 5s ease-in-out infinite;
         }
 
         .section-title {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 30px;
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .section-title i {
+            color: var(--primary);
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -0.75rem;
             left: 0;
-            width: 50px;
-            height: 3px;
+            width: 3rem;
+            height: 0.25rem;
             background: var(--primary);
+            border-radius: var(--radius-full);
         }
 
-        .features-list {
-            list-style: none;
-            padding: 0;
-            display: grid;
-            gap: 20px;
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            transition: transform var(--transition-normal), backdrop-filter var(--transition-normal);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
         }
 
-        .features-item {
-            padding: 20px;
-            background: #f9f9fb;
-            border-radius: 10px;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            transition: transform 0.2s ease, background 0.2s ease;
+        .glass-card:hover {
+            backdrop-filter: blur(10px);
+            transform: translateY(-5px);
         }
 
-        .features-item:hover {
-            transform: translateX(5px);
-            background: #f0f0f2;
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+            z-index: 5;
         }
 
-        .features-item i {
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s var(--easing);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-primary {
+            background-image: var(--gradient-primary);
+        }
+
+        .btn-accent {
+            background-image: var(--gradient-secondary);
+        }
+
+        .btn-neomorphic {
+            background: var(--bg-primary);
             color: var(--primary);
-            font-size: 20px;
-            margin-top: 5px;
-            flex-shrink: 0;
+            box-shadow: var(--neomorphism-light);
+        }
+
+        .btn-neomorphic:hover {
+            box-shadow: var(--neomorphism-dark);
+        }
+
+        .btn-neomorphic:active {
+            box-shadow: var(--neomorphism-pressed);
+            transform: translateY(0);
+        }
+
+        .test-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-card-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        .category-card-content {
+            padding: 1.25rem;
+        }
+
+        .category-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-card-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .category-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .category-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .badge-beginner {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .badge-intermediate {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: var(--warn);
+        }
+
+        .badge-advanced {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: var(--error);
         }
 
         .accordion {
-            background: #ffffff;
-            border-radius: 15px;
+            margin: 2rem 0;
+            border-radius: var(--radius-lg);
+            background: var(--bg-secondary);
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-md);
         }
 
         .accordion-item {
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -153,144 +501,422 @@
         }
 
         .accordion-header {
-            padding: 20px 30px;
+            padding: 1.25rem 1.5rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f9f9fb;
-            transition: background 0.3s ease;
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: background var(--transition-normal), transform var(--transition-normal);
+            position: relative;
         }
 
         .accordion-header:hover {
-            background: #f0f0f2;
+            background: rgba(0, 0, 0, 0.02);
+            transform: translateY(-2px);
+        }
+
+        .accordion-header span {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .accordion-header i {
             color: var(--primary);
-            transition: transform 0.3s ease;
+            transition: transform var(--transition-normal);
         }
 
-        .accordion-header.active i {
+        .accordion-header.active {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .accordion-header.active i.chevron {
             transform: rotate(180deg);
         }
 
+        .accordion-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .accordion-header.active::before {
+            opacity: 1;
+        }
+
         .accordion-content {
-            padding: 0 30px;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            transition: max-height var(--transition-slow);
+            background: var(--bg-secondary);
+            padding: 0 1.5rem;
         }
 
         .accordion-content.active {
-            padding: 30px;
-            max-height: 1000px;
+            max-height: 2000px;
+            padding: 1.5rem;
         }
 
         .quiz-container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-top: 20px;
+            background: var(--bg-secondary);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-top: 1.5rem;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+
+        .quiz-container:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .quiz-question {
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .quiz-options label {
+        .quiz-question:last-of-type {
+            border-bottom: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .quiz-question p i {
+            color: var(--primary);
+            margin-top: 0.25rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            position: relative;
+        }
+
+        .quiz-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .quiz-option label {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
             cursor: pointer;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-normal);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        .quiz-options input {
-            margin-right: 10px;
+        .quiz-option label::before {
+            content: '';
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--primary-light);
+            transition: all var(--transition-normal);
+            flex-shrink: 0;
         }
 
-        .submit-btn {
-            background: var(--primary);
-            color: var(--text-light);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 16px;
+        .quiz-option input[type="radio"]:checked + label {
+            background: rgba(37, 99, 235, 0.05);
+            border-color: var(--primary);
+        }
+
+        .quiz-option input[type="radio"]:checked + label::before {
+            background-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--bg-secondary) inset;
+        }
+
+        .quiz-option label:hover {
+            transform: translateX(5px);
+            background: rgba(37, 99, 235, 0.025);
+        }
+
+        .quiz-result {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
             font-weight: 500;
+            display: none;
+            animation: fadeIn 0.5s var(--easing);
+            border-left: 4px solid transparent;
         }
 
-        .submit-btn:hover {
-            background: var(--secondary);
-        }
-
-        #quiz-result-1, #quiz-result-2, #quiz-result-3 {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            font-weight: 500;
-        }
-
-        .success {
-            background: #d4edda;
+        .quiz-result.success {
+            background: rgba(16, 185, 129, 0.1);
             color: var(--success);
+            border-color: var(--success);
         }
 
-        .error {
-            background: #f8d7da;
+        .quiz-result.error {
+            background: rgba(239, 68, 68, 0.1);
             color: var(--error);
+            border-color: var(--error);
         }
 
-        a {
+        .quiz-result.partial {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warn);
+            border-color: var(--warn);
+        }
+
+        .final-score {
+            text-align: center;
+            margin: 2.5rem 0;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            color: white;
+            display: none;
+            animation: fadeIn 0.8s var(--easing);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .final-score h2 {
+            margin-bottom: 1.25rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 1.5rem 0;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+
+        .score-display::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-full);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            margin: 1.5rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            border-radius: var(--radius-full);
+            transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+        }
+
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            transition: transform var(--transition-normal);
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .info-card i {
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .info-card-primary {
+            background: rgba(37, 99, 235, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-card-primary i {
             color: var(--primary);
-            text-decoration: none;
-            transition: color 0.2s ease;
         }
 
-        a:hover {
-            color: var(--secondary);
-            text-decoration: underline;
+        .info-card-warning {
+            background: rgba(245, 158, 11, 0.05);
+            border-left: 4px solid var(--warn);
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            .hero-section {
-                flex-direction: column;
-                text-align: center;
-                padding: 40px 20px;
-            }
-
-            .hero-image {
-                width: 100%;
-                margin-top: 20px;
-            }
-
-            .section-card {
-                padding: 20px;
-            }
-
-            .hero-title {
-                font-size: 28px;
-            }
-
-            .hero-description {
-                font-size: 16px;
-            }
+        .info-card-warning i {
+            color: var(--warn);
         }
 
-        @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: background var(--transition-normal), transform var(--transition-normal);
+            box-shadow: var(--shadow-md);
+            color: var(--text-primary);
+        }
 
-            .features-item {
-                flex-direction: column;
-                align-items: flex-start;
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .progress-tracker {
+            display: flex;
+            flex-direction: column;
+            margin: 2rem 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-header h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .progress-header span {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            height: 0.5rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: var(--radius-full);
+            width: 65%;
+            transition: width 0.5s ease;
+        }
+
+        .certification-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            margin-top: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 2px dashed rgba(37, 99, 235, 0.3);
+        }
+
+        .certification-badge img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .certification-badge h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .certification-badge p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -299,311 +925,782 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-15px);
             }
         }
 
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite var(--easing);
+        }
+
+        @media (max-width: 992px) {
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-image {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            
+            .hero-content {
+                order: 1;
+            }
+            
+            .hero-image {
+                order: 0;
+                width: 80%;
+                max-width: 300px;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .hero-description {
+                max-width: 100%;
+            }
+            
+            .section-title {
+                text-align: center;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .fixed-image {
+                width: 60px;
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            
+            .accordion-header {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            
+            .accordion-content.active {
+                padding: 1rem;
+            }
+            
+            .test-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-description {
+                font-size: 0.875rem;
+            }
+            
+            .hero-badge {
+                padding: 0.25rem 0.75rem;
+                font-size: 0.75rem;
+            }
+            
+            .section-title {
+                font-size: 1.25rem;
+            }
+            
+            .quiz-question p {
+                font-size: 1rem;
+            }
+            
+            .quiz-option label {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 0.75rem 1.25rem;
+                font-size: 0.875rem;
+            }
+            
+            .score-display {
+                font-size: 3rem;
+            }
+            
+            .info-card {
+                flex-direction: column;
+            }
+            
+            .info-card i {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme]) {
+                --bg-primary: #111827;
+                --bg-secondary: #1f2937;
+                --text-primary: #f3f4f6;
+                --text-secondary: #d1d5db;
+                /* ... остальные переменные для темной темы */
+            }
         }
     </style>
 </head>
 <body>
+    <div class="progress-bar-top" id="progress-bar"></div>
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <!-- Фиксированный PNG-элемент -->
+    <img src="https://i.imgur.com/zLWcIp0.png" alt="FinCheck Mascot" class="fixed-image">
+    
     <div class="container">
+        <nav class="nav">
+            <div class="nav-logo">
+                <i class="fas fa-piggy-bank"></i> Fin<span>Check</span>
+            </div>
+        </nav>
+        
         <section class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title"><i class="fas fa-check-circle"></i> Проверим усвоенный материал</h1>
+                <div class="hero-badge">Финансовая грамотность</div>
+                <h1 class="hero-title">Проверьте свои <span>финансовые</span> знания</h1>
+                <p class="hero-description">Интерактивная платформа для тестирования знаний по финансовой грамотности, защите от мошенничества и управлению личными финансами</p>
+            </div>
+            <img src="https://i.imgur.com/wOv8zez.png" alt="Financial Literacy Tests" class="hero-image">
+        </section>
+
+        <div class="neomorphic-card">
+            <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Категории тестов</h2>
+            <p>Выберите интересующую вас тему для проверки финансовых знаний и получите персонализированные рекомендации.</p>
+            
+            <div class="test-categories">
+                <div class="category-card" id="category-1">
+                    <img src="https://i.imgur.com/0d0mXd8.jpg" alt="Базовая финансовая грамотность" class="category-card-image">
+                    <div class="category-card-content">
+                        <h3 class="category-card-title"><i class="fas fa-chart-pie"></i> Базовые знания</h3>
+                        <p class="category-card-desc">Проверьте знания в области личного бюджета, финансового планирования и сбережений</p>
+                        <div class="category-card-meta">
+                            <span><i class="fas fa-clock"></i> 15 минут</span>
+                            <span><i class="fas fa-question-circle"></i> 10 вопросов</span>
+                        </div>
+                    </div>
+                    <span class="badge badge-beginner">Начальный</span>
                 </div>
-                <img src="https://via.placeholder.com/400x300" alt="Проверка знаний" class="hero-image animated-image">
-            </section>
-    
-            <div class="section-card">
-                <h2 class="section-title"><i class="fas fa-info-circle"></i> Тесты для проверки знаний</h2>
-    
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span><i class="fas fa-chevron-down"></i> Тема 1. Деньги: слуга или хозяин</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="quiz-container">
-                                <form id="quiz-form-1">
-                                    <div class="quiz-question">
-                                        <p>1. Вам необходимо оплатить задолженность по коммунальным услугам. Выберите наиболее предпочтительный способ с учетом экономии времени, денег, скорости зачисления, надежности и простоты:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q1-1" value="a"> Пойти в банк и оплатить квитанцию</label>
-                                            <label><input type="radio" name="q1-1" value="b"> Через платежный терминал в супермаркете</label>
-                                            <label><input type="radio" name="q1-1" value="c"> Через мобильное приложение банк-онлайн</label>
-                                            <label><input type="radio" name="q1-1" value="d"> Через электронный кошелек</label>
-                                            <label><input type="radio" name="q1-1" value="e"> Через портал госуслуг</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>2. Родственники подарили 300 у.е. Через месяц вы обменяли 150 у.е. (курс покупки 101 руб./у.е., продажи 104 руб./у.е.), через 2 месяца купили 150 у.е. (курс покупки 103 руб./у.е., продажи 107 руб./у.е.). Сколько рублей вы сэкономили (+) / потеряли (-) при конверсионных операциях?</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q1-2" value="a"> +150 руб.</label>
-                                            <label><input type="radio" name="q1-2" value="b"> -300 руб.</label>
-                                            <label><input type="radio" name="q1-2" value="c"> -900 руб.</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>3. Юридический статус криптовалюты в РФ:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q1-3" value="a"> Безналичные деньги</label>
-                                            <label><input type="radio" name="q1-3" value="b"> Наличные деньги</label>
-                                            <label><input type="radio" name="q1-3" value="c"> Цифровые деньги</label>
-                                            <label><input type="radio" name="q1-3" value="d"> Цифровой финансовый актив</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>4. Рост цен 1% в месяц. На сколько % увеличатся расходы на потребительскую корзину через год и на сколько % снизится покупательная способность денег (округлить до 0,1%)?</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q1-4" value="a"> 12% и 12%</label>
-                                            <label><input type="radio" name="q1-4" value="b"> 12,7% и 11,3%</label>
-                                            <label><input type="radio" name="q1-4" value="c"> 12% и 10,7%</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>5. Вы одолжили другу 100 000 руб. на 1 год. Рост цен 12,9%. Реальный размер суммы через год и снижение покупательной способности (округлить до целого и 0,1%)?</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q1-5" value="a"> 87 100 руб. и 12,9%</label>
-                                            <label><input type="radio" name="q1-5" value="b"> 88 574 руб. и 11,4%</label>
-                                            <label><input type="radio" name="q1-5" value="c"> 87 100 руб. и 11,4%</label>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="submit-btn" onclick="checkQuiz1()">Проверить</button>
-                                </form>
-                                <div id="quiz-result-1"></div>
-                            </div>
+                
+                <div class="category-card" id="category-2">
+                    <img src="https://i.imgur.com/Bq4N47o.jpg" alt="Защита от мошенничества" class="category-card-image">
+                    <div class="category-card-content">
+                        <h3 class="category-card-title"><i class="fas fa-shield-alt"></i> Защита от мошенничества</h3>
+                        <p class="category-card-desc">Тест на знание методов защиты от финансовых мошенников и киберпреступников</p>
+                        <div class="category-card-meta">
+                            <span><i class="fas fa-clock"></i> 20 минут</span>
+                            <span><i class="fas fa-question-circle"></i> 15 вопросов</span>
                         </div>
                     </div>
-    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span><i class="fas fa-chevron-down"></i> Тема 2. Личный бюджет: зачем вести и как управлять</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="quiz-container">
-                                <form id="quiz-form-2">
-                                    <div class="quiz-question">
-                                        <p>1. Прожиточный минимум 18 749 руб., федеральный МРОТ 22 440 руб., региональный МРОТ на 10% выше. Минимальная зарплата за полный месяц:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q2-1" value="a"> 18 749 руб.</label>
-                                            <label><input type="radio" name="q2-1" value="b"> 22 440 руб.</label>
-                                            <label><input type="radio" name="q2-1" value="c"> 24 640 руб.</label>
-                                            <label><input type="radio" name="q2-1" value="d"> Минимальная оплата труда в организации</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>2. Зарплата 70 тыс. руб., расходы на питание и услуги 50 тыс. руб., кредит 7,2 тыс. руб., ОСАГО 5,8 тыс. руб., доход от аренды 35 тыс. руб. (налог 4%), ИПЦ 1,095. Реально располагаемый доход (округлить до 0,01 руб.):</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q2-2" value="a"> 38,36 тыс. руб.</label>
-                                            <label><input type="radio" name="q2-2" value="b"> 37,08 тыс. руб.</label>
-                                            <label><input type="radio" name="q2-2" value="c"> 82,74 тыс. руб.</label>
-                                            <label><input type="radio" name="q2-2" value="d"> 84,00 тыс. руб.</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>3. При составлении бюджета в составе доходов НЕ учитывается:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q2-3" value="a"> Ежемесячные пособия на детей</label>
-                                            <label><input type="radio" name="q2-3" value="b"> Проценты по вкладам</label>
-                                            <label><input type="radio" name="q2-3" value="c"> Выигрыш в лотерею</label>
-                                            <label><input type="radio" name="q2-3" value="d"> Полученный кредит банка</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>4. Семья Калинкиных: доходы (зарплата матери 85 тыс. руб., отца 120 тыс. руб., премия отца 50 тыс. руб., проценты по вкладу 250 тыс. руб. под 18% простые), расходы (еда 115 тыс. руб., кредит 49 тыс. руб., карманные 10 тыс. руб., одежда 15 тыс. руб., подарки 5 тыс. руб.). Тип бюджета и изменение сальдо без премии:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q2-4" value="a"> Сбалансированный, да</label>
-                                            <label><input type="radio" name="q2-4" value="b"> Дефицитный, нет</label>
-                                            <label><input type="radio" name="q2-4" value="c"> Профицитный (64,7 тыс. руб.), да</label>
-                                            <label><input type="radio" name="q2-4" value="d"> Профицитный (64,7 тыс. руб.), нет</label>
-                                        </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>5. Доход 150 тыс. руб./мес., откладываете 15%, тур 185 тыс. руб., рост цен 9%. Период накопления (округлить до месяцев):</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q2-5" value="a"> 8 месяцев</label>
-                                            <label><input type="radio" name="q2-5" value="b"> 9 месяцев</label>
-                                            <label><input type="radio" name="q2-5" value="c"> 12 месяцев</label>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="submit-btn" onclick="checkQuiz2()">Проверить</button>
-                                </form>
-                                <div id="quiz-result-2"></div>
-                            </div>
+                    <span class="badge badge-intermediate">Средний</span>
+                </div>
+                
+                <div class="category-card" id="category-3">
+                    <img src="https://i.imgur.com/8fhTkA3.jpg" alt="Инвестиции и накопления" class="category-card-image">
+                    <div class="category-card-content">
+                        <h3 class="category-card-title"><i class="fas fa-chart-line"></i> Инвестиции</h3>
+                        <p class="category-card-desc">Проверьте понимание основ инвестирования, финансовых инструментов и стратегий</p>
+                        <div class="category-card-meta">
+                            <span><i class="fas fa-clock"></i> 25 минут</span>
+                            <span><i class="fas fa-question-circle"></i> 20 вопросов</span>
                         </div>
                     </div>
-    
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span><i class="fas fa-chevron-down"></i> Тема 3. Банковские вклады: копим с умом</span>
+                    <span class="badge badge-advanced">Продвинутый</span>
+                </div>
+                
+                <div class="category-card" id="category-4">
+                    <img src="https://i.imgur.com/5jBc2JH.jpg" alt="Кредиты и займы" class="category-card-image">
+                    <div class="category-card-content">
+                        <h3 class="category-card-title"><i class="fas fa-credit-card"></i> Кредиты и займы</h3>
+                        <p class="category-card-desc">Тест на знание кредитных продуктов, условий займов и эффективного управления долгом</p>
+                        <div class="category-card-meta">
+                            <span><i class="fas fa-clock"></i> 20 минут</span>
+                            <span><i class="fas fa-question-circle"></i> 15 вопросов</span>
                         </div>
-                        <div class="accordion-content">
-                            <div class="quiz-container">
-                                <form id="quiz-form-3">
-                                    <div class="quiz-question">
-                                        <p>1. Вклад 100 000 руб., инфляция 12,5%, ставка 18% годовых. Реальный размер через 1 год (округлить до руб.):</p>
-                                        <p>1) Простая ставка:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-1a" value="a"> 118 000 руб.</label>
-                                            <label><input type="radio" name="q3-1a" value="b"> 104 889 руб.</label>
-                                            <label><input type="radio" name="q3-1a" value="c"> 103 250 руб.</label>
+                    </div>
+                    <span class="badge badge-intermediate">Средний</span>
+                </div>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="progress-header">
+                    <h4>Ваш прогресс</h4>
+                    <span>65%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="certification-badge">
+                <img src="https://i.imgur.com/fA3rxxu.png" alt="Certification Badge" />
+                <h3>Сертификат финансовой грамотности</h3>
+                <p>Пройдите все тесты и получите персональный сертификат, подтверждающий ваши знания</p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title"><i class="fas fa-shield-alt"></i> Защита от финансового мошенничества</h2>
+            <p>Проверьте свои знания о методах защиты от финансовых мошенников и безопасном использовании финансовых инструментов.</p>
+            
+            <div class="info-card info-card-warning">
+                <i class="fas fa-exclamation-circle"></i>
+                <div>
+                    <h3>Важное напоминание</h3>
+                    <p>По данным Центрального банка, в 2024 году резко возросло число случаев финансового мошенничества. Знание базовых правил безопасности поможет защитить ваши средства.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-phone-alt"></i> Телефонное мошенничество</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="quiz-container">
+                            <form id="quiz-form-1">
+                                <div class="quiz-question">
+                                    <p><i class="fas fa-question-circle"></i> 1. Какие данные нельзя сообщать по телефону сотрудникам банка?</p>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q1a" value="a">
+                                            <label for="q1a">Ваше полное имя</label>
                                         </div>
-                                        <p>2) Сложная ставка:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-1b" value="a"> 119 560 руб.</label>
-                                            <label><input type="radio" name="q3-1b" value="b"> 104 615 руб.</label>
-                                            <label><input type="radio" name="q3-1b" value="c"> 106 276 руб.</label>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q1b" value="b">
+                                            <label for="q1b">Название вашего банка</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q1c" value="c">
+                                            <label for="q1c">CVV/CVC-код карты и коды из SMS</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q1d" value="d">
+                                            <label for="q1d">Адрес электронной почты</label>
                                         </div>
                                     </div>
-                                    <div class="quiz-question">
-                                        <p>2. 50 000 руб., банк "Зенит" 16,8% с ежемесячной капитализацией, банк "Арсенал" 18% простые проценты. Выгоднее на 181 день и 1 год:</p>
-                                        <p>181 день:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-2a" value="a"> Зенит</label>
-                                            <label><input type="radio" name="q3-2a" value="b"> Арсенал</label>
+                                </div>
+                                
+                                <div class="quiz-question">
+                                    <p><i class="fas fa-question-circle"></i> 2. Что делать при звонке от «сотрудника службы безопасности банка»?</p>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2a" value="a">
+                                            <label for="q2a">Сообщить данные карты для проверки</label>
                                         </div>
-                                        <p>1 год:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-2b" value="a"> Зенит</label>
-                                            <label><input type="radio" name="q3-2b" value="b"> Арсенал</label>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2b" value="b">
+                                            <label for="q2b">Прервать разговор и самостоятельно позвонить на официальный номер банка</label>
                                         </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>3. Вклад 70 000 руб., 22% годовых, капитализация в конце года, простой процент в течение года. Сумма через 3 года (округлить до руб.):</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-3" value="a"> 116 200 руб.</label>
-                                            <label><input type="radio" name="q3-3" value="b"> 127 109 руб.</label>
-                                            <label><input type="radio" name="q3-3" value="c"> 130 929 руб.</label>
-                                            <label><input type="radio" name="q3-3" value="d"> 134 627 руб.</label>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2c" value="c">
+                                            <label for="q2c">Продиктовать код из SMS для подтверждения личности</label>
                                         </div>
-                                    </div>
-                                    <div class="quiz-question">
-                                        <p>4. Вклад 500 000 руб., 9% годовых, простые проценты, с 15.01.2022, отзыв лицензии 10.02.2024. Страховое возмещение от АСВ:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-4" value="a"> 500 000 руб.</label>
-                                            <label><input type="radio" name="q3-4" value="b"> 593 082 руб.</label>
-                                            <label><input type="radio" name="q3-4" value="c"> 597 696 руб.</label>
-                                            <label><input type="radio" name="q3-4" value="d"> 1 400 000 руб.</label>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2d" value="d">
+                                            <label for="q2d">Перезвонить по номеру, с которого звонили</label>
                                         </div>
                                     </div>
-                                    <div class="quiz-question">
-                                        <p>5. Два вклада: рублевый 350 000 руб., 8% с ежеквартальной капитализацией, с 15.01.2022; валютный 15 000 у.е., 0,5% простые, с 10.08.2021, курс 85 руб./у.е., отзыв лицензии 10.03.2024. Страховое возмещение от АСВ:</p>
-                                        <div class="quiz-options">
-                                            <label><input type="radio" name="q3-5" value="a"> 1 370 000 руб.</label>
-                                            <label><input type="radio" name="q3-5" value="b"> 1 400 000 руб.</label>
-                                            <label><input type="radio" name="q3-5" value="c"> 1 448 007 руб.</label>
-                                            <label><input type="radio" name="q3-5" value="d"> 414 917 руб. и 12 154 у.е.</label>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary" onclick="checkQuiz1()">
+                                    <i class="fas fa-check-circle"></i> Проверить ответы
+                                </button>
+                                
+                                <div class="quiz-result" id="quiz-result-1"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-globe"></i> Интернет-мошенничество</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="quiz-container">
+                            <form id="quiz-form-2">
+                                <div class="quiz-question">
+                                    <p><i class="fas fa-question-circle"></i> 1. Как распознать фишинговый сайт?</p>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q2-1a" value="a">
+                                            <label for="q2-1a">По отсутствию логотипа компании</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q2-1b" value="b">
+                                            <label for="q2-1b">По ошибкам в URL адресе (sberbamk вместо sberbank)</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q2-1c" value="c">
+                                            <label for="q2-1c">По яркому дизайну сайта</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q2-1d" value="d">
+                                            <label for="q2-1d">По медленной загрузке страниц</label>
                                         </div>
                                     </div>
-                                    <button type="button" class="submit-btn" onclick="checkQuiz3()">Проверить</button>
-                                </form>
-                                <div id="quiz-result-3"></div>
-                            </div>
+                                </div>
+                                
+                                <div class="quiz-question">
+                                    <p><i class="fas fa-question-circle"></i> 2. Что делать, если вы обнаружили подозрительную транзакцию в мобильном банке?</p>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2-2a" value="a">
+                                            <label for="q2-2a">Подождать несколько дней, возможно это технический сбой</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2-2b" value="b">
+                                            <label for="q2-2b">Немедленно заблокировать карту и связаться с банком</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2-2c" value="c">
+                                            <label for="q2-2c">Сменить только пароль от личного кабинета</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q2-2d" value="d">
+                                            <label for="q2-2d">Проверить антивирус на компьютере</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary" onclick="checkQuiz2()">
+                                    <i class="fas fa-check-circle"></i> Проверить ответы
+                                </button>
+                                
+                                <div class="quiz-result" id="quiz-result-2"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-money-bill-wave"></i> Инвестиционное мошенничество</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="quiz-container">
+                            <form id="quiz-form-3">
+                                <div class="quiz-question">
+                                    <p><i class="fas fa-question-circle"></i> 1. Какие признаки могут указывать на финансовую пирамиду?</p>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q3-1a" value="a">
+                                            <label for="q3-1a">Гарантия высокой доходности выше рыночной</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q3-1b" value="b">
+                                            <label for="q3-1b">Наличие лицензии Центрального банка</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q3-1c" value="c">
+                                            <label for="q3-1c">Прозрачная структура инвестиций</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q1" id="q3-1d" value="d">
+                                            <label for="q3-1d">Регулярная публикация финансовой отчетности</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-question">
+                                    <p><i class="fas fa-question-circle"></i> 2. Как безопасно выбрать инвестиционную компанию?</p>
+                                    <div class="quiz-options">
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q3-2a" value="a">
+                                            <label for="q3-2a">По рекламе в социальных сетях</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q3-2b" value="b">
+                                            <label for="q3-2b">Проверить наличие лицензии в реестре ЦБ РФ</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q3-2c" value="c">
+                                            <label for="q3-2c">По рекомендациям знакомых в мессенджерах</label>
+                                        </div>
+                                        <div class="quiz-option">
+                                            <input type="radio" name="q2" id="q3-2d" value="d">
+                                            <label for="q3-2d">По отзывам на сайте компании</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary" onclick="checkQuiz3()">
+                                    <i class="fas fa-check-circle"></i> Проверить ответы
+                                </button>
+                                
+                                <div class="quiz-result" id="quiz-result-3"></div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <div class="info-card info-card-primary">
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                    <h3>Совет эксперта</h3>
+                    <p>Всегда проверяйте официальные источники перед принятием финансовых решений. Помните, что банки никогда не запрашивают полные данные карты, CVV-код или пароли из SMS по телефону.</p>
+                </div>
+            </div>
+            
+            <button id="show-final-result" class="btn btn-neomorphic pulse">
+                <i class="fas fa-poll"></i> Посмотреть итоговый результат
+            </button>
         </div>
-    
-        <script>
-            // Аккордеон
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', () => {
-                    const content = header.nextElementSibling;
-                    const icon = header.querySelector('i');
-                    const isActive = content.classList.contains('active');
-    
-                    // Закрыть все открытые аккордеоны
-                    document.querySelectorAll('.accordion-content.active').forEach(activeContent => {
-                        activeContent.classList.remove('active');
-                        activeContent.previousElementSibling.querySelector('i').classList.remove('active');
-                    });
-    
-                    // Открыть текущий аккордеон, если он не был активен
-                    if (!isActive) {
-                        content.classList.add('active');
-                        icon.classList.add('active');
-                    }
-                });
+        
+        <div class="final-score" id="final-score">
+            <h2><i class="fas fa-award"></i> Ваш результат</h2>
+            <p>Вы правильно ответили на <span id="correct-answers">0</span> из <span id="total-questions">6</span> вопросов</p>
+            
+            <div class="score-display">0%</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 0%"></div>
+            </div>
+            
+            <div id="result-message"></div>
+            
+            <button class="btn btn-accent" onclick="location.reload()">
+                Пройти тест заново
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Прогресс-бар при скролле
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
+        
+        // Переключение темы
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        themeToggle.addEventListener('click', function() {
+            if (htmlElement.getAttribute('data-theme') === 'light') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Аккордеон
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                
+                if (this.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
             });
-    
-            // Проверка теста по теме 1
-            function checkQuiz1() {
-                const form = document.getElementById('quiz-form-1');
-                const resultDiv = document.getElementById('quiz-result-1');
-                let score = 0;
-    
-                const q1 = form['q1-1'].value;
-                const q2 = form['q1-2'].value;
-                const q3 = form['q1-3'].value;
-                const q4 = form['q1-4'].value;
-                const q5 = form['q1-5'].value;
-    
-                // Правильные ответы
-// Правильные ответы
-if (q1 === 'c') score++; // Через мобильное приложение банк-онлайн
-            if (q2 === 'c') score++; // -900 руб.
-            if (q3 === 'd') score++; // Цифровой финансовый актив
-            if (q4 === 'b') score++; // 12,7% и 11,3%
-            if (q5 === 'b') score++; // 88 574 руб. и 11,4%
-
-            resultDiv.innerHTML = `Вы набрали ${score} из 5 баллов.`;
-            resultDiv.className = score === 5 ? 'success' : 'error';
+        });
+        
+        // Переход к тестам по клику на категории
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const accordionHeaders = document.querySelectorAll('.accordion-header');
+                const index = Array.from(document.querySelectorAll('.category-card')).indexOf(this);
+                
+                // Прокрутка к соответствующему тесту
+                if (index === 1) { // Если это категория "Защита от мошенничества"
+                    document.querySelector('.glass-card').scrollIntoView({ behavior: 'smooth' });
+                    // Откройте первый аккордеон
+                    setTimeout(() => {
+                        if (!accordionHeaders[0].classList.contains('active')) {
+                            accordionHeaders[0].click();
+                        }
+                    }, 800);
+                } else {
+                    alert("В этой демонстрации пока доступны только тесты по защите от мошенничества.");
+                }
+            });
+        });
+        
+        // Глобальные переменные для отслеживания результатов
+        let quiz1Score = 0;
+        let quiz2Score = 0;
+        let quiz3Score = 0;
+        let quiz1Completed = false;
+        let quiz2Completed = false;
+        let quiz3Completed = false;
+        
+        // Функция проверки первого теста
+        function checkQuiz1() {
+            const form = document.getElementById('quiz-form-1');
+            const resultDiv = document.getElementById('quiz-result-1');
+            
+            // Правильные ответы
+            const correctAnswers = {
+                q1: 'c',
+                q2: 'b'
+            };
+            
+            let score = 0;
+            const answers = {
+                q1: form.querySelector('input[name="q1"]:checked')?.value,
+                q2: form.querySelector('input[name="q2"]:checked')?.value
+            };
+            
+            // Проверка на заполнение всех полей
+            if (!answers.q1 || !answers.q2) {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пожалуйста, ответьте на все вопросы';
+                resultDiv.className = 'quiz-result error';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            // Подсчет правильных ответов
+            for (const [question, answer] of Object.entries(answers)) {
+                if (answer === correctAnswers[question]) {
+                    score++;
+                }
+            }
+            
+            // Сохранение результата
+            quiz1Score = score;
+            quiz1Completed = true;
+            
+            // Вывод результата
+            if (score === 2) {
+                resultDiv.innerHTML = '<i class="fas fa-check-circle"></i> Отлично! Вы правильно ответили на все вопросы.';
+                resultDiv.className = 'quiz-result success';
+            } else if (score === 1) {
+                resultDiv.innerHTML = '<i class="fas fa-info-circle"></i> Неплохо! Правильных ответов: 1 из 2.';
+                resultDiv.className = 'quiz-result partial';
+            } else {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Рекомендуем повторить материал. Правильных ответов: 0 из 2.';
+                resultDiv.className = 'quiz-result error';
+            }
+            
+            resultDiv.style.display = 'block';
         }
-
-        // Проверка теста по теме 2
+        
+        // Функция проверки второго теста
         function checkQuiz2() {
             const form = document.getElementById('quiz-form-2');
             const resultDiv = document.getElementById('quiz-result-2');
-            let score = 0;
-
-            const q1 = form['q2-1'].value;
-            const q2 = form['q2-2'].value;
-            const q3 = form['q2-3'].value;
-            const q4 = form['q2-4'].value;
-            const q5 = form['q2-5'].value;
-
+            
             // Правильные ответы
-            if (q1 === 'c') score++; // 24 640 руб.
-            if (q2 === 'c') score++; // 82,74 тыс. руб.
-            if (q3 === 'd') score++; // Полученный кредит банка
-            if (q4 === 'd') score++; // Профицитный (64,7 тыс. руб.), нет
-            if (q5 === 'b') score++; // 9 месяцев
-
-            resultDiv.innerHTML = `Вы набрали ${score} из 5 баллов.`;
-            resultDiv.className = score === 5 ? 'success' : 'error';
+            const correctAnswers = {
+                q1: 'b',
+                q2: 'b'
+            };
+            
+            let score = 0;
+            const answers = {
+                q1: form.querySelector('input[name="q1"]:checked')?.value,
+                q2: form.querySelector('input[name="q2"]:checked')?.value
+            };
+            
+            // Проверка на заполнение всех полей
+            if (!answers.q1 || !answers.q2) {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пожалуйста, ответьте на все вопросы';
+                resultDiv.className = 'quiz-result error';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            // Подсчет правильных ответов
+            for (const [question, answer] of Object.entries(answers)) {
+                if (answer === correctAnswers[question]) {
+                    score++;
+                }
+            }
+            
+            // Сохранение результата
+            quiz2Score = score;
+            quiz2Completed = true;
+            
+            // Вывод результата
+            if (score === 2) {
+                resultDiv.innerHTML = '<i class="fas fa-check-circle"></i> Отлично! Вы правильно ответили на все вопросы.';
+                resultDiv.className = 'quiz-result success';
+            } else if (score === 1) {
+                resultDiv.innerHTML = '<i class="fas fa-info-circle"></i> Неплохо! Правильных ответов: 1 из 2.';
+                resultDiv.className = 'quiz-result partial';
+            } else {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Рекомендуем повторить материал. Правильных ответов: 0 из 2.';
+                resultDiv.className = 'quiz-result error';
+            }
+            
+            resultDiv.style.display = 'block';
         }
-
-        // Проверка теста по теме 3
+        
+        // Функция проверки третьего теста
         function checkQuiz3() {
             const form = document.getElementById('quiz-form-3');
             const resultDiv = document.getElementById('quiz-result-3');
-            let score = 0;
-
-            const q1a = form['q3-1a'].value;
-            const q1b = form['q3-1b'].value;
-            const q2a = form['q3-2a'].value;
-            const q2b = form['q3-2b'].value;
-            const q3 = form['q3-3'].value;
-            const q4 = form['q3-4'].value;
-            const q5 = form['q3-5'].value;
-
+            
             // Правильные ответы
-            if (q1a === 'b') score++; // 104 889 руб. (простая ставка)
-            if (q1b === 'c') score++; // 106 276 руб. (сложная ставка)
-            if (q2a === 'b') score++; // Арсенал (181 день)
-            if (q2b === 'a') score++; // Зенит (1 год)
-            if (q3 === 'b') score++; // 127 109 руб.
-            if (q4 === 'b') score++; // 593 082 руб.
-            if (q5 === 'b') score++; // 1 400 000 руб.
-
-            resultDiv.innerHTML = `Вы набрали ${score} из 7 баллов.`;
-            resultDiv.className = score === 7 ? 'success' : 'error';
+            const correctAnswers = {
+                q1: 'a',
+                q2: 'b'
+            };
+            
+            let score = 0;
+            const answers = {
+                q1: form.querySelector('input[name="q1"]:checked')?.value,
+                q2: form.querySelector('input[name="q2"]:checked')?.value
+            };
+            
+            // Проверка на заполнение всех полей
+            if (!answers.q1 || !answers.q2) {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пожалуйста, ответьте на все вопросы';
+                resultDiv.className = 'quiz-result error';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            // Подсчет правильных ответов
+            for (const [question, answer] of Object.entries(answers)) {
+                if (answer === correctAnswers[question]) {
+                    score++;
+                }
+            }
+            
+            // Сохранение результата
+            quiz3Score = score;
+            quiz3Completed = true;
+            
+            // Вывод результата
+            if (score === 2) {
+                resultDiv.innerHTML = '<i class="fas fa-check-circle"></i> Отлично! Вы правильно ответили на все вопросы.';
+                resultDiv.className = 'quiz-result success';
+            } else if (score === 1) {
+                resultDiv.innerHTML = '<i class="fas fa-info-circle"></i> Неплохо! Правильных ответов: 1 из 2.';
+                resultDiv.className = 'quiz-result partial';
+            } else {
+                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Рекомендуем повторить материал. Правильных ответов: 0 из 2.';
+                resultDiv.className = 'quiz-result error';
+            }
+            
+            resultDiv.style.display = 'block';
         }
+        
+        // Функция отображения итогового результата
+        document.getElementById('show-final-result').addEventListener('click', function() {
+            // Проверка прохождения минимум одного теста
+            const testsCompleted = [quiz1Completed, quiz2Completed, quiz3Completed].filter(Boolean).length;
+            
+            if (testsCompleted === 0) {
+                alert('Пожалуйста, пройдите хотя бы один тест перед просмотром итогового результата.');
+                return;
+            }
+            
+            const totalScore = quiz1Score + quiz2Score + quiz3Score;
+            const totalQuestions = (quiz1Completed ? 2 : 0) + (quiz2Completed ? 2 : 0) + (quiz3Completed ? 2 : 0);
+            const scorePercentage = Math.round((totalScore / totalQuestions) * 100);
+            
+            document.getElementById('correct-answers').textContent = totalScore;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('final-score').style.display = 'block';
+            document.querySelector('.score-display').textContent = scorePercentage + '%';
+            document.querySelector('.progress-bar').style.width = scorePercentage + '%';
+            
+            const resultMessage = document.getElementById('result-message');
+            
+            if (scorePercentage >= 80) {
+                resultMessage.innerHTML = '<p>Отличный результат! Вы обладаете высоким уровнем финансовой защиты и сможете уберечь себя от большинства видов мошенничества.</p>';
+            } else if (scorePercentage >= 50) {
+                resultMessage.innerHTML = '<p>Хороший результат, но есть темы, которые стоит изучить глубже. Особенно обратите внимание на распознавание фишинговых сайтов и безопасное взаимодействие с финансовыми организациями.</p>';
+            } else {
+                resultMessage.innerHTML = '<p>Рекомендуем более внимательно изучить материалы по финансовой безопасности. Это поможет защитить ваши средства от мошенников в будущем.</p>';
+            }
+            
+            // Плавная прокрутка к результатам
+            document.getElementById('final-score').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        
+        // Анимация появления элементов при прокрутке
+        function reveal() {
+            const reveals = document.querySelectorAll('.neomorphic-card, .glass-card, .category-card');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].style.transition = 'all 0.6s ease';
+                    reveals[i].style.transitionDelay = `${i * 0.1}s`;
+                    reveals[i].style.opacity = '1';
+                    reveals[i].style.transform = 'translateY(0)';
+                }
+            }
+        }
+        
+        // Применение начальных стилей для анимации
+        function applyInitialStyles() {
+            const elements = document.querySelectorAll('.neomorphic-card, .glass-card, .category-card');
+            
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+            });
+        }
+        
+        // Инициализация и событие скролла
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', function() {
+            applyInitialStyles();
+            setTimeout(reveal, 300);
+        });
     </script>
 </body>
 </html>

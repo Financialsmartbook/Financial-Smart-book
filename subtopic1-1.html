@@ -7,6 +7,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        body {
+    position: relative; /* Нужно для правильного позиционирования */
+}
+
+.left-image {
+    position: absolute;
+    left: 4%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px; /* Укажите желаемую ширину */
+    z-index: 9999;
+    pointer-events: none; /* Чтобы не мешать взаимодействию с другими элементами */
+}
+
+.right-image {
+    position: absolute;
+    right: 10%;
+    top: 80%;
+    transform: translateY(-50%);
+    width: 300px; /* Укажите желаемую ширину */
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Адаптивность: скрываем на малых экранах */
+@media (max-width: 768px) {
+    .left-image, .right-image {
+        display: none;
+    }
+}
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
@@ -31,7 +61,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
@@ -51,11 +81,14 @@
             font-size: 2rem;
             margin-bottom: 1rem;
             font-weight: 700;
+            
+            
         }
 
         .header p {
             font-size: 1.1rem;
             opacity: 0.9;
+            color: white;
         }
 
         /* Sections */
@@ -195,7 +228,9 @@
             color: white;
             border-radius: 1rem;
             box-shadow: var(--shadow);
+           
         }
+        
 
         @media (max-width: 640px) {
             .container {
@@ -213,6 +248,8 @@
     </style>
 </head>
 <body>
+    <img src="collective-investments.png" alt="Изображение слева" class="left-image">
+<img src="banner_komplaens.png" alt="Изображение справа" class="right-image">
     <div class="container">
  <!-- Header -->
  <header class="header">
@@ -350,7 +387,12 @@
                 <h3>Можно ли обойтись без денег?</h3>
                 <p>
                     В современном мире деньги необходимы. Даже с появлением электронных и цифровых форматов (электронные кошельки, криптовалюты)
-                    деньги остаются основным инструментом экономики.
+                    деньги остаются основным инструментом экономических отношений. Бартер (прямой обмен товарами) неэффективен для сложной экономики, 
+                    так как требует "двойного совпадения желаний" — когда каждый участник обмена хочет именно то, что предлагает другой.
+                </p>
+                <p>
+                    Различные альтернативные системы (локальные валюты, банки времени) существуют, но они дополняют, а не заменяют 
+                    традиционные деньги и используются в ограниченных сообществах.
                 </p>
             </section>
 
@@ -398,6 +440,7 @@
                 item.classList.toggle('open');
             });
         });
+        
     </script>
 </body>
 </html>
