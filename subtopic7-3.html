@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Что такое ИНН и как платить налоги</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Что такое ИНН и как платить налоги - Смарт-учебник</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
-        /* Стили из предыдущего шаблона */
         :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
@@ -17,9 +16,31 @@
             --text-light: #f1f5f9;
             --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
             --success: #10b981;
             --error: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --background: #1e293b;
+            --text-dark: #e5e7eb;
+            --text-light: #9ca3af;
+            --glass: rgba(31, 41, 55, 0.9);
+            --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
+            --shadow-md: var(--shadow);
+            --border: #374151;
         }
 
         * {
@@ -28,187 +49,385 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
             color: var(--text-dark);
             overflow-x: hidden;
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .hero-section {
             position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
             line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-description {
-            font-size: 1.2rem;
-            opacity: 0.95;
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-image {
-            width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
-            transition: transform 0.4s ease;
+            width: clamp(150px, 30vw, 350px);
+            border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
         }
 
         .section-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            backdrop-filter: blur(20px);
+            padding: clamp(1.5rem, 3vw, 3rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
         }
 
         .section-title {
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+            color: var(--secondary);
+            font-weight: 800;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -0.5rem;
+            bottom: -10px;
             left: 0;
             width: 60px;
-            height: 3px;
+            height: 4px;
             background: var(--primary);
+            border-radius: 2px;
         }
 
         .features-list {
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         .features-item {
-            padding: 1.2rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
         }
 
         .features-item:hover {
-            transform: translateX(5px);
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .features-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
+            color: var(--secondary);
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
             margin-top: 3px;
             flex-shrink: 0;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+
+        .features-item:hover i {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .features-item strong {
+            color: var(--secondary);
+            font-weight: 700;
         }
 
         .accordion {
             background: var(--glass);
-            border-radius: 1.5rem;
+            border-radius: var(--radius-md);
             overflow: hidden;
+            margin-top: clamp(1rem, 1.5vw, 1.5rem);
+            box-shadow: var(--shadow-xs);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.4s ease, transform 0.4s ease;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .accordion-header i {
+            color: var(--secondary);
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0 clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease, padding 0.4s ease;
         }
 
         .accordion-content.active {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 1000px;
         }
 
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: clamp(1.2rem, 1.5vw, 1.5rem);
+            margin-top: clamp(1.5rem, 2vw, 2rem);
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.8);
+            padding: clamp(1.2rem, 1.5vw, 1.5rem);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calculator h4 {
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+            font-weight: 700;
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
         input[type="number"], input[type="text"] {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
         }
 
         button {
-            background: var(--primary);
+            background: var(--gradient);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         button:hover {
-            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .result {
@@ -216,31 +435,47 @@
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .result.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .success {
-            background: #d1fae5;
+            background: rgba(16, 185, 129, 0.2);
             color: var(--success);
         }
 
         .error {
-            background: #fee2e2;
+            background: rgba(239, 68, 68, 0.2);
             color: var(--error);
         }
 
         .tips-list {
             list-style: none;
             padding: 0;
+            display: grid;
+            gap: clamp(0.8rem, 1vw, 1rem);
         }
 
         .tips-item {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(0.8rem, 1vw, 1rem);
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius-md);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            background: white;
         }
 
         .tips-item i {
@@ -248,116 +483,164 @@
             font-size: 1.2rem;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: steps-counter;
+        }
 
+        .steps-item {
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius-md);
+            display: flex;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+            position: relative;
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .steps-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .steps-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .steps-item::before {
+            counter-increment: steps-counter;
+            content: counter(steps-counter);
+            min-width: clamp(2rem, 2.5vw, 2.5rem);
+            height: clamp(2rem, 2.5vw, 2.5rem);
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .steps-content h4 {
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .note-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: clamp(1.5rem, 2vw, 2rem) 0;
+        }
+
+        .note-box h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .note-box p {
+            margin: 0;
+        }
+
+        #to-top-btn {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            right: clamp(20px, 3vw, 30px);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+            cursor: pointer;
+            display: none;
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        #to-top-btn:hover {
+            transform: scale(1.15);
+            background: var(--secondary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+        }
+
+        @media (max-width: 768px) {
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .hero-image {
-                width: 30%;
-                margin-top: 2rem;
+                max-width: 250px;
             }
 
-            .section-card {
-                padding: 1.5rem;
+            .section-title {
+                text-align: center;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
 
         @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
-
             .features-item {
                 flex-direction: column;
-                align-items: flex-start;
             }
-        }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
+            .interactive-grid {
+                grid-template-columns: 1fr;
             }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calculator h4 {
-            margin-bottom: 1rem;
-        }
-
-        .calculator input {
-            margin-bottom: 1rem;
-        }
-
-        .test-section {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .test-section h4 {
-            margin-bottom: 1rem;
-        }
-
-        .test-section .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .test-section .result {
-            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
             <div class="hero-content">
+                <span class="hero-badge">Финансовая грамотность</span>
                 <h1 class="hero-title">Что такое ИНН и как платить налоги</h1>
                 <p class="hero-description">
-                    Узнайте, что такое ИНН, как его получить, и как правильно платить налоги.
+                    Узнайте, что такое ИНН, как его получить и как правильно платить налоги в России. Простое руководство для всех налогоплательщиков.
                 </p>
             </div>
-            <img src="inn-concept.png" alt="ИНН" class="hero-image animated-image">
+            <img src="banner_komplaens.png" alt="ИНН" class="hero-image">
         </header>
 
         <main>
             <!-- Что такое ИНН -->
             <section class="section-card">
-                <h2 class="section-title">Что такое ИНН?</h2>
+                <h2 class="section-title"><i class="fas fa-id-card"></i> Что такое ИНН?</h2>
                 <p>
-                    ИНН — это индивидуальный номер налогоплательщика, который используется для учета налоговых обязательств физических и юридических лиц.
+                    Индивидуальный номер налогоплательщика (ИНН) — это уникальный идентификатор, который присваивается каждому налогоплательщику в России для учета налоговых обязательств. ИНН состоит из 12 цифр для физических лиц и 10 цифр для организаций.
                 </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -366,27 +649,116 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                ИНН необходим для трудоустройства, оформления налоговых вычетов, регистрации на портале «Госуслуги» и других целей.
+                                ИНН используется для различных целей:
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Для официального трудоустройства</li>
+                                <li>Для оформления налоговых вычетов</li>
+                                <li>Для регистрации на портале «Госуслуги»</li>
+                                <li>Для открытия банковских счетов и оформления кредитов</li>
+                                <li>Для регистрации ИП или юридического лица</li>
+                                <li>Для регистрации сделок с недвижимостью</li>
+                                <li>Для идентификации при взаимодействии с налоговыми органами</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Как получить ИНН?</span>
+                            <span>Структура ИНН</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                ИНН можно получить через портал «Госуслуги», личный кабинет налогоплательщика или при личном обращении в налоговую инспекцию.
+                                ИНН физического лица (12 цифр) состоит из следующих частей:
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Первые 4 цифры: код налогового органа, который присвоил ИНН</li>
+                                <li>Следующие 6 цифр: порядковый номер записи о физическом лице</li>
+                                <li>Последние 2 цифры: контрольные числа для проверки правильности ИНН</li>
+                            </ul>
+                            
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 8px;">
+                                <p><strong>Пример ИНН:</strong> 771234567890</p>
+                                <p>Где:</p>
+                                <p>• 7712 - код налогового органа</p>
+                                <p>• 345678 - порядковый номер</p>
+                                <p>• 90 - контрольные числа</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+                
+                <div class="calculator" style="margin-top: 2rem;">
+                    <h4>Проверка правильности ИНН</h4>
+                    <div class="form-group">
+                        <label for="inn-input">Введите ИНН (12 цифр)</label>
+                        <input type="text" id="inn-input" placeholder="Например: 771234567890" maxlength="12">
+                    </div>
+                    <button id="check-inn">
+                        Проверить ИНН
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                    <div class="result" id="inn-result"></div>
+                </div>
+            </section>
+
+            <!-- Как получить ИНН -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-file-alt"></i> Как получить ИНН</h2>
+                <p>
+                    ИНН присваивается автоматически при рождении ребенка с 2023 года. Если вы не имеете ИНН, получить его можно несколькими способами.
+                </p>
+                
+                <ol class="steps-list">
+                    <li class="steps-item">
+                        <div class="steps-content">
+                            <h4>Через портал Госуслуги</h4>
+                            <p>
+                                Самый удобный способ получить ИНН. Необходимо авторизоваться на портале, выбрать услугу "Постановка на учет в налоговом органе" и заполнить заявление.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="steps-item">
+                        <div class="steps-content">
+                            <h4>Через личный кабинет налогоплательщика</h4>
+                            <p>
+                                На сайте nalog.ru можно зарегистрироваться в личном кабинете и оформить заявку на получение ИНН.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="steps-item">
+                        <div class="steps-content">
+                            <h4>При личном обращении в налоговую инспекцию</h4>
+                            <p>
+                                Можно обратиться в любую налоговую инспекцию с паспортом и написать заявление на получение ИНН.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="steps-item">
+                        <div class="steps-content">
+                            <h4>Через МФЦ</h4>
+                            <p>
+                                В многофункциональном центре можно подать заявление на получение ИНН, предъявив паспорт.
+                            </p>
+                        </div>
+                    </li>
+                </ol>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-info-circle"></i> Важно знать</h4>
+                    <p>
+                        ИНН присваивается физическому лицу один раз и не меняется при смене фамилии или места жительства. Получение ИНН для физических лиц является бесплатным.
+                    </p>
                 </div>
             </section>
 
             <!-- Как платить налоги -->
             <section class="section-card">
-                <h3 class="section-title">Как платить налоги</h3>
+                <h2 class="section-title"><i class="fas fa-money-bill-wave"></i> Как платить налоги</h2>
+                <p>
+                    С 2023 года в России введен Единый налоговый платеж (ЕНП), который упрощает процесс уплаты налогов для физических лиц. Теперь все налоги можно оплатить одним платежом.
+                </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -395,8 +767,30 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Налоги можно оплатить через портал «Госуслуги», личный кабинет налогоплательщика, банковские приложения или терминалы.
+                                Существует несколько способов оплаты налогов:
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>
+                                    <strong>Через портал Госуслуги</strong>
+                                    <p>Авторизуйтесь на портале, перейдите в раздел "Налоги и финансы" и выберите "Оплата налогов и пошлин".</p>
+                                </li>
+                                <li>
+                                    <strong>Через личный кабинет налогоплательщика</strong>
+                                    <p>На сайте nalog.ru в личном кабинете можно увидеть все начисленные налоги и оплатить их онлайн.</p>
+                                </li>
+                                <li>
+                                    <strong>Через банковские приложения</strong>
+                                    <p>Многие банки предоставляют возможность оплаты налогов через мобильные приложения или интернет-банкинг.</p>
+                                </li>
+                                <li>
+                                    <strong>В отделениях банков</strong>
+                                    <p>Можно оплатить налоги в кассе или через терминал любого банка.</p>
+                                </li>
+                                <li>
+                                    <strong>В отделениях Почты России</strong>
+                                    <p>Налоги принимаются к оплате в почтовых отделениях.</p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -406,184 +800,355 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                ЕНП позволяет уплачивать налоги одним платежом, что упрощает процесс и экономит время.
+                                Единый налоговый платеж (ЕНП) — это механизм, при котором деньги перечисляются одним платежом на единый налоговый счет (ЕНС), а затем налоговая служба сама распределяет средства в счет уплаты конкретных налогов.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                <strong>Преимущества ЕНП:</strong>
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>Упрощение процесса уплаты налогов (один платеж вместо нескольких)</li>
+                                <li>Исключение ошибок в реквизитах платежей</li>
+                                <li>Автоматический зачет переплаты в счет будущих платежей</li>
+                                <li>Сокращение времени на оплату налогов</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                Для уплаты ЕНП нужно знать только ИНН и сумму платежа. Реквизиты для уплаты едины для всей страны.
                             </p>
                         </div>
                     </div>
+                </div>
+                
+                <div class="calculator" style="margin-top: 2rem;">
+                    <h4>Налоговый календарь</h4>
+                    <p>Основные сроки уплаты налогов для физических лиц:</p>
+                    <ul style="margin-top: 10px; list-style-type: none;">
+                        <li style="margin-bottom: 10px; padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+                            <strong>1 декабря</strong> — крайний срок уплаты имущественных налогов (земельный, транспортный, налог на имущество)
+                        </li>
+                        <li style="margin-bottom: 10px; padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+                            <strong>15 июля</strong> — крайний срок уплаты НДФЛ по декларации 3-НДФЛ (для ИП и лиц, получивших доход, с которого не был удержан налог)
+                        </li>
+                        <li style="padding: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 8px;">
+                            <strong>Ежемесячно</strong> — для самозанятых граждан (уплата НПД до 25 числа следующего месяца)
+                        </li>
+                    </ul>
                 </div>
             </section>
 
             <!-- Как проверить и погасить налоговую задолженность -->
             <section class="section-card">
-                <h3 class="section-title">Как проверить и погасить налоговую задолженность</h3>
+                <h2 class="section-title"><i class="fas fa-search-dollar"></i> Как проверить и погасить налоговую задолженность</h2>
+                <p>
+                    Проверка налоговой задолженности — важная часть финансовой дисциплины. Своевременное погашение поможет избежать начисления пеней и штрафов.
+                </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Через личный кабинет налогоплательщика</span>
+                            <span>Как проверить задолженность по налогам?</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                В личном кабинете можно проверить задолженность и оплатить налоги онлайн.
+                                Проверить наличие налоговой задолженности можно несколькими способами:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>
+                                    <strong>Через личный кабинет налогоплательщика</strong> на сайте nalog.ru
+                                </li>
+                                <li>
+                                    <strong>Через портал Госуслуги</strong> в разделе "Налоги и финансы"
+                                </li>
+                                <li>
+                                    <strong>В мобильном приложении "Налоги ФЛ"</strong>
+                                </li>
+                                <li>
+                                    <strong>При личном обращении в налоговую инспекцию</strong>
+                                </li>
+                                <li>
+                                    <strong>В МФЦ</strong> при предъявлении паспорта
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Последствия неуплаты налогов</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Неуплата налогов в срок может привести к серьезным последствиям:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>
+                                    <strong>Начисление пеней</strong> — 1/300 ключевой ставки ЦБ РФ за каждый день просрочки
+                                </li>
+                                <li>
+                                    <strong>Штрафы</strong> — от 20% до 40% от неуплаченной суммы налога
+                                </li>
+                                <li>
+                                    <strong>Ограничение выезда за границу</strong> при задолженности свыше 30 000 рублей
+                                </li>
+                                <li>
+                                    <strong>Арест имущества</strong> и блокировка банковских счетов
+                                </li>
+                                <li>
+                                    <strong>Удержание задолженности из заработной платы</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="interactive-grid">
+                    <div class="calculator">
+                        <h4>Расчет пени за просрочку</h4>
+                        <div class="form-group">
+                            <label for="tax-debt">Сумма задолженности (руб.)</label>
+                            <input type="number" id="tax-debt" placeholder="Введите сумму долга">
+                        </div>
+                        <div class="form-group">
+                            <label for="delay-days">Количество дней просрочки</label>
+                            <input type="number" id="delay-days" placeholder="Введите количество дней">
+                        </div>
+                        <button id="calculate-penalty">
+                            Рассчитать пени
+                            <i class="fas fa-calculator"></i>
+                        </button>
+                        <div class="result" id="penalty-result"></div>
+                    </div>
+                    
+                    <div class="tips-list">
+                        <h4 style="margin-bottom: 1rem; color: var(--secondary);">Полезные советы</h4>
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Настройте уведомления</strong>
+                                <p>Подключите SMS или email-уведомления о новых налоговых начислениях</p>
+                            </div>
+                        </div>
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Оплачивайте заранее</strong>
+                                <p>Не откладывайте уплату налогов на последний день срока</p>
+                            </div>
+                        </div>
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Проверяйте историю платежей</strong>
+                                <p>Регулярно проверяйте, все ли платежи поступили в бюджет</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Часто задаваемые вопросы -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> Часто задаваемые вопросы</h2>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Могу ли я потерять ИНН?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                ИНН присваивается один раз на всю жизнь и не меняется. Если вы потеряли документ с ИНН, вы можете получить новое свидетельство, но сам номер останется прежним.
                             </p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Через мобильное приложение ФНС</span>
+                            <span>Нужно ли менять ИНН при смене фамилии?</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Приложение «Налоги ФЛ» позволяет проверять и оплачивать налоги с мобильного устройства.
+                                Нет, ИНН не меняется при смене фамилии. Однако рекомендуется получить новое свидетельство с актуальными данными.
                             </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что делать, если я не знаю свой ИНН?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Узнать свой ИНН можно на сайте ФНС России в разделе "Узнай ИНН", на портале Госуслуги или обратившись в любую налоговую инспекцию с паспортом.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как быть, если я не получил налоговое уведомление?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Если вы не получили налоговое уведомление, это не освобождает от обязанности уплаты налогов. Проверьте начисления в личном кабинете налогоплательщика или обратитесь в налоговую инспекцию.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                Налоговые уведомления не направляются в следующих случаях:
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>Общая сумма налогов менее 100 рублей</li>
+                                <li>У налогоплательщика есть льгота, освобождающая от уплаты налога</li>
+                                <li>Налогоплательщик зарегистрирован в личном кабинете (в этом случае уведомления направляются только в электронном виде)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Можно ли получить отсрочку по уплате налогов?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Да, в определенных случаях можно получить отсрочку или рассрочку по уплате налогов. Для этого нужно обратиться в налоговую инспекцию с заявлением и документами, подтверждающими основания для отсрочки.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                Основания для получения отсрочки:
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>Причинение ущерба в результате стихийного бедствия или катастрофы</li>
+                                <li>Существенное ухудшение финансового положения</li>
+                                <li>Другие причины, предусмотренные Налоговым кодексом РФ</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <!-- Интерактивные задания -->
-            <section class="section-card">
-                <h3 class="section-title">Интерактивные задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Что такое ИНН -->
-                    <div class="test-section">
-                        <h4>Тест: Что такое ИНН?</h4>
-                        <form id="inn-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="inn-type" value="correct"> Уникальный номер налогоплательщика
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="inn-type" value="wrong"> Номер банковского счета
-                                </label>
-                            </div>
-                            <button type="button" id="check-inn-btn">Проверить</button>
-                            <div id="inn-test-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <!-- Тест: Способы оплаты налогов -->
-                    <div class="test-section">
-                        <h4>Тест: Способы оплаты налогов</h4>
-                        <form id="tax-payment-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="tax-payment" value="gosuslugi"> Портал «Госуслуги»
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="tax-payment" value="bank"> Банковские приложения
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="tax-payment" value="terminal"> Терминалы
-                                </label>
-                            </div>
-                            <button type="button" id="check-tax-payment-btn">Проверить</button>
-                            <div id="tax-payment-test-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <!-- Калькулятор налога -->
-                    <div class="calculator">
-                        <h4>Калькулятор налога</h4>
-                        <input type="number" id="tax-amount" placeholder="Сумма дохода (руб)">
-                        <button type="button" id="calculate-tax-btn">Рассчитать</button>
-                        <div id="tax-calculation-result" class="result"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Полезные советы -->
-            <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте налоговые уведомления в личном кабинете налогоплательщика.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Используйте единый налоговый платеж для упрощения процесса уплаты налогов.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Регулярно проверяйте наличие налоговой задолженности, чтобы избежать штрафов.
-                    </li>
-                </ul>
-            </section>
         </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
     </div>
-
+    
+    <button id="to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <script>
-        // Тест: Что такое ИНН
-        document.getElementById('check-inn-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="inn-type"]:checked');
-            const resultElement = document.getElementById('inn-test-result');
-
-            if (selected && selected.value === 'correct') {
-                resultElement.textContent = '✅ Правильно! ИНН — это уникальный номер налогоплательщика.';
-                resultElement.className = 'result success';
+        // Прогресс скролла
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.scrollY;
+            let docHeight = document.body.offsetHeight - window.innerHeight;
+            let scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Показ кнопки "наверх"
+            if (scrollTop > 300) {
+                document.getElementById('to-top-btn').style.display = 'block';
             } else {
-                resultElement.textContent = '❌ Неверно. ИНН — это уникальный номер налогоплательщика.';
-                resultElement.className = 'result error';
+                document.getElementById('to-top-btn').style.display = 'none';
             }
         });
-
-        // Тест: Способы оплаты налогов
-        document.getElementById('check-tax-payment-btn').addEventListener('click', () => {
-                   const selected = document.querySelectorAll('input[name="tax-payment"]:checked');
-            const resultElement = document.getElementById('tax-payment-test-result');
-
-            const correctAnswers = ['gosuslugi', 'bank', 'terminal'];
-            const userAnswers = Array.from(selected).map(input => input.value);
-
-            const isCorrect = correctAnswers.every(answer => userAnswers.includes(answer)) &&
-                              userAnswers.every(answer => correctAnswers.includes(answer));
-
-            if (isCorrect) {
-                resultElement.textContent = '✅ Правильно! Все способы оплаты налогов указаны верно.';
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '❌ Неверно. Попробуйте еще раз.';
-                resultElement.className = 'result error';
-            }
+        
+        // Кнопка наверх
+        document.getElementById('to-top-btn').addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         });
-
-        // Калькулятор налога
-        document.getElementById('calculate-tax-btn').addEventListener('click', () => {
-            const taxAmount = parseFloat(document.getElementById('tax-amount').value);
-            const resultElement = document.getElementById('tax-calculation-result');
-
-            if (!isNaN(taxAmount)) {
-                const tax = taxAmount * 0.13; // Ставка 13%
-                resultElement.textContent = `💰 Сумма налога: ${tax.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректную сумму дохода.';
-                resultElement.className = 'result error';
-            }
-        });
-
+        
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                let content = this.nextElementSibling;
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
+        });
+        
+        // Анимация появления блоков при скролле
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.section-card');
+            
+            function checkVisible() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.75) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Первичная проверка при загрузке
+            checkVisible();
+            
+            // Проверка при скролле
+            window.addEventListener('scroll', checkVisible);
+        });
+        
+        // Проверка ИНН
+        document.getElementById('check-inn').addEventListener('click', function() {
+            const inn = document.getElementById('inn-input').value.trim();
+            const resultElement = document.getElementById('inn-result');
+            
+            if (/^\d{12}$/.test(inn)) {
+                // Алгоритм проверки контрольных цифр ИНН
+                const coefficients1 = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8];
+                const coefficients2 = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8];
+                
+                let sum1 = 0;
+                for (let i = 0; i < 10; i++) {
+                    sum1 += parseInt(inn[i]) * coefficients1[i];
+                }
+                const control1 = (sum1 % 11) % 10;
+                
+                let sum2 = 0;
+                for (let i = 0; i < 11; i++) {
+                    sum2 += parseInt(inn[i]) * coefficients2[i];
+                }
+                const control2 = (sum2 % 11) % 10;
+                
+                if (control1 === parseInt(inn[10]) && control2 === parseInt(inn[11])) {
+                    resultElement.innerHTML = 'ИНН корректен';
+                    resultElement.classList.add('success', 'active');
+                    resultElement.classList.remove('error');
+                } else {
+                    resultElement.innerHTML = 'ИНН некорректен. Проверьте правильность ввода';
+                    resultElement.classList.add('error', 'active');
+                    resultElement.classList.remove('success');
+                }
+            } else {
+                resultElement.innerHTML = 'Введите 12 цифр ИНН (для физического лица)';
+                resultElement.classList.add('error', 'active');
+                resultElement.classList.remove('success');
+            }
+        });
+        
+        // Расчет пени за просрочку
+        document.getElementById('calculate-penalty').addEventListener('click', function() {
+            const taxDebt = parseFloat(document.getElementById('tax-debt').value);
+            const delayDays = parseInt(document.getElementById('delay-days').value);
+            const resultElement = document.getElementById('penalty-result');
+            
+            if (!isNaN(taxDebt) && !isNaN(delayDays) && taxDebt > 0 && delayDays > 0) {
+                // Упрощенный расчет: ключевая ставка ЦБ РФ примерно 7.5%
+                const keyRate = 7.5;
+                const penaltyRate = keyRate / 300; // 1/300 ставки ЦБ
+                
+                const penalty = (taxDebt * penaltyRate * delayDays / 100).toFixed(2);
+                
+                resultElement.innerHTML = `
+                    <p>Сумма пени: <strong>${penalty} руб.</strong></p>
+                    <p>Общая сумма к уплате: <strong>${(taxDebt + parseFloat(penalty)).toFixed(2)} руб.</strong></p>
+                `;
+                resultElement.classList.add('success', 'active');
+                resultElement.classList.remove('error');
+            } else {
+                resultElement.innerHTML = 'Пожалуйста, введите корректные значения';
+                resultElement.classList.add('error', 'active');
+                resultElement.classList.remove('success');
+            }
         });
     </script>
 </body>

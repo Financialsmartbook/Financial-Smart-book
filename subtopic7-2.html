@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7.2 Какие налоги платит население</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>7.2 Какие налоги платит население - Смарт-учебник</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
-        /* Стили из предыдущего шаблона */
         :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
@@ -17,9 +16,31 @@
             --text-light: #f1f5f9;
             --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
             --success: #10b981;
             --error: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --background: #1e293b;
+            --text-dark: #e5e7eb;
+            --text-light: #9ca3af;
+            --glass: rgba(31, 41, 55, 0.9);
+            --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
+            --shadow-md: var(--shadow);
+            --border: #374151;
         }
 
         * {
@@ -28,187 +49,385 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
             color: var(--text-dark);
             overflow-x: hidden;
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .hero-section {
             position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
             line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-description {
-            font-size: 1.2rem;
-            opacity: 0.95;
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-image {
-            width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
-            transition: transform 0.4s ease;
+            width: clamp(150px, 30vw, 350px);
+            border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
         }
 
         .section-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            backdrop-filter: blur(20px);
+            padding: clamp(1.5rem, 3vw, 3rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
         }
 
         .section-title {
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+            color: var(--secondary);
+            font-weight: 800;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -0.5rem;
+            bottom: -10px;
             left: 0;
             width: 60px;
-            height: 3px;
+            height: 4px;
             background: var(--primary);
+            border-radius: 2px;
         }
 
         .features-list {
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         .features-item {
-            padding: 1.2rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
         }
 
         .features-item:hover {
-            transform: translateX(5px);
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .features-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
+            color: var(--secondary);
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
             margin-top: 3px;
             flex-shrink: 0;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+
+        .features-item:hover i {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .features-item strong {
+            color: var(--secondary);
+            font-weight: 700;
         }
 
         .accordion {
             background: var(--glass);
-            border-radius: 1.5rem;
+            border-radius: var(--radius-md);
             overflow: hidden;
+            margin-top: clamp(1rem, 1.5vw, 1.5rem);
+            box-shadow: var(--shadow-xs);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.4s ease, transform 0.4s ease;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .accordion-header i {
+            color: var(--secondary);
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0 clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease, padding 0.4s ease;
         }
 
         .accordion-content.active {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 1000px;
         }
 
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: clamp(1.2rem, 1.5vw, 1.5rem);
+            margin-top: clamp(1.5rem, 2vw, 2rem);
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.8);
+            padding: clamp(1.2rem, 1.5vw, 1.5rem);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calculator h4 {
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+            font-weight: 700;
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
         input[type="number"], input[type="text"] {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
         }
 
         button {
-            background: var(--primary);
+            background: var(--gradient);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         button:hover {
-            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .result {
@@ -216,31 +435,47 @@
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .result.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .success {
-            background: #d1fae5;
+            background: rgba(16, 185, 129, 0.2);
             color: var(--success);
         }
 
         .error {
-            background: #fee2e2;
+            background: rgba(239, 68, 68, 0.2);
             color: var(--error);
         }
 
         .tips-list {
             list-style: none;
             padding: 0;
+            display: grid;
+            gap: clamp(0.8rem, 1vw, 1rem);
         }
 
         .tips-item {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(0.8rem, 1vw, 1rem);
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            background: white;
         }
 
         .tips-item i {
@@ -248,96 +483,93 @@
             font-size: 1.2rem;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
+        #to-top-btn {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            right: clamp(20px, 3vw, 30px);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+            cursor: pointer;
+            display: none;
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
 
+        #to-top-btn:hover {
+            transform: scale(1.15);
+            background: var(--secondary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+        }
+
+        @media (max-width: 768px) {
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .hero-image {
-                width: 30%;
-                margin-top: 2rem;
+                max-width: 250px;
             }
 
-            .section-card {
-                padding: 1.5rem;
+            .section-title {
+                text-align: center;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
 
         @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
-
             .features-item {
                 flex-direction: column;
-                align-items: flex-start;
             }
-        }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
+            .interactive-grid {
+                grid-template-columns: 1fr;
             }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calculator h4 {
-            margin-bottom: 1rem;
-        }
-
-        .calculator input {
-            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title">7.2 Какие налоги платит население</h1>
+                <span class="hero-badge">Финансовая грамотность</span>
+                <h1 class="hero-title">Какие налоги платит население</h1>
                 <p class="hero-description">
                     Узнайте, какие налоги платят физические лица, как они рассчитываются и какие ставки применяются.
                 </p>
             </div>
-            <img src="taxes-concept.png" alt="Налоги" class="hero-image animated-image">
+            <img src="gospoderjka.png" alt="Налоги" class="hero-image">
         </header>
 
         <main>
             <!-- Налог на доходы физических лиц (НДФЛ) -->
             <section class="section-card">
-                <h2 class="section-title">Налог на доходы физических лиц (НДФЛ)</h2>
+                <h2 class="section-title"><i class="fas fa-wallet"></i> Налог на доходы физических лиц (НДФЛ)</h2>
                 <p>
-                    НДФЛ — это налог, который платят физические лица с доходов, полученных в любой форме: заработная плата, доходы от продажи имущества, аренды и т.д.
+                    НДФЛ — это основной налог, который платят физические лица с доходов, полученных в любой форме: заработная плата, доходы от продажи имущества, аренды и т.д.
                 </p>
                 <div class="accordion">
                     <div class="accordion-item">
@@ -348,6 +580,9 @@
                         <div class="accordion-content">
                             <p>
                                 НДФЛ платят все физические лица, получающие доходы. Налоговые резиденты (находящиеся в РФ более 183 дней в году) платят по ставке 13%, нерезиденты — по ставке 30%.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                При этом с 2021 года введена прогрессивная шкала НДФЛ: доходы свыше 5 миллионов рублей в год облагаются по ставке 15% (на часть, превышающую 5 млн).
                             </p>
                         </div>
                     </div>
@@ -360,14 +595,57 @@
                             <p>
                                 НДФЛ рассчитывается как процент от дохода. Например, при зарплате 50 000 рублей налог составит 6 500 рублей (13%).
                             </p>
+                            <p style="margin-top: 10px;">
+                                Формула: Сумма НДФЛ = Доход × Ставка налога
+                            </p>
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 8px;">
+                                <p><strong>Пример расчета:</strong></p>
+                                <p>Зарплата: 50 000 рублей</p>
+                                <p>НДФЛ: 50 000 × 0,13 = 6 500 рублей</p>
+                                <p>Сумма к получению: 43 500 рублей</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Налоговые вычеты по НДФЛ</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Налоговые вычеты позволяют вернуть часть уплаченного НДФЛ. Основные виды вычетов:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Стандартные</strong> – на детей и для определенных категорий граждан</li>
+                                <li><strong>Социальные</strong> – на лечение, обучение, благотворительность</li>
+                                <li><strong>Имущественные</strong> – при покупке жилья (до 2 млн рублей)</li>
+                                <li><strong>Инвестиционные</strong> – при операциях с ценными бумагами</li>
+                                <li><strong>Профессиональные</strong> – для ИП и самозанятых граждан</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calculator" style="margin-top: 2rem;">
+                    <h4>Калькулятор НДФЛ</h4>
+                    <div class="form-group">
+                        <label for="income">Ваш доход (руб.)</label>
+                        <input type="number" id="income" min="0" placeholder="Введите сумму дохода">
+                    </div>
+                    <button id="calculate-ndfl">
+                        Рассчитать НДФЛ
+                        <i class="fas fa-calculator"></i>
+                    </button>
+                    <div class="result" id="ndfl-result"></div>
                 </div>
             </section>
 
             <!-- Налог на имущество физических лиц -->
             <section class="section-card">
-                <h3 class="section-title">Налог на имущество физических лиц</h3>
+                <h2 class="section-title"><i class="fas fa-home"></i> Налог на имущество физических лиц</h2>
+                <p>
+                    Налог на имущество физических лиц — это местный налог, который платят собственники недвижимости. С 2015 года налог рассчитывается исходя из кадастровой стоимости объектов недвижимости.
+                </p>
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -376,7 +654,37 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Налогом облагаются квартиры, дома, гаражи, машино-места и другие объекты недвижимости.
+                                Налогом облагаются следующие объекты недвижимости:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Квартиры, комнаты</li>
+                                <li>Жилые дома</li>
+                                <li>Гаражи и машино-места</li>
+                                <li>Объекты незавершенного строительства</li>
+                                <li>Единые недвижимые комплексы</li>
+                                <li>Иные строения, сооружения, помещения</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как рассчитывается налог?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Налог рассчитывается по формуле: Налог = Кадастровая стоимость × Ставка налога
+                            </p>
+                            <p style="margin-top: 10px;">
+                                Ставки налога устанавливают муниципалитеты, но они не могут превышать:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>0,1% – для жилых домов, квартир, комнат</li>
+                                <li>0,5% – для прочих объектов</li>
+                                <li>2% – для дорогой недвижимости (более 300 млн рублей)</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                При расчете налога применяются налоговые вычеты: для квартир – 20 кв. м, для домов – 50 кв. м, для комнат – 10 кв. м.
                             </p>
                         </div>
                     </div>
@@ -387,16 +695,53 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                От уплаты налога освобождаются пенсионеры, ветераны и другие льготные категории граждан.
+                                От уплаты налога на имущество освобождаются следующие категории граждан:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Пенсионеры</li>
+                                <li>Инвалиды I и II групп</li>
+                                <li>Инвалиды с детства</li>
+                                <li>Ветераны боевых действий</li>
+                                <li>Участники Великой Отечественной войны</li>
+                                <li>Чернобыльцы и другие льготные категории граждан</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                <strong>Важно:</strong> льгота предоставляется только на один объект каждого вида (одну квартиру, один дом и т.д.)
                             </p>
                         </div>
                     </div>
+                </div>
+                
+                <div class="calculator" style="margin-top: 2rem;">
+                    <h4>Калькулятор налога на имущество</h4>
+                    <div class="form-group">
+                        <label for="property-value">Кадастровая стоимость (руб.)</label>
+                        <input type="number" id="property-value" min="0" placeholder="Введите кадастровую стоимость">
+                    </div>
+                    <div class="form-group">
+                        <label for="property-type">Тип недвижимости</label>
+                        <select id="property-type" style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: inherit; font-size: 1rem;">
+                            <option value="0.1">Квартира</option>
+                            <option value="0.1">Жилой дом</option>
+                            <option value="0.5">Гараж</option>
+                            <option value="0.5">Другой объект</option>
+                        </select>
+                    </div>
+                    <button id="calculate-property">
+                        Рассчитать налог
+                        <i class="fas fa-calculator"></i>
+                    </button>
+                    <div class="result" id="property-result"></div>
                 </div>
             </section>
 
             <!-- Транспортный налог -->
             <section class="section-card">
-                <h3 class="section-title">Транспортный налог</h3>
+                <h2 class="section-title"><i class="fas fa-car"></i> Транспортный налог</h2>
+                <p>
+                    Транспортный налог — это региональный налог, который платят владельцы транспортных средств. Налог устанавливается региональными властями и поступает в региональный бюджет.
+                </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -405,8 +750,17 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Транспортный налог платят владельцы автомобилей, мотоциклов, снегоходов и других транспортных средств.
+                                Транспортным налогом облагаются следующие транспортные средства:
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Автомобили легковые и грузовые</li>
+                                <li>Мотоциклы и мотороллеры</li>
+                                <li>Автобусы</li>
+                                <li>Яхты, катера, моторные лодки</li>
+                                <li>Снегоходы и мотосани</li>
+                                <li>Самолеты и вертолеты</li>
+                                <li>Другие транспортные средства</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -416,365 +770,322 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Размер налога зависит от мощности двигателя, региональной ставки и периода владения транспортным средством.
+                                Налог рассчитывается по формуле: Налог = Налоговая база × Ставка налога × Коэффициенты
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Налоговая база</strong> – для легковых автомобилей это мощность двигателя в лошадиных силах</li>
+                                <li><strong>Ставка налога</strong> – устанавливается региональными властями</li>
+                                <li><strong>Коэффициенты</strong> – повышающие коэффициенты для дорогих автомобилей</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                <strong>Повышающие коэффициенты:</strong>
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>1,1 – для автомобилей стоимостью от 3 до 5 млн рублей возрастом не более 3 лет</li>
+                                <li>2 – для автомобилей стоимостью от 5 до 10 млн рублей возрастом не более 5 лет</li>
+                                <li>3 – для автомобилей стоимостью от 10 до 15 млн рублей возрастом не более 10 лет</li>
+                                <li>3 – для автомобилей стоимостью от 15 млн рублей возрастом не более 20 лет</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Льготы по транспортному налогу</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Льготы по транспортному налогу устанавливаются региональными властями. Типичные категории льготников:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Ветераны и инвалиды Великой Отечественной войны</li>
+                                <li>Инвалиды I и II групп</li>
+                                <li>Владельцы легковых автомобилей с мощностью до 70-150 л.с. (зависит от региона)</li>
+                                <li>Владельцы электромобилей (в некоторых регионах)</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                <strong>Не облагаются налогом:</strong> весельные лодки, автомобили для инвалидов, сельхозтехника, транспорт, находящийся в розыске.
                             </p>
                         </div>
                     </div>
                 </div>
+                
+                <div class="calculator" style="margin-top: 2rem;">
+                    <h4>Калькулятор транспортного налога</h4>
+                    <div class="form-group">
+                        <label for="horse-power">Мощность двигателя (л.с.)</label>
+                        <input type="number" id="horse-power" min="0" placeholder="Введите мощность двигателя">
+                    </div>
+                    <div class="form-group">
+                        <label for="price-category">Категория стоимости автомобиля</label>
+                        <select id="price-category" style="width: 100%; padding: 0.8rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-family: inherit; font-size: 1rem;">
+                            <option value="1">До 3 млн рублей</option>
+                            <option value="1.1">От 3 до 5 млн рублей</option>
+                            <option value="2">От 5 до 10 млн рублей</option>
+                            <option value="3">Свыше 10 млн рублей</option>
+                        </select>
+                    </div>
+                    <button id="calculate-transport">
+                        Рассчитать налог
+                        <i class="fas fa-calculator"></i>
+                    </button>
+                    <div class="result" id="transport-result"></div>
+                </div>
             </section>
-
+            
             <!-- Земельный налог -->
             <section class="section-card">
-                <h3 class="section-title">Земельный налог</h3>
+                <h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Земельный налог</h2>
+                <p>
+                    Земельный налог — это местный налог, который платят собственники земельных участков. Налог устанавливается муниципальными властями и поступает в местный бюджет.
+                </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Кто платит земельный налог?</span>
+                            <span>Как рассчитывается земельный налог?</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Земельный налог платят собственники земельных участков. Ставка зависит от кадастровой стоимости земли.
+                                Налог рассчитывается по формуле: Налог = Кадастровая стоимость × Ставка налога × Коэффициенты
                             </p>
+                            <p style="margin-top: 10px;">
+                                Ставки налога устанавливают муниципалитеты, но они не могут превышать:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>0,3% – для земель сельхозназначения, жилищного фонда, личного подсобного хозяйства</li>
+                                <li>1,5% – для прочих земельных участков</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Какие ставки применяются?</span>
+                            <span>Льготы по земельному налогу</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Пониженная ставка — 0,3% для сельскохозяйственных земель, повышенная — до 1,5% для других категорий.
+                                Льготы по земельному налогу устанавливаются федеральным законодательством и решениями местных властей. Федеральные льготы:
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Вычет в размере 600 кв. м для пенсионеров и предпенсионеров</li>
+                                <li>Вычет в размере 600 кв. м для инвалидов I и II групп</li>
+                                <li>Вычет в размере 600 кв. м для многодетных семей</li>
+                                <li>Вычет в размере 600 кв. м для ветеранов и инвалидов боевых действий</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <!-- Налог на профессиональный доход (самозанятые) -->
+            
+            <!-- Советы и рекомендации -->
             <section class="section-card">
-                <h3 class="section-title">Налог на профессиональный доход (самозанятые)</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Кто может стать самозанятым?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Самозанятыми могут стать граждане, которые работают на себя без привлечения наемных работников и имеют доход не более 2,4 млн рублей в год.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Какие ставки применяются?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Ставка налога для самозанятых: 4% с доходов от физических лиц и 6% с доходов от юридических лиц.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Практические задания -->
-            <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Виды налогов -->
-                    <div class="calculator">
-                        <h4>Тест: Виды налогов</h4>
-                        <form id="tax-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="tax-type" value="ndfl"> НДФЛ
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="tax-type" value="property"> Налог на имущество
-                                </label>
-                            </div>
-                            <button type="button" id="check-tax-btn">Проверить</button>
-                            <div id="tax-test-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <!-- Калькулятор НДФЛ -->
-                    <div class="calculator">
-                        <h4>Калькулятор НДФЛ</h4>
-                        <input type="number" id="income-amount" placeholder="Сумма дохода (руб)">
-                        <button type="button" id="calculate-ndfl-btn">Рассчитать</button>
-                        <div id="ndfl-calculation-result" class="result"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Полезные советы -->
-            <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Советы по оптимизации налогов</h2>
+                <p>
+                    Законная оптимизация налогов позволяет существенно сократить налоговую нагрузку. Вот несколько полезных советов:
+                </p>
+                
+                <ul class="tips-list" style="margin-top: 1.5rem;">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте налоговые ставки и сроки уплаты налогов.
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Используйте налоговые вычеты</strong> 
+                            <p>Возвращайте 13% от расходов на лечение, обучение, покупку жилья, инвестиции через налоговые вычеты.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Используйте налоговые вычеты для уменьшения налоговой нагрузки.
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Используйте льготы</strong>
+                            <p>Проверьте, положены ли вам льготы по налогам как пенсионеру, инвалиду, многодетному родителю или ветерану.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Ведите учет доходов  и расходов для правильного расчета налогов.
-                    </li>
-                </ul>
-            </section>
-
-             <!-- Налог на добавленную стоимость (НДС) -->
-             <section class="section-card">
-                <h3 class="section-title">Налог на добавленную стоимость (НДС)</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Что такое НДС?</span>
-                            <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Оформляйте имущество правильно</strong>
+                            <p>Распределяйте имущество между членами семьи с учетом налоговых льгот и вычетов.</p>
                         </div>
-                        <div class="accordion-content">
-                            <p>
-                                НДС — это косвенный налог, который включается в стоимость товаров и услуг. Плательщиками НДС являются организации и ИП, но фактически налог оплачивают потребители.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Какие ставки НДС применяются?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Основная ставка НДС — 20%. Пониженная ставка 10% применяется для некоторых товаров, таких как продукты питания, детские товары и лекарства.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Акцизы -->
-            <section class="section-card">
-                <h3 class="section-title">Акцизы</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Что облагается акцизами?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Акцизы взимаются с товаров, таких как алкоголь, табак, топливо и автомобили. Эти налоги включаются в цену товара и оплачиваются потребителями.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Какие ставки акцизов применяются?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Ставки акцизов зависят от вида товара. Например, для алкоголя ставка может быть фиксированной за литр, а для автомобилей — в зависимости от мощности двигателя.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Государственная пошлина -->
-            <section class="section-card">
-                <h3 class="section-title">Государственная пошлина</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Что такое госпошлина?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Госпошлина — это плата за юридически значимые действия, такие как регистрация брака, выдача паспорта или рассмотрение дела в суде.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Какие ставки госпошлины применяются?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Размер госпошлины зависит от вида услуги. Например, за регистрацию брака пошлина составляет 350 рублей, а за выдачу загранпаспорта — 5000 рублей.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Страховые взносы -->
-            <section class="section-card">
-                <h3 class="section-title">Страховые взносы</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Что такое страховые взносы?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Страховые взносы — это обязательные платежи, которые работодатели перечисляют за своих сотрудников в фонды социального, пенсионного и медицинского страхования.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Какие виды страховых взносов существуют?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Существуют взносы на пенсионное страхование, медицинское страхование, социальное страхование и страхование от несчастных случаев на производстве.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Интерактивные задания -->
-            <section class="section-card">
-                <h3 class="section-title">Интерактивные задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Виды налогов -->
-                    <div class="calculator">
-                        <h4>Тест: Виды налогов</h4>
-                        <form id="tax-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="tax-type" value="ndfl"> НДФЛ
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="tax-type" value="nds"> НДС
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="tax-type" value="property"> Налог на имущество
-                                </label>
-                            </div>
-                            <button type="button" id="check-tax-btn">Проверить</button>
-                            <div id="tax-test-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <!-- Калькулятор НДФЛ -->
-                    <div class="calculator">
-                        <h4>Калькулятор НДФЛ</h4>
-                        <input type="number" id="income-amount" placeholder="Сумма дохода (руб)">
-                        <button type="button" id="calculate-ndfl-btn">Рассчитать</button>
-                        <div id="ndfl-calculation-result" class="result"></div>
-                    </div>
-
-                    <!-- Калькулятор НДС -->
-                    <div class="calculator">
-                        <h4>Калькулятор НДС</h4>
-                        <input type="number" id="price-amount" placeholder="Сумма без НДС (руб)">
-                        <button type="button" id="calculate-nds-btn">Рассчитать</button>
-                        <div id="nds-calculation-result" class="result"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Полезные советы -->
-            <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте налоговые ставки и сроки уплаты налогов.
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Используйте налоговые вычеты для уменьшения налоговой нагрузки.
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Используйте специальные налоговые режимы</strong>
+                            <p>Для предпринимательской деятельности используйте наиболее выгодный режим налогообложения (самозанятый, ИП на УСН и т.д.).</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Ведите учет доходов и расходов для правильного расчета налогов.
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Используйте налоговые преференции для инвесторов</strong>
+                            <p>Открывайте ИИС для получения инвестиционных вычетов, используйте освобождение от НДФЛ для долгосрочных инвестиций.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
         </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
     </div>
-
+    
+    <button id="to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <script>
-        // Тест: Виды налогов
-        document.getElementById('check-tax-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="tax-type"]:checked');
-            const resultElement = document.getElementById('tax-test-result');
-
-            if (selected && selected.value === 'ndfl') {
-                resultElement.textContent = '✅ Правильно! НДФЛ — это налог на доходы физических лиц.';
-                resultElement.className = 'result success';
+        // Прогресс скролла
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.scrollY;
+            let docHeight = document.body.offsetHeight - window.innerHeight;
+            let scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Показ кнопки "наверх"
+            if (scrollTop > 300) {
+                document.getElementById('to-top-btn').style.display = 'block';
             } else {
-                resultElement.textContent = '❌ Неверно. НДФЛ — это налог на доходы физических лиц.';
-                resultElement.className = 'result error';
+                document.getElementById('to-top-btn').style.display = 'none';
             }
         });
-
-        // Калькулятор НДФЛ
-        document.getElementById('calculate-ndfl-btn').addEventListener('click', () => {
-            const incomeAmount = parseFloat(document.getElementById('income-amount').value);
-            const resultElement = document.getElementById('ndfl-calculation-result');
-
-            if (!isNaN(incomeAmount)) {
-                const tax = incomeAmount * 0.13; // Ставка 13%
-                resultElement.textContent = `💰 Сумма НДФЛ: ${tax.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректную сумму дохода.';
-                resultElement.className = 'result error';
-            }
+        
+        // Кнопка наверх
+        document.getElementById('to-top-btn').addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         });
-
-        // Калькулятор НДС
-        document.getElementById('calculate-nds-btn').addEventListener('click', () => {
-            const priceAmount = parseFloat(document.getElementById('price-amount').value);
-            const resultElement = document.getElementById('nds-calculation-result');
-
-            if (!isNaN(priceAmount)) {
-                const nds = priceAmount * 0.20; // Ставка 20%
-                resultElement.textContent = `💰 Сумма НДС: ${nds.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректную сумму.';
-                resultElement.className = 'result error';
-            }
-        });
-
+        
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                let content = this.nextElementSibling;
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
+        });
+        
+        // Анимация появления блоков при скролле
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.section-card');
+            
+            function checkVisible() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.75) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Первичная проверка при загрузке
+            checkVisible();
+            
+            // Проверка при скролле
+            window.addEventListener('scroll', checkVisible);
+        });
+        
+        // Калькулятор НДФЛ
+        document.getElementById('calculate-ndfl').addEventListener('click', function() {
+            const income = parseFloat(document.getElementById('income').value);
+            
+            if (!isNaN(income) && income >= 0) {
+                let ndflAmount, netIncome;
+                
+                if (income <= 5000000) {
+                    ndflAmount = income * 0.13;
+                    netIncome = income - ndflAmount;
+                } else {
+                    const baseNdfl = 5000000 * 0.13;
+                    const extraNdfl = (income - 5000000) * 0.15;
+                    ndflAmount = baseNdfl + extraNdfl;
+                    netIncome = income - ndflAmount;
+                }
+                
+                const resultElement = document.getElementById('ndfl-result');
+                resultElement.innerHTML = `
+                    <p>НДФЛ: <strong>${ndflAmount.toFixed(2)} руб.</strong></p>
+                    <p>К получению: <strong>${netIncome.toFixed(2)} руб.</strong></p>
+                `;
+                resultElement.classList.add('success', 'active');
+            } else {
+                const resultElement = document.getElementById('ndfl-result');
+                resultElement.textContent = 'Пожалуйста, введите корректную сумму дохода';
+                resultElement.classList.add('error', 'active');
+            }
+        });
+        
+        // Калькулятор налога на имущество
+        document.getElementById('calculate-property').addEventListener('click', function() {
+            const propertyValue = parseFloat(document.getElementById('property-value').value);
+            const propertyType = parseFloat(document.getElementById('property-type').value);
+            
+            if (!isNaN(propertyValue) && propertyValue >= 0) {
+                let taxAmount, taxRate;
+                
+                // Расчет налога в зависимости от типа недвижимости
+                taxRate = propertyType;
+                
+                // Применяем налоговый вычет для жилых помещений
+                let adjustedValue = propertyValue;
+                if (taxRate === 0.1) {
+                    // Упрощенный расчет с учетом вычетов
+                    adjustedValue = Math.max(propertyValue * 0.8, 0); // Примерный учет вычетов
+                }
+                
+                taxAmount = adjustedValue * taxRate / 100;
+                
+                const resultElement = document.getElementById('property-result');
+                resultElement.innerHTML = `
+                    <p>Ставка налога: <strong>${taxRate}%</strong></p>
+                    <p>Сумма налога: <strong>${taxAmount.toFixed(2)} руб.</strong></p>
+                `;
+                resultElement.classList.add('success', 'active');
+            } else {
+                const resultElement = document.getElementById('property-result');
+                resultElement.textContent = 'Пожалуйста, введите корректное значение кадастровой стоимости';
+                resultElement.classList.add('error', 'active');
+            }
+        });
+        
+        // Калькулятор транспортного налога
+        document.getElementById('calculate-transport').addEventListener('click', function() {
+            const horsePower = parseFloat(document.getElementById('horse-power').value);
+            const priceCategory = parseFloat(document.getElementById('price-category').value);
+            
+            if (!isNaN(horsePower) && horsePower > 0) {
+                let taxRate;
+                
+                // Определение ставки в зависимости от мощности (примерные значения)
+                if (horsePower <= 100) {
+                    taxRate = 12;
+                } else if (horsePower <= 150) {
+                    taxRate = 25;
+                } else if (horsePower <= 200) {
+                    taxRate = 35;
+                } else if (horsePower <= 250) {
+                    taxRate = 50;
+                } else {
+                    taxRate = 75;
+                }
+                
+                // Расчет налога с учетом повышающего коэффициента
+                const taxAmount = horsePower * taxRate * priceCategory;
+                
+                const resultElement = document.getElementById('transport-result');
+                resultElement.innerHTML = `
+                    <p>Ставка налога: <strong>${taxRate} руб. за 1 л.с.</strong></p>
+                    <p>Повышающий коэффициент: <strong>${priceCategory}</strong></p>
+                    <p>Сумма налога: <strong>${taxAmount.toFixed(2)} руб. в год</strong></p>
+                `;
+                resultElement.classList.add('success', 'active');
+            } else {
+                const resultElement = document.getElementById('transport-result');
+                resultElement.textContent = 'Пожалуйста, введите корректное значение мощности';
+                resultElement.classList.add('error', 'active');
+            }
         });
     </script>
 </body>

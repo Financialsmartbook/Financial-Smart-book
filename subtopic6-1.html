@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6.1. Страхование как способ защиты от рисков</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>6.1. Страхование как способ защиты от рисков - Смарт-учебник</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
-        /* Стили из шаблона */
         :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
@@ -17,9 +16,31 @@
             --text-light: #f1f5f9;
             --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
             --success: #10b981;
             --error: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --background: #1e293b;
+            --text-dark: #e5e7eb;
+            --text-light: #9ca3af;
+            --glass: rgba(31, 41, 55, 0.9);
+            --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
+            --shadow-md: var(--shadow);
+            --border: #374151;
         }
 
         * {
@@ -28,226 +49,472 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
             color: var(--text-dark);
             overflow-x: hidden;
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Hero Section */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .hero-section {
             position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
             line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-description {
-            font-size: 1.2rem;
-            opacity: 0.95;
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-image {
-            width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
-            transition: transform 0.4s ease;
+            width: clamp(150px, 30vw, 350px);
+            border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* Sections */
         .section-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            backdrop-filter: blur(20px);
+            padding: clamp(1.5rem, 3vw, 3rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
         }
 
         .section-title {
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+            color: var(--secondary);
+            font-weight: 800;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -0.5rem;
+            bottom: -10px;
             left: 0;
             width: 60px;
-            height: 3px;
+            height: 4px;
             background: var(--primary);
+            border-radius: 2px;
         }
 
-        /* Features List */
         .features-list {
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         .features-item {
-            padding: 1.2rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
         }
 
         .features-item:hover {
-            transform: translateX(5px);
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .features-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
+            color: var(--secondary);
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
             margin-top: 3px;
             flex-shrink: 0;
+            transition: color 0.4s ease, transform 0.4s ease;
         }
 
-        /* Accordion */
+        .features-item:hover i {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .features-item strong {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
         .accordion {
             background: var(--glass);
-            border-radius: 1.5rem;
+            border-radius: var(--radius-md);
             overflow: hidden;
+            margin-top: clamp(1rem, 1.5vw, 1.5rem);
+            box-shadow: var(--shadow-xs);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.4s ease, transform 0.4s ease;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .accordion-header i {
+            color: var(--secondary);
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0 clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease, padding 0.4s ease;
         }
 
         .accordion-content.active {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 1000px;
         }
 
-        /* Forms */
+        .info-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: clamp(1.2rem, 1.5vw, 1.5rem);
+            border-radius: var(--radius-md);
+            margin-top: clamp(1.5rem, 2vw, 2rem);
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .info-box h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .note-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: clamp(1.5rem, 2vw, 2rem) 0;
+        }
+
+        .note-box h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .note-box p {
+            margin: 0;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: clamp(1.2rem, 1.5vw, 1.5rem);
+            margin-top: clamp(1.5rem, 2vw, 2rem);
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.8);
+            padding: clamp(1.2rem, 1.5vw, 1.5rem);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calculator h4 {
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+            font-weight: 700;
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
         }
 
         button {
-            background: var(--primary);
+            background: var(--gradient);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         button:hover {
-            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
-        /* Results */
         .result {
             margin-top: 1rem;
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .result.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .success {
-            background: #d1fae5;
+            background: rgba(16, 185, 129, 0.2);
             color: var(--success);
         }
 
         .error {
-            background: #fee2e2;
+            background: rgba(239, 68, 68, 0.2);
             color: var(--error);
         }
 
-        /* Tips Section */
         .tips-list {
             list-style: none;
             padding: 0;
+            display: grid;
+            gap: clamp(0.8rem, 1vw, 1rem);
         }
 
         .tips-item {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(0.8rem, 1vw, 1rem);
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius-md);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            background: white;
         }
 
         .tips-item i {
@@ -255,138 +522,259 @@
             font-size: 1.2rem;
         }
 
-        /* Mobile Adaptation */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: clamp(1.5rem, 2vw, 2rem) 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+        }
 
+        .comparison-table th,
+        .comparison-table td {
+            padding: clamp(0.8rem, 1vw, 1rem);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .steps-list {
+            margin: 1.5rem 0;
+            counter-reset: step;
+        }
+
+        .step-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .step-number {
+            background: var(--gradient);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-right: 1rem;
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-content {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            flex: 1;
+        }
+
+        #to-top-btn {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            right: clamp(20px, 3vw, 30px);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+            cursor: pointer;
+            display: none;
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        #to-top-btn:hover {
+            transform: scale(1.15);
+            background: var(--secondary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: clamp(1rem, 2vw, 1.5rem);
+            right: clamp(1.5rem, 3vw, 2rem);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+            padding: clamp(0.5rem, 1vw, 0.75rem);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 5;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .hero-image {
-                width: 30%;
-                margin-top: 2rem;
+                max-width: 250px;
             }
 
-            .section-card {
-                padding: 1.5rem;
+            .section-title {
+                text-align: center;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
             }
         }
 
         @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
-
             .features-item {
                 flex-direction: column;
                 align-items: flex-start;
             }
-        }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
+            .step-item {
+                flex-direction: column;
+                align-items: flex-start;
             }
-            50% {
-                transform: translateY(-10px);
+
+            .step-number {
+                margin-bottom: 0.5rem;
             }
-        }
 
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calculator h4 {
-            margin-bottom: 1rem;
-        }
-
-        .calculator input {
-            margin-bottom: 1rem;
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
+            <button class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
             <div class="hero-content">
-                <h1 class="hero-title">6.1. Страхование как способ защиты от рисков</h1>
+                <span class="hero-badge">Финансовая грамотность</span>
+                <h1 class="hero-title">Страхование как способ защиты от рисков</h1>
                 <p class="hero-description">
-                    Узнайте о видах рисков, их последствиях и способах защиты через страхование.
+                    Узнайте о видах финансовых рисков, их последствиях и как страхование помогает защитить вас и ваше имущество от непредвиденных ситуаций.
                 </p>
             </div>
-            <img src="insurance.png" alt="Страхование" class="hero-image animated-image">
+            
+            <img src="insurance-concept.png" alt="Страхование" class="hero-image">
         </header>
 
         <main>
-            <!-- Что такое страхование? -->
+            <!-- Что такое страхование -->
             <section class="section-card">
-                <h2 class="section-title">Что такое страхование?</h2>
+                <h2 class="section-title"><i class="fas fa-shield-alt"></i> Что такое страхование?</h2>
+                
                 <p>
                     Страхование – это вид финансовых отношений по защите имущественных интересов физических и юридических лиц 
-                    при наступлении неблагоприятных событий (страховых случаев). 
-                    В жизни каждого человека могут случиться форс-мажорные ситуации или неблагоприятные события.
+                    при наступлении неблагоприятных событий (страховых случаев). В жизни каждого человека могут случиться форс-мажорные ситуации или неблагоприятные события.
                 </p>
+                
+                <p>
+                    Суть страхования заключается в том, что вы регулярно платите небольшую сумму денег (страховую премию), а в случае наступления страхового случая получаете компенсацию (страховую выплату), которая может значительно превышать сумму взносов.
+                </p>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-lightbulb"></i> Важно понимать</h4>
+                    <p>
+                        Страхование работает по принципу солидарности: взносы многих людей формируют страховой фонд, из которого выплачиваются компенсации пострадавшим. Поскольку страховые случаи происходят не у всех застрахованных, этот механизм позволяет обеспечить защиту каждому участнику системы.
+                    </p>
+                </div>
+                
+                <h3 style="margin-top: 2rem; color: var(--secondary);">Какие риски могут вам угрожать?</h3>
+                
                 <ul class="features-list">
                     <li class="features-item">
                         <i class="fas fa-user-shield"></i>
                         <div>
-                            <strong>Личные риски:</strong>
-                            <p>Болезни, травмы, потеря работы, инвалидность.</p>
+                            <strong>Личные риски</strong>
+                            <p>Болезни, травмы, потеря работы, инвалидность, утрата трудоспособности, смерть кормильца.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-home"></i>
                         <div>
-                            <strong>Имущественные риски:</strong>
-                            <p>Пожар, кража, порча имущества.</p>
+                            <strong>Имущественные риски</strong>
+                            <p>Пожар, кража, затопление, стихийные бедствия, повреждение или уничтожение имущества.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-car"></i>
                         <div>
-                            <strong>Транспортные риски:</strong>
-                            <p>ДТП, повреждение автомобиля.</p>
+                            <strong>Транспортные риски</strong>
+                            <p>ДТП, повреждение, угон или кража автомобиля, нанесение вреда другим участникам движения.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-coins"></i>
                         <div>
-                            <strong>Финансовые риски:</strong>
-                            <p>Потеря сбережений, снижение стоимости активов.</p>
+                            <strong>Финансовые риски</strong>
+                            <p>Потеря сбережений, инфляция, снижение стоимости активов, кредитные риски, предпринимательские риски.</p>
                         </div>
                     </li>
                 </ul>
             </section>
 
-            <!-- Что можно застраховать? -->
+            <!-- Что можно застраховать -->
             <section class="section-card">
-                <h3 class="section-title">Что можно застраховать?</h3>
+                <h2 class="section-title"><i class="fas fa-umbrella"></i> Что можно застраховать?</h2>
+                
                 <p>
-                    Застраховать можно не только привычные вещи, но и уникальные предметы или даже части тела.
+                    Современные страховые компании предлагают широкий спектр страховых продуктов, которые позволяют защитить практически любые интересы – от привычных вещей до уникальных активов или даже частей тела.
                 </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -395,10 +783,17 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Включает страхование жизни, здоровья, трудоспособности. Например, страховка от болезней или травм.
+                                Включает страхование жизни, здоровья, трудоспособности и медицинское страхование. Эти виды страхования защищают вас и ваших близких от финансовых последствий болезней, травм и других неблагоприятных событий.
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Страхование жизни</strong> – выплата определенной суммы в случае смерти застрахованного или по окончании срока страхования.</li>
+                                <li><strong>Медицинское страхование</strong> – оплата медицинских услуг при заболеваниях или травмах.</li>
+                                <li><strong>Страхование от несчастных случаев</strong> – выплата компенсации при травмах, инвалидности или смерти в результате несчастного случая.</li>
+                                <li><strong>Страхование на случай болезни</strong> – выплата при диагностировании определенных заболеваний.</li>
+                            </ul>
                         </div>
                     </div>
+                    
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Имущественное страхование</span>
@@ -406,10 +801,17 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Защищает имущество от пожара, кражи, наводнения. Например, квартиру, автомобиль, предметы искусства.
+                                Защищает материальные ценности от различных рисков повреждения или утраты.
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Страхование недвижимости</strong> – защита квартиры, дома, дачи от пожара, затопления, стихийных бедствий.</li>
+                                <li><strong>Страхование движимого имущества</strong> – защита бытовой техники, мебели, ценных предметов.</li>
+                                <li><strong>Страхование автотранспорта</strong> – КАСКО защищает ваш автомобиль от ущерба, угона и других рисков.</li>
+                                <li><strong>Страхование предметов искусства и антиквариата</strong> – защита коллекций, картин, ювелирных изделий и других ценностей.</li>
+                            </ul>
                         </div>
                     </div>
+                    
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Страхование ответственности</span>
@@ -417,137 +819,562 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Включает ответственность водителя, заемщика по кредиту. Например, ОСАГО или страхование профессиональной ответственности.
+                                Защищает от финансовых последствий в случае, если вы нанесете вред жизни, здоровью или имуществу третьих лиц.
                             </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>ОСАГО</strong> – обязательное страхование автогражданской ответственности, компенсирует ущерб, который вы можете причинить другим участникам дорожного движения.</li>
+                                <li><strong>Страхование гражданской ответственности</strong> – защита от претензий соседей в случае, например, затопления их квартиры.</li>
+                                <li><strong>Профессиональная ответственность</strong> – страхование для врачей, адвокатов, строителей и других специалистов, чьи ошибки могут причинить вред клиентам.</li>
+                            </ul>
                         </div>
                     </div>
+                    
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Уникальные виды страхования</span>
+                            <span>Финансовые риски</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Вокальные исполнители страхуют голос, музыканты — руки, фотомодели — лица, танцоры — ноги.
+                                Защита от различных финансовых потерь.
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Страхование кредитов</strong> – выплаты по кредиту в случае потери работы, болезни или других обстоятельств.</li>
+                                <li><strong>Страхование от потери работы</strong> – временная компенсация доходов при увольнении.</li>
+                                <li><strong>Страхование титула</strong> – защита от потери права собственности на недвижимость.</li>
+                                <li><strong>Страхование предпринимательских рисков</strong> – защита бизнеса от различных непредвиденных обстоятельств.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="note-box" style="margin-top: 2rem;">
+                    <h4><i class="fas fa-info-circle"></i> Интересный факт</h4>
+                    <p>
+                        Многие знаменитости страхуют части своего тела, которые имеют особую ценность для их профессиональной деятельности. Например, голос певца, ноги футболиста или руки пианиста. Такое страхование может стоить миллионы долларов.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Как работает страхование -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-cogs"></i> Как работает страхование?</h2>
+                
+                <p>
+                    Понимание принципов работы страхования поможет вам осознанно подходить к выбору страховых продуктов и эффективно использовать их для защиты своих интересов.
+                </p>
+                
+                <div class="steps-list">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Оценка рисков</h4>
+                            <p>
+                                Страховая компания оценивает вероятность наступления страхового случая и возможный размер ущерба. На основе этой оценки определяется стоимость страховки.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Заключение договора</h4>
+                            <p>
+                                Вы заключаете договор со страховой компанией, где прописываются условия страхования: что именно покрывается, какие исключения, сумма страхового покрытия и другие параметры.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Оплата премии</h4>
+                            <p>
+                                Вы платите страховую премию — это может быть разовый платеж или регулярные взносы, в зависимости от условий договора.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Наступление страхового случая</h4>
+                            <p>
+                                Если происходит событие, от которого вы застрахованы (например, авария или болезнь), вы уведомляете страховую компанию и подаете заявление о страховом случае.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Урегулирование убытков</h4>
+                            <p>
+                                Страховая компания проверяет обстоятельства случившегося, оценивает размер ущерба и принимает решение о выплате.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Страховая выплата</h4>
+                            <p>
+                                Если страховой случай подтвержден, компания производит выплату в соответствии с условиями договора.
                             </p>
                         </div>
                     </div>
                 </div>
+                
+                <h3 style="margin-top: 2rem; color: var(--secondary);">Основные понятия в страховании</h3>
+                
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-file-contract"></i>
+                        <div>
+                            <strong>Страховой полис</strong>
+                            <p>Договор страхования, документ, подтверждающий факт страхования.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <div>
+                            <strong>Страховая премия</strong>
+                            <p>Плата за страхование, которую страхователь вносит страховщику.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-money-check-alt"></i>
+                        <div>
+                            <strong>Страховая сумма</strong>
+                            <p>Максимальная сумма, которую страховщик обязуется выплатить при наступлении страхового случая.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Страховой случай</strong>
+                            <p>Событие, при наступлении которого страховщик обязан произвести страховую выплату.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-percent"></i>
+                        <div>
+                            <strong>Франшиза</strong>
+                            <p>Часть убытка, не подлежащая возмещению страховщиком. Может быть условной (если ущерб превышает франшизу, то страховщик возмещает его полностью) или безусловной (вычитается из суммы возмещения).</p>
+                        </div>
+                    </li>
+                </ul>
             </section>
 
-            <!-- Практические задания -->
+            <!-- Обязательное и добровольное страхование -->
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
+                <h2 class="section-title"><i class="fas fa-balance-scale"></i> Обязательное и добровольное страхование</h2>
+                
+                <p>
+                    В России существует два основных типа страхования: обязательное и добровольное. Обязательное страхование регулируется законом и является необходимым для определенных категорий лиц или объектов, в то время как добровольное страхование осуществляется по желанию страхователя.
+                </p>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Параметр</th>
+                                <th>Обязательное страхование</th>
+                                <th>Добровольное страхование</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Необходимость</strong></td>
+                                <td>Предписано законом</td>
+                                <td>По желанию страхователя</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Примеры</strong></td>
+                                <td>ОСАГО, ОМС, страхование пассажиров</td>
+                                <td>КАСКО, ДМС, страхование жизни</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Условия</strong></td>
+                                <td>Регулируются законом</td>
+                                <td>Определяются договором</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Тарифы</strong></td>
+                                <td>Чаще всего регулируются государством</td>
+                                <td>Устанавливаются страховщиком</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Страховые суммы</strong></td>
+                                <td>Часто имеют минимальные пределы</td>
+                                <td>Определяются по соглашению сторон</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
                 <div class="interactive-grid">
-                    <!-- Тест: Какой риск застраховать? -->
-                    <div class="calculator">
-                        <h4>Тест: Какой риск застраховать?</h4>
-                        <form id="risk-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="risk-type" value="personal"> Личный риск
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="risk-type" value="property"> Имущественный риск
-                                </label>
-                            </div>
-                            <button type="button" id="check-risk-btn">Проверить</button>
-                            <div id="risk-test-result" class="result"></div>
-                        </form>
+                    <div>
+                        <h3 style="margin-bottom: 1rem; color: var(--secondary);">Обязательное страхование</h3>
+                        <ul class="features-list">
+                            <li class="features-item">
+                                <i class="fas fa-car-crash"></i>
+                                <div>
+                                    <strong>ОСАГО</strong>
+                                    <p>Страхование ответственности автовладельцев перед третьими лицами.</p>
+                                </div>
+                            </li>
+                            <li class="features-item">
+                                <i class="fas fa-hospital-user"></i>
+                                <div>
+                                    <strong>ОМС</strong>
+                                    <p>Обязательное медицинское страхование, обеспечивающее базовую медицинскую помощь.</p>
+                                </div>
+                            </li>
+                            <li class="features-item">
+                                <i class="fas fa-plane"></i>
+                                <div>
+                                    <strong>Страхование пассажиров</strong>
+                                    <p>Страхование жизни и здоровья пассажиров во время поездок на общественном транспорте.</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-
-                    <!-- Калькулятор стоимости страховки -->
-                    <div class="calculator">
-                        <h4>Калькулятор стоимости страховки</h4>
-                        <input type="number" id="insurance-amount" placeholder="Стоимость имущества (руб)">
-                        <select id="insurance-type">
-                            <option value="0.01">Жизнь и здоровье (1%)</option>
-                            <option value="0.02">Автомобиль (2%)</option>
-                            <option value="0.03">Квартира (3%)</option>
-                        </select>
-                        <button type="button" id="calculate-insurance-btn">Рассчитать</button>
-                        <div id="insurance-calculation-result" class="result"></div>
+                    
+                    <div>
+                        <h3 style="margin-bottom: 1rem; color: var(--secondary);">Добровольное страхование</h3>
+                        <ul class="features-list">
+                            <li class="features-item">
+                                <i class="fas fa-car"></i>
+                                <div>
+                                    <strong>КАСКО</strong>
+                                    <p>Страхование автомобиля от повреждений, угона и других рисков.</p>
+                                </div>
+                            </li>
+                            <li class="features-item">
+                                <i class="fas fa-heartbeat"></i>
+                                <div>
+                                    <strong>ДМС</strong>
+                                    <p>Добровольное медицинское страхование, расширяющее возможности ОМС.</p>
+                                </div>
+                            </li>
+                            <li class="features-item">
+                                <i class="fas fa-house-damage"></i>
+                                <div>
+                                    <strong>Страхование жилья</strong>
+                                    <p>Защита квартиры или дома от различных рисков.</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Полезные советы -->
+            <!-- Как выбрать страховку -->
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда читайте условия страхового договора перед подписанием.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Сравнивайте предложения разных страховых компаний.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Выбирайте страховку, соответствующую вашим потребностям.
-                    </li>
-                </ul>
+                <h2 class="section-title"><i class="fas fa-search-dollar"></i> Как выбрать страховку?</h2>
+                
+                <p>
+                    Выбор страховки — ответственный шаг, который может серьезно повлиять на вашу финансовую безопасность. Вот несколько рекомендаций, которые помогут вам сделать правильный выбор.
+                </p>
+                
+                <div class="tips-list">
+                    <div class="tips-item">
+                        <i class="fas fa-clipboard-list"></i>
+                        <div>
+                            <strong>Оцените свои риски</strong>
+                            <p>Определите, какие финансовые потери могут быть для вас наиболее существенными. Например, если у вас дорогая квартира, ее повреждение может привести к серьезным расходам.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-building"></i>
+                        <div>
+                            <strong>Изучите надежность страховщика</strong>
+                            <p>Проверьте рейтинги страховых компаний, отзывы клиентов, время работы на рынке. Надежный страховщик – залог того, что вы получите выплату в случае наступления страхового случая.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-file-contract"></i>
+                        <div>
+                            <strong>Тщательно изучите условия договора</strong>
+                            <p>Обратите внимание на страховые случаи, исключения, франшизу, порядок и сроки выплат. Не стесняйтесь задавать вопросы страховому агенту.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-balance-scale-right"></i>
+                        <div>
+                            <strong>Сравните предложения разных компаний</strong>
+                            <p>Сравните не только цены, но и условия страхования, размеры выплат, отзывы о качестве обслуживания и скорости урегулирования страховых случаев.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <div>
+                            <strong>Определите оптимальную страховую сумму</strong>
+                            <p>Страховая сумма должна покрывать потенциальные расходы на восстановление или замену застрахованного объекта. Не завышайте и не занижайте ее.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-exclamation-circle"></i> Важно!</h4>
+                    <p>
+                        Перед подписанием договора страхования внимательно прочитайте все условия, особенно мелкий шрифт. Обратите внимание на исключения из страхового покрытия – случаи, при которых страховая компания не будет производить выплаты.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Расчет стоимости страховки -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-calculator"></i> Калькулятор страховки</h2>
+                
+                <p>
+                    Попробуйте рассчитать примерную стоимость различных видов страхования с помощью наших калькуляторов.
+                </p>
+                
+                <div class="interactive-grid">
+                    <!-- Калькулятор ОСАГО -->
+                    <div class="calculator">
+                        <h4>Калькулятор ОСАГО</h4>
+                        <div class="form-group">
+                            <label for="car-power">Мощность автомобиля (л.с.)</label>
+                            <input type="number" id="car-power" placeholder="Например: 150">
+                        </div>
+                        <div class="form-group">
+                            <label for="driver-experience">Стаж водителя (лет)</label>
+                            <input type="number" id="driver-experience" placeholder="Например: 5">
+                        </div>
+                        <div class="form-group">
+                            <label for="car-age">Возраст автомобиля (лет)</label>
+                            <input type="number" id="car-age" placeholder="Например: 3">
+                        </div>
+                        <button id="calculate-osago">
+                            Рассчитать ОСАГО
+                            <i class="fas fa-calculator"></i>
+                        </button>
+                        <div class="result" id="osago-result"></div>
+                    </div>
+                    
+                    <!-- Калькулятор страхования квартиры -->
+                    <div class="calculator">
+                        <h4>Калькулятор страхования квартиры</h4>
+                        <div class="form-group">
+                            <label for="apartment-area">Площадь квартиры (м²)</label>
+                            <input type="number" id="apartment-area" placeholder="Например: 65">
+                        </div>
+                        <div class="form-group">
+                            <label for="apartment-value">Стоимость квартиры (руб.)</label>
+                            <input type="number" id="apartment-value" placeholder="Например: 5000000">
+                        </div>
+                        <div class="form-group">
+                            <label for="property-value">Стоимость имущества (руб.)</label>
+                            <input type="number" id="property-value" placeholder="Например: 1000000">
+                        </div>
+                        <button id="calculate-property-insurance">
+                            Рассчитать страховку
+                            <i class="fas fa-calculator"></i>
+                        </button>
+                        <div class="result" id="property-insurance-result"></div>
+                    </div>
+                </div>
+                
+                <!-- Тест на знание страхования -->
+                <div style="margin-top: 2rem;">
+                    <h4 style="color: var(--secondary); margin-bottom: 1rem; font-size: 1.25rem;">Проверьте свои знания о страховании</h4>
+                    <div class="calculator">
+                        <h4>Тест: Основы страхования</h4>
+                        <div class="form-group">
+                            <p style="margin-bottom: 0.5rem; font-weight: 600;">Что такое франшиза в страховании?</p>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="insurance-test" value="a">
+                                    <span>Дополнительный платеж страховой компании</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="insurance-test" value="b">
+                                    <span>Часть ущерба, которую страховая компания не возмещает</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="insurance-test" value="c">
+                                    <span>Бонус за безаварийную езду</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: rgba(255, 255, 255, 0.5); border-radius: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="insurance-test" value="d">
+                                    <span>Скидка при оформлении нескольких страховок</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button id="check-insurance-test">
+                            Проверить ответ
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                        <div class="result" id="insurance-test-result"></div>
+                    </div>
+                </div>
             </section>
         </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
+        
+        <footer style="text-align: center; margin-top: 3rem; color: var(--text-dark); opacity: 0.7;">
+            <p>&copy; 2025 Смарт-учебник. Все права защищены.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Представленная информация носит образовательный характер и не является консультацией по страхованию.</p>
         </footer>
     </div>
-
+    
+    <button id="to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <script>
-        // Тест: Какой риск застраховать?
-        document.getElementById('check-risk-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="risk-type"]:checked');
-            const resultElement = document.getElementById('risk-test-result');
-
-            if (selected) {
-                let message = '';
-                switch (selected.value) {
-                    case 'personal':
-                        message = '✅ Личный риск можно застраховать через полис ДМС или страхование жизни.';
-                        break;
-                    case 'property':
-                        message = '✅ Имущественный риск можно застраховать через полис КАСКО или страхование квартиры.';
-                        break;
-                }
-                resultElement.textContent = message;
-                resultElement.className = 'result success';
+        // Прогресс скролла
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.scrollY;
+            let docHeight = document.body.offsetHeight - window.innerHeight;
+            let scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Показ кнопки "наверх"
+            if (scrollTop > 300) {
+                document.getElementById('to-top-btn').style.display = 'block';
             } else {
-                resultElement.textContent = '❌ Пожалуйста, выберите вариант.';
-                resultElement.className = 'result error';
+                document.getElementById('to-top-btn').style.display = 'none';
             }
         });
-
-        // Калькулятор стоимости страховки
-        document.getElementById('calculate-insurance-btn').addEventListener('click', () => {
-            const insuranceAmount = parseFloat(document.getElementById('insurance-amount').value);
-            const insuranceRate = parseFloat(document.getElementById('insurance-type').value);
-            const resultElement = document.getElementById('insurance-calculation-result');
-
-            if (!isNaN(insuranceAmount)) {
-                const cost = insuranceAmount * insuranceRate;
-                resultElement.textContent = `💰 Стоимость страховки: ${cost.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                resultElement.className = 'result error';
-            }
+        
+        // Кнопка наверх
+        document.getElementById('to-top-btn').addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         });
-
+        
+        // Переключение темы
+        document.querySelector('.theme-toggle').addEventListener('click', function() {
+            document.documentElement.dataset.theme = 
+                document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            
+            this.innerHTML = document.documentElement.dataset.theme === 'light' 
+                ? '<i class="fas fa-moon"></i>' 
+                : '<i class="fas fa-sun"></i>';
+        });
+        
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                let content = this.nextElementSibling;
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
+        });
+        
+        // Анимация появления блоков при скролле
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.section-card');
+            
+            function checkVisible() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.75) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Первичная проверка при загрузке
+            checkVisible();
+            
+            // Проверка при скролле
+            window.addEventListener('scroll', checkVisible);
+        });
+        
+        // Калькулятор ОСАГО
+        document.getElementById('calculate-osago').addEventListener('click', function() {
+            const carPower = parseFloat(document.getElementById('car-power').value) || 0;
+            const driverExperience = parseFloat(document.getElementById('driver-experience').value) || 0;
+            const carAge = parseFloat(document.getElementById('car-age').value) || 0;
+            
+            // Простая формула для примерного расчета
+            let baseRate = 5000; // Базовый тариф
+            
+            // Коэффициент мощности
+            let powerCoef = 1;
+            if (carPower <= 100) powerCoef = 0.9;
+            else if (carPower <= 150) powerCoef = 1.1;
+            else if (carPower <= 200) powerCoef = 1.4;
+            else powerCoef = 1.8;
+            
+            // Коэффициент стажа
+            let expCoef = 1;
+            if (driverExperience < 3) expCoef = 1.8;
+            else if (driverExperience < 10) expCoef = 1.2;
+            else expCoef = 0.8;
+            
+            // Коэффициент возраста автомобиля
+            let ageCoef = 1;
+            if (carAge > 10) ageCoef = 1.3;
+            else if (carAge > 5) ageCoef = 1.1;
+            
+            const osagoPrice = baseRate * powerCoef * expCoef * ageCoef;
+            
+            const resultElement = document.getElementById('osago-result');
+            resultElement.innerHTML = `
+                <p>Ориентировочная стоимость ОСАГО: <strong>${osagoPrice.toFixed(2)} руб./год</strong></p>
+                <p>Это примерный расчет, реальная стоимость может отличаться</p>
+            `;
+            resultElement.classList.add('success', 'active');
+        });
+        
+        // Калькулятор страхования квартиры
+        document.getElementById('calculate-property-insurance').addEventListener('click', function() {
+            const apartmentArea = parseFloat(document.getElementById('apartment-area').value) || 0;
+            const apartmentValue = parseFloat(document.getElementById('apartment-value').value) || 0;
+            const propertyValue = parseFloat(document.getElementById('property-value').value) || 0;
+            
+            // Простая формула для примерного расчета
+            const areaRate = 60; // Ставка за 1 кв.м.
+            const valueRate = 0.005; // 0.5% от стоимости имущества
+            
+            const apartmentInsurance = areaRate * apartmentArea;
+            const propertyInsurance = propertyValue * valueRate;
+            const totalInsurance = apartmentInsurance + propertyInsurance;
+            
+            const resultElement = document.getElementById('property-insurance-result');
+            resultElement.innerHTML = `
+                <p>Страхование конструктива: <strong>${apartmentInsurance.toFixed(2)} руб./год</strong></p>
+                <p>Страхование имущества: <strong>${propertyInsurance.toFixed(2)} руб./год</strong></p>
+                <p>Общая стоимость: <strong>${totalInsurance.toFixed(2)} руб./год</strong></p>
+            `;
+            resultElement.classList.add('success', 'active');
+        });
+        
+        // Тест на знание страхования
+        document.getElementById('check-insurance-test').addEventListener('click', function() {
+            const selectedAnswer = document.querySelector('input[name="insurance-test"]:checked');
+            const resultElement = document.getElementById('insurance-test-result');
+            
+            if (selectedAnswer) {
+                if (selectedAnswer.value === 'b') {
+                    resultElement.innerHTML = 'Правильно! Франшиза — это часть ущерба, которую страховая компания не возмещает. Она может быть условной или безусловной.';
+                    resultElement.classList.add('success', 'active');
+                    resultElement.classList.remove('error');
+                } else {
+                    resultElement.innerHTML = 'Неправильно. Франшиза — это часть ущерба, которую страховая компания не возмещает. Она может быть условной или безусловной.';
+                    resultElement.classList.add('error', 'active');
+                    resultElement.classList.remove('success');
+                }
+            } else {
+                resultElement.innerHTML = 'Пожалуйста, выберите вариант ответа.';
+                resultElement.classList.add('error', 'active');
+                resultElement.classList.remove('success');
+            }
         });
     </script>
 </body>

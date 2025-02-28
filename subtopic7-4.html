@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Что такое ИНН и как платить налоги</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Какие налоги платят организации - Смарт-учебник</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
-        /* Стили из предыдущего шаблона */
         :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
@@ -17,9 +16,31 @@
             --text-light: #f1f5f9;
             --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
             --success: #10b981;
             --error: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --background: #1e293b;
+            --text-dark: #e5e7eb;
+            --text-light: #9ca3af;
+            --glass: rgba(31, 41, 55, 0.9);
+            --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
+            --shadow-md: var(--shadow);
+            --border: #374151;
         }
 
         * {
@@ -28,499 +49,856 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
             color: var(--text-dark);
             overflow-x: hidden;
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .hero-section {
             position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
             line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-description {
-            font-size: 1.2rem;
-            opacity: 0.95;
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-image {
-            width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
-            transition: transform 0.4s ease;
+            width: clamp(150px, 30vw, 350px);
+            border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
         }
 
         .section-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            backdrop-filter: blur(20px);
+            padding: clamp(1.5rem, 3vw, 3rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
         }
 
         .section-title {
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+            color: var(--secondary);
+            font-weight: 800;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -0.5rem;
+            bottom: -10px;
             left: 0;
             width: 60px;
-            height: 3px;
+            height: 4px;
             background: var(--primary);
+            border-radius: 2px;
         }
 
         .features-list {
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
         }
 
         .features-item {
-            padding: 1.2rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
         }
 
         .features-item:hover {
-            transform: translateX(5px);
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .features-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
+            color: var(--secondary);
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
             margin-top: 3px;
             flex-shrink: 0;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+
+        .features-item:hover i {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .features-item strong {
+            color: var(--secondary);
+            font-weight: 700;
         }
 
         .accordion {
             background: var(--glass);
-            border-radius: 1.5rem;
+            border-radius: var(--radius-md);
             overflow: hidden;
+            margin-top: clamp(1rem, 1.5vw, 1.5rem);
+            box-shadow: var(--shadow-xs);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.4s ease, transform 0.4s ease;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .accordion-header i {
+            color: var(--secondary);
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0 clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease, padding 0.4s ease;
         }
 
         .accordion-content.active {
-            padding: 1.5rem;
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
             max-height: 1000px;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .info-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: clamp(1.2rem, 1.5vw, 1.5rem);
+            border-radius: var(--radius-md);
+            margin-top: clamp(1.5rem, 2vw, 2rem);
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow-xs);
         }
 
-        label {
-            display: block;
+        .info-box h3 {
+            color: var(--secondary);
             margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        input[type="number"], input[type="text"] {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 0.5rem;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        button:hover {
-            background: var(--secondary);
-        }
-
-        .result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-        }
-
-        .success {
-            background: #d1fae5;
-            color: var(--success);
-        }
-
-        .error {
-            background: #fee2e2;
-            color: var(--error);
-        }
-
-        .tips-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tips-item {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
-        .tips-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
+        .note-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: clamp(1.5rem, 2vw, 2rem) 0;
+        }
+
+        .note-box h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .note-box p {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: clamp(1.5rem, 2vw, 2rem) 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+        }
+
+        th, td {
+            padding: clamp(0.8rem, 1vw, 1rem);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        #to-top-btn {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            right: clamp(20px, 3vw, 30px);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+            cursor: pointer;
+            display: none;
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        #to-top-btn:hover {
+            transform: scale(1.15);
+            background: var(--secondary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .hero-image {
-                width: 30%;
-                margin-top: 2rem;
+                max-width: 250px;
             }
 
-            .section-card {
-                padding: 1.5rem;
+            .section-title {
+                text-align: center;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
             }
         }
 
         @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
-
             .features-item {
                 flex-direction: column;
-                align-items: flex-start;
             }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calculator h4 {
-            margin-bottom: 1rem;
-        }
-
-        .calculator input {
-            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title">Что такое ИНН и как платить налоги</h1>
+                <span class="hero-badge">Финансовая грамотность</span>
+                <h1 class="hero-title">Какие налоги платят организации</h1>
                 <p class="hero-description">
-                    Узнайте, что такое ИНН, как его получить, и как правильно платить налоги.
+                    Узнайте о системах налогообложения, применяемых для организаций и индивидуальных предпринимателей в России, и о налогах, которые они платят.
                 </p>
             </div>
-            <img src="720insurance5.png" alt="ИНН" class="hero-image animated-image">
+            <img src="floating-coin.png" alt="Налоги для бизнеса" class="hero-image">
         </header>
 
         <main>
-            <!-- Что такое ИНН -->
+            <!-- Введение -->
             <section class="section-card">
-                <h2 class="section-title">Что такое ИНН?</h2>
+                <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Налоги для организаций и ИП</h2>
                 <p>
-                    ИНН — это индивидуальный номер налогоплательщика, который используется для учета налоговых обязательств физических и юридических лиц.
+                    Налоги платят не только физические лица, но и организации. С налогами, которые платят граждане, мы познакомились в прошлом параграфе. Но если вы работаете в организации, полезно знать на какие налоги уходит часть ее доходов.
                 </p>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Для чего нужен ИНН?</span>
-                            <i class="fas fa-chevron-down"></i>
+                <p>
+                    В Российской Федерации для всех организаций и индивидуальных предпринимателей (далее – ИП) существуют две основные системы налогообложения:
+                </p>
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-building"></i>
+                        <div>
+                            <strong>Общая система налогообложения (ОСНО)</strong>
+                            <p>Базовый режим налогообложения, при котором организации и ИП платят все предусмотренные налоги.</p>
                         </div>
-                        <div class="accordion-content">
-                            <p>
-                                ИНН необходим для трудоустройства, оформления налоговых вычетов, регистрации на портале «Госуслуги» и других целей.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Как получить ИНН?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                ИНН можно получить через портал «Госуслуги», личный кабинет налогоплательщика или при личном обращении в налоговую инспекцию.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Как платить налоги -->
-            <section class="section-card">
-                <h3 class="section-title">Как платить налоги</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Способы оплаты налогов</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Налоги можно оплатить через портал «Госуслуги», личный кабинет налогоплательщика, банковские приложения или терминалы.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Единый налоговый платеж (ЕНП)</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                ЕНП позволяет уплачивать налоги одним платежом, что упрощает процесс и экономит время.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Как проверить и погасить налоговую задолженность -->
-            <section class="section-card">
-                <h3 class="section-title">Как проверить и погасить налоговую задолженность</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Через личный кабинет налогоплательщика</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                В личном кабинете можно проверить задолженность и оплатить налоги онлайн.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Через мобильное приложение ФНС</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>
-                                Приложение «Налоги ФЛ» позволяет проверять и оплачивать налоги с мобильного устройства.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Интерактивные задания -->
-            <section class="section-card">
-                <h3 class="section-title">Интерактивные задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Что такое ИНН -->
-                    <div class="calculator">
-                        <h4>Тест: Что такое ИНН?</h4>
-                        <form id="inn-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="inn-type" value="correct"> Уникальный номер налогоплательщика
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="inn-type" value="wrong"> Номер банковского счета
-                                </label>
-                            </div>
-                            <button type="button" id="check-inn-btn">Проверить</button>
-                            <div id="inn-test-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <!-- Калькулятор налога -->
-                    <div class="calculator">
-                        <h4>Калькулятор налога</h4>
-                        <input type="number" id="tax-amount" placeholder="Сумма дохода (руб)">
-                        <button type="button" id="calculate-tax-btn">Рассчитать</button>
-                        <div id="tax-calculation-result" class="result"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Полезные советы -->
-            <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте налоговые уведомления в личном кабинете налогоплательщика.
                     </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Используйте единый налоговый платеж для упрощения процесса уплаты налогов.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Регулярно проверяйте наличие налоговой задолженности, чтобы избежать штрафов.
+                    <li class="features-item">
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <strong>Упрощенная система налогообложения (УСНО)</strong>
+                            <p>Специальный налоговый режим для малого и среднего бизнеса, при котором несколько налогов заменяются одним.</p>
+                        </div>
                     </li>
                 </ul>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-info-circle"></i> Важно</h4>
+                    <p>
+                        Кроме основных систем налогообложения, существуют и другие специальные режимы: патентная система налогообложения (ПСН) и единый сельскохозяйственный налог (ЕСХН), которые могут применяться организациями и ИП при определенных условиях.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ОСНО -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-landmark"></i> Общая система налогообложения (ОСНО)</h2>
+                <p>
+                    Общая система налогообложения (ОСНО) – это базовый режим налогообложения для юридических лиц и ИП, при котором они должны уплачивать все налоги, предусмотренные российским налоговым законодательством в отношении этих налогоплательщиков.
+                </p>
+                <p>
+                    ОСНО применяется по умолчанию ко всем организациям и ИП, если они не подали заявление о переходе на другую систему налогов.
+                </p>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Налог на добавленную стоимость (НДС)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Все компании и ИП с реализованной покупателям продукции, работ и услуг уплачивают НДС. И хотя непосредственно бремя этого налога несет на себе покупатель, оплачивая его в цене покупаемых благ, непосредственным плательщиком НДС выступает все-таки продавец (поставщик).
+                            </p>
+                            <p style="margin-top: 10px;">
+                                <strong>Ставки НДС:</strong>
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>20% – основная ставка</li>
+                                <li>10% – льготная ставка для продовольственных товаров, товаров для детей и др.</li>
+                                <li>0% – для экспортируемых товаров</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Налог на прибыль организаций (НПО)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Этот налог уплачивают только те юридические лица (организации), у которых доходы за отчетный налоговый период превысили их расходы, то есть которые получили прибыль. Налог на прибыль организаций (НПО) является федеральным налогом, поэтому условия его введения и уплаты являются одинаковыми на всей территории Российской Федерации.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                <strong>Ставки НПО:</strong>
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>8% – федеральная ставка (с 2025 года)</li>
+                                <li>17% – региональная ставка</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                Несмотря на существование двух самостоятельных ставок этого налога, принято говорить об общей ставке налога на прибыль организаций в 25%.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                <strong>Важно:</strong> Индивидуальные предприниматели платят налог с доходов как физические лица, и этот налог – НДФЛ.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Налог на имущество организаций (НИО)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Налог на имущество организаций уплачивается теми юридическими лицами, на которых зарегистрировано недвижимое имущество (здания, сооружения, оборудование, другие основные средства). Это региональный налог, который вводится субъектами Федерации.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                <strong>Ставки НИО:</strong>
+                            </p>
+                            <ul style="margin-top: 5px; padding-left: 20px;">
+                                <li>2,2% – базовая ставка с кадастровой стоимости объекта недвижимости до 300 млн рублей</li>
+                                <li>2,5% – повышенная ставка для объектов с кадастровой стоимостью более 300 млн рублей (действует с 1 января 2025 года)</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                Несмотря на повышение ставки налога на имущество организаций, это значение регионы вводят на свое усмотрение.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Другие налоги при ОСНО</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Остальные налоги организации и ИП платят по обстоятельствам:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>Транспортный налог</strong> – если на организацию зарегистрирован автомобиль</li>
+                                <li><strong>Земельный налог</strong> – если организация владеет земельным участком</li>
+                                <li><strong>Налог на добычу полезных ископаемых (НДПИ)</strong> – для организаций, чьим видом деятельности является добыча полезных ископаемых (газ, нефть, цветные и черные металлы, руда, уголь и т.д.)</li>
+                            </ul>
+                            <p style="margin-top: 10px;">
+                                Организации-работодатели уплачивают НДФЛ, удерживая его с заработной платы своих работников, только в качестве налоговых агентов.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- УСНО -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-balance-scale"></i> Упрощенная система налогообложения (УСНО)</h2>
+                <p>
+                    Упрощенная система налогообложения (УСНО) – это специальный налоговый режим, ориентированный на субъектов малого и среднего бизнеса (МСБ), а также на индивидуальных предпринимателей (ИП).
+                </p>
+                <p>
+                    Основная идея и преимущества использования УСНО состоит в том, что применяющая его организация или ИП заменяет обязательства по уплате основных налогов на один налог. То есть применение режима заменяет уплату следующих налогов: НДС (только при годовом доходе до 60 млн рублей), налога на прибыль организаций, НДФЛ (для ИП), налога на имущество.
+                </p>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-user-check"></i> Кто может применять УСНО</h3>
+                    <p>
+                        Применять УСНО могут организации и ИП при выполнении определенных условий:
+                    </p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>средняя численность работников – не более 130 человек</li>
+                        <li>сумма годового дохода – не более 450 млн руб.</li>
+                        <li>остаточная стоимость основных средств – не более 200 млн руб.</li>
+                        <li>доля участия других компаний в уставном капитале компании-упрощенца не больше 25%</li>
+                    </ul>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Объекты налогообложения при УСНО</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                В рамках УСНО налогоплательщик может выбрать один из двух объектов налогообложения:
+                            </p>
+                            <ol style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>«Доходы»</strong> – налог платится со всех полученных доходов</li>
+                                <li><strong>«Доходы минус расходы»</strong> – налог платится с разницы между доходами и расходами</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Ставки налога при УСНО</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Ставки налога при УСНО зависят от выбранного объекта налогообложения:
+                            </p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>6%</strong> – при выборе объекта обложения «Доходы» (законами субъектов РФ ставка может быть снижена до 1%)</li>
+                                <li><strong>15%</strong> – при выборе объекта обложения «Доходы минус расходы» (законами субъектов РФ ставка может быть снижена до 5%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--secondary); margin-bottom: 1rem;">Налоговые ставки УСНО в новых субъектах Российской Федерации</h3>
+                    <p>
+                        На территориях ДНР, ЛНР, Запорожской и Херсонской областей УСНО была введена с 1 января 2023 года. Нормативно-правовыми актами указанных субъектов в них действуют следующие льготные ставки в рамках УСНО:
+                    </p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Регион</th>
+                                <th>Объект «Доходы»</th>
+                                <th>Объект «Доходы, уменьшенные на величину расходов»</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Донецкая Народная республика (ДНР)</td>
+                                <td>3%</td>
+                                <td>7%</td>
+                            </tr>
+                            <tr>
+                                <td>Луганская Народная Республика (ЛНР)</td>
+                                <td>3%</td>
+                                <td>7%</td>
+                            </tr>
+                            <tr>
+                                <td>Херсонская область</td>
+                                <td>2%</td>
+                                <td>5%</td>
+                            </tr>
+                            <tr>
+                                <td>Запорожская область</td>
+                                <td>2%</td>
+                                <td>5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Другие режимы налогообложения -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-sitemap"></i> Другие специальные режимы налогообложения</h2>
+                
+                <div class="features-list">
+                    <div class="features-item">
+                        <i class="fas fa-certificate"></i>
+                        <div>
+                            <strong>Патентная система налогообложения (ПСН)</strong>
+                            <p>
+                                Еще один из специальных режимов налогообложения для ИП – патентная система налогообложения (ПСН). При ее использовании предприниматель вместо предусмотренных законодательством налогов платит за патент фиксированную сумму, которая засчитывается в счет налогов.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                Особенность ПСН заключается в том, что налог на этом режиме уплачивается не от фактического, а от потенциально возможного дохода. Никакой отчетности на ПСН сдавать не нужно, надо лишь вовремя оплачивать патент и вести книгу учета доходов.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                Этот режим популярен для сферы услуг, перевозок, розничной торговли и общепита.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="features-item">
+                        <i class="fas fa-tractor"></i>
+                        <div>
+                            <strong>Единый сельскохозяйственный налог (ЕСХН)</strong>
+                            <p>
+                                ЕСХН или единый сельскохозяйственный налог – система налогообложения для сельскохозяйственных товаропроизводителей. Также, как и ПСН и УСНО она является специальным налоговым режимом.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                Налог при данном режиме уплачивается по ставке 6% с доходов. Применение ЕСХН, однако, не освобождает ИП или организацию от уплаты НДС, но при небольших доходах (до 60 млн рублей в год) можно получить льготу и не платить его.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                При применении ЕСХН также не нужно платить налог на прибыль организаций (НДФЛ для ИП) и налог на имущество.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Сравнительная таблица -->
+            <section class="section-card">
+                <h2 class="section-title"><i class="fas fa-table"></i> Сравнение режимов налогообложения</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Параметр</th>
+                            <th>ОСНО</th>
+                            <th>УСНО</th>
+                            <th>ПСН</th>
+                            <th>ЕСХН</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Кто может применять</td>
+                            <td>Любые организации и ИП</td>
+                            <td>Организации и ИП при соблюдении ограничений</td>
+                            <td>Только ИП</td>
+                            <td>Сельхозпроизводители</td>
+                        </tr>
+                        <tr>
+                            <td>Основные налоги</td>
+                            <td>НДС, налог на прибыль (для организаций), НДФЛ (для ИП), налог на имущество</td>
+                            <td>Единый налог по ставке 6% или 15%</td>
+                            <td>Стоимость патента (6% от потенциально возможного дохода)</td>
+                            <td>6% от доходов за вычетом расходов</td>
+                        </tr>
+                        <tr>
+                            <td>Отчетность</td>
+                            <td>Полная</td>
+                            <td>Упрощенная</td>
+                            <td>Только книга учета доходов</td>
+                            <td>Упрощенная</td>
+                        </tr>
+                        <tr>
+                            <td>Ограничения по доходам</td>
+                            <td>Нет</td>
+                            <td>До 450 млн руб.</td>
+                            <td>До 60 млн руб.</td>
+                            <td>Нет</td>
+                        </tr>
+                        <tr>
+                            <td>Ограничения по сотрудникам</td>
+                            <td>Нет</td>
+                            <td>До 130 человек</td>
+                            <td>До 15 человек</td>
+                            <td>Нет</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note-box">
+                    <h4><i class="fas fa-info-circle"></i> Важно</h4>
+                    <p>
+                        Выбор системы налогообложения – важный шаг для любого бизнеса. Он должен основываться на специфике деятельности, размере компании, планируемой выручке и других факторах. Перед принятием решения рекомендуется проконсультироваться с налоговым специалистом.
+                    </p>
+                </div>
             </section>
         </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
     </div>
-
+    
+    <button id="to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <script>
-        // Тест: Что такое ИНН
-        document.getElementById('check-inn-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="inn-type"]:checked');
-            const resultElement = document.getElementById('inn-test-result');
-
-            if (selected && selected.value === 'correct') {
-                resultElement.textContent = '✅ Правильно! ИНН — это уникальный номер налогоплательщика.';
-                resultElement.className = 'result success';
+        // Прогресс скролла
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.scrollY;
+            let docHeight = document.body.offsetHeight - window.innerHeight;
+            let scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Показ кнопки "наверх"
+            if (scrollTop > 300) {
+                document.getElementById('to-top-btn').style.display = 'block';
             } else {
-                resultElement.textContent = '❌ Неверно. ИНН — это уникальный номер налогоплательщика.';
-                resultElement.className = 'result error';
+                document.getElementById('to-top-btn').style.display = 'none';
             }
         });
-
-        // Калькулятор налога
-        document.getElementById('calculate-tax-btn').addEventListener('click', () => {
-            const taxAmount = parseFloat(document.getElementById('tax-amount').value);
-            const resultElement = document.getElementById('tax-calculation-result');
-
-            if (!isNaN(taxAmount)) {
-                const tax = taxAmount * 0.13; // Ставка 13%
-                resultElement.textContent = `💰 Сумма налога: ${tax.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректную сумму дохода.';
-                resultElement.className = 'result error';
-            }
+        
+        // Кнопка наверх
+        document.getElementById('to-top-btn').addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         });
-
+        
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                let content = this.nextElementSibling;
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
+        });
+        
+        // Анимация появления блоков при скролле
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.section-card');
+            
+            function checkVisible() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.75) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Первичная проверка при загрузке
+            checkVisible();
+            
+            // Проверка при скролле
+            window.addEventListener('scroll', checkVisible);
         });
     </script>
 </body>

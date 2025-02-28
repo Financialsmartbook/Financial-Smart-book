@@ -1,254 +1,1302 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Как платить налогов меньше. Налоговые вычеты</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6366f1;
-      --secondary: #4f46e5;
-      --accent: #818cf8;
-      --background: #f8fafc;
-      --text-dark: #1e293b;
-      --text-light: #f1f5f9;
-      --glass: rgba(255, 255, 255, 0.9);
-      --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      --success: #10b981;
-      --error: #ef4444;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      line-height: 1.7;
-      background: var(--background);
-      color: var(--text-dark);
-      overflow-x: hidden;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    .hero-section {
-      position: relative;
-      margin: 2rem 0 4rem;
-      padding: 4rem 2rem;
-      background: var(--gradient);
-      border-radius: 2rem;
-      color: white;
-      overflow: hidden;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .hero-title {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .section-card {
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      border-radius: 1.5rem;
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--shadow);
-      transition: transform 0.3s ease;
-    }
-    .section-card:hover {
-      transform: translateY(-5px);
-    }
-    .accordion-header {
-      padding: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(99, 102, 241, 0.1);
-      transition: background 0.3s ease;
-    }
-    .accordion-header:hover {
-      background: rgba(99, 102, 241, 0.2);
-    }
-    .accordion-content {
-      padding: 0 1.5rem;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-    .accordion-content.active {
-      padding: 1.5rem;
-      max-height: 1000px;
-    }
-    .interactive-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-    .calculator {
-      background: var(--glass);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: var(--shadow);
-    }
-    .animated-image {
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .feature-icon {
-      color: var(--primary);
-      font-size: 2rem;
-      margin-right: 1rem;
-    }
-    .feature-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    .highlight {
-      background: var(--accent);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как платить налогов меньше. Налоговые вычеты - Смарт-учебник</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #818cf8;
+            --background: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.9);
+            --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --background: #1e293b;
+            --text-dark: #e5e7eb;
+            --text-light: #9ca3af;
+            --glass: rgba(31, 41, 55, 0.9);
+            --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
+            --shadow-md: var(--shadow);
+            --border: #374151;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+            min-height: 100vh;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .hero-section {
+            position: relative;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
+            background: var(--gradient);
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        .hero-content {
+            max-width: 60%;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        .hero-title {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+            line-height: 1.2;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .hero-image {
+            width: clamp(150px, 30vw, 350px);
+            border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .section-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: clamp(1.5rem, 3vw, 3rem);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.15), -8px -8px 25px rgba(255, 255, 255, 0.9);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+            color: var(--secondary);
+            font-weight: 800;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+        }
+
+        .feature-item {
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(1rem, 1.5vw, 1.5rem);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            color: var(--secondary);
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+            margin-top: 3px;
+            flex-shrink: 0;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .highlight {
+            background: var(--gradient);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .accordion {
+            background: var(--glass);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: clamp(1rem, 1.5vw, 1.5rem);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-header {
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.4s ease, transform 0.4s ease;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .accordion-header i {
+            color: var(--secondary);
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 clamp(1.2rem, 1.75vw, 1.75rem);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .accordion-content.active {
+            padding: clamp(1.2rem, 1.75vw, 1.75rem);
+            max-height: 1000px;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: clamp(1.2rem, 1.5vw, 1.5rem);
+            margin-top: clamp(1.5rem, 2vw, 2rem);
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.8);
+            padding: clamp(1.2rem, 1.5vw, 1.5rem);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calculator h4 {
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .radio-label:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(5px);
+        }
+
+        input[type="radio"] {
+            accent-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .result.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .tax-tip {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: clamp(1rem, 1.5vw, 1.5rem);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: clamp(1.5rem, 2vw, 2rem) 0;
+        }
+
+        .tax-tip h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .steps-list {
+            margin: 1.5rem 0;
+            counter-reset: step;
+        }
+
+        .step-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .step-number {
+            background: var(--gradient);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-right: 1rem;
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-content {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            flex: 1;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--secondary);
+            padding: 0.35rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .toc {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .toc h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .toc-item {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .toc-item::before {
+            content: "";
+            position: absolute;
+            left: -1rem;
+            top: 0.75rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+        .toc-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .toc-link:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        #to-top-btn {
+            position: fixed;
+            bottom: clamp(20px, 3vw, 30px);
+            right: clamp(20px, 3vw, 30px);
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, 5vw, 60px);
+            height: clamp(40px, 5vw, 60px);
+            font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+            cursor: pointer;
+            display: none;
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        #to-top-btn:hover {
+            transform: scale(1.15);
+            background: var(--secondary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: clamp(1rem, 2vw, 1.5rem);
+            right: clamp(1.5rem, 3vw, 2rem);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+            padding: clamp(0.5rem, 1vw, 0.75rem);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 5;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .hero-image {
+                max-width: 250px;
+            }
+
+            .section-title {
+                text-align: center;
+            }
+
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .calculator {
+                padding: 1rem;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Hero Section -->
-    <header class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">Как платить налогов меньше. Налоговые вычеты</h1>
-        <p class="hero-description">
-          Узнайте о налоговых льготах, вычетах и способах уменьшения налоговой нагрузки.
-        </p>
-      </div>
-      <img src="taxes.png" alt="Налоги" class="hero-image animated-image">
-    </header>
+    <div id="progress-bar"></div>
 
-    <main>
-      <!-- Раздел: Льготы по НДФЛ -->
-      <section class="section-card">
-        <h2 class="section-title">Льготы по НДФЛ</h2>
-        <div class="feature-item">
-          <i class="fas fa-hand-holding-usd feature-icon"></i>
-          <p><span class="highlight">Семьи с детьми</span> могут получить льготы при среднедушевом доходе менее 1,5 прожиточных минимумов.</p>
-        </div>
-        <div class="feature-item">
-          <i class="fas fa-users feature-icon"></i>
-          <p><span class="highlight">Участники ГТО</span> получают налоговый вычет за сдачу нормативов.</p>
-        </div>
-        <div class="accordion">
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <span>Кто может получить льготы?</span>
-              <i class="fas fa-chevron-down"></i>
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <button class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <div class="hero-content">
+                <span class="hero-badge">Финансовая грамотность</span>
+                <h1 class="hero-title">Как платить налогов меньше. Налоговые вычеты</h1>
+                <p class="hero-description">
+                    Узнайте о законных способах снижения налоговой нагрузки с помощью налоговых вычетов и льгот. Экономьте деньги и увеличивайте личный бюджет.
+                </p>
             </div>
-            <div class="accordion-content">
-              <p>
-                Право на льготы имеют семьи, где:
-                <ul>
-                  <li>Всем детям до 18 лет или до 23 лет включительно, если они учатся очно.</li>
-                  <li>Среднедушевой доход не более 1,5 прожиточного минимума.</li>
-                  <li>Все члены семьи — налоговые резиденты России.</li>
-                </ul>
-              </p>
-            </div>
-          </div>
+            
+            <img src="expenses.png" alt="Налоговые вычеты" class="hero-image">
+        </header>
+
+        <!-- Содержание -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Содержание</h3>
+            <ul class="toc-list">
+                <li class="toc-item"><a href="#what-are-tax-deductions" class="toc-link">Что такое налоговые вычеты?</a></li>
+                <li class="toc-item"><a href="#standard-deductions" class="toc-link">Стандартные налоговые вычеты</a></li>
+                <li class="toc-item"><a href="#social-deductions" class="toc-link">Социальные налоговые вычеты</a></li>
+                <li class="toc-item"><a href="#property-deductions" class="toc-link">Имущественные налоговые вычеты</a></li>
+                <li class="toc-item"><a href="#investment-deductions" class="toc-link">Инвестиционные налоговые вычеты</a></li>
+                <li class="toc-item"><a href="#how-to-get" class="toc-link">Как получить налоговый вычет?</a></li>
+                <li class="toc-item"><a href="#calculators" class="toc-link">Калькуляторы</a></li>
+            </ul>
         </div>
-      </section>
 
-      <!-- Интерактивные задания -->
-      <section class="section-card">
-        <h3 class="section-title">Интерактивные задания</h3>
-        <div class="interactive-grid">
-          <!-- Тест: Категории льготников -->
-          <div class="calculator">
-            <h4>Тест: Категории льготников</h4>
-            <form id="tax-benefits-test">
-              <div class="form-group">
-                <label>
-                  <input type="radio" name="beneficiary" value="family"> Многодетная семья
-                </label>
-              </div>
-              <div class="form-group">
-                <label>
-                  <input type="radio" name="beneficiary" value="gto"> Участник ГТО
-                </label>
-              </div>
-              <button type="button" id="check-beneficiary-btn">Проверить</button>
-              <div id="tax-benefits-test-result" class="result"></div>
-            </form>
-          </div>
+        <main>
+            <!-- Что такое налоговые вычеты -->
+            <section id="what-are-tax-deductions" class="section-card">
+                <h2 class="section-title"><i class="fas fa-coins"></i> Что такое налоговые вычеты?</h2>
+                
+                <p>
+                    Налоговый вычет — это сумма, которая уменьшает размер дохода, с которого взимается налог, или возврат части ранее уплаченного налога. В России налоговые вычеты применяются к налогу на доходы физических лиц (НДФЛ), ставка которого составляет 13% (для резидентов).
+                </p>
+                
+                <div class="tax-tip">
+                    <h4><i class="fas fa-lightbulb"></i> Важно понимать!</h4>
+                    <p>
+                        Налоговый вычет — это не дополнительный доход или "подарок" от государства, а возврат части уже уплаченного вами НДФЛ. Вернуть можно только те деньги, которые вы уже заплатили в качестве подоходного налога.
+                    </p>
+                </div>
+                
+                <p>
+                    Согласно Налоговому кодексу РФ, существует несколько видов налоговых вычетов:
+                </p>
+                
+                <div class="tag-list">
+                    <span class="tag">Стандартные</span>
+                    <span class="tag">Социальные</span>
+                    <span class="tag">Имущественные</span>
+                    <span class="tag">Инвестиционные</span>
+                    <span class="tag">Профессиональные</span>
+                </div>
+                
+                <p>
+                    Каждый вид вычета имеет свои условия предоставления, ограничения по сумме и порядок оформления. В этом уроке мы подробно рассмотрим основные виды вычетов и расскажем, как их получить.
+                </p>
+            </section>
 
-          <!-- Калькулятор налогового вычета -->
-          <div class="calculator">
-            <h4>Калькулятор налогового вычета</h4>
-            <input type="number" id="income-amount" placeholder="Сумма доходов (руб)">
-            <button type="button" id="calculate-tax-deduction-btn">Рассчитать</button>
-            <div id="tax-deduction-calculation-result" class="result"></div>
-          </div>
-        </div>
-      </section>
-    </main>
+            <!-- Стандартные налоговые вычеты -->
+            <section id="standard-deductions" class="section-card">
+                <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Стандартные налоговые вычеты</h2>
+                
+                <p>
+                    Стандартные налоговые вычеты предоставляются определенным категориям налогоплательщиков и родителям, опекунам или попечителям, на обеспечении которых находятся дети.
+                </p>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-users feature-icon"></i>
+                        <div>
+                            <strong>Налоговые вычеты на детей</strong>
+                            <p>
+                                Предоставляются родителям, усыновителям, опекунам и попечителям на каждого ребенка до 18 лет или учащегося очной формы обучения до 24 лет:
+                            </p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>1 400 рублей – на первого и второго ребенка</li>
+                                <li>3 000 рублей – на третьего и каждого последующего ребенка</li>
+                                <li>12 000 рублей – на ребенка-инвалида до 18 лет или учащегося очной формы обучения до 24 лет, если он является инвалидом I или II группы</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-medal feature-icon"></i>
+                        <div>
+                            <strong>Вычеты для льготных категорий граждан</strong>
+                            <p>
+                                500 рублей в месяц предоставляются следующим категориям:
+                            </p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Героям Советского Союза и Героям Российской Федерации</li>
+                                <li>Инвалидам с детства, инвалидам I и II групп</li>
+                                <li>Участникам Великой Отечественной войны</li>
+                                <li>Лицам, пострадавшим от радиации</li>
+                                <li>Другим категориям, указанным в ст. 218 НК РФ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tax-tip">
+                    <h4><i class="fas fa-info-circle"></i> Ограничение по доходу</h4>
+                    <p>
+                        Стандартные вычеты на детей предоставляются до месяца, в котором доход налогоплательщика, облагаемый по ставке 13%, превысил 350 000 рублей с начала года.
+                    </p>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как получить стандартный налоговый вычет?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Стандартные налоговые вычеты можно получить двумя способами:
+                            </p>
+                            <ol style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li>
+                                    <strong>Через работодателя:</strong> 
+                                    <p>Напишите заявление в бухгалтерию вашей компании и приложите документы, подтверждающие право на вычет (свидетельство о рождении ребенка, справку об инвалидности и т.д.).</p>
+                                </li>
+                                <li>
+                                    <strong>Через налоговую инспекцию:</strong> 
+                                    <p>По окончании года подайте декларацию 3-НДФЛ в налоговую инспекцию вместе с подтверждающими документами.</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-      <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-    </footer>
-  </div>
+            <!-- Социальные налоговые вычеты -->
+            <section id="social-deductions" class="section-card">
+                <h2 class="section-title"><i class="fas fa-heartbeat"></i> Социальные налоговые вычеты</h2>
+                
+                <p>
+                    Социальные налоговые вычеты позволяют вернуть часть средств, потраченных на социально значимые расходы: обучение, лечение, благотворительность, пенсионное обеспечение и др.
+                </p>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-graduation-cap feature-icon"></i>
+                        <div>
+                            <strong>Вычет на обучение</strong>
+                            <p>
+                                Можно получить 13% от суммы, потраченной на:
+                            </p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Собственное обучение в любой форме (до 120 000 рублей в год)</li>
+                                <li>Обучение детей до 24 лет по очной форме (до 50 000 рублей на каждого ребенка в год)</li>
+                                <li>Обучение братьев/сестер до 24 лет по очной форме (до 120 000 рублей в год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-hospital-alt feature-icon"></i>
+                        <div>
+                            <strong>Вычет на лечение</strong>
+                            <p>
+                                Можно вернуть 13% от расходов на:
+                            </p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Медицинские услуги для себя, супруга(и), родителей и детей до 18 лет</li>
+                                <li>Лекарства, назначенные врачом</li>
+                                <li>Взносы на ДМС</li>
+                            </ul>
+                            <p style="margin-top: 0.5rem;">Для обычного лечения и лекарств — до 120 000 рублей в год (вместе с другими социальными вычетами). Для дорогостоящего лечения — без ограничения суммы.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-hand-holding-heart feature-icon"></i>
+                        <div>
+                            <strong>Другие социальные вычеты</strong>
+                            <p>
+                                Также предусмотрены вычеты за:
+                            </p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Благотворительность (до 25% годового дохода)</li>
+                                <li>Взносы на негосударственное пенсионное обеспечение и страхование</li>
+                                <li>Взносы на накопительную часть пенсии</li>
+                                <li>Независимую оценку квалификации</li>
+                                <li>Физкультурно-оздоровительные услуги</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tax-tip">
+                    <h4><i class="fas fa-exclamation-circle"></i> Важное ограничение</h4>
+                    <p>
+                        Общая сумма социальных вычетов (за исключением расходов на благотворительность и дорогостоящее лечение) ограничена 120 000 рублей в год. Это означает, что максимальная сумма возврата составит 15 600 рублей (120 000 × 13%).
+                    </p>
+                </div>
+            </section>
 
-  <script>
-    // Тест: Категории льготников
-    document.getElementById('check-beneficiary-btn').addEventListener('click', () => {
-      const selected = document.querySelector('input[name="beneficiary"]:checked');
-      const resultElement = document.getElementById('tax-benefits-test-result');
-      if (selected && selected.value === 'family') {
-        resultElement.textContent = '✅ Правильно! Многодетные семьи имеют право на льготы.';
-        resultElement.className = 'result success';
-      } else {
-        resultElement.textContent = '❌ Неверно. Многодетные семьи имеют право на льготы.';
-        resultElement.className = 'result error';
-      }
-    });
+            <!-- Имущественные налоговые вычеты -->
+            <section id="property-deductions" class="section-card">
+                <h2 class="section-title"><i class="fas fa-home"></i> Имущественные налоговые вычеты</h2>
+                
+                <p>
+                    Имущественные налоговые вычеты позволяют вернуть часть НДФЛ при покупке жилья, земельных участков, строительстве дома или выплате процентов по ипотеке.
+                </p>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-building feature-icon"></i>
+                        <div>
+                            <strong>Вычет при покупке или строительстве жилья</strong>
+                            <p>
+                                Возврат 13% от расходов на:
+                            </p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Покупку квартиры, дома, комнаты или доли в них</li>
+                                <li>Приобретение земельного участка для строительства жилого дома</li>
+                                <li>Строительство или отделку жилого дома</li>
+                            </ul>
+                            <p style="margin-top: 0.5rem;">Максимальная сумма расходов, с которых можно получить вычет, составляет 2 млн рублей (то есть вернуть можно до 260 000 рублей).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-percentage feature-icon"></i>
+                        <div>
+                            <strong>Вычет по ипотечным процентам</strong>
+                            <p>
+                                Возврат 13% от суммы уплаченных процентов по целевым кредитам на приобретение или строительство жилья.
+                            </p>
+                            <p style="margin-top: 0.5rem;">Максимальная сумма расходов на проценты, с которых можно получить вычет, составляет 3 млн рублей (то есть вернуть можно до 390 000 рублей).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tax-tip">
+                    <h4><i class="fas fa-info-circle"></i> Важно знать</h4>
+                    <p>
+                        Имущественный вычет при покупке жилья можно получить только один раз в жизни, но если вы не использовали максимальную сумму вычета (2 млн рублей), остаток можно использовать при покупке другого жилья. Вычет по ипотечным процентам предоставляется только по одному объекту недвижимости.
+                    </p>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Какие документы нужны для получения имущественного вычета?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Для получения имущественного вычета необходимо подготовить:
+                            </p>
+                            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li>Декларацию 3-НДФЛ</li>
+                                <li>Справку 2-НДФЛ о доходах (берется у работодателя)</li>
+                                <li>Документы, подтверждающие право собственности (выписка из ЕГРН, договор купли-продажи)</li>
+                                <li>Документы, подтверждающие расходы (платежные поручения, расписки, банковские выписки)</li>
+                                <li>Если жилье приобреталось в кредит — кредитный договор и справку о выплаченных процентах</li>
+                                <li>Заявление на возврат НДФЛ с указанием банковских реквизитов</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    // Калькулятор налогового вычета
-    document.getElementById('calculate-tax-deduction-btn').addEventListener('click', () => {
-      const incomeAmount = parseFloat(document.getElementById('income-amount').value);
-      const resultElement = document.getElementById('tax-deduction-calculation-result');
-      if (!isNaN(incomeAmount)) {
-        const deduction = incomeAmount * 0.13; // 13% НДФЛ
-        resultElement.textContent = `💰 Сумма налогового вычета: ${deduction.toFixed(2)} руб.`;
-        resultElement.className = 'result success';
-      } else {
-        resultElement.textContent = '⚠️ Пожалуйста, введите корректную сумму доходов.';
-        resultElement.className = 'result error';
-      }
-    });
+            <!-- Инвестиционные налоговые вычеты -->
+            <section id="investment-deductions" class="section-card">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Инвестиционные налоговые вычеты</h2>
+                
+                <p>
+                    Инвестиционные налоговые вычеты предназначены для стимулирования долгосрочных инвестиций и предоставляются при определенных операциях с ценными бумагами и при инвестировании через индивидуальный инвестиционный счет (ИИС).
+                </p>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-wallet feature-icon"></i>
+                        <div>
+                            <strong>Вычет типа А (на взносы)</strong>
+                            <p>
+                                Позволяет вернуть 13% от суммы, внесенной на ИИС в течение года (максимум с 400 000 рублей в год, то есть до 52 000 рублей возврата).
+                            </p>
+                            <p style="margin-top: 0.5rem;">
+                                Для получения вычета необходимо иметь налогооблагаемый доход, с которого уплачивается НДФЛ по ставке 13%.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-piggy-bank feature-icon"></i>
+                        <div>
+                            <strong>Вычет типа Б (на доходы)</strong>
+                            <p>
+                                Освобождает от НДФЛ всю прибыль, полученную от операций на ИИС, при закрытии счета через 3 года или более после его открытия.
+                            </p>
+                            <p style="margin-top: 0.5rem;">
+                                Этот тип вычета подходит тем, у кого нет официального дохода, облагаемого НДФЛ, или кто рассчитывает на высокую доходность инвестиций.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tax-tip">
+                    <h4><i class="fas fa-lightbulb"></i> Совет</h4>
+                    <p>
+                        Вы можете использовать только один тип инвестиционного вычета по ИИС. Тип А обычно выгоден работающим гражданам с официальной зарплатой, а тип Б — тем, кто планирует получить значительный доход от инвестиций.
+                    </p>
+                </div>
+            </section>
 
-    // Аккордеон
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const content = header.nextElementSibling;
-        const icon = header.querySelector('i');
-        header.classList.toggle('active');
-        content.classList.toggle('active');
-        icon.classList.toggle('fa-chevron-up');
-        icon.classList.toggle('fa-chevron-down');
-      });
-    });
-  </script>
+            <!-- Как получить налоговый вычет -->
+            <section id="how-to-get" class="section-card">
+                <h2 class="section-title"><i class="fas fa-file-alt"></i> Как получить налоговый вычет?</h2>
+                
+                <p>
+                    Существует два основных способа получения налоговых вычетов:
+                </p>
+                
+                <div class="steps-list">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Через налоговую инспекцию</h4>
+                            <p>
+                                По окончании календарного года, в котором были произведены соответствующие расходы, вы можете подать декларацию 3-НДФЛ и заявление на возврат налога.
+                            </p>
+                            <p style="margin-top: 0.5rem;">
+                                Подать документы можно через личный кабинет налогоплательщика на сайте nalog.ru, в налоговой инспекции лично или через представителя, по почте заказным письмом с описью вложения.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Через работодателя</h4>
+                            <p>
+                                Некоторые вычеты (стандартные, социальные, имущественные) можно получать через работодателя в течение года, не дожидаясь его окончания.
+                            </p>
+                            <p style="margin-top: 0.5rem;">
+                                Для этого нужно получить в налоговой инспекции уведомление о праве на вычет и предоставить его работодателю. Работодатель перестанет удерживать НДФЛ с вашей зарплаты до исчерпания суммы вычета.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tax-tip">
+                    <h4><i class="fas fa-clock"></i> Сроки получения вычета</h4>
+                    <p>
+                        Налоговая инспекция должна рассмотреть вашу декларацию в течение 3 месяцев, после чего в течение 1 месяца должен быть произведен возврат налога. Таким образом, максимальный срок ожидания составляет 4 месяца.
+                    </p>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Срок давности для налоговых вычетов</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Заявить налоговый вычет можно в течение 3 лет с момента окончания года, в котором возникло право на вычет. Например:
+                            </p>
+                            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li>Если вы оплатили лечение в 2023 году, подать декларацию для получения вычета можно до конца 2026 года.</li>
+                                <li>Если вы купили квартиру в 2022 году, подать декларацию можно до конца 2025 года.</li>
+                            </ul>
+                            <p style="margin-top: 1rem;">
+                                Обратите внимание, что имущественный вычет при покупке жилья не имеет срока давности по возникновению права: если вы купили квартиру 10 лет назад и не получали вычет, вы можете подать декларацию сейчас, но вернуть налог можно только за последние 3 года.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Калькуляторы -->
+            <section id="calculators" class="section-card">
+                <h2 class="section-title"><i class="fas fa-calculator"></i> Рассчитайте свой налоговый вычет</h2>
+                
+                <div class="interactive-grid">
+                    <!-- Калькулятор НДФЛ -->
+                    <div class="calculator">
+                        <h4>Калькулятор имущественного вычета</h4>
+                        <div class="form-group">
+                            <label for="property-price">Стоимость жилья (руб.)</label>
+                            <input type="number" id="property-price" placeholder="Например: 5000000">
+                        </div>
+                        <div class="form-group">
+                            <label for="mortgage-interest">Сумма уплаченных процентов по ипотеке (руб.)</label>
+                            <input type="number" id="mortgage-interest" placeholder="Например: 1000000">
+                        </div>
+                        <button id="calculate-property-deduction">
+                            Рассчитать вычет
+                            <i class="fas fa-calculator"></i>
+                        </button>
+                        <div class="result" id="property-deduction-result"></div>
+                    </div>
+                    
+                    <!-- Калькулятор социального вычета -->
+                    <div class="calculator">
+                        <h4>Калькулятор социального вычета</h4>
+                        <div class="form-group">
+                            <label for="education-expenses">Расходы на обучение (руб.)</label>
+                            <input type="number" id="education-expenses" placeholder="Например: 80000">
+                        </div>
+                        <div class="form-group">
+                            <label for="medical-expenses">Расходы на лечение (руб.)</label>
+                            <input type="number" id="medical-expenses" placeholder="Например: 50000">
+                        </div>
+                        <button id="calculate-social-deduction">
+                            Рассчитать вычет
+                            <i class="fas fa-calculator"></i>
+                        </button>
+                        <div class="result" id="social-deduction-result"></div>
+                    </div>
+                </div>
+                
+                <!-- Тест на знание налоговых вычетов -->
+                <div style="margin-top: 2rem;">
+                    <h4 style="color: var(--secondary); margin-bottom: 1rem;">Проверьте свои знания о налоговых вычетах</h4>
+                    <div class="calculator">
+                        <h4>Тест: Категории налоговых вычетов</h4>
+                        <div class="radio-group">
+                            <p style="margin-bottom: 0.5rem; font-weight: 600;">Какой максимальный размер имущественного вычета при покупке жилья?</p>
+                            <label class="radio-label">
+                                <input type="radio" name="tax-test" value="a"> 1 000 000 рублей
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="tax-test" value="b"> 2 000 000 рублей
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="tax-test" value="c"> 3 000 000 рублей
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="tax-test" value="d"> 5 000 000 рублей
+                            </label>
+                        </div>
+                        <button id="check-tax-test">
+                            Проверить ответ
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                        <div class="result" id="tax-test-result"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer style="text-align: center; margin-top: 3rem; color: var(--text-light); opacity: 0.7;">
+            <p>&copy; 2025 Смарт-учебник. Все права защищены.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Представленная информация носит справочный характер и не является финансовой консультацией.</p>
+        </footer>
+    </div>
+    
+    <button id="to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Прогресс скролла
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.scrollY;
+            let docHeight = document.body.offsetHeight - window.innerHeight;
+            let scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Показ кнопки "наверх"
+            if (scrollTop > 300) {
+                document.getElementById('to-top-btn').style.display = 'block';
+            } else {
+                document.getElementById('to-top-btn').style.display = 'none';
+            }
+        });
+        
+        // Кнопка наверх
+        document.getElementById('to-top-btn').addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+        
+        // Аккордеон
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                let content = this.nextElementSibling;
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
+            });
+        });
+        
+        // Анимация появления блоков при скролле
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.section-card');
+            
+            function checkVisible() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.75) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Первичная проверка при загрузке
+            checkVisible();
+            
+            // Проверка при скролле
+            window.addEventListener('scroll', checkVisible);
+        });
+        
+        // Калькулятор имущественного вычета
+        document.getElementById('calculate-property-deduction').addEventListener('click', function() {
+            const propertyPrice = parseFloat(document.getElementById('property-price').value) || 0;
+            const mortgageInterest = parseFloat(document.getElementById('mortgage-interest').value) || 0;
+            
+            const resultElement = document.getElementById('property-deduction-result');
+            
+            const propertyDeductionBase = Math.min(propertyPrice, 2000000);
+            const propertyDeduction = propertyDeductionBase * 0.13;
+            
+            const interestDeductionBase = Math.min(mortgageInterest, 3000000);
+            const interestDeduction = interestDeductionBase * 0.13;
+            
+            const totalDeduction = propertyDeduction + interestDeduction;
+            
+            resultElement.innerHTML = `
+                <p>Вычет за покупку жилья: <strong>${propertyDeduction.toLocaleString('ru-RU')} руб.</strong></p>
+                <p>Вычет за проценты по ипотеке: <strong>${interestDeduction.toLocaleString('ru-RU')} руб.</strong></p>
+                <p>Общая сумма к возврату: <strong>${totalDeduction.toLocaleString('ru-RU')} руб.</strong></p>
+            `;
+            resultElement.classList.add('success', 'active');
+        });
+        
+        // Калькулятор социального вычета
+        document.getElementById('calculate-social-deduction').addEventListener('click', function() {
+            const educationExpenses = parseFloat(document.getElementById('education-expenses').value) || 0;
+            const medicalExpenses = parseFloat(document.getElementById('medical-expenses').value) || 0;
+            
+            const resultElement = document.getElementById('social-deduction-result');
+            
+            const totalExpenses = educationExpenses + medicalExpenses;
+            const limitedExpenses = Math.min(totalExpenses, 120000);
+            const deduction = limitedExpenses * 0.13;
+            
+            resultElement.innerHTML = `
+                <p>Общие расходы: <strong>${totalExpenses.toLocaleString('ru-RU')} руб.</strong></p>
+                <p>С учетом лимита 120 000 руб.: <strong>${limitedExpenses.toLocaleString('ru-RU')} руб.</strong></p>
+                <p>Сумма к возврату: <strong>${deduction.toLocaleString('ru-RU')} руб.</strong></p>
+            `;
+            resultElement.classList.add('success', 'active');
+        });
+        
+        // Тест на знание налоговых вычетов
+        document.getElementById('check-tax-test').addEventListener('click', function() {
+            const selectedAnswer = document.querySelector('input[name="tax-test"]:checked');
+            const resultElement = document.getElementById('tax-test-result');
+            
+            if (selectedAnswer) {
+                if (selectedAnswer.value === 'b') {
+                    resultElement.innerHTML = 'Правильно! Максимальный размер имущественного вычета при покупке жилья составляет 2 000 000 рублей, что позволяет вернуть до 260 000 рублей налога.';
+                    resultElement.classList.add('success', 'active');
+                    resultElement.classList.remove('error');
+                } else {
+                    resultElement.innerHTML = 'Неправильно. Максимальный размер имущественного вычета при покупке жилья составляет 2 000 000 рублей, что позволяет вернуть до 260 000 рублей налога.';
+                    resultElement.classList.add('error', 'active');
+                    resultElement.classList.remove('success');
+                }
+            } else {
+                resultElement.innerHTML = 'Пожалуйста, выберите вариант ответа.';
+                resultElement.classList.add('error', 'active');
+                resultElement.classList.remove('success');
+            }
+        });
+        
+        // Переключение темы
+        document.querySelector('.theme-toggle').addEventListener('click', function() {
+            document.documentElement.dataset.theme = 
+                document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            
+            this.innerHTML = document.documentElement.dataset.theme === 'light' 
+                ? '<i class="fas fa-moon"></i>' 
+                : '<i class="fas fa-sun"></i>';
+        });
+    </script>
 </body>
 </html>

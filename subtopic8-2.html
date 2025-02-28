@@ -14,30 +14,44 @@
             --background: #f8fafc;
             --text-dark: #1e293b;
             --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.25);
+            --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
             --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
             --radius-lg: 1.5rem;
             --radius-md: 1rem;
             --success: #10b981;
             --error: #ef4444;
+            --border: #e2e8f0;
         }
 
         [data-theme="dark"] {
             --background: #1e293b;
             --text-dark: #e5e7eb;
             --text-light: #9ca3af;
-            --glass: rgba(31, 41, 55, 0.25);
+            --glass: rgba(31, 41, 55, 0.9);
             --gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-warm: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.2), 0 -2px 10px rgba(31, 41, 55, 0.5);
             --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.3), -4px -4px 20px rgba(31, 41, 55, 0.7);
+            --shadow-md: var(--shadow);
+            --border: #374151;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -47,6 +61,10 @@
             color: var(--text-dark);
             overflow-x: hidden;
             transition: background 0.5s ease;
+            min-height: 100vh;
+            text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
@@ -66,28 +84,70 @@
             background: var(--gradient);
             z-index: 1000;
             transition: width 0.3s ease;
-            box-shadow: 0 2px 15px rgba(79, 70, 229, 0.5);
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
             border-radius: 0 0 5px 5px;
         }
 
         .fixed-image {
             position: fixed;
             bottom: clamp(20px, 3vw, 30px);
-            left: clamp(20px, 3vw, 30px);
-            width: clamp(100px, 15vw, 200px);
+            right: clamp(20px, 3vw, 30px);
+            width: clamp(80px, 15vw, 180px);
             height: auto;
-            z-index: 2000; /* Выше всех элементов */
+            z-index: 2000;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
             transition: transform 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
         }
 
         .fixed-image:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .hero-section {
             position: relative;
-            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 4vw, 4rem);
-            padding: clamp(2rem, 4vw, 4rem) clamp(1rem, 2vw, 2rem);
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
             border-radius: var(--radius-lg);
             color: var(--text-light);
@@ -95,49 +155,146 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow-sm);
-            animation: gradientShift 10s ease infinite;
-            background-size: 200% 200%;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+            z-index: 1;
         }
 
         .hero-content {
             max-width: 60%;
             z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
         }
 
         .hero-title {
-            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
             font-weight: 900;
-            margin-bottom: clamp(0.5rem, 1vw, 1rem);
-            line-height: 1.2;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+            line-height: 1.1;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             gap: 1rem;
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hero-description {
-            font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
             opacity: 0.9;
             font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 3D эффект для изображения */
+        .hero-image-wrapper {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-image {
-            width: clamp(150px, 25vw, 300px);
+            width: clamp(150px, 30vw, 350px);
             border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.4s ease;
-            animation: float 3s ease-in-out infinite;
+            transition: transform 0.6s ease-out;
+            transform: rotateY(12deg) rotateX(5deg);
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2),
+                         0 0 40px rgba(79, 70, 229, 0.4);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
         }
 
-        .hero-image:hover {
-            transform: scale(1.05);
+        .hero-image-wrapper:hover .hero-image {
+            transform: rotateY(-12deg) rotateX(-5deg) scale(1.05);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+            z-index: 3;
+            pointer-events: none;
+            border-radius: calc(var(--radius-md) - 4px);
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 30%;
+            bottom: -30px;
+            left: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(10px);
+            transform: scaleX(0.8);
+            z-index: -1;
         }
 
         .theme-toggle {
             position: absolute;
             top: clamp(0.75rem, 1.5vw, 1.5rem);
-            left: clamp(0.75rem, 1.5vw, 2rem);
+            right: clamp(0.75rem, 1.5vw, 2rem);
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
@@ -146,6 +303,14 @@
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 10;
+            width: clamp(2.5rem, 4vw, 3.5rem);
+            height: clamp(2.5rem, 4vw, 3.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .theme-toggle:hover {
@@ -155,32 +320,37 @@
 
         .content-grid {
             display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-            gap: clamp(1rem, 2vw, 2rem);
-            margin-bottom: clamp(2rem, 4vw, 4rem);
+            grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+            gap: clamp(1.5rem, 3vw, 3rem);
+            margin-bottom: clamp(3rem, 5vw, 5rem);
             align-items: start;
+            position: relative;
         }
 
         .main-content {
             display: grid;
-            gap: clamp(1rem, 2vw, 2rem);
+            gap: clamp(1.5rem, 3vw, 3rem);
         }
 
         .section-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             border-radius: var(--radius-lg);
-            padding: clamp(1rem, 2vw, 2rem);
+            padding: clamp(1.2rem, 3vw, 3rem);
             box-shadow: var(--shadow-sm);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             opacity: 0;
             transform: translateY(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.6s forwards ease-out;
+            animation-delay: calc(var(--delay, 0) * 0.2s);
         }
 
-        .section-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .section-card:hover {
@@ -197,6 +367,11 @@
             align-items: center;
             gap: 0.75rem;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: clamp(1.2rem, 2.2vw, 1.8rem);
         }
 
         .features-list {
@@ -259,6 +434,7 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.15);
             transition: background 0.4s ease, transform 0.4s ease;
+            font-weight: 600;
         }
 
         .accordion-header:hover {
@@ -280,6 +456,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease, padding 0.4s ease;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .accordion-content.active {
@@ -290,7 +467,7 @@
         .test-section {
             position: sticky;
             top: clamp(1rem, 2vw, 2rem);
-            max-width: clamp(300px, 35vw, 450px);
+            max-width: 100%;
         }
 
         .test-card {
@@ -313,6 +490,13 @@
             color: var(--secondary);
             margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-card h3 i {
+            color: var(--primary);
         }
 
         .question {
@@ -365,7 +549,7 @@
 
         .button:hover {
             transform: scale(1.05);
-            background: var(--secondary);
+            background-position: right center;
             box-shadow: 6px 6px 20px rgba(79, 70, 229, 0.4);
         }
 
@@ -379,317 +563,449 @@
             box-shadow: var(--shadow-xs);
         }
 
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+        .test-result.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            display: block;
         }
 
-        a:hover {
-            color: var(--secondary);
-            text-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
+        .test-result.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+            display: block;
         }
 
-        #to-top-btn {
-            position: fixed;
-            bottom: clamp(20px, 3vw, 30px);
-            right: clamp(20px, 3vw, 30px);
-            background: var(--gradient);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: clamp(40px, 5vw, 60px);
-            height: clamp(40px, 5vw, 60px);
-            font-size: clamp(1rem, 2vw, 1.75rem);
-            cursor: pointer;
-            display: none;
-            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
-            z-index: 1000;
+        footer {
+            margin-top: clamp(2rem, 4vw, 4rem);
+            padding: clamp(1.5rem, 3vw, 3rem);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            text-align: center;
             box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        #to-top-btn:hover {
-            transform: scale(1.15);
-            background: var(--secondary);
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.5);
+        footer p {
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .info-card {
+            padding: clamp(0.75rem, 1.5vw, 1rem);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xs);
+            margin-top: clamp(0.75rem, 1.5vw, 1rem);
+            border-left: 4px solid var(--primary);
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .info-card p {
+            margin: 0;
+            font-size: clamp(0.85rem, 1.3vw, 0.95rem);
         }
 
-        @media (min-width: 1440px) {
-            .content-grid {
-                grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
-            }
-        }
-
-        @media (max-width: 1024px) {
+        /* Адаптивная верстка для мобильных устройств */
+        @media (max-width: 768px) {
             .content-grid {
                 grid-template-columns: 1fr;
-                gap: clamp(1.5rem, 3vw, 3rem);
-            }
-
-            .test-section {
-                position: static;
-                max-width: 700px;
-                margin: 0 auto;
             }
 
             .hero-section {
                 flex-direction: column;
                 text-align: center;
+                padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2vw, 1.5rem);
             }
 
             .hero-content {
                 max-width: 100%;
+                margin-bottom: clamp(1.5rem, 3vw, 2rem);
             }
 
-            .hero-image {
-                margin-top: clamp(1rem, 2vw, 2rem);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: clamp(0.75rem, 2vw, 1.5rem);
-            }
-
-            .hero-section {
-                padding: clamp(1.5rem, 3vw, 3rem) clamp(0.75rem, 1.5vw, 1.5rem);
-            }
-
-            .section-card, .test-card {
-                padding: clamp(0.75rem, 1.5vw, 1.5rem);
-            }
-
-            .hero-title {
-                font-size: clamp(1.25rem, 3vw, 2rem);
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .hero-description {
-                font-size: clamp(0.8rem, 1.5vw, 1rem);
+                max-width: 100%;
             }
-        }
 
-        @media (max-width: 480px) {
+            .hero-image-wrapper {
+                perspective: none;
+            }
+
             .hero-image {
-                width: 100%;
+                width: clamp(120px, 60vw, 250px);
+                transform: none;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             }
 
-            .features-item {
-                flex-direction: column;
-                align-items: flex-start;
+            .hero-image-wrapper:hover .hero-image {
+                transform: scale(1.05);
             }
 
-            .section-title {
-                font-size: clamp(1rem, 2vw, 1.5rem);
-            }
-
-            .test-card h3 {
-                font-size: clamp(0.9rem, 1.5vw, 1.25rem);
-            }
-
-            #to-top-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .fixed-image {
-                width: clamp(80px, 12vw, 100px);
+            .test-section {
+                position: static;
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div id="progress-bar"></div>
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <div class="container">
         <section class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title"><i class="fas fa-hand-holding-usd"></i> Виды социальных выплат и как их получить</h1>
-                <p class="hero-description">Узнайте, какие федеральные и региональные выплаты доступны, зачем нужен прожиточный минимум и как начать получать социальные выплаты.</p>
+                <div class="hero-badge">
+                    <i class="fas fa-crown"></i> Смарт-учебник
+                </div>
+                <h1 class="hero-title">
+                    Виды социальных выплат и как их получить
+                </h1>
+                <p class="hero-description">
+                    Полное руководство по социальным выплатам: каким категориям граждан положены, как оформить и получить государственную помощь.
+                </p>
             </div>
-            <img src="calc.png" alt="Социальные выплаты" class="hero-image">
-            <button class="theme-toggle" onclick="toggleTheme()">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+            <div class="hero-image-wrapper">
+                <img src="gospoderjka.png" alt="Социальные выплаты" class="hero-image">
+            </div>
         </section>
 
-        <p>Социальные выплаты – это важный инструмент государственной поддержки, который помогает гражданам в различных жизненных ситуациях. Давайте разберем, какие виды выплат существуют и как их получить.</p>
-
         <div class="content-grid">
-            <div class="main-content">
-                <div class="section-card">
-                    <h2 class="section-title"><i class="fas fa-info-circle"></i> Федеральные и региональные выплаты</h2>
-                    <p>Социальные выплаты делятся на федеральные и региональные в зависимости от уровня их введения и действия.</p>
+            <main class="main-content">
+                <div class="section-card" style="--delay: 0">
+                    <h2 class="section-title">
+                        <i class="fas fa-landmark"></i> Что такое социальные выплаты
+                    </h2>
+                    <p>Социальные выплаты — это денежные пособия гражданам от государства, которые выплачиваются в случаях, установленных законодательством РФ. Выплаты предназначены для социальной поддержки определенных категорий населения.</p>
+                    
+                    <div class="info-card">
+                        <p><strong>Важно:</strong> Получение социальных выплат — это право, а не привилегия. Если вы относитесь к категории граждан, которым положены выплаты, вы имеете полное право их получить.</p>
+                    </div>
+                </div>
+
+                <div class="section-card" style="--delay: 1">
+                    <h2 class="section-title">
+                        <i class="fas fa-coins"></i> Основные виды социальных выплат
+                    </h2>
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-child"></i>
+                            <div>
+                                <h3>Выплаты семьям с детьми</h3>
+                                <p>Пособия по беременности и родам, материнский капитал, ежемесячные пособия на детей до 3 лет, компенсации многодетным семьям.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-wheelchair"></i>
+                            <div>
+                                <h3>Выплаты для людей с инвалидностью</h3>
+                                <p>Ежемесячная денежная выплата (ЕДВ), пенсия по инвалидности, компенсация за средства реабилитации.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-person-cane"></i>
+                            <div>
+                                <h3>Выплаты пенсионерам</h3>
+                                <p>Страховые пенсии, социальные доплаты к пенсии, льготы и субсидии для пенсионеров.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-house-chimney"></i>
+                            <div>
+                                <h3>Жилищные субсидии</h3>
+                                <p>Субсидии на оплату жилищно-коммунальных услуг, льготы по оплате капитального ремонта, компенсации расходов.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div>
+                                <h3>Выплаты безработным</h3>
+                                <p>Пособие по безработице, стипендии на время профессионального обучения, материальная помощь.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="section-card" style="--delay: 2">
+                    <h2 class="section-title">
+                        <i class="fas fa-id-card"></i> Как оформить социальную выплату
+                    </h2>
+                    <p>Процесс оформления социальных выплат зависит от конкретного вида пособия, но в общем случае включает следующие шаги:</p>
+                    
                     <div class="accordion">
                         <div class="accordion-item">
                             <div class="accordion-header">
-                                <span><i class="fas fa-chevron-down"></i> Подробности</span>
+                                Шаг 1: Определите ваше право на выплату <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="accordion-content">
-                                <h3>Федеральные выплаты</h3>
-                                <p>Эти выплаты действуют на всей территории России и не зависят от региона проживания. Они устанавливаются федеральными законами, постановлениями правительства и указами Президента.</p>
-                                <ul class="features-list">
-                                    <li class="features-item"><i class="fas fa-user-clock"></i> Государственная пенсия</li>
-                                    <li class="features-item"><i class="fas fa-hand-holding-heart"></i> Ежемесячная выплата ветеранам, инвалидам и др.</li>
-                                    <li class="features-item"><i class="fas fa-baby-carriage"></i> Единовременное пособие при рождении ребенка</li>
-                                    <li class="features-item"><i class="fas fa-baby"></i> Материнский капитал</li>
+                                <p>Перед тем как начать процесс оформления, необходимо убедиться, что вы относитесь к категории граждан, которым положена данная выплата. Это можно сделать через официальные сайты государственных органов или при личной консультации в МФЦ или органах социальной защиты.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Шаг 2: Подготовьте необходимые документы <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Для оформления выплаты потребуется собрать пакет документов. Базовый набор включает:</p>
+                                <ul>
+                                    <li>Паспорт или иной документ, удостоверяющий личность</li>
+                                    <li>СНИЛС</li>
+                                    <li>Документы, подтверждающие право на получение выплаты (свидетельства о рождении детей, справки об инвалидности и т.д.)</li>
+                                    <li>Справки о доходах (для некоторых видов выплат)</li>
+                                    <li>Реквизиты банковского счета для перечисления средств</li>
                                 </ul>
-                                <p>С 1 февраля 2025 года выплаты проиндексированы на 9,5%.</p>
-
-                                <h3>Региональные выплаты</h3>
-                                <p>Устанавливаются субъектами РФ и зависят от региона регистрации. Часто привязаны к прожиточному минимуму (ПМ).</p>
-                                <ul class="features-list">
-                                    <li class="features-item"><i class="fas fa-users"></i> Единое пособие для семей с детьми</li>
-                                    <li class="features-item"><i class="fas fa-user-clock"></i> Доплата к пенсии до ПМ</li>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Шаг 3: Подайте заявление <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Заявление на получение социальной выплаты можно подать:</p>
+                                <ul>
+                                    <li>Через портал Госуслуги (gosuslugi.ru)</li>
+                                    <li>В многофункциональном центре (МФЦ)</li>
+                                    <li>В органах социальной защиты населения</li>
+                                    <li>В отделении Пенсионного фонда РФ (в зависимости от вида выплаты)</li>
                                 </ul>
+                                <p>При подаче заявления вам выдадут расписку о приеме документов с указанием даты, когда можно узнать о результате рассмотрения.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Шаг 4: Дождитесь решения <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Срок рассмотрения заявления зависит от вида выплаты и обычно составляет от 5 до 30 дней. О принятом решении вас уведомят способом, который вы указали в заявлении (по телефону, электронной почте или по почте).</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                Шаг 5: Получите выплату <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>В случае положительного решения средства будут перечислены на указанный вами счет в банке или выплачены другим удобным для вас способом, который предусмотрен для данного вида выплаты.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="section-card">
-                    <h2 class="section-title"><i class="fas fa-hand-holding-heart"></i> Социальные пособия и компенсации</h2>
-                    <p>Социальные пособия и компенсационные выплаты помогают в разных ситуациях. Вот основные виды:</p>
-                    <div class="accordion">
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span><i class="fas fa-chevron-down"></i> Подробности</span>
+                <div class="section-card" style="--delay: 3">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i> Полезные советы
+                    </h2>
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3>Проверяйте сроки</h3>
+                                <p>Многие выплаты имеют четкие сроки подачи заявлений. Например, пособие по беременности и родам нужно оформить в течение 6 месяцев со дня окончания отпуска по беременности и родам.</p>
                             </div>
-                            <div class="accordion-content">
-                                <h3>Социальные пособия</h3>
-                                <ul class="features-list">
-                                    <li class="features-item"><i class="fas fa-file-medical"></i> Пособие по временной нетрудоспособности</li>
-                                    <li class="features-item"><i class="fas fa-briefcase"></i> Пособие по безработице</li>
-                                    <li class="features-item"><i class="fas fa-baby-carriage"></i> Пособия на детей</li>
-                                    <li class="features-item"><i class="fas fa-cross"></i> Пособие на погребение</li>
-                                </ul>
-
-                                <h3>Компенсационные выплаты</h3>
-                                <ul class="features-list">
-                                    <li class="features-item"><i class="fas fa-user-clock"></i> Доплата к пенсии</li>
-                                    <li class="features-item"><i class="fas fa-hands-helping"></i> Уход за инвалидами</li>
-                                    <li class="features-item"><i class="fas fa-radiation"></i> Пострадавшим от техногенных аварий</li>
-                                </ul>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3>Следите за изменениями</h3>
+                                <p>Законодательство в сфере социальных выплат часто меняется. Регулярно проверяйте актуальную информацию на официальных сайтах государственных органов.</p>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3>Используйте электронные сервисы</h3>
+                                <p>Портал Госуслуг значительно упрощает процесс оформления многих выплат. Через него можно не только подать заявление, но и отследить статус его рассмотрения.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3>Не забывайте про региональные выплаты</h3>
+                                <p>Помимо федеральных, существуют региональные социальные выплаты. Их условия и размеры различаются в зависимости от региона проживания.</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
+            </main>
 
-            <div class="test-section">
+            <aside class="test-section">
                 <div class="test-card">
-                    <h3>Тест: Виды выплат</h3>
+                    <h3><i class="fas fa-clipboard-check"></i> Проверьте свои знания</h3>
+                    <p>Ответьте на вопросы, чтобы проверить, насколько хорошо вы усвоили материал.</p>
+                    
                     <div class="question">
-                        <p>1. Какие выплаты действуют по всей России?</p>
-                        <label><input type="radio" name="q1" value="a"> Региональные</label>
-                        <label><input type="radio" name="q1" value="b"> Федеральные</label>
+                        <p>1. Какой документ обязательно нужен для оформления большинства социальных выплат?</p>
+                        <label>
+                            <input type="radio" name="question1" value="1"> Водительское удостоверение
+                        </label>
+                        <label>
+                            <input type="radio" name="question1" value="2"> СНИЛС
+                        </label>
+                        <label>
+                            <input type="radio" name="question1" value="3"> Диплом об образовании
+                        </label>
                     </div>
+                    
                     <div class="question">
-                        <p>2. Что влияет на региональные выплаты?</p>
-                        <label><input type="radio" name="q2" value="a"> Прожиточный минимум</label>
-                        <label><input type="radio" name="q2" value="b"> Инфляция</label>
+                        <p>2. Через какой официальный портал можно подать заявление на большинство социальных выплат?</p>
+                        <label>
+                            <input type="radio" name="question2" value="1"> mosru.ru
+                        </label>
+                        <label>
+                            <input type="radio" name="question2" value="2"> gosuslugi.ru
+                        </label>
+                        <label>
+                            <input type="radio" name="question2" value="3"> pfrf.ru
+                        </label>
                     </div>
-                    <button class="button" onclick="checkQuiz(this)"><i class="fas fa-check"></i> Проверить</button>
-                    <div class="test-result"></div>
+                    
+                    <div class="question">
+                        <p>3. Какая категория граждан может получать выплаты на детей до 3 лет?</p>
+                        <label>
+                            <input type="radio" name="question3" value="1"> Только многодетные семьи
+                        </label>
+                        <label>
+                            <input type="radio" name="question3" value="2"> Только малоимущие семьи
+                        </label>
+                        <label>
+                            <input type="radio" name="question3" value="3"> Семьи с детьми до 3 лет при соблюдении определенных условий
+                        </label>
+                    </div>
+                    
+                    <button class="button" id="check-test">
+                        <i class="fas fa-check"></i> Проверить ответы
+                    </button>
+                    
+                    <div class="test-result" id="test-result"></div>
                 </div>
-            </div>
+                
+                <div class="test-card" style="margin-top: 20px;">
+                    <h3><i class="fas fa-link"></i> Полезные ссылки</h3>
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-external-link-alt"></i>
+                            <div>
+                                <h3>Портал Госуслуг</h3>
+                                <p>Официальный портал для оформления государственных услуг и социальных выплат.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-external-link-alt"></i>
+                            <div>
+                                <h3>Пенсионный фонд РФ</h3>
+                                <p>Информация о пенсиях, материнском капитале и других выплатах.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-external-link-alt"></i>
+                            <div>
+                                <h3>Фонд социального страхования</h3>
+                                <p>Сведения о пособиях по временной нетрудоспособности и материнству.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
         </div>
 
-        <h2 class="section-title"><i class="fas fa-question-circle"></i> Как узнать о положенных выплатах</h2>
-        <p>Чтобы узнать о положенных социальных выплатах, можно воспользоваться следующими способами:</p>
-        <ul class="features-list">
-            <li class="features-item"><i class="fas fa-laptop"></i> Личный кабинет на «Госуслугах» или региональном портале.</li>
-            <li class="features-item"><i class="fas fa-globe"></i> Официальные сайты органов власти региона.</li>
-            <li class="features-item"><i class="fas fa-phone"></i> Центр консультирования Социального фонда.</li>
-            <li class="features-item"><i class="fas fa-building"></i> МФЦ.</li>
-        </ul>
+        <footer>
+            <p>© 2025 Смарт-учебник – Все права защищены</p>
+        </footer>
     </div>
-    <img src="decor1.png" alt="Фиксированное изображение" class="fixed-image">
-    <button id="to-top-btn"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
+        // Прогресс-бар при прокрутке
+        const progressBar = document.getElementById('progress-bar');
+
         window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.getElementById('progress-bar').style.width = `${scrollPercent}%`;
+            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = window.scrollY;
+            const scrollPercentage = (scrollProgress / scrollTotal) * 100;
+            progressBar.style.width = scrollPercentage + '%';
         });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+        // Переключение темы
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        const themeIcon = themeToggle.querySelector('i');
 
-        document.querySelectorAll('.section-card').forEach(card => observer.observe(card));
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
 
+        // Аккордеон
         const accordionHeaders = document.querySelectorAll('.accordion-header');
+
         accordionHeaders.forEach(header => {
             header.addEventListener('click', () => {
                 const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                const isActive = content.classList.contains('active');
-
-                document.querySelectorAll('.accordion-content.active').forEach(active => {
-                    active.classList.remove('active');
-                    active.previousElementSibling.querySelector('i').classList.remove('active');
-                });
-
-                if (!isActive) {
-                    content.classList.add('active');
-                    icon.classList.add('active');
-                }
+                
+                header.classList.toggle('active');
+                content.classList.toggle('active');
             });
         });
 
-        function checkQuiz(button) {
-            const card = button.closest('.test-card');
-            const resultDiv = card.querySelector('.test-result');
-            let score = 0;
-            const answers = { q1: 'b', q2: 'a' };
+        // Тест
+        const checkTestButton = document.getElementById('check-test');
+        const testResult = document.getElementById('test-result');
 
-            const q1 = card.querySelector('input[name="q1"]:checked')?.value;
-            const q2 = card.querySelector('input[name="q2"]:checked')?.value;
-
-            if (q1 === answers.q1) score++;
-            if (q2 === answers.q2) score++;
-
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = `
-                <p>Вы набрали ${score} из 2 баллов.</p>
-                <p>Вопрос 1: ${q1 === answers.q1 ? '<i class="fa-solid fa-check"></i> Правильно' : '<i class="fa-solid fa-times"></i> Неправильно, правильный ответ: Федеральные'}</p>
-                <p>Вопрос 2: ${q2 === answers.q2 ? '<i class="fa-solid fa-check"></i> Правильно' : '<i class="fa-solid fa-times"></i> Неправильно, правильный ответ: Прожиточный минимум'}</p>
-            `;
-            resultDiv.style.background = score === 2 ? '#dcfce7' : '#fee2e2';
-            resultDiv.style.color = score === 2 ? 'var(--success)' : 'var(--error)';
-        }
-
-        const toTopBtn = document.getElementById('to-top-btn');
-        window.addEventListener('scroll', () => {
-            toTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        checkTestButton.addEventListener('click', () => {
+            const question1 = document.querySelector('input[name="question1"]:checked')?.value;
+            const question2 = document.querySelector('input[name="question2"]:checked')?.value;
+            const question3 = document.querySelector('input[name="question3"]:checked')?.value;
+            
+            if (!question1 || !question2 || !question3) {
+                testResult.textContent = 'Пожалуйста, ответьте на все вопросы!';
+                testResult.className = 'test-result error';
+                return;
+            }
+            
+            let correctAnswers = 0;
+            
+            if (question1 === '2') correctAnswers++;
+            if (question2 === '2') correctAnswers++;
+            if (question3 === '3') correctAnswers++;
+            
+            if (correctAnswers === 3) {
+                testResult.textContent = 'Отлично! Вы правильно ответили на все вопросы!';
+                testResult.className = 'test-result success';
+            } else {
+                testResult.textContent = `Вы ответили правильно на ${correctAnswers} из 3 вопросов. Попробуйте еще раз!`;
+                testResult.className = 'test-result error';
+            }
         });
 
-        toTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        // Анимация появления карточек при прокрутке
+        const sectionCards = document.querySelectorAll('.section-card');
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            html.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+        function animateOnScroll() {
+            sectionCards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (cardTop < windowHeight * 0.9) {
+                    card.classList.add('visible');
+                }
+            });
         }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
     </script>
 </body>
 </html>

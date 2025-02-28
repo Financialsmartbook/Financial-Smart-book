@@ -921,6 +921,109 @@
                 font-size: 90%;
             }
         }
+        .section-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.2rem, 3vw, 3rem);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 1;
+}
+
+.section-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    z-index: -1;
+}
+
+.section-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: clamp(1rem, 2vw, 2rem);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-description {
+    font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+    opacity: 0.8;
+    font-weight: 400;
+    margin-bottom: clamp(1rem, 2vw, 2rem);
+    line-height: 1.6;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.section-list-item {
+    font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+    opacity: 0.8;
+    font-weight: 400;
+    margin-bottom: clamp(0.5rem, 1vw, 1rem);
+    line-height: 1.6;
+    position: relative;
+    padding-left: 2rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-list-item::before {
+    content: '\f061'; /* Используем иконку Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    color: var(--accent);
+}
+
+.call-to-action {
+    background: var(--primary);
+    color: var(--text-light);
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 600;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.call-to-action:hover {
+    background: var(--secondary);
+}
+
+.footer {
+    background: var(--background);
+    color: var(--text-dark);
+    padding: clamp(2rem, 4vw, 4rem);
+    text-align: center;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+    opacity: 0.8;
+    font-weight: 400;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    z-index: -1;
+}
     </style>
 </head>
 <body>
