@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Виды финансового мошенничества - Смарт-учебник</title>
-    <!-- Подключение Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
@@ -20,6 +20,15 @@
             --success: #10b981;
             --error: #ef4444;
             --border: #e2e8f0;
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --warning-light: #fff3cd;
+            --warning: #ffc107;
+            --info-light: #f1f8ff;
+            --info: #0dcaf0;
         }
 
         * {
@@ -28,123 +37,430 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
             color: var(--text-dark);
             overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotateY(12deg) rotateX(5deg);
+            }
+            50% {
+                transform: translateY(-15px) rotateY(12deg) rotateX(5deg);
+            }
+            100% {
+                transform: translateY(0px) rotateY(12deg) rotateX(5deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .hero-section {
             position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+            z-index: 1;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 60%;
             z-index: 2;
-        }
-
-        .hero-title {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-description {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        .hero-image {
-            width: 400px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .section-card {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .section-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .section-title {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 30px;
             position: relative;
         }
 
-        .section-title::after {
-            content: '';
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        .hero-title {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+            line-height: 1.1;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .hero-title i {
+            font-size: 90%;
+        }
+
+        .hero-title::after {
+            content: "";
             position: absolute;
             bottom: -10px;
             left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--primary);
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 3D эффект для изображения */
+        .hero-image-wrapper {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image {
+            width: clamp(150px, 30vw, 400px);
+            border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            transform: rotateY(12deg) rotateX(5deg);
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2),
+                         0 0 40px rgba(79, 70, 229, 0.4);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-image-wrapper:hover .hero-image {
+            transform: rotateY(-12deg) rotateX(-5deg) scale(1.05);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+            z-index: 3;
+            pointer-events: none;
+            border-radius: calc(var(--radius-md) - 4px);
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 30%;
+            bottom: -30px;
+            left: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(10px);
+            transform: scaleX(0.8);
+            z-index: -1;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+            gap: clamp(1.5rem, 3vw, 3rem);
+            margin-bottom: clamp(3rem, 5vw, 5rem);
+            align-items: start;
+            position: relative;
+        }
+
+        .main-content {
+            display: grid;
+            gap: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: clamp(1.2rem, 3vw, 3rem);
+            box-shadow: var(--shadow);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .section-card:nth-child(odd) {
+            border-left: 4px solid var(--primary);
+        }
+
+        .section-card:nth-child(even) {
+            border-right: 4px solid var(--secondary);
+        }
+
+        .section-title {
+            font-size: clamp(1.3rem, 2.8vw, 2.2rem);
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 2vw, 1.8rem);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .section-title i {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 130%;
         }
 
         .features-list {
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 20px;
+            gap: clamp(0.8rem, 1.5vw, 1.2rem);
         }
 
         .features-item {
-            padding: 20px;
-            background: #f9f9fb;
-            border-radius: 10px;
+            padding: clamp(0.8rem, 1.5vw, 1.2rem);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,240,255,0.95) 100%);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: flex-start;
-            gap: 15px;
-            transition: transform 0.2s ease, background 0.2s ease;
+            gap: clamp(0.7rem, 1.2vw, 1rem);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border);
         }
 
         .features-item:hover {
-            transform: translateX(5px);
-            background: #f0f0f2;
+            transform: translateX(8px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
         }
 
         .features-item i {
             color: var(--primary);
-            font-size: 20px;
-            margin-top: 5px;
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            margin-top: 3px;
             flex-shrink: 0;
+            transition: transform 0.4s ease;
+        }
+
+        .features-item:hover i {
+            transform: scale(1.3);
+        }
+
+        .warning-box {
+            background: var(--warning-light);
+            border-left: 4px solid var(--warning);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            margin: clamp(1rem, 2vw, 1.5rem) 0;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .warning-box h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #856404;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .warning-box h3 i {
+            color: var(--warning);
+        }
+
+        .info-box {
+            background: var(--info-light);
+            border-left: 4px solid var(--info);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            margin: clamp(1rem, 2vw, 1.5rem) 0;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .info-box h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #0c5460;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .info-box h3 i {
+            color: var(--info);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .card {
+            background: var(--glass);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .card-title i {
+            color: var(--primary);
+            font-size: 1.3rem;
         }
 
         .accordion {
-            background: #ffffff;
-            border-radius: 15px;
+            background: var(--glass);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            margin-top: clamp(1rem, 1.8vw, 1.5rem);
+            box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border);
         }
 
         .accordion-item {
@@ -156,562 +472,538 @@
         }
 
         .accordion-header {
-            padding: 20px 30px;
+            padding: clamp(0.8rem, 1.5vw, 1.2rem);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f9f9fb;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(240,240,255,0.8) 100%);
             transition: background 0.3s ease;
-            font-weight: 600;
         }
 
         .accordion-header:hover {
-            background: #f0f0f2;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,240,255,0.9) 100%);
         }
 
-        .accordion-header i {
+        .accordion-title {
+            font-weight: 600;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: var(--secondary);
+        }
+
+        .accordion-icon {
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
             color: var(--primary);
             transition: transform 0.3s ease;
         }
 
-        .accordion-header.active i {
-            transform: rotate(180deg);
-        }
-
         .accordion-content {
-            padding: 0 30px;
             max-height: 0;
             overflow: hidden;
+            padding: 0 clamp(0.8rem, 1.5vw, 1.2rem);
+            background: rgba(255,255,255,0.5);
             transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
-        .accordion-content.active {
-            padding: 30px;
-            max-height: 1000px;
-        }
-
-        .info-box {
-            background: #f8f9fa;
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
+        .accordion-content p {
+            padding: clamp(0.5rem, 1vw, 0.8rem) 0;
+            color: var(--text-dark);
+            opacity: 0.9;
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
         }
 
         .quiz-container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
+            background: var(--glass);
+            padding: clamp(1.2rem, 2.5vw, 2rem);
+            border-radius: var(--radius-md);
             box-shadow: var(--shadow);
-            margin-top: 20px;
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+            border: 1px solid var(--border);
         }
 
         .quiz-question {
-            margin-bottom: 20px;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
             font-weight: 600;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            color: var(--secondary);
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
         }
 
         .quiz-options label {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 5px;
-            background: #f9f9fb;
-            transition: background 0.3s ease;
+            border: 1px solid var(--border);
         }
 
         .quiz-options label:hover {
-            background: #f0f0f2;
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
         }
 
         .quiz-options input {
-            margin-right: 10px;
+            margin: 0;
         }
 
         .submit-btn {
-            background: var(--primary);
-            color: var(--text-light);
+            background: var(--gradient);
+            color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 16px;
-            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
         }
 
         .submit-btn:hover {
-            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
         }
 
         #quiz-result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            font-weight: 500;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
             text-align: center;
-            animation: fadeIn 0.5s ease;
+            font-weight: 500;
             display: none;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
         .success {
-            background: #d4edda;
+            background: rgba(16, 185, 129, 0.2);
             color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .error {
-            background: #f8d7da;
+            background: rgba(239, 68, 68, 0.2);
             color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.2s ease;
+        .sidebar {
+            position: sticky;
+            top: clamp(1.5rem, 3vw, 3rem);
+            display: grid;
+            gap: clamp(1.5rem, 3vw, 3rem);
         }
 
-        a:hover {
+        .sidebar-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: clamp(1.2rem, 2vw, 2rem);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sidebar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: clamp(1rem, 1.8vw, 1.4rem);
+            font-weight: 800;
             color: var(--secondary);
-            text-decoration: underline;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.2rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* Адаптация для планшетов и телефонов */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+        .sidebar-title i {
+            color: var(--primary);
+        }
 
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 40px 20px;
+                padding-bottom: clamp(3rem, 8vw, 6rem);
             }
-
-            .hero-image {
-                width: 100%;
-                max-width: 300px;
-                margin-top: 20px;
+            
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: clamp(2rem, 5vw, 3rem);
             }
-
-            .hero-title {
-                font-size: 28px;
+            
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
-
+            
             .hero-description {
-                font-size: 16px;
-            }
-
-            .section-card {
-                padding: 20px;
-            }
-
-            .section-title {
-                font-size: 24px;
+                max-width: 100%;
             }
 
             .features-item {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: flex-start;
             }
-
-            .quiz-container {
-                padding: 20px;
-            }
-
-            .quiz-options label {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 24px;
-            }
-
-            .hero-description {
-                font-size: 14px;
-            }
-
-            .section-title {
-                font-size: 22px;
-            }
-
-            .features-item {
-                padding: 15px;
-            }
-
-            .accordion-header {
-                padding: 15px 20px;
-                font-size: 16px;
-            }
-
-            .accordion-content {
-                padding: 0 20px;
-            }
-
-            .accordion-content.active {
-                padding: 20px;
-            }
-
-            .quiz-container {
-                padding: 15px;
-            }
-
-            .quiz-question {
-                font-size: 16px;
-            }
-
-            .quiz-options label {
-                padding: 8px;
-                font-size: 14px;
-            }
-
-            .submit-btn {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-
-            #quiz-result {
-                padding: 10px;
-                font-size: 14px;
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .card-title i {
-            font-size: 20px;
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
         <section class="hero-section">
             <div class="hero-content">
+                <div class="hero-badge">Финансовая безопасность</div>
                 <h1 class="hero-title"><i class="fas fa-exclamation-triangle"></i> Виды финансового мошенничества</h1>
                 <p class="hero-description">Узнайте, как защитить свои деньги и платежные карты от мошенников, какие схемы они используют и что делать в случае атаки.</p>
             </div>
-            <img src="https://placehold.co/400x300/6366f1/ffffff?text=Финансовая+безопасность" alt="Финансовое мошенничество" class="hero-image animated-image">
+            <div class="hero-image-wrapper">
+                <img src="placehold.png" alt="Финансовое мошенничество" class="hero-image">
+            </div>
         </section>
 
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-info-circle"></i> Финансовое мошенничество: основная информация</h2>
-            <p>В заключительной главе нашего учебника мы поговорим, как противостоять финансовому мошенничеству. Ведь финансово грамотный человек умеет не только с пользой использовать свои финансовые ресурсы, инвестировать свободные средства, преумножать свои доходы, оптимизировать расходы, в том числе налоги. Не менее важно уметь защитить свои денежные средства, инвестиции в ценных бумагах и других активах, чтобы не стать жертвой мошеннических атак. Ведь «кто предупрежден — тот вооружен».</p>
-            
-            <div class="warning-box">
-                <h3><i class="fas fa-shield-alt"></i> Важно знать</h3>
-                <p>По данным статистики, ежегодно от действий финансовых мошенников страдают миллионы людей по всему миру. Чаще всего жертвами становятся пожилые люди и те, кто недостаточно хорошо разбирается в современных технологиях.</p>
-            </div>
-
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-phone"></i> Телефонное мошенничество
+        <div class="content-grid">
+            <main class="main-content">
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> Финансовое мошенничество: основная информация</h2>
+                    <p>В заключительной главе нашего учебника мы поговорим, как противостоять финансовому мошенничеству. Ведь финансово грамотный человек умеет не только с пользой использовать свои финансовые ресурсы, инвестировать свободные средства, преумножать свои доходы, оптимизировать расходы, в том числе налоги. Не менее важно уметь защитить свои денежные средства, инвестиции в ценных бумагах и других активах, чтобы не стать жертвой мошеннических атак. Ведь «кто предупрежден — тот вооружен».</p>
+                    
+                    <div class="warning-box">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Будьте бдительны!</h3>
+                        <p>По данным Центрального банка России, в 2024 году мошенники похитили со счетов граждан более 15 миллиардов рублей. Ежедневно тысячи людей становятся жертвами кибермошенников, теряя свои сбережения из-за незнания основных принципов финансовой безопасности.</p>
                     </div>
-                    <p>Мошенники звонят от имени "сотрудников банка", "полиции" или "службы безопасности", чтобы выманить данные карты или заставить перевести деньги.</p>
-                </div>
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-globe"></i> Фишинг
-                    </div>
-                    <p>Создание поддельных сайтов банков и платежных систем для кражи логинов, паролей и данных банковских карт.</p>
-                </div>
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-credit-card"></i> Скимминг
-                    </div>
-                    <p>Установка на банкоматы специальных устройств, которые считывают данные карты и PIN-код при снятии денег.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-phone-alt"></i> Телефонное мошенничество</h2>
-            <p>Телефонное мошенничество — один из самых распространенных видов финансового обмана. Мошенники используют различные психологические техники, создают ситуацию срочности и давления, представляясь сотрудниками различных организаций.</p>
-            
-            <div class="features-list">
-                <div class="features-item">
-                    <i class="fas fa-user-tie"></i>
-                    <div>
-                        <h3>Звонок от имени "сотрудника банка"</h3>
-                        <p>Мошенник представляется сотрудником службы безопасности банка и сообщает о подозрительных операциях по карте. Для "защиты средств" просит сообщить данные карты, коды из SMS или перевести деньги на "безопасный счет".</p>
-                        <p class="info-box"><strong>Защита:</strong> Никогда не сообщайте по телефону CVV-код, пароли и коды из SMS. Настоящие сотрудники банка не запрашивают эту информацию.</p>
-                    </div>
-                </div>
-                <div class="features-item">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <div>
-                        <h3>Ложные выигрыши и призы</h3>
-                        <p>Мошенники сообщают о выигрыше крупного приза, но для его получения просят оплатить "налог", "комиссию" или "страховку".</p>
-                        <p class="info-box"><strong>Защита:</strong> Помните, что законный выигрыш никогда не требует предварительных платежей.</p>
-                    </div>
-                </div>
-                <div class="features-item">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <div>
-                        <h3>Звонки от "родственников в беде"</h3>
-                        <p>Мошенник звонит и представляется вашим родственником, который попал в беду (авария, задержание полицией) и срочно нуждается в деньгах.</p>
-                        <p class="info-box"><strong>Защита:</strong> Перепроверяйте информацию, перезвоните родственнику на его настоящий номер.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-globe"></i> Интернет-мошенничество и фишинг</h2>
-            <p>Фишинг — вид интернет-мошенничества, целью которого является получение доступа к конфиденциальным данным пользователей: логинам, паролям, данным банковских карт и другой личной информации.</p>
-            
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>Фишинговые сайты</span> <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Мошенники создают поддельные сайты, которые внешне очень похожи на настоящие сайты банков, платежных систем или популярных интернет-магазинов. Цель — заставить пользователя ввести свои данные для входа или платежную информацию.</p>
-                        <div class="info-box">
-                            <h4>Как распознать:</h4>
-                            <ul>
-                                <li>Проверяйте URL-адрес сайта (должен начинаться с https://)</li>
-                                <li>Обращайте внимание на наличие замочка в адресной строке</li>
-                                <li>Ищите ошибки и опечатки в интерфейсе</li>
-                                <li>Не переходите по ссылкам из подозрительных писем и SMS</li>
-                            </ul>
+                    
+                    <p>Финансовое мошенничество — это противоправное действие в сфере денежного обращения путем обмана, злоупотребления доверием и других манипуляций с целью незаконного обогащения. С каждым годом мошенники придумывают все более изощренные способы обмана, используя современные технологии и методы социальной инженерии.</p>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">Почему финансовое мошенничество так распространено?</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Распространению финансового мошенничества способствуют несколько факторов:</p>
+                                <ul>
+                                    <li>Недостаточная финансовая грамотность населения</li>
+                                    <li>Развитие цифровых технологий и электронных платежей</li>
+                                    <li>Анонимность в интернете, затрудняющая поиск мошенников</li>
+                                    <li>Психологические факторы: доверчивость, жадность, страх, спешка</li>
+                                    <li>Отсутствие привычки проверять информацию</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">Кто чаще всего становится жертвой мошенников?</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Хотя жертвой мошенников может стать каждый, статистика показывает, что наиболее уязвимыми группами являются:</p>
+                                <ul>
+                                    <li>Пожилые люди</li>
+                                    <li>Люди с низким уровнем финансовой грамотности</li>
+                                    <li>Новички в использовании цифровых технологий</li>
+                                    <li>Люди в эмоционально нестабильном состоянии (стресс, страх, эйфория)</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>Фишинговые email-рассылки</span> <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Массовые рассылки писем от имени банков, платежных систем или популярных сервисов с просьбой "обновить данные", "подтвердить аккаунт" или сообщениями о "проблемах с безопасностью".</p>
-                        <div class="warning-box">
-                            <h4>Признаки фишингового письма:</h4>
-                            <ul>
-                                <li>Письмо вызывает тревогу или требует срочных действий</li>
-                                <li>Обращение общее, а не персонализированное</li>
-                                <li>Наличие грамматических ошибок и опечаток</li>
-                                <li>Подозрительные ссылки и вложения</li>
-                            </ul>
+                
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-shield-alt"></i> Распространенные виды финансового мошенничества</h2>
+                    <p>Существует множество видов финансового мошенничества, и новые схемы появляются постоянно. Рассмотрим наиболее распространенные типы мошенничества, с которыми может столкнуться любой человек.</p>
+                    
+                    <div class="card-grid">
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-phone-alt"></i> Телефонное мошенничество</div>
+                            <p>Мошенники звонят от имени банков, государственных органов или служб безопасности и под различными предлогами выманивают персональные данные, данные карт или убеждают перевести деньги на "безопасные счета".</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-at"></i> Фишинг</div>
+                            <p>Создание поддельных сайтов, имитирующих банки, платежные системы или государственные порталы с целью кражи логинов, паролей, данных карт и другой конфиденциальной информации.</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-credit-card"></i> Скимминг</div>
+                            <p>Установка на банкоматы специальных устройств, которые считывают данные карты и ПИН-код. С их помощью мошенники могут создать дубликат карты и снять с нее деньги.</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-chart-line"></i> Инвестиционное мошенничество</div>
+                            <p>Создание финансовых пирамид или предложения "высокодоходных инвестиций" без реальной деятельности, с целью привлечения средств доверчивых граждан.</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-mobile-alt"></i> СМС-мошенничество</div>
+                            <p>Отправка сообщений с просьбой перезвонить на платный номер, перейти по ссылке или сообщить данные под предлогом выигрыша, блокировки карты или проблем с родственниками.</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-laptop"></i> Мошенничество с онлайн-покупками</div>
+                            <p>Создание фальшивых интернет-магазинов, предлагающих товары по заниженным ценам или размещение ложных объявлений о продаже несуществующих товаров.</p>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>Мошенничество в социальных сетях</span> <i class="fas fa-chevron-down"></i>
+                
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-user-shield"></i> Как защититься от финансового мошенничества</h2>
+                    <p>Защита от финансового мошенничества требует бдительности и соблюдения определенных правил безопасности. Вот основные рекомендации, которые помогут вам сохранить свои средства.</p>
+                    
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-lock"></i>
+                            <div>
+                                <strong>Защита персональных данных</strong>
+                                <p>Никогда не сообщайте по телефону или в интернете свои персональные данные, логины, пароли, коды из СМС, ПИН-коды, CVV/CVC-коды карт. Банки никогда не запрашивают эту информацию.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-link"></i>
+                            <div>
+                                <strong>Проверка сайтов и ссылок</strong>
+                                <p>Перед вводом данных или совершением платежа всегда проверяйте адрес сайта: он должен начинаться с https://, в адресной строке должен быть значок закрытого замка, а сам адрес должен точно соответствовать официальному.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-bell"></i>
+                            <div>
+                                <strong>Настройка уведомлений</strong>
+                                <p>Подключите СМС-уведомления о всех операциях по счету. Это позволит мгновенно узнать о несанкционированных транзакциях и быстро заблокировать карту.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Использование антивирусов</strong>
+                                <p>Установите и регулярно обновляйте антивирусное ПО на всех устройствах, которые используете для доступа к финансовым сервисам.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div>
+                                <strong>Проявляйте здоровый скептицизм</strong>
+                                <p>Слишком выгодные предложения, срочные решения, неожиданные выигрыши — всё это должно вызывать подозрение. Не поддавайтесь на эмоциональные манипуляции.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="info-box">
+                        <h3><i class="fas fa-info-circle"></i> Полезный совет</h3>
+                        <p>Создайте отдельную карту для онлайн-покупок с минимальным балансом или используйте виртуальные карты, которые можно создавать для одноразовых платежей. Это существенно снизит возможные потери в случае кражи данных карты.</p>
                     </div>
-                    <div class="accordion-content">
-                        <p>Взлом аккаунтов в социальных сетях и рассылка сообщений с просьбой одолжить деньги или перейти по подозрительной ссылке.</p>
-                        <div class="info-box">
-                            <h4>Защита:</h4>
-                            <ul>
-                                <li>Используйте двухфакторную аутентификацию</li>
-                                <li>Не переходите по подозрительным ссылкам</li>
-                                <li>Перепроверяйте странные просьбы от друзей другими способами связи</li>
-                            </ul>
+                </div>
+                
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-first-aid"></i> Что делать, если вы стали жертвой мошенников</h2>
+                    <p>Если вы подозреваете, что стали жертвой мошенников, действовать нужно быстро:</p>
+                    
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-credit-card"></i>
+                            <div>
+                                <strong>Заблокируйте карту</strong>
+                                <p>Немедленно позвоните в банк по номеру, указанному на обратной стороне карты, и заблокируйте карту. Это предотвратит дальнейшие несанкционированные списания.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-university"></i>
+                            <div>
+                                <strong>Обратитесь в банк</strong>
+                                <p>Посетите отделение банка и напишите заявление о несанкционированных операциях. У вас есть шанс вернуть деньги, если вы обратитесь в течение 24 часов.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-gavel"></i>
+                            <div>
+                                <strong>Обратитесь в полицию</strong>
+                                <p>Напишите заявление в полицию о краже денежных средств. Указывайте все детали: номера телефонов мошенников, сайты, реквизиты, на которые были переведены деньги.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-piggy-bank"></i>
+                            <div>
+                                <strong>Измените пароли</strong>
+                                <p>Смените пароли от всех финансовых сервисов, особенно если вы их где-то указывали или подозреваете, что ваше устройство могло быть заражено вирусом.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Важно!</h3>
+                        <p>По закону "О национальной платежной системе" банк обязан возместить клиенту украденные мошенниками деньги, если клиент не нарушал правила использования карты и обратился в банк не позднее суток с момента получения уведомления о несанкционированной операции.</p>
+                    </div>
+                </div>
+                
+                <div class="quiz-container">
+                    <h2 class="section-title"><i class="fas fa-tasks"></i> Проверьте свои знания</h2>
+                    <div class="quiz-question">Какое из следующих действий НЕ следует выполнять для защиты от финансового мошенничества?</div>
+                    
+                    <div class="quiz-options">
+                        <label>
+                            <input type="radio" name="question" value="a">
+                            Устанавливать антивирусное ПО на все устройства
+                        </label>
+                        
+                        <label>
+                            <input type="radio" name="question" value="b">
+                            Сообщать сотруднику банка CVV/CVC-код для проверки карты
+                        </label>
+                        
+                        <label>
+                            <input type="radio" name="question" value="c">
+                            Проверять адрес сайта перед вводом данных карты
+                        </label>
+                        
+                        <label>
+                            <input type="radio" name="question" value="d">
+                            Использовать разные пароли для разных сервисов
+                        </label>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Проверить ответ</button>
+                    <div id="quiz-result"></div>
+                </div>
+            </main>
+            
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title"><i class="fas fa-graduation-cap"></i> Полезные ресурсы</h3>
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-landmark"></i>
+                            <div>
+                                <strong>Центральный банк РФ</strong>
+                                <p>Официальный сайт с информацией о финансовой безопасности и мерах защиты от мошенников.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-university"></i>
+                            <div>
+                                <strong>Финансовая культура</strong>
+                                <p>Образовательный проект Банка России с материалами по финансовой грамотности.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>МВД России</strong>
+                                <p>Рекомендации по защите от интернет-мошенничества и действиям в случае мошенничества.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title"><i class="fas fa-exclamation-circle"></i> Важные контакты</h3>
+                    <div class="features-list">
+                        <div class="features-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <strong>8-800-300-3000</strong>
+                                <p>Горячая линия Банка России для вопросов о финансовом мошенничестве</p>
+                            </div>
+                        </div>
+                        
+                        <div class="features-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <strong>102</strong>
+                                <p>Единый номер полиции для сообщений о мошенничестве</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-credit-card"></i> Защита банковских карт</h2>
-            <p>Банковские карты часто становятся объектом атак мошенников, поэтому важно знать основные правила их безопасного использования.</p>
-            
-            <div class="features-list">
-                <div class="features-item">
-                    <i class="fas fa-lock"></i>
-                    <div>
-                        <h3>Скимминг и его признаки</h3>
-                        <p>Скимминг — установка накладок на банкоматы для считывания данных карты и PIN-кода.</p>
-                        <p class="info-box"><strong>Как защититься:</strong> Проверяйте картоприемник и клавиатуру банкомата на наличие подозрительных накладок. Прикрывайте рукой клавиатуру при вводе PIN-кода.</p>
-                    </div>
-                </div>
-                <div class="features-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <div>
-                        <h3>Защита данных карты</h3>
-                        <p>Данные вашей карты — это ценная информация, которую нужно тщательно охранять.</p>
-                        <p class="info-box"><strong>Основные правила:</strong> Не сообщайте полные данные карты и CVV-код по телефону, не храните PIN-код вместе с картой, регулярно проверяйте выписку по карте.</p>
-                    </div>
-                </div>
-                <div class="features-item">
-                    <i class="fas fa-bell"></i>
-                    <div>
-                        <h3>SMS-информирование и лимиты</h3>
-                        <p>Современные банковские сервисы предоставляют дополнительные уровни защиты.</p>
-                        <p class="info-box"><strong>Рекомендации:</strong> Подключите SMS-информирование о всех операциях, установите лимиты на онлайн-платежи, используйте отдельную карту для интернет-покупок.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-card">
-            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Проверьте ваши знания</h2>
-            <p>Пройдите небольшой тест, чтобы проверить, насколько хорошо вы усвоили информацию о финансовом мошенничестве и способах защиты.</p>
-            
-            <div class="quiz-container">
-                <div class="quiz-question">
-                    <p>1. Что следует делать, если вам позвонил "сотрудник банка" и сообщил о подозрительной операции?</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q1" value="a">Назвать ему данные карты и код из SMS для отмены операции</label>
-                        <label><input type="radio" name="q1" value="b">Перевести деньги на "безопасный счет", который он сообщит</label>
-                        <label><input type="radio" name="q1" value="c">Положить трубку и самостоятельно позвонить в банк по номеру, указанному на обратной стороне карты</label>
-                        <label><input type="radio" name="q1" value="d">Сообщить ему PIN-код для блокировки карты</label>
-                    </div>
-                </div>
                 
-                <div class="quiz-question">
-                    <p>2. Какой признак может указывать на то, что вы находитесь на фишинговом сайте?</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q2" value="a">Наличие иконки замка в адресной строке</label>
-                        <label><input type="radio" name="q2" value="b">Протокол https в начале адреса</label>
-                        <label><input type="radio" name="q2" value="c">Незначительные отличия в написании домена (например, sberbank.ru и sberbamk.ru)</label>
-                        <label><input type="radio" name="q2" value="d">Наличие формы для ввода логина и пароля</label>
-                    </div>
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title"><i class="fas fa-chart-pie"></i> Статистика мошенничества</h3>
+                    <p>В 2023-2024 годах наиболее распространенными видами финансового мошенничества в России стали:</p>
+                    <ul>
+                        <li>Телефонное мошенничество - 46%</li>
+                        <li>Фишинг - 32%</li>
+                        <li>Мошенничество с инвестициями - 14%</li>
+                        <li>Другие виды - 8%</li>
+                    </ul>
+                    <p class="mt-3">Средняя сумма ущерба от одного случая мошенничества составляет около 27 000 рублей.</p>
                 </div>
-                
-                <div class="quiz-question">
-                    <p>3. Как обезопасить себя от скимминга при использовании банкомата?</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q3" value="a">Использовать только банкоматы внутри банковских отделений</label>
-                        <label><input type="radio" name="q3" value="b">Проверять картоприемник и клавиатуру на наличие накладок и прикрывать рукой ввод PIN-кода</label>
-                        <label><input type="radio" name="q3" value="c">Никогда не пользоваться банкоматами, только кассами банка</label>
-                        <label><input type="radio" name="q3" value="d">Громко говорить PIN-код, чтобы все слышали и могли помочь при проблемах</label>
-                    </div>
-                </div>
-                
-                <button type="button" class="submit-btn" onclick="checkQuiz()">Проверить результаты</button>
-                <div id="quiz-result"></div>
-            </div>
+            </aside>
         </div>
     </div>
-
+    
     <script>
-        // Функция для показа/скрытия аккордеона
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                header.classList.toggle('active');
+        // Прогресс чтения
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollProgress + '%';
+        });
+        
+        // Функциональность аккордеона
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('.accordion-icon i');
                 
-                if (header.classList.contains('active')) {
-                    content.classList.add('active');
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    content.style.padding = '0 ' + getComputedStyle(content).paddingLeft;
+                    icon.style.transform = 'rotate(0deg)';
                 } else {
-                    content.classList.remove('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.padding = 'clamp(0.8rem, 1.5vw, 1.2rem)';
+                    icon.style.transform = 'rotate(180deg)';
                 }
             });
         });
-
-        // Функция проверки теста
-        function checkQuiz() {
-            const correctAnswers = {
-                q1: 'c',
-                q2: 'c',
-                q3: 'b'
-            };
-            
-            let score = 0;
-            let answered = 0;
-            const total = Object.keys(correctAnswers).length;
-            
-            // Проверка каждого вопроса
-            for (const question in correctAnswers) {
-                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
-                
-                if (selectedOption) {
-                    answered++;
-                    if (selectedOption.value === correctAnswers[question]) {
-                        score++;
-                    }
-                }
-            }
-            
-            // Отображение результата
+        
+        // Квиз
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            const selectedAnswer = document.querySelector('input[name="question"]:checked');
             const resultDiv = document.getElementById('quiz-result');
             
-            if (answered < total) {
+            if (!selectedAnswer) {
+                resultDiv.textContent = 'Пожалуйста, выберите один из вариантов ответа';
                 resultDiv.className = 'error';
-                resultDiv.innerHTML = 'Пожалуйста, ответьте на все вопросы.';
                 resultDiv.style.display = 'block';
                 return;
             }
             
-            const percentage = Math.round((score / total) * 100);
-            
-            if (percentage === 100) {
+            if (selectedAnswer.value === 'b') {
+                resultDiv.textContent = 'Правильно! Сотрудники банка никогда не должны запрашивать CVV/CVC-код вашей карты.';
                 resultDiv.className = 'success';
-                resultDiv.innerHTML = `Отлично! Вы набрали ${score} из ${total} баллов (${percentage}%). Вы хорошо знаете, как защититься от мошенников.`;
-            } else if (percentage >= 70) {
-                resultDiv.className = 'success';
-                resultDiv.innerHTML = `Хороший результат! Вы набрали ${score} из ${total} баллов (${percentage}%). Вы довольно хорошо знаете, как защититься от мошенников.`;
             } else {
+                resultDiv.textContent = 'Неверно. Правильный ответ: "Сообщать сотруднику банка CVV/CVC-код для проверки карты". Сотрудники банка никогда не запрашивают эти данные.';
                 resultDiv.className = 'error';
-                resultDiv.innerHTML = `Вы набрали ${score} из ${total} баллов (${percentage}%). Рекомендуем внимательнее изучить материал о финансовом мошенничестве.`;
             }
             
             resultDiv.style.display = 'block';
-        }
+        });
     </script>
 </body>
 </html>

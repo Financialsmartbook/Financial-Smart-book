@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Финансовые пирамиды: как не стать участником</title>
+    <title>Финансовые пирамиды: как не стать участником - Смарт-учебник</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
     <style>
-        /* Base Variables */
         :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
             --accent: #818cf8;
             --background: #f8fafc;
-            --text: #1e293b;
-            --text-light: #64748b;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --radius-lg: 2rem;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e2e8f0;
+            --radius-lg: 1.5rem;
             --radius-md: 1rem;
             --radius-sm: 0.5rem;
-            --accent-hover: #a89ef9;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+            --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+            --shadow-md: var(--shadow);
+            --warning-light: #fffbeb;
+            --warning: #f59e0b;
+            --info-light: #f1f8ff;
+            --info: #0dcaf0;
+            --success-light: #dcfce7;
             --spacing-xs: 0.5rem;
             --spacing-sm: 1rem;
             --spacing-md: 1.5rem;
@@ -30,64 +38,121 @@
             --spacing-xl: 3rem;
         }
 
-        /* Reset & Base */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: 'Manrope', sans-serif;
-            line-height: 1.8;
-            background: var(--background);
-            color: var(--text);
-            font-size: 1.05rem;
-            overflow-x: hidden;
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
         }
 
-        h1, h2, h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: -0.03em;
-            line-height: 1.3;
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: clamp(3px, 0.5vw, 5px);
+            background: var(--gradient);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+            border-radius: 0 0 5px 5px;
         }
 
         .container {
-            width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: var(--spacing-md);
+            padding: clamp(1rem, 3vw, 3rem);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: var(--spacing-xl);
-            padding: 8rem var(--spacing-lg);
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotateY(12deg) rotateX(5deg);
+            }
+            50% {
+                transform: translateY(-15px) rotateY(12deg) rotateX(5deg);
+            }
+            100% {
+                transform: translateY(0px) rotateY(12deg) rotateX(5deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.08;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.12;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.08;
+            }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-section {
+            position: relative;
+            margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+            padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
             background: var(--gradient);
             border-radius: var(--radius-lg);
-            color: white;
-            box-shadow: var(--shadow-sm);
-            position: relative;
+            color: var(--text-light);
             overflow: hidden;
-            transform-style: preserve-3d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            animation: gradientShift 15s ease infinite;
+            background-size: 300% 300%;
+            border: 1px solid var(--border);
         }
 
-        .header h1 {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            margin-bottom: var(--spacing-md);
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header p {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+            z-index: 1;
+            animation: pulse 10s infinite ease-in-out;
         }
 
         .header__icon {
@@ -101,92 +166,243 @@
             z-index: 1;
         }
 
-        /* Content Layout */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: var(--spacing-lg);
+        .hero-content {
+            max-width: 60%;
+            z-index: 2;
+            position: relative;
         }
 
-        /* Card styling */
-        .card {
-            background: white;
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--spacing-lg);
-            box-shadow: var(--shadow-xs);
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
+            font-weight: 600;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 3s infinite ease-in-out;
         }
 
-        .card h2 {
+        .hero-title {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+            line-height: 1.1;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
-            margin-bottom: var(--spacing-md);
-            gap: 0.75rem;
-            color: var(--primary);
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            gap: 1rem;
+            position: relative;
         }
 
-        .card h2 i {
-            font-size: clamp(1rem, 3vw, 1.2rem);
+        .hero-title i {
+            font-size: 90%;
         }
 
-        /* Accordions */
-        .accordion {
-            background: white;
-            margin: var(--spacing-md) 0;
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 90%;
+            margin-top: clamp(1rem, 2vw, 1.5rem);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 3D эффект для изображения */
+        .hero-image-wrapper {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image {
+            width: clamp(150px, 30vw, 400px);
             border-radius: var(--radius-md);
+            transition: transform 0.6s ease-out;
+            transform: rotateY(12deg) rotateX(5deg);
+            box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                         0 10px 20px rgba(0, 0, 0, 0.2),
+                         0 0 40px rgba(79, 70, 229, 0.4);
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-image-wrapper:hover .hero-image {
+            transform: rotateY(-12deg) rotateX(-5deg) scale(1.05);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+            z-index: 3;
+            pointer-events: none;
+            border-radius: calc(var(--radius-md) - 4px);
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 30%;
+            bottom: -30px;
+            left: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(10px);
+            transform: scaleX(0.8);
+            z-index: -1;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+            gap: clamp(1.5rem, 3vw, 3rem);
+            margin-bottom: clamp(3rem, 5vw, 5rem);
+            align-items: start;
+            position: relative;
+        }
+
+        .main-content {
+            display: grid;
+            gap: clamp(1.5rem, 3vw, 3rem);
+        }
+
+        .section-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: clamp(1.2rem, 3vw, 3rem);
+            box-shadow: var(--shadow);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .section-card:nth-child(odd) {
+            border-left: 4px solid var(--primary);
+        }
+
+        .section-card:nth-child(even) {
+            border-right: 4px solid var(--secondary);
+        }
+
+        .section-title {
+            font-size: clamp(1.3rem, 2.8vw, 2.2rem);
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: clamp(1rem, 2vw, 1.8rem);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .section-title i {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 130%;
+        }
+
+        .accordion {
+            background: var(--glass);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: clamp(1rem, 1.8vw, 1.5rem);
             box-shadow: var(--shadow-xs);
+            border: 1px solid var(--border);
             transition: var(--transition);
-            border: 1px solid #e2e8f0;
         }
 
         .accordion:hover {
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
         }
 
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
         .accordion-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: var(--spacing-md);
+            padding: clamp(0.8rem, 1.5vw, 1.2rem);
             cursor: pointer;
-            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(240,240,255,0.8) 100%);
+            transition: background 0.3s ease;
         }
 
         .accordion-header:hover {
-            background: #f8fafc;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,240,255,0.9) 100%);
         }
 
-        .accordion-header span {
+        .accordion-title {
             font-weight: 600;
-            font-size: clamp(0.95rem, 3vw, 1.1rem);
-            color: var(--text);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: var(--secondary);
         }
 
-        .accordion-header i {
+        .accordion-icon {
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
+            color: var(--primary);
             transition: transform 0.3s ease;
-            color: var(--text-light);
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .accordion.active .accordion-header i {
-            transform: rotate(180deg);
         }
 
         .accordion-content {
-            padding: 0 var(--spacing-md);
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--text-light);
-            line-height: 1.7;
-            font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+            padding: 0 clamp(0.8rem, 1.5vw, 1.2rem);
+            background: rgba(255,255,255,0.5);
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
-        .accordion.active .accordion-content {
-            padding: 0 var(--spacing-md) var(--spacing-lg);
-            max-height: 2000px; /* Increased for larger content */
+        .accordion-content p {
+            padding: clamp(0.5rem, 1vw, 0.8rem) 0;
+            color: var(--text-dark);
+            opacity: 0.9;
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
         }
 
         .accordion-content ul {
@@ -208,32 +424,61 @@
             font-weight: bold;
         }
 
-        /* Test Section */
+        .alert {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            background: var(--warning-light);
+            border-left: 4px solid var(--warning);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .alert i {
+            color: var(--warning);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
         .test-section {
-            background: white;
-            padding: var(--spacing-lg);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: clamp(1.2rem, 2.5vw, 2rem);
             border-radius: var(--radius-lg);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
             position: sticky;
             top: var(--spacing-lg);
+            border: 1px solid var(--border);
         }
 
         .test-section h3 {
             font-size: clamp(1.1rem, 3.5vw, 1.3rem);
             margin-bottom: var(--spacing-sm);
+            color: var(--secondary);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-section h3 i {
+            color: var(--primary);
         }
 
         .test-card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
             margin-bottom: var(--spacing-lg);
             transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
         }
 
         .test-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.1);
         }
 
         .question {
@@ -243,7 +488,7 @@
         .question p {
             font-weight: 600;
             margin-bottom: var(--spacing-md);
-            color: var(--text);
+            color: var(--text-dark);
             font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
 
@@ -255,22 +500,24 @@
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: all 0.2s;
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.5);
             font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+            border: 1px solid var(--border);
         }
 
         .answer-label:hover {
-            background: #f1f5f9;
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(5px);
         }
 
         .answer-label.correct {
-            background: #dcfce7 !important;
-            border: 2px solid #22c55e;
+            background: var(--success-light) !important;
+            border: 2px solid var(--success);
         }
 
         .answer-label.incorrect {
-            background: #fee2e2 !important;
-            border: 2px solid #ef4444;
+            background: rgba(239, 68, 68, 0.2) !important;
+            border: 2px solid var(--error);
         }
 
         input[type="radio"],
@@ -294,11 +541,11 @@
             font-size: clamp(0.8rem, 2.5vw, 0.9rem);
             margin-top: var(--spacing-sm);
             padding: var(--spacing-sm);
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.5);
             border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
         }
 
-        /* Button */
         .button {
             background: var(--gradient);
             color: white;
@@ -309,37 +556,15 @@
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
-            transition: var(--transition);
-            font-weight: 500;
+            transition: all 0.3s ease;
+            font-weight: 600;
             font-size: clamp(0.9rem, 2.5vw, 1rem);
-            width: auto;
-            text-align: center;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
         }
 
         .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Alert box */
-        .alert {
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            margin: var(--spacing-lg) 0;
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-        }
-
-        .alert-warning {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .alert i {
-            color: #f59e0b;
-            font-size: 1.5rem;
-            flex-shrink: 0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
         }
 
         .score-counter {
@@ -354,23 +579,7 @@
             display: none;
             z-index: 100;
             font-size: clamp(0.85rem, 2.5vw, 1rem);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.08; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.05); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1200px) {
-            .container {
-                padding: var(--spacing-sm);
-            }
+            font-weight: 600;
         }
 
         @media (max-width: 992px) {
@@ -380,31 +589,30 @@
             
             .test-section {
                 position: static;
-                margin-top: var(--spacing-xl);
-            }
-            
-            .header {
-                padding: 4rem var(--spacing-md);
+                margin-top: var(--spacing-lg);
             }
         }
 
         @media (max-width: 768px) {
-            .card, .test-section {
-                padding: var(--spacing-md);
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding-bottom: clamp(3rem, 8vw, 6rem);
             }
             
-            .accordion-header {
-                padding: var(--spacing-sm) var(--spacing-md);
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: clamp(2rem, 5vw, 3rem);
             }
             
-            .accordion.active .accordion-content {
-                padding: 0 var(--spacing-md) var(--spacing-md);
+            .hero-title::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
             
-            .header {
-                border-radius: var(--radius-md);
-                padding: 3rem var(--spacing-md);
-                margin-bottom: var(--spacing-lg);
+            .hero-description {
+                max-width: 100%;
+                margin: clamp(1rem, 2vw, 1.5rem) auto 0;
             }
             
             .alert {
@@ -419,453 +627,425 @@
                 text-align: center;
             }
         }
-
-        @media (max-width: 480px) {
-            :root {
-                --spacing-md: 1rem;
-                --spacing-lg: 1.5rem;
-            }
-            
-            .header {
-                padding: 2.5rem 1rem;
-            }
-            
-            .card h2 {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            
-            .accordion-header {
-                padding: 0.75rem 1rem;
-            }
-            
-            .accordion-content li {
-                padding-left: 1rem;
-            }
-            
-            .answer-label {
-                padding: 0.75rem 0.5rem;
-            }
-            
-            .button {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .card, .test-section {
-                border-radius: var(--radius-sm);
-            }
-        }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <i class="fa-solid fa-triangle-exclamation header__icon"></i>
-            <h1>Финансовые пирамиды: как не стать участником</h1>
-            <p>Полное руководство по распознаванию и защите от мошеннических схем</p>
-        </header>
-
-        <!-- Content Grid -->
-        <div class="content-grid">
-            <!-- Main Content -->
-            <div class="main-content">
-                <!-- Types of Pyramids -->
-                <div class="card">
-                    <h2><i class="fa-solid fa-layer-group"></i> Виды финансовых пирамид</h2>
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Одноуровневые (схема Понци)</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Классическая схема, названная в честь Чарльза Понци (1920 год). Принцип работы: доход первых инвесторов формируется исключительно за счёт привлечения новых участников. Современные варианты часто маскируются под:</p>
-                            <ul>
-                                <li>Криптовалютные проекты с гарантированной доходностью</li>
-                                <li>Краудфандинговые платформы</li>
-                                <li>Инвестиционные клубы с "эксклюзивными" возможностями</li>
-                            </ul>
-                            <p><strong>Примеры:</strong> МММ (Сергей Мавроди, 1990-е), BitConnect (2017), OneCoin (2014-2019)</p>
-                            <p><strong>Статистика:</strong> По данным FTC, в 2022 году жертвы финансовых пирамид в США потеряли в среднем $718 на человека</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Многоуровневые (матричные)</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Участники получают доход при переходе на верхние уровни иерархии. Особенности:</p>
-                            <ul>
-                                <li>Обязательные первоначальные взносы ($100-1000)</li>
-                                <li>Необходимость постоянного привлечения новых участников</li>
-                                <li>Сложная система бонусов и статусов</li>
-                            </ul>
-                            <p><strong>Современные формы:</strong></p>
-                            <ul>
-                                <li>NFT-проекты с искусственной накруткой стоимости</li>
-                                <li>Маркетинг с обязательными покупками товара для участия</li>
-                                <li>Финтех-стартапы без реального продукта</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recognition -->
-                <div class="card">
-                    <h2><i class="fa-solid fa-magnifying-glass"></i> Как распознать пирамиду</h2>
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Признаки по версии ЦБ РФ</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Центральный Банк России выделяет 6 основных критериев:</p>
-                            <ul>
-                                <li>Обещание доходности выше рыночной (>20% годовых в рублях)</li>
-                                <li>Гарантированные выплаты без рисков</li>
-                                <li>Отсутствие лицензии на финансовую деятельность</li>
-                                <li>Массированная реклама с призывами к немедленному вступлению</li>
-                                <li>Отсутствие реальной деятельности (нет производства, инвестирования)</li>
-                                <li>Непрозрачная структура компании и отсутствие отчетности</li>
-                            </ul>
-                            <p>Источник: <em>Официальный сайт Банка России, раздел "Защита прав потребителей"</em></p>
-                        </div>
-                    </div>
-
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Психологические приемы мошенников</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Организаторы пирамид активно используют психологические техники манипуляции:</p>
-                            <ul>
-                                <li><strong>FOMO (Fear of Missing Out)</strong> — создание иллюзии упущенной возможности</li>
-                                <li><strong>Социальное доказательство</strong> — демонстрация "успешных" участников</li>
-                                <li><strong>Авторитет</strong> — использование известных личностей и экспертов</li>
-                                <li><strong>Эксклюзивность</strong> — создание иллюзии ограниченного доступа</li>
-                                <li><strong>Искусственная нехватка времени</strong> — "последние места", "только сегодня"</li>
-                            </ul>
-                            <p>Схемы активно адаптируются под актуальные тренды, используя термины из мира криптовалют, NFT, искусственного интеллекта и технологий.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Digital Era Pyramids -->
-                <div class="card">
-                    <h2><i class="fa-solid fa-globe"></i> Цифровые пирамиды XXI века</h2>
-                    
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Криптовалютные схемы</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Современные пирамиды часто маскируются под инновационные блокчейн-проекты:</p>
-                            <ul>
-                                <li><strong>Fake ICO</strong> — мошеннические первичные предложения монет без реального продукта</li>
-                                <li><strong>DeFi-пирамиды</strong> — обещание высокой доходности в протоколах децентрализованных финансов</li>
-                                <li><strong>Yield farming scams</strong> — схемы с обещанием высокого пассивного дохода</li>
-                                <li><strong>Pump and dump</strong> — искусственное завышение цены малоизвестных токенов</li>
-                            </ul>
-                            <p><strong>Пример:</strong> В 2022 году криптовалютная платформа Celsius Network обанкротилась после обещания доходности до 18% годовых. В результате пострадало более 300 000 пользователей.</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Инвестиционные приложения</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Мобильные приложения с обещанием высокой доходности часто оказываются замаскированными пирамидами:</p>
-                            <ul>
-                                <li>Платформы с "роботизированной торговлей" и "AI-алгоритмами"</li>
-                                <li>Приложения с игровой механикой и системой уровней инвесторов</li>
-                                <li>Международные инвестиционные программы с иностранной регистрацией</li>
-                            </ul>
-                            <p><strong>Тревожный знак:</strong> Невозможность вывести средства или необходимость привлекать новых участников для вывода инвестиций.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Legal Aspects -->
-                <div class="card">
-                    <h2><i class="fa-solid fa-scale-balanced"></i> Юридические аспекты</h2>
-                    
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Законодательство РФ о финансовых пирамидах</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>С 2016 года в России организация финансовых пирамид является уголовным преступлением:</p>
-                            <ul>
-                                <li><strong>Статья 172.2 УК РФ</strong> — до 6 лет лишения свободы и штраф до 1,5 млн рублей</li>
-                                <li><strong>Статья 14.62 КоАП РФ</strong> — административная ответственность за привлечение денег в пирамиду</li>
-                            </ul>
-                            <p>Важно: даже активные участники (не организаторы) могут быть привлечены к административной ответственности за рекламу и продвижение пирамиды.</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Что делать если вы стали жертвой</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Алгоритм действий при обнаружении мошенничества:</p>
-                            <ul>
-                                <li>Немедленно прекратить внесение любых средств</li>
-                                <li>Собрать все документы, подтверждающие ваши инвестиции (договоры, чеки, скриншоты)</li>
-                                <li>Написать заявление в полицию (УМВД)</li>
-                                <li>Направить жалобу в ЦБ РФ через официальный сайт</li>
-                                <li>Обратиться в Роспотребнадзор с заявлением о нарушении прав потребителя</li>
-                            </ul>
-                            <p><strong>Контакты:</strong> Горячая линия ЦБ РФ: 8-800-300-30-00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Protection Strategies -->
-                <div class="card">
-                    <h2><i class="fa-solid fa-shield-halved"></i> Как защитить себя</h2>
-                    
-                    <div class="alert alert-warning">
-                        <i class="fa-solid fa-exclamation-circle"></i>
-                        <div>
-                            <strong>Важно!</strong> Помните простое правило: если доходность превышает ставки по банковским депозитам в 2-3 раза и выше — это повод для серьезных сомнений. Инвестиции с гарантированной высокой доходностью без рисков не существуют.
-                        </div>
-                    </div>
-                    
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Проверка финансовой организации</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Перед вложением средств необходимо:</p>
-                            <ul>
-                                <li>Проверить наличие лицензии ЦБ РФ</li>
-                                <li>Изучить историю компании (время работы на рынке не менее 3-5 лет)</li>
-                                <li>Проверить юридическую информацию через ЕГРЮЛ на сайте ФНС</li>
-                                <li>Найти реальные отзывы в независимых источниках</li>
-                                <li>Проверить компанию в списке недобросовестных организаций ЦБ РФ</li>
-                            </ul>
-                            <p>Надежные финансовые организации входят в систему страхования вкладов, имеют прозрачную отчетность и реальный физический адрес.</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion">
-                        <div class="accordion-header">
-                            <span>Признаки легальных инвестиций</span>
-                            <i class="fa-solid fa-angle-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Как отличить легальный инвестиционный продукт от мошеннической схемы:</p>
-                            <ul>
-                                <li>Наличие подробной информации о рисках инвестирования</li>
-                                <li>Отсутствие гарантий фиксированной доходности</li>
-                                <li>Прозрачный механизм формирования доходности</li>
-                                <li>Отсутствие условий об обязательном привлечении новых клиентов</li>
-                                <li>Возможность забрать вложения в любой момент (с учетом рыночных условий)</li>
-                            </ul>
-                            <p>Легальные инвестиционные компании не используют давление и не торопят с принятием решения.</p>
-                        </div>
-                    </div>
-                </div>
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">Финансовая безопасность</div>
+                <h1 class="hero-title"><i class="fas fa-exclamation-triangle"></i> Финансовые пирамиды</h1>
+                <p class="hero-description">Научитесь распознавать признаки финансовых пирамид, понимать принципы их работы и защитить себя от потери денег</p>
             </div>
+            <div class="hero-image-wrapper">
+                <img src="pyramid-money.png" alt="Финансовая пирамида" class="hero-image">
+            </div>
+        </section>
 
-            <!-- Test Section -->
-            <div class="test-section">
-                <h3>Проверьте свои знания</h3>
-                <p>Пройдите тест и узнайте, насколько хорошо вы умеете распознавать финансовые пирамиды</p>
+        <div class="content-grid">
+            <main class="main-content">
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> Что такое финансовая пирамида?</h2>
+                    <p>Финансовая пирамида — это схема получения дохода, при которой прибыль выплачивается за счет привлечения новых участников. В такой системе отсутствует реальная экономическая деятельность и генерация прибыли, а деньги просто перераспределяются от новых участников к старым.</p>
+                    
+                    <div class="alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Важно понимать!</strong> Любая финансовая пирамида обречена на разрушение, поскольку количество новых участников не может расти бесконечно. Когда приток новых инвесторов прекращается, система рушится, и большинство участников теряют свои деньги.
+                        </div>
+                    </div>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">История финансовых пирамид</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Финансовые пирамиды существуют уже более ста лет. Одна из первых известных пирамид была создана Чарльзом Понци в 1919 году в США. Понци обещал инвесторам 50% прибыли за 45 дней и 100% за 90 дней. Его схема привлекла около 40 000 инвесторов и собрала около 15 миллионов долларов, но в конечном итоге рухнула, оставив тысячи людей без денег.</p>
+                                <p>В России наиболее известными финансовыми пирамидами были "МММ" Сергея Мавроди (1990-е годы), "Хопёр-Инвест", "Властилина" и другие. По некоторым оценкам, от деятельности МММ пострадало до 15 миллионов человек.</p>
+                                <p>Несмотря на печальный опыт прошлого, финансовые пирамиды продолжают появляться и сегодня, только в более современных формах, используя интернет, криптовалюты и социальные сети для привлечения участников.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">Как работает финансовая пирамида?</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Принцип работы финансовой пирамиды достаточно прост:</p>
+                                <ul>
+                                    <li>Организаторы создают "инвестиционную" компанию и обещают высокую доходность (значительно выше рыночной)</li>
+                                    <li>Первым инвесторам действительно выплачивают обещанную прибыль, чтобы создать положительную репутацию</li>
+                                    <li>Выплаты производятся за счет денег, которые приносят новые участники</li>
+                                    <li>Чтобы система продолжала работать, нужно постоянно привлекать всё больше и больше новых участников</li>
+                                    <li>Когда приток новых инвесторов замедляется, пирамида перестает выполнять обязательства и рушится</li>
+                                </ul>
+                                <p>Организаторы обычно успевают вывести большую часть денег до краха пирамиды, а рядовые участники теряют свои вложения.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="test-card" id="question1">
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-search"></i> Признаки финансовой пирамиды</h2>
+                    <p>Чтобы не стать жертвой мошенников, необходимо знать основные признаки, по которым можно распознать финансовую пирамиду:</p>
+                    
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-percentage"></i>
+                            <div>
+                                <strong>Нереально высокая доходность</strong>
+                                <p>Обещание доходности, значительно превышающей среднерыночную (например, 30-100% годовых и выше), без объяснения, как именно будет генерироваться такая прибыль.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-file-contract"></i>
+                            <div>
+                                <strong>Отсутствие лицензии</strong>
+                                <p>Компания не имеет необходимых лицензий на осуществление финансовой деятельности или инвестирование.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-user-plus"></i>
+                            <div>
+                                <strong>Агрессивное привлечение новых участников</strong>
+                                <p>Активная реклама и система вознаграждения за привлечение новых участников, часто по принципу сетевого маркетинга.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-question-circle"></i>
+                            <div>
+                                <strong>Непрозрачная бизнес-модель</strong>
+                                <p>Отсутствие понятного объяснения, как именно компания будет генерировать доход. Использование сложной терминологии и расплывчатых формулировок.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Срочность принятия решения</strong>
+                                <p>Давление на потенциальных участников, чтобы они быстрее вкладывали деньги: "Только сегодня!", "Успей, пока не поздно!"</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-globe"></i>
+                            <div>
+                                <strong>Регистрация в офшорах</strong>
+                                <p>Компания зарегистрирована в офшорной зоне, что затрудняет контроль за её деятельностью и привлечение к ответственности в случае мошенничества.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-pencil-alt"></i> Современные виды финансовых пирамид</h2>
+                    <p>С развитием технологий меняется и облик финансовых пирамид. Вот наиболее распространенные современные разновидности:</p>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">Хайп-проекты (HYIP)</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>HYIP (High Yield Investment Program) — это интернет-инвестиционные проекты, обещающие высокую доходность. Они активно используют цифровые технологии, криптовалюты и автоматизированные платежные системы. Характерные черты:</p>
+                                <ul>
+                                    <li>Красиво оформленные веб-сайты с "легендой" о торговле на биржах, инвестициях в криптовалюты или стартапы</li>
+                                    <li>Обещание фиксированного высокого дохода (от 1% в день и выше)</li>
+                                    <li>Короткий срок жизни (от нескольких недель до нескольких месяцев)</li>
+                                    <li>Использование электронных платежей и криптовалют для анонимности</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">Финансовые MLM-компании</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Некоторые компании сетевого маркетинга (MLM) фактически являются замаскированными финансовыми пирамидами. В отличие от легитимных MLM-компаний, которые зарабатывают на продаже реальных товаров или услуг, такие структуры:</p>
+                                <ul>
+                                    <li>Фокусируются в первую очередь на привлечении новых участников, а не на продаже продукта</li>
+                                    <li>Предлагают завышенные комиссии за привлечение новых членов</li>
+                                    <li>Имеют продукт с сомнительной ценностью или значительно завышенной стоимостью</li>
+                                    <li>Используют систему сложных многоуровневых комиссий</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <div class="accordion-title">Криптовалютные финансовые пирамиды</div>
+                                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>С ростом популярности криптовалют появилось множество пирамид, использующих блокчейн-технологии. Они могут выглядеть как:</p>
+                                <ul>
+                                    <li>Псевдо-ICO (Initial Coin Offering) — сбор денег на разработку несуществующей или бесполезной криптовалюты</li>
+                                    <li>"Инвестиционные фонды", якобы торгующие криптовалютами</li>
+                                    <li>Облачный майнинг без реальных вычислительных мощностей</li>
+                                    <li>Новые криптовалюты с механизмом, поощряющим раннее участие и привлечение новых пользователей</li>
+                                </ul>
+                                <p>Отсутствие регулирования и анонимность в криптосфере делают такие пирамиды особенно опасными и трудными для выявления.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-card visible">
+                    <h2 class="section-title"><i class="fas fa-shield-alt"></i> Как защитить себя от финансовых пирамид</h2>
+                    <p>Финансовая грамотность и осознанное отношение к своим деньгам — лучшая защита от мошенников. Вот основные правила, которые помогут вам не попасть в финансовую пирамиду:</p>
+                    
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-check-double"></i>
+                            <div>
+                                <strong>Проверяйте лицензии и разрешения</strong>
+                                <p>Перед вложением денег обязательно проверьте наличие у компании необходимых лицензий на осуществление финансовой деятельности. Информацию можно найти на сайте Центрального банка.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <div>
+                                <strong>Соблюдайте правило "слишком хорошо, чтобы быть правдой"</strong>
+                                <p>Если предложение звучит слишком привлекательно (гарантированная высокая доходность, отсутствие рисков), скорее всего, это обман.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-search-dollar"></i>
+                            <div>
+                                <strong>Изучайте информацию о компании</strong>
+                                <p>Узнайте, как долго компания существует, кто её основатели, где она зарегистрирована, есть ли реальный физический адрес и контактные данные.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <strong>Не поддавайтесь психологическому давлению</strong>
+                                <p>Мошенники часто играют на страхе упустить возможность или жадности. Принимайте решения обдуманно, без спешки.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="features-item">
+                            <i class="fas fa-file-alt"></i>
+                            <div>
+                                <strong>Внимательно читайте документы</strong>
+                                <p>Изучите договор и все сопутствующие документы. Если что-то непонятно или вызывает сомнения, лучше отказаться.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Помните!</strong> Участие в финансовой пирамиде может иметь не только финансовые, но и юридические последствия. Если вы привлекаете других людей в известную вам финансовую пирамиду, вы можете нести ответственность за соучастие в мошенничестве.
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <aside class="test-section">
+                <h3><i class="fas fa-tasks"></i> Проверьте свои знания</h3>
+                <p>Пройдите тест, чтобы проверить, насколько хорошо вы умеете распознавать финансовые пирамиды:</p>
+                
+                <div class="test-card">
                     <div class="question">
-                        <p>1. Какой из признаков НЕ характерен для финансовой пирамиды?</p>
+                        <p>1. Какой из следующих признаков НЕ является типичным для финансовой пирамиды?</p>
                         <label class="answer-label">
                             <input type="radio" name="q1" value="a">
-                            Обещание гарантированной высокой доходности
+                            Обещание очень высокой доходности
                         </label>
                         <label class="answer-label">
                             <input type="radio" name="q1" value="b">
-                            Прозрачная отчетность и регулярный аудит
+                            Наличие лицензии от Центрального банка
                         </label>
                         <label class="answer-label">
                             <input type="radio" name="q1" value="c">
-                            Агрессивная рекламная кампания
+                            Активное привлечение новых участников
                         </label>
                         <label class="answer-label">
                             <input type="radio" name="q1" value="d">
-                            Необходимость привлекать новых участников
+                            Непрозрачная бизнес-модель
                         </label>
                     </div>
-                    <div class="test-results" id="result1">
-                        <div class="explanation">
-                            <p><strong>Правильный ответ: B. Прозрачная отчетность и регулярный аудит</strong></p>
-                            <p>Финансовые пирамиды избегают прозрачности в своей деятельности и не проходят регулярный аудит. Настоящие финансовые организации имеют прозрачную отчетность, а их деятельность часто подвергается независимому аудиту.</p>
-                        </div>
-                    </div>
+                    <div class="test-results" id="result1"></div>
                 </div>
-                
-                <div class="test-card" id="question2">
+
+                <div class="test-card">
                     <div class="question">
-                        <p>2. Что из перечисленного является "красным флагом" при инвестировании?</p>
+                        <p>2. Что из перечисленного является главным принципом работы финансовой пирамиды?</p>
                         <label class="answer-label">
-                            <input type="checkbox" name="q2" value="a">
-                            Предложение вложить средства "только сегодня" из-за ограниченного предложения
+                            <input type="radio" name="q2" value="a">
+                            Выплаты старым инвесторам за счет денег новых участников
                         </label>
                         <label class="answer-label">
-                            <input type="checkbox" name="q2" value="b">
-                            Наличие лицензии Центрального банка
+                            <input type="radio" name="q2" value="b">
+                            Получение прибыли от реальной предпринимательской деятельности
                         </label>
                         <label class="answer-label">
-                            <input type="checkbox" name="q2" value="c">
-                            Обещание доходности 50% в месяц с гарантией
+                            <input type="radio" name="q2" value="c">
+                            Инвестирование в международные финансовые рынки
                         </label>
                         <label class="answer-label">
-                            <input type="checkbox" name="q2" value="d">
-                            Компания зарегистрирована меньше года назад
+                            <input type="radio" name="q2" value="d">
+                            Государственное финансирование новых проектов
                         </label>
                     </div>
-                    <div class="test-results" id="result2">
-                        <div class="explanation">
-                            <p><strong>Правильные ответы: A, C, D</strong></p>
-                            <p>Ограничение времени на принятие решения, нереалистичная доходность и короткая история компании — все это признаки потенциального мошенничества. Наличие лицензии ЦБ (пункт B) — наоборот, признак легальной организации.</p>
-                        </div>
-                    </div>
+                    <div class="test-results" id="result2"></div>
                 </div>
-                
-                <div class="test-card" id="question3">
+
+                <div class="test-card">
                     <div class="question">
-                        <p>3. Чем схема Понци отличается от классической многоуровневой пирамиды?</p>
+                        <p>3. Какое действие следует предпринять, если вы подозреваете, что компания является финансовой пирамидой?</p>
                         <label class="answer-label">
                             <input type="radio" name="q3" value="a">
-                            В схеме Понци не нужно привлекать новых участников
+                            Вложить небольшую сумму, чтобы проверить надежность компании
                         </label>
                         <label class="answer-label">
                             <input type="radio" name="q3" value="b">
-                            Схема Понци — одноуровневая структура без явной иерархии участников
+                            Сообщить о подозрительной компании в Центральный банк
                         </label>
                         <label class="answer-label">
                             <input type="radio" name="q3" value="c">
-                            Схема Понци законна в большинстве стран
+                            Спросить мнение у друзей в социальных сетях
                         </label>
                         <label class="answer-label">
                             <input type="radio" name="q3" value="d">
-                            В схеме Понци есть реальный финансовый продукт
+                            Инвестировать быстро, пока компания еще принимает новых участников
                         </label>
                     </div>
-                    <div class="test-results" id="result3">
-                        <div class="explanation">
-                            <p><strong>Правильный ответ: B. Схема Понци — одноуровневая структура без явной иерархии участников</strong></p>
-                            <p>В классической схеме Понци организатор сам привлекает средства инвесторов и выплачивает им доход за счет денег новых вкладчиков. В многоуровневой пирамиде участники образуют иерархическую структуру, где каждый должен привлекать новых людей.</p>
-                        </div>
-                    </div>
+                    <div class="test-results" id="result3"></div>
                 </div>
                 
-                <button class="button" id="checkAnswers">
-                    <i class="fa-solid fa-check-circle"></i> Проверить ответы
+                <button class="button" id="check-all">
+                    <i class="fas fa-check-circle"></i> Проверить ответы
                 </button>
                 
-                <div class="score-counter" id="scoreCounter">
-                    Правильных ответов: <span id="score">0</span> из <span id="total">3</span>
-                </div>
-            </div>
+                <div class="score-counter" id="score">Правильных ответов: 0 из 3</div>
+            </aside>
         </div>
     </div>
-
+    
     <script>
-        // Accordion functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const accordions = document.querySelectorAll('.accordion');
+        // Прогресс чтения
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollProgress + '%';
             
-            accordions.forEach(accordion => {
-                const header = accordion.querySelector('.accordion-header');
-                
-                header.addEventListener('click', () => {
-                    accordion.classList.toggle('active');
-                });
-            });
-            
-            // Test functionality
-            const checkButton = document.getElementById('checkAnswers');
-            const scoreCounter = document.getElementById('scoreCounter');
-            let score = 0;
-            
-            checkButton.addEventListener('click', () => {
-                score = 0;
-                
-                // Question 1
-                const q1Answer = document.querySelector('input[name="q1"]:checked');
-                if (q1Answer && q1Answer.value === 'b') {
-                    score++;
-                    q1Answer.parentElement.classList.add('correct');
-                } else if (q1Answer) {
-                    q1Answer.parentElement.classList.add('incorrect');
-                    document.querySelector('input[name="q1"][value="b"]').parentElement.classList.add('correct');
-                }
-                
-                // Question 2
-                const q2Answers = document.querySelectorAll('input[name="q2"]:checked');
-                const correctAnswers = ['a', 'c', 'd'];
-                let q2Correct = true;
-                
-                // Mark all selected answers
-                q2Answers.forEach(answer => {
-                    if (correctAnswers.includes(answer.value)) {
-                        answer.parentElement.classList.add('correct');
-                    } else {
-                        answer.parentElement.classList.add('incorrect');
-                        q2Correct = false;
-                    }
-                });
-                
-                // Check if any correct answers were missed
-                correctAnswers.forEach(value => {
-                    const input = document.querySelector(`input[name="q2"][value="${value}"]`);
-                    if (!input.checked) {
-                        input.parentElement.classList.add('correct');
-                        q2Correct = false;
-                    }
-                });
-                
-                if (q2Correct && q2Answers.length === 3) {
-                    score++;
-                }
-                
-                // Question 3
-                const q3Answer = document.querySelector('input[name="q3"]:checked');
-                if (q3Answer && q3Answer.value === 'b') {
-                    score++;
-                    q3Answer.parentElement.classList.add('correct');
-                } else if (q3Answer) {
-                    q3Answer.parentElement.classList.add('incorrect');
-                    document.querySelector('input[name="q3"][value="b"]').parentElement.classList.add('correct');
-                }
-                
-                // Show results
-                document.getElementById('result1').style.display = 'block';
-                document.getElementById('result2').style.display = 'block';
-                document.getElementById('result3').style.display = 'block';
-                
-                // Update score counter
-                document.getElementById('score').textContent = score;
-                scoreCounter.style.display = 'block';
-                
-                // Hide score counter on small screens after 5 seconds
-                if (window.innerWidth <= 768) {
-                    setTimeout(() => {
-                        scoreCounter.style.display = 'none';
-                    }, 5000);
+            // Анимация появления секций
+            const sectionCards = document.querySelectorAll('.section-card');
+            sectionCards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight * 0.85) {
+                    card.classList.add('visible');
                 }
             });
         });
+        
+        // Функциональность аккордеона
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('.accordion-icon i');
+                
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    content.style.padding = '0 ' + getComputedStyle(content).paddingLeft;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.padding = 'clamp(0.8rem, 1.5vw, 1.2rem)';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        
+        // Квиз
+        document.getElementById('check-all').addEventListener('click', function() {
+            let correctAnswers = 0;
+            
+            // Вопрос 1
+            const q1Selected = document.querySelector('input[name="q1"]:checked');
+            const result1 = document.getElementById('result1');
+            if (q1Selected) {
+                if (q1Selected.value === 'b') {
+                    result1.innerHTML = '<div class="success">Верно! Наличие лицензии от Центрального банка как раз говорит о легитимности компании.</div>';
+                    q1Selected.parentElement.classList.add('correct');
+                    correctAnswers++;
+                } else {
+                    result1.innerHTML = '<div class="error">Неверно. Правильный ответ: "Наличие лицензии от Центрального банка".</div>';
+                    q1Selected.parentElement.classList.add('incorrect');
+                    document.querySelectorAll('input[name="q1"]').forEach(radio => {
+                        if (radio.value === 'b') radio.parentElement.classList.add('correct');
+                    });
+                }
+                result1.style.display = 'block';
+            }
+            
+            // Вопрос 2
+            const q2Selected = document.querySelector('input[name="q2"]:checked');
+            const result2 = document.getElementById('result2');
+            if (q2Selected) {
+                if (q2Selected.value === 'a') {
+                    result2.innerHTML = '<div class="success">Верно! Основной принцип финансовой пирамиды — выплаты старым участникам за счет привлечения новых.</div>';
+                    q2Selected.parentElement.classList.add('correct');
+                    correctAnswers++;
+                } else {
+                    result2.innerHTML = '<div class="error">Неверно. Правильный ответ: "Выплаты старым инвесторам за счет денег новых участников".</div>';
+                    q2Selected.parentElement.classList.add('incorrect');
+                    document.querySelectorAll('input[name="q2"]').forEach(radio => {
+                        if (radio.value === 'a') radio.parentElement.classList.add('correct');
+                    });
+                }
+                result2.style.display = 'block';
+            }
+            
+            // Вопрос 3
+            const q3Selected = document.querySelector('input[name="q3"]:checked');
+            const result3 = document.getElementById('result3');
+            if (q3Selected) {
+                if (q3Selected.value === 'b') {
+                    result3.innerHTML = '<div class="success">Верно! Следует сообщить о подозрительной компании в регулирующие органы.</div>';
+                    q3Selected.parentElement.classList.add('correct');
+                    correctAnswers++;
+                } else {
+                    result3.innerHTML = '<div class="error">Неверно. Правильный ответ: "Сообщить о подозрительной компании в Центральный банк".</div>';
+                    q3Selected.parentElement.classList.add('incorrect');
+                    document.querySelectorAll('input[name="q3"]').forEach(radio => {
+                        if (radio.value === 'b') radio.parentElement.classList.add('correct');
+                    });
+                }
+                result3.style.display = 'block';
+            }
+            
+            // Отображение счета
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `Правильных ответов: ${correctAnswers} из 3`;
+            scoreElement.style.display = 'block';
+            
+            if (correctAnswers === 3) {
+                scoreElement.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+            } else if (correctAnswers > 0) {
+                scoreElement.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+            } else {
+                scoreElement.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+            }
+        });
+        
+        // Вызов функции появления секций при загрузке страницы
+        window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
 </html>

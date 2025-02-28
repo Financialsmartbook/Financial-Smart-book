@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Защита финансовой информации от мошенников</title>
+  <title>Защита финансовой информации от мошенников - Смарт-учебник</title>
   <!-- Подключение Font Awesome для иконок -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- Подключение шрифта Inter -->
@@ -14,16 +14,31 @@
       --secondary: #4f46e5;
       --accent: #818cf8;
       --background: #f8fafc;
-      --text: #1e293b;
-      --text-light: #64748b;
+      --text-dark: #1e293b;
+      --text-light: #f1f5f9;
+      --glass: rgba(255, 255, 255, 0.9);
       --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-      --radius-lg: 1.5rem;
-      --radius-md: 1rem;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       --success: #10b981;
       --error: #ef4444;
       --warning: #f59e0b;
+      --border: #e2e8f0;
+      --radius-lg: 1.5rem;
+      --radius-md: 1rem;
+      --radius-sm: 0.5rem;
+      --shadow-xs: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(255, 255, 255, 0.8);
+      --shadow-sm: 4px 4px 20px rgba(0, 0, 0, 0.1), -4px -4px 20px rgba(255, 255, 255, 0.9);
+      --shadow-md: var(--shadow);
+      --warning-light: #fffbeb;
+      --danger-light: #fee2e2;
+      --info-light: #f1f8ff;
+      --info: #0dcaf0;
+      --success-light: #dcfce7;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
     }
 
     * {
@@ -32,132 +47,351 @@
       padding: 0;
     }
 
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
-      background: var(--background);
-      color: var(--text);
+      background: linear-gradient(135deg, var(--background) 0%, #e5e7eb 100%);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: clamp(3px, 0.5vw, 5px);
+      background: var(--gradient);
+      z-index: 1000;
+      transition: width 0.3s ease;
+      box-shadow: 0 2px 15px rgba(99, 102, 241, 0.5);
+      border-radius: 0 0 5px 5px;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 3rem);
+      position: relative;
+      z-index: 1;
     }
 
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 4rem;
-      padding: 6rem 2rem;
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotateY(12deg) rotateX(5deg);
+      }
+      50% {
+        transform: translateY(-15px) rotateY(12deg) rotateX(5deg);
+      }
+      100% {
+        transform: translateY(0px) rotateY(12deg) rotateX(5deg);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.08;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.12;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.08;
+      }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-section {
+      position: relative;
+      margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 5vw, 5rem);
+      padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
       background: var(--gradient);
       border-radius: var(--radius-lg);
-      color: white;
-      box-shadow: var(--shadow-sm);
-      position: relative;
+      color: var(--text-light);
       overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      animation: gradientShift 15s ease infinite;
+      background-size: 300% 300%;
+      border: 1px solid var(--border);
+    }
+
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,256L48,229.3C96,203,192,149,288,138.7C384,128,480,160,576,186.7C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      opacity: 0.7;
+      z-index: 1;
+      animation: pulse 10s infinite ease-in-out;
     }
 
     .header__icon {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 4rem;
-      opacity: 0.1;
-      animation: pulse 2s infinite;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(10rem, 30vw, 18rem);
+      opacity: 0.08;
+      animation: pulse 8s infinite;
+      z-index: 1;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.1; }
-      50% { transform: scale(1.05); opacity: 0.15; }
+    .hero-content {
+      max-width: 60%;
+      z-index: 2;
+      position: relative;
     }
 
-    .header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-      line-height: 1.2;
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: clamp(0.7rem, 1vw, 0.9rem);
+      font-weight: 600;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      animation: pulse 3s infinite ease-in-out;
     }
 
-    /* Content Sections */
+    .hero-title {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+      line-height: 1.1;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .hero-title i {
+      font-size: 90%;
+    }
+
+    .hero-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .hero-description {
+      font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+      opacity: 0.9;
+      font-weight: 300;
+      max-width: 90%;
+      margin-top: clamp(1rem, 2vw, 1.5rem);
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* 3D эффект для изображения */
+    .hero-image-wrapper {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-image {
+      width: clamp(150px, 30vw, 350px);
+      border-radius: var(--radius-md);
+      transition: transform 0.6s ease-out;
+      transform: rotateY(12deg) rotateX(5deg);
+      box-shadow: -20px 20px 30px rgba(0, 0, 0, 0.3), 
+                   0 10px 20px rgba(0, 0, 0, 0.2),
+                   0 0 40px rgba(79, 70, 229, 0.4);
+      border: 4px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      z-index: 2;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .hero-image-wrapper:hover .hero-image {
+      transform: rotateY(-12deg) rotateX(-5deg) scale(1.05);
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+      z-index: 3;
+      pointer-events: none;
+      border-radius: calc(var(--radius-md) - 4px);
+    }
+
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 30%;
+      bottom: -30px;
+      left: 0;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%);
+      filter: blur(10px);
+      transform: scaleX(0.8);
+      z-index: -1;
+    }
+
     .content-grid {
       display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 3rem;
-      margin-bottom: 4rem;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: clamp(1.5rem, 3vw, 3rem);
+      margin-bottom: clamp(3rem, 5vw, 5rem);
+      align-items: start;
+      position: relative;
     }
 
     .main-content {
       display: grid;
-      gap: 3rem;
+      gap: clamp(1.5rem, 3vw, 3rem);
     }
 
-    /* Cards */
-    .card {
-      background: white;
-      padding: 2.5rem;
+    .section-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-xs);
-      transition: transform 0.2s, box-shadow 0.2s;
+      padding: clamp(1.2rem, 3vw, 3rem);
+      box-shadow: var(--shadow);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      opacity: 0;
+      transform: translateY(40px);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-sm);
+    .section-card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    h2 {
-      font-size: 1.75rem;
-      margin-bottom: 2rem;
+    .section-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+
+    .section-card:nth-child(odd) {
+      border-left: 4px solid var(--primary);
+    }
+
+    .section-card:nth-child(even) {
+      border-right: 4px solid var(--secondary);
+    }
+
+    .section-title {
+      font-size: clamp(1.3rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: clamp(1rem, 2vw, 1.8rem);
       display: flex;
       align-items: center;
-      gap: 1rem;
-      color: var(--secondary);
+      gap: 0.8rem;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      line-height: 1.3;
     }
 
-    h2 i {
-      font-size: 1.5em;
-      color: var(--primary);
+    .section-title i {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 130%;
     }
 
-    /* Financial Instruments */
     .instrument-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius-md);
+      padding: clamp(1.2rem, 2vw, 2rem);
+      margin: clamp(1.5rem, 2vw, 2rem) 0;
       border-left: 4px solid var(--primary);
-      padding-left: 2rem;
-      margin: 2rem 0;
+      box-shadow: var(--shadow-xs);
+      transition: transform 0.3s ease;
+    }
+
+    .instrument-card:hover {
+      transform: translateX(8px);
     }
 
     .instrument-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--text);
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      margin-bottom: clamp(0.8rem, 1.2vw, 1.2rem);
+      color: var(--secondary);
+      font-weight: 700;
     }
 
     .instrument-card ul {
-      margin-left: 1.5rem;
+      padding-left: 1.5rem;
     }
 
     .instrument-card li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
+      position: relative;
     }
 
-    /* Alert Box */
     .alert {
-      padding: 1.25rem;
+      padding: clamp(1rem, 2vw, 1.5rem);
       border-radius: var(--radius-md);
-      margin: 1.5rem 0;
+      margin: clamp(1.5rem, 2vw, 2rem) 0;
       display: flex;
       align-items: flex-start;
-      gap: 1rem;
+      gap: clamp(0.8rem, 1.2vw, 1rem);
+      box-shadow: var(--shadow-xs);
     }
 
     .alert i {
-      font-size: 1.25rem;
-      margin-top: 0.25rem;
+      font-size: 1.5rem;
+      flex-shrink: 0;
     }
 
     .alert-warning {
-      background: #fff8e6;
+      background: var(--warning-light);
       border-left: 4px solid var(--warning);
     }
 
@@ -166,7 +400,7 @@
     }
 
     .alert-danger {
-      background: #fee2e2;
+      background: var(--danger-light);
       border-left: 4px solid var(--error);
     }
 
@@ -174,210 +408,210 @@
       color: var(--error);
     }
 
-    /* Test Section */
-    .test-section {
-      background: var(--background);
-      padding: 2rem;
-      border-radius: var(--radius-lg);
-      position: sticky;
-      top: 2rem;
-    }
-
-    .test-card {
-      background: white;
-      padding: 2rem;
-      border-radius: var(--radius-md);
-      margin-bottom: 2rem;
-      border: 1px solid #e2e8f0;
-      transition: transform 0.2s;
-    }
-
-    .test-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .test-card h3 {
-      margin-bottom: 1.5rem;
-      color: var(--secondary);
-      font-size: 1.25rem;
-    }
-
-    .question {
-      margin: 1.5rem 0;
-    }
-
-    .question p {
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .question label {
-      display: flex;
-      align-items: center;
-      margin: 0.75rem 0;
-      cursor: pointer;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      background: #f1f5f9;
-      transition: background 0.2s;
-    }
-
-    .question label:hover {
-      background: #e2e8f0;
-    }
-
-    .question input[type="radio"],
-    .question input[type="checkbox"] {
-      margin-right: 0.75rem;
-      accent-color: var(--primary);
-    }
-
-    .button {
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-      font-weight: 500;
-      margin-top: 1rem;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-    }
-
-    .feedback {
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-top: 1rem;
-      font-weight: 500;
-      display: none;
-    }
-
-    .feedback.success {
-      background: #dcfce7;
-      color: var(--success);
-    }
-
-    .feedback.error {
-      background: #fee2e2;
-      color: var(--error);
-    }
-
-    /* Online Banking Section */
     .security-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      margin-top: clamp(1.5rem, 2vw, 2rem);
     }
 
     .security-item {
-      background: white;
-      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      padding: clamp(1.2rem, 2vw, 1.5rem);
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-xs);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      transition: transform 0.2s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border);
     }
 
     .security-item:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-sm);
     }
 
     .security-item i {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 4vw, 2.5rem);
       color: var(--primary);
-      margin-bottom: 1rem;
+      margin-bottom: clamp(0.8rem, 1.2vw, 1rem);
     }
 
     .security-item h4 {
-      margin-bottom: 0.75rem;
-      color: var(--text);
+      margin-bottom: clamp(0.6rem, 1vw, 0.8rem);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
     }
 
-    /* Media Queries */
-    @media (max-width: 1024px) {
+    .test-section {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      padding: clamp(1.2rem, 2.5vw, 2rem);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: var(--spacing-lg);
+      border: 1px solid var(--border);
+    }
+
+    .test-section h3 {
+      font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+      margin-bottom: var(--spacing-sm);
+      color: var(--secondary);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .test-section h3 i {
+      color: var(--primary);
+    }
+
+    .test-card {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-lg);
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+    }
+
+    .test-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.1);
+    }
+
+    .question {
+      padding: var(--spacing-md);
+    }
+
+    .question p {
+      font-weight: 600;
+      margin-bottom: var(--spacing-md);
+      color: var(--text-dark);
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+    }
+
+    .answer-label {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(255, 255, 255, 0.5);
+      font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+      border: 1px solid var(--border);
+    }
+
+    .answer-label:hover {
+      background: rgba(255, 255, 255, 0.8);
+      transform: translateX(5px);
+    }
+
+    .answer-label.correct {
+      background: var(--success-light) !important;
+      border: 2px solid var(--success);
+    }
+
+    .answer-label.incorrect {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border: 2px solid var(--error);
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-right: 0.75rem;
+      margin-top: 0.3rem;
+      accent-color: var(--primary);
+      min-width: 16px;
+      min-height: 16px;
+    }
+
+    .feedback {
+      padding: var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      margin-top: var(--spacing-sm);
+      display: none;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .feedback.success {
+      background: var(--success-light);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+
+    .feedback.error {
+      background: var(--danger-light);
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+
+    .button {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+    }
+
+    @media (max-width: 992px) {
       .content-grid {
         grid-template-columns: 1fr;
       }
-
+      
       .test-section {
         position: static;
+        margin-top: var(--spacing-lg);
       }
     }
 
     @media (max-width: 768px) {
-      .container {
-        padding: 1.5rem;
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: clamp(3rem, 8vw, 6rem);
       }
-
-      .header {
-        padding: 4rem 1.5rem;
+      
+      .hero-content {
+        max-width: 100%;
+        margin-bottom: clamp(2rem, 5vw, 3rem);
       }
-
-      .header h1 {
-        font-size: 2rem;
+      
+      .hero-title::after {
+        left: 50%;
+        transform: translateX(-50%);
       }
-
-      .card, .test-card {
-        padding: 1.5rem;
+      
+      .hero-description {
+        max-width: 100%;
+        margin: clamp(1rem, 2vw, 1.5rem) auto 0;
       }
-
-      h2 {
-        font-size: 1.5rem;
+      
+      .alert {
+        flex-direction: column;
+        align-items: flex-start;
       }
-
-      .instrument-card {
-        padding-left: 1.5rem;
-      }
-
-      .instrument-card h3 {
-        font-size: 1.25rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 1rem;
-      }
-
-      .header {
-        padding: 3rem 1rem;
-        margin-bottom: 2rem;
-      }
-
-      .header h1 {
-        font-size: 1.75rem;
-      }
-
-      .card, .test-card {
-        padding: 1.25rem;
-      }
-
-      h2 {
-        font-size: 1.35rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .instrument-card {
-        padding-left: 1rem;
-        margin: 1.5rem 0;
-      }
-
-      .instrument-card h3 {
-        font-size: 1.15rem;
-      }
-
+      
       .button {
         width: 100%;
         justify-content: center;
@@ -386,22 +620,29 @@
   </style>
 </head>
 <body>
+  <div id="progress-bar"></div>
+  
   <div class="container">
     <!-- Header -->
-    <header class="header">
-      <i class="fa-solid fa-shield-halved header__icon"></i>
-      <h1>Защита финансовой информации от мошенников</h1>
-      <p>Основные правила и рекомендации для защиты ваших данных</p>
-    </header>
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">Финансовая безопасность</div>
+        <h1 class="hero-title"><i class="fa-solid fa-lock"></i> Защита финансовой информации</h1>
+        <p class="hero-description">Основные правила и рекомендации для защиты ваших данных от мошенников и кибератак</p>
+      </div>
+      <div class="hero-image-wrapper">
+        <img src="security-finance.png" alt="Защита финансовой информации" class="hero-image">
+      </div>
+    </section>
 
     <!-- Content Grid -->
     <div class="content-grid">
       <!-- Main Content -->
       <div class="main-content">
         <!-- Основное правило -->
-        <div class="card">
-          <h2><i class="fa-solid fa-lock"></i> Основное правило</h2>
-          <p>Никому не сообщайте коды из SMS-сообщений! Это строго конфиденциальная информация.</p>
+        <div class="section-card visible">
+          <h2 class="section-title"><i class="fa-solid fa-lock"></i> Основное правило безопасности</h2>
+          <p>Никому не сообщайте коды из SMS-сообщений! Это строго конфиденциальная информация, которая не должна передаваться третьим лицам.</p>
           
           <div class="alert alert-danger">
             <i class="fa-solid fa-triangle-exclamation"></i>
@@ -422,16 +663,16 @@
         </div>
 
         <!-- Защита от фишинговых атак -->
-        <div class="card">
-          <h2><i class="fa-solid fa-fish"></i> Защита от фишинговых атак</h2>
-          <p>Фишинг — это попытка мошенников получить ваши данные через поддельные сайты или письма.</p>
+        <div class="section-card visible">
+          <h2 class="section-title"><i class="fa-solid fa-fish"></i> Защита от фишинговых атак</h2>
+          <p>Фишинг — это попытка мошенников получить ваши данные через поддельные сайты или письма, имитирующие официальные ресурсы банков и платежных систем.</p>
           
           <div class="instrument-card">
             <h3>Рекомендации</h3>
             <ul>
               <li>Используйте антивирусное программное обеспечение и регулярно обновляйте его.</li>
               <li>Настройте двухфакторную аутентификацию для всех важных сервисов.</li>
-              <li>Не переходите по ссылкам из подозрительных писем.</li>
+              <li>Не переходите по ссылкам из подозрительных писем и сообщений.</li>
               <li>Проверяйте адрес сайта в адресной строке браузера перед вводом данных.</li>
               <li>Обращайте внимание на защищенное соединение (https://) и значок замка в адресной строке.</li>
             </ul>
@@ -440,21 +681,21 @@
           <div class="alert alert-warning">
             <i class="fa-solid fa-info-circle"></i>
             <div>
-              <strong>Как распознать фишинговые письма:</strong> Они часто содержат срочные требования, грамматические ошибки, угрозы блокировки счета или сообщения о неожиданных выигрышах.
+              <strong>Как распознать фишинговые письма:</strong> Они часто содержат срочные требования, грамматические ошибки, угрозы блокировки счета или сообщения о неожиданных выигрышах. Также проверяйте адрес отправителя — он часто отличается от официального всего на несколько символов.
             </div>
           </div>
         </div>
 
         <!-- Правила использования банковской карты -->
-        <div class="card">
-          <h2><i class="fa-solid fa-credit-card"></i> Правила использования банковской карты</h2>
-          <p>Следуйте этим рекомендациям для защиты ваших средств:</p>
+        <div class="section-card visible">
+          <h2 class="section-title"><i class="fa-solid fa-credit-card"></i> Правила использования банковской карты</h2>
+          <p>Следуйте этим рекомендациям для защиты ваших средств и предотвращения мошеннических операций:</p>
           
           <div class="instrument-card">
             <h3>Основные правила</h3>
             <ul>
               <li>Не передавайте карту третьим лицам, даже для оплаты услуг.</li>
-              <li>Снимайте наличные только в надежных банкоматах.</li>
+              <li>Снимайте наличные только в надежных банкоматах, расположенных в банках или торговых центрах.</li>
               <li>Закрывайте клавиатуру при вводе ПИН-кода.</li>
               <li>Подключите СМС-информирование об операциях по карте.</li>
               <li>Установите лимиты на снятие наличных и интернет-платежи.</li>
@@ -464,8 +705,8 @@
         </div>
 
         <!-- Безопасность онлайн-банкинга -->
-        <div class="card">
-          <h2><i class="fa-solid fa-laptop"></i> Безопасность онлайн-банкинга</h2>
+        <div class="section-card visible">
+          <h2 class="section-title"><i class="fa-solid fa-laptop"></i> Безопасность онлайн-банкинга</h2>
           <p>Современные цифровые банковские услуги удобны, но требуют повышенного внимания к безопасности:</p>
           
           <div class="security-grid">
@@ -478,247 +719,217 @@
             <div class="security-item">
               <i class="fa-solid fa-shield-virus"></i>
               <h4>Безопасные устройства</h4>
-              <p>Не входите в онлайн-банк с чужих компьютеров или через публичные Wi-Fi сети.</p>
+              <p>Не используйте общедоступные компьютеры и Wi-Fi для входа в онлайн-банк.</p>
             </div>
             
             <div class="security-item">
-              <i class="fa-solid fa-user-lock"></i>
-              <h4>Двухфакторная аутентификация</h4>
-              <p>Всегда используйте дополнительный уровень защиты через SMS-коды или приложения.</p>
+              <i class="fa-solid fa-bell"></i>
+              <h4>Уведомления</h4>
+              <p>Подключите уведомления обо всех операциях по счету для быстрого реагирования.</p>
+            </div>
+            
+            <div class="security-item">
+              <i class="fa-solid fa-fingerprint"></i>
+              <h4>Биометрия</h4>
+              <p>Используйте отпечаток пальца или распознавание лица для дополнительной защиты.</p>
             </div>
           </div>
           
+          <div class="alert alert-danger">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>
+              <strong>Никогда не входите в онлайн-банк по ссылкам из писем!</strong> Всегда вводите адрес банка вручную или используйте официальное мобильное приложение, скачанное из проверенных источников.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Безопасность мобильных платежей -->
+        <div class="section-card visible">
+          <h2 class="section-title"><i class="fa-solid fa-mobile-alt"></i> Безопасность мобильных платежей</h2>
+          <p>Популярность мобильных платежей растет, и вместе с этим увеличиваются риски для пользователей:</p>
+          
           <div class="instrument-card">
-            <h3>Что делать, если вы стали жертвой мошенников</h3>
-            <ol>
-              <li>Немедленно заблокируйте карту или доступ к онлайн-банкингу.</li>
-              <li>Обратитесь в банк и опишите ситуацию.</li>
-              <li>Напишите заявление в полицию.</li>
-              <li>Сохраните все доказательства мошенничества (скриншоты, SMS, электронные письма).</li>
-              <li>Измените пароли ко всем финансовым сервисам.</li>
-            </ol>
+            <h3>Рекомендации по защите</h3>
+            <ul>
+              <li>Устанавливайте приложения только из официальных магазинов (App Store, Google Play).</li>
+              <li>Не подключайте банковские карты к подозрительным сервисам.</li>
+              <li>Регулярно обновляйте операционную систему и приложения.</li>
+              <li>Не храните банковские карты в смартфоне, если не используете зашифрованное хранилище.</li>
+              <li>Настройте автоматическую блокировку экрана и используйте биометрию для разблокировки.</li>
+            </ul>
           </div>
         </div>
       </div>
 
       <!-- Test Section -->
-      <div class="test-section">
+      <aside class="test-section">
+        <h3><i class="fa-solid fa-tasks"></i> Проверьте свои знания</h3>
+        <p>Пройдите тест, чтобы проверить, насколько хорошо вы знаете основы финансовой безопасности:</p>
+        
         <div class="test-card">
-          <h3>Тест 1: Основные правила</h3>
           <div class="question">
-            <p>Что делать при получении подозрительного SMS?</p>
-            <label>
-              <input type="radio" name="question1" value="a"> Проигнорировать
+            <p>1. Сотрудник банка звонит и просит продиктовать код из SMS для отмены подозрительной операции. Ваши действия?</p>
+            <label class="answer-label">
+              <input type="radio" name="q1" value="a">
+              Сообщить код, чтобы защитить свои деньги
             </label>
-            <label>
-              <input type="radio" name="question1" value="b"> Связаться с банком
+            <label class="answer-label">
+              <input type="radio" name="q1" value="b">
+              Отказаться и перезвонить в банк по официальному номеру
             </label>
-            <label>
-              <input type="radio" name="question1" value="c"> Перейти по ссылке из сообщения
+            <label class="answer-label">
+              <input type="radio" name="q1" value="c">
+              Сообщить только часть кода для проверки
             </label>
-            <button class="button" id="check-q1">
-              <i class="fa-solid fa-check"></i> Проверить
-            </button>
-            <div class="feedback" id="feedback-q1"></div>
+            <label class="answer-label">
+              <input type="radio" name="q1" value="d">
+              Попросить перезвонить позже
+            </label>
           </div>
+          <div class="feedback" id="result1"></div>
         </div>
 
         <div class="test-card">
-          <h3>Тест 2: Фишинговые атаки</h3>
           <div class="question">
-            <p>Выберите правильные способы защиты от фишинга:</p>
-            <label>
-              <input type="checkbox" name="question2" value="a"> Использовать антивирус
+            <p>2. Какие признаки указывают на то, что вы находитесь на фишинговом сайте?</p>
+            <label class="answer-label">
+              <input type="radio" name="q2" value="a">
+              Адрес сайта содержит название банка
             </label>
-            <label>
-              <input type="checkbox" name="question2" value="b"> Переходить по всем ссылкам из писем
+            <label class="answer-label">
+              <input type="radio" name="q2" value="b">
+              В адресной строке есть https и значок замка
             </label>
-            <label>
-              <input type="checkbox" name="question2" value="c"> Проверять адрес сайта в браузере
+            <label class="answer-label">
+              <input type="radio" name="q2" value="c">
+              Мелкие ошибки в адресе сайта и опечатки в тексте
             </label>
-            <label>
-              <input type="checkbox" name="question2" value="d"> Сообщать пароли по телефону сотрудникам банка
+            <label class="answer-label">
+              <input type="radio" name="q2" value="d">
+              Наличие функции "запомнить пароль"
             </label>
-            <button class="button" id="check-q2">
-              <i class="fa-solid fa-graduation-cap"></i> Ответить
-            </button>
-            <div class="feedback" id="feedback-q2"></div>
           </div>
+          <div class="feedback" id="result2"></div>
         </div>
 
         <div class="test-card">
-          <h3>Тест 3: Банковская карта</h3>
           <div class="question">
-            <p>Выберите правильные утверждения о безопасном использовании банковской карты:</p>
-            <label>
-              <input type="checkbox" name="question3" value="a"> Передавать карту официанту
+            <p>3. Что следует делать при утере банковской карты?</p>
+            <label class="answer-label">
+              <input type="radio" name="q3" value="a">
+              Ждать, пока найдется карта
             </label>
-            <label>
-              <input type="checkbox" name="question3" value="b"> Закрывать клавиатуру при вводе ПИН-кода
+            <label class="answer-label">
+              <input type="radio" name="q3" value="b">
+              Немедленно заблокировать карту
             </label>
-            <label>
-              <input type="checkbox" name="question3" value="c"> Подключить СМС-информирование
+            <label class="answer-label">
+              <input type="radio" name="q3" value="c">
+              Сначала проверить баланс, затем решить блокировать или нет
             </label>
-            <label>
-              <input type="checkbox" name="question3" value="d"> Хранить ПИН-код вместе с картой
+            <label class="answer-label">
+              <input type="radio" name="q3" value="d">
+              Заблокировать карту только если на ней много денег
             </label>
-            <button class="button" id="check-q3">
-              <i class="fa-solid fa-credit-card"></i> Ответить
-            </button>
-            <div class="feedback" id="feedback-q3"></div>
           </div>
+          <div class="feedback" id="result3"></div>
         </div>
-
-        <div class="test-card">
-          <h3>Тест 4: Онлайн-банкинг</h3>
-          <div class="question">
-            <p>Какие меры повышают безопасность онлайн-банкинга?</p>
-            <label>
-              <input type="checkbox" name="question4" value="a"> Двухфакторная аутентификация
-            </label>
-            <label>
-              <input type="checkbox" name="question4" value="b"> Использование публичных Wi-Fi сетей
-            </label>
-            <label>
-              <input type="checkbox" name="question4" value="c"> Регулярная смена пароля
-            </label>
-            <label>
-              <input type="checkbox" name="question4" value="d"> Сохранение пароля в браузере
-            </label>
-            <button class="button" id="check-q4">
-              <i class="fa-solid fa-laptop"></i> Ответить
-            </button>
-            <div class="feedback" id="feedback-q4"></div>
-          </div>
-        </div>
-      </div>
+        
+        <button class="button" id="check-answers">
+          <i class="fa-solid fa-check-circle"></i> Проверить ответы
+        </button>
+      </aside>
     </div>
   </div>
-
+  
   <script>
-    // Обработка тестов
-    document.addEventListener('DOMContentLoaded', function() {
-      // Тест 1: Основные правила
-      document.getElementById('check-q1').addEventListener('click', function() {
-        const selectedOption = document.querySelector('input[name="question1"]:checked');
-        const feedback = document.getElementById('feedback-q1');
-        
-        feedback.style.display = 'block';
-        
-        if (!selectedOption) {
-          feedback.textContent = 'Пожалуйста, выберите ответ';
-          feedback.className = 'feedback error';
-          return;
-        }
-        
-        if (selectedOption.value === 'b') {
-          feedback.textContent = 'Правильно! При получении подозрительного SMS необходимо связаться с банком по официальному номеру.';
-          feedback.className = 'feedback success';
-        } else {
-          feedback.textContent = 'Неверно. Правильный ответ: связаться с банком по официальному номеру.';
-          feedback.className = 'feedback error';
-        }
-      });
+    // Прогресс чтения
+    window.addEventListener('scroll', function() {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollProgress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progress-bar').style.width = scrollProgress + '%';
       
-      // Тест 2: Фишинговые атаки
-      document.getElementById('check-q2').addEventListener('click', function() {
-        const selectedOptions = document.querySelectorAll('input[name="question2"]:checked');
-        const feedback = document.getElementById('feedback-q2');
-        
-        feedback.style.display = 'block';
-        
-        if (selectedOptions.length === 0) {
-          feedback.textContent = 'Пожалуйста, выберите хотя бы один ответ';
-          feedback.className = 'feedback error';
-          return;
-        }
-        
-        const correctAnswers = ['a', 'c'];
-        let isCorrect = true;
-        
-        // Проверяем, что все выбранные ответы правильные
-        selectedOptions.forEach(option => {
-          if (!correctAnswers.includes(option.value)) {
-            isCorrect = false;
-          }
-        });
-        
-        // Проверяем, что выбраны все правильные ответы
-        if (isCorrect && selectedOptions.length === correctAnswers.length) {
-          feedback.textContent = 'Правильно! Использование антивируса и проверка адреса сайта - важные меры защиты от фишинга.';
-          feedback.className = 'feedback success';
-        } else {
-          feedback.textContent = 'Неверно. Правильные ответы: использовать антивирус и проверять адрес сайта в браузере.';
-          feedback.className = 'feedback error';
-        }
-      });
-      
-      // Тест 3: Банковская карта
-      document.getElementById('check-q3').addEventListener('click', function() {
-        const selectedOptions = document.querySelectorAll('input[name="question3"]:checked');
-        const feedback = document.getElementById('feedback-q3');
-        
-        feedback.style.display = 'block';
-        
-        if (selectedOptions.length === 0) {
-          feedback.textContent = 'Пожалуйста, выберите хотя бы один ответ';
-          feedback.className = 'feedback error';
-          return;
-        }
-        
-        const correctAnswers = ['b', 'c'];
-        let isCorrect = true;
-        
-        // Проверяем, что все выбранные ответы правильные
-        selectedOptions.forEach(option => {
-          if (!correctAnswers.includes(option.value)) {
-            isCorrect = false;
-          }
-        });
-        
-        // Проверяем, что выбраны все правильные ответы
-        if (isCorrect && selectedOptions.length === correctAnswers.length) {
-          feedback.textContent = 'Правильно! Закрытие клавиатуры при вводе ПИН-кода и подключение СМС-информирования повышают безопасность.';
-          feedback.className = 'feedback success';
-        } else {
-          feedback.textContent = 'Неверно. Правильные ответы: закрывать клавиатуру при вводе ПИН-кода и подключить СМС-информирование.';
-          feedback.className = 'feedback error';
-        }
-      });
-      
-      // Тест 4: Онлайн-банкинг
-      document.getElementById('check-q4').addEventListener('click', function() {
-        const selectedOptions = document.querySelectorAll('input[name="question4"]:checked');
-        const feedback = document.getElementById('feedback-q4');
-        
-        feedback.style.display = 'block';
-        
-        if (selectedOptions.length === 0) {
-          feedback.textContent = 'Пожалуйста, выберите хотя бы один ответ';
-          feedback.className = 'feedback error';
-          return;
-        }
-        
-        const correctAnswers = ['a', 'c'];
-        let isCorrect = true;
-        
-        // Проверяем, что все выбранные ответы правильные
-        selectedOptions.forEach(option => {
-          if (!correctAnswers.includes(option.value)) {
-            isCorrect = false;
-          }
-        });
-        
-        // Проверяем, что выбраны все правильные ответы
-        if (isCorrect && selectedOptions.length === correctAnswers.length) {
-          feedback.textContent = 'Правильно! Двухфакторная аутентификация и регулярная смена пароля - важные меры безопасности.';
-          feedback.className = 'feedback success';
-        } else {
-          feedback.textContent = 'Неверно. Правильные ответы: двухфакторная аутентификация и регулярная смена пароля.';
-          feedback.className = 'feedback error';
+      // Анимация появления секций
+      const sectionCards = document.querySelectorAll('.section-card');
+      sectionCards.forEach(card => {
+        const cardTop = card.getBoundingClientRect().top;
+        if (cardTop < window.innerHeight * 0.85) {
+          card.classList.add('visible');
         }
       });
     });
+    
+    // Проверка теста
+    document.getElementById('check-answers').addEventListener('click', function() {
+      let score = 0;
+      
+      // Проверка первого вопроса
+      const q1Selected = document.querySelector('input[name="q1"]:checked');
+      const result1 = document.getElementById('result1');
+      
+      if (q1Selected) {
+        if (q1Selected.value === 'b') {
+          result1.innerHTML = 'Верно! Никогда не сообщайте коды из SMS, даже сотрудникам банка.';
+          result1.className = 'feedback success';
+          q1Selected.parentElement.classList.add('correct');
+          score++;
+        } else {
+          result1.innerHTML = 'Неверно. Правильный ответ: "Отказаться и перезвонить в банк по официальному номеру".';
+          result1.className = 'feedback error';
+          q1Selected.parentElement.classList.add('incorrect');
+          document.querySelectorAll('input[name="q1"]').forEach(radio => {
+            if (radio.value === 'b') radio.parentElement.classList.add('correct');
+          });
+        }
+        result1.style.display = 'block';
+      }
+      
+      // Проверка второго вопроса
+      const q2Selected = document.querySelector('input[name="q2"]:checked');
+      const result2 = document.getElementById('result2');
+      
+      if (q2Selected) {
+        if (q2Selected.value === 'c') {
+          result2.innerHTML = 'Верно! Ошибки в адресе и опечатки - верный признак фишингового сайта.';
+          result2.className = 'feedback success';
+          q2Selected.parentElement.classList.add('correct');
+          score++;
+        } else {
+          result2.innerHTML = 'Неверно. Правильный ответ: "Мелкие ошибки в адресе сайта и опечатки в тексте".';
+          result2.className = 'feedback error';
+          q2Selected.parentElement.classList.add('incorrect');
+          document.querySelectorAll('input[name="q2"]').forEach(radio => {
+            if (radio.value === 'c') radio.parentElement.classList.add('correct');
+          });
+        }
+        result2.style.display = 'block';
+      }
+      
+      // Проверка третьего вопроса
+      const q3Selected = document.querySelector('input[name="q3"]:checked');
+      const result3 = document.getElementById('result3');
+      
+      if (q3Selected) {
+        if (q3Selected.value === 'b') {
+          result3.innerHTML = 'Верно! При утере карты необходимо немедленно её заблокировать.';
+          result3.className = 'feedback success';
+          q3Selected.parentElement.classList.add('correct');
+          score++;
+        } else {
+          result3.innerHTML = 'Неверно. Правильный ответ: "Немедленно заблокировать карту".';
+          result3.className = 'feedback error';
+          q3Selected.parentElement.classList.add('incorrect');
+          document.querySelectorAll('input[name="q3"]').forEach(radio => {
+            if (radio.value === 'b') radio.parentElement.classList.add('correct');
+          });
+        }
+        result3.style.display = 'block';
+      }
+    });
+    
+    // Вызов функции появления секций при загрузке страницы
+    window.dispatchEvent(new Event('scroll'));
   </script>
 </body>
 </html>
