@@ -2,21 +2,54 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>4.3. Какие кредиты дает банк</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>        
         :root {
-            --primary: #6366f1;
-            --secondary: #4f46e5;
+            /* Основная цветовая палитра - современные цвета */
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #6366f1;
             --accent: #818cf8;
-            --background: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
-            --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --background: #f9fafb;
+            --background-card: #ffffff;
+            --text-dark: #111827;
+            --text-medium: #4b5563;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+            --gradient: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
+            
+            /* Семантические цвета */
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            
+            /* Эффекты */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            
+            /* Размеры */
+            --container-max-width: 1440px;
+            --header-height: 70px;
+            --sidebar-width: 300px;
+            --border-radius-sm: 0.375rem;
+            --border-radius: 0.75rem;
+            --border-radius-lg: 1.5rem;
+            
+            /* Анимация */
+            --transition-fast: 150ms ease;
+            --transition: 300ms ease;
+            --transition-slow: 500ms ease;
+            --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Переменная для мобильной высоты окна */
+            --vh: 1vh;
         }
 
         * {
@@ -25,33 +58,200 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--header-height);
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.7;
             background: var(--background);
             color: var(--text-dark);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
-        .container {
-            max-width: 1200px;
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.2;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        button, .button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        button:hover, .button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        button:active, .button:active {
+            transform: translateY(0);
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--background-card);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 50;
+        }
+
+        .header-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-medium);
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text-dark);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.35rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 1px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-medium);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            box-shadow: none;
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--text-dark);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        /* Layout */
+        .page-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            width: 100%;
+            max-width: var(--container-max-width);
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .content-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .content-sidebar {
+            position: relative;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: calc(var(--header-height) + 2rem);
+        }
+
+        /* Hero section */
         .hero-section {
             background: var(--gradient);
             padding: 4rem 2rem;
-            border-radius: 2rem;
-            margin: 2rem 0;
+            border-radius: var(--border-radius-lg);
+            margin-bottom: 2rem;
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
         }
 
         .hero-content {
             max-width: 600px;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-title {
@@ -68,8 +268,39 @@
 
         .hero-image {
             width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.3));
             animation: float 6s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .hero-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-icon {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.2);
+            animation: floatIcon 15s linear infinite;
         }
 
         @keyframes float {
@@ -77,21 +308,42 @@
             50% { transform: translateY(-20px); }
         }
 
-        .section-card {
-            background: var(--glass);
-            padding: 2rem;
-            border-radius: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+        @keyframes floatIcon {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
         }
 
-        .section-title {
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
+        /* Cards */
+        .card {
+            background: var(--background-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            padding: 1.5rem;
             position: relative;
         }
 
-        .section-title::after {
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .card-title::after {
             content: '';
             position: absolute;
             bottom: -0.5rem;
@@ -99,16 +351,103 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        /* Term definitions */
+        .term {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .term-title {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
         }
 
-        .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
+        /* Loan cards */
+        .loan-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .loan-card {
+            background: white;
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .loan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .loan-card-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .loan-card-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        .loan-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .loan-card-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .loan-card-body {
+            padding: 1.5rem;
+        }
+
+        .loan-card-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .loan-card-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .loan-card-features li i {
+            color: var(--primary);
+        }
+
+        /* Accordion */
+        .accordion {
+            background: var(--background-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -116,353 +455,1884 @@
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            font-weight: 500;
+            transition: background var(--transition-fast);
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .accordion-header.active {
+            background: rgba(99, 102, 241, 0.08);
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: all var(--transition);
+        }
+
+        .accordion-content-inner {
+            padding: 0 1.5rem 1.5rem 1.5rem;
         }
 
         .accordion-content.active {
-            padding: 1.5rem;
             max-height: 1000px;
         }
 
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
+        /* Calculator */
         .calculator {
-            background: var(--glass);
+            background: var(--background-card);
             padding: 1.5rem;
-            border-radius: 1rem;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
 
-        .calculator h4 {
-            margin-bottom: 1rem;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .calculator input {
-            margin-bottom: 1rem;
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-medium);
+        }
+
+        .calculator input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin: 1rem 0;
+        }
+
+        .calculator input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .calculator input[type="range"]::-webkit-slider-thumb:hover {
+            background: var(--primary-hover);
+            transform: scale(1.1);
+        }
+
+        .calculator input, .calculator select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: var(--border-radius-sm);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+            background: white;
+        }
+
+        .calculator input:focus, .calculator select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .slider-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .range-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
         }
 
         .result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: var(--border-radius-sm);
             font-weight: 500;
+            background: #f3f4f6;
         }
 
-        .success {
-            background: #d1fae5;
-            color: #10b981;
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
         }
 
-        .error {
-            background: #fee2e2;
-            color: #ef4444;
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
 
+        .result-label {
+            color: var(--text-medium);
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Table */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--background-card);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.05);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(99, 102, 241, 0.02);
+        }
+
+        /* Tips list */
         .tips-list {
             list-style: none;
             padding: 0;
+            margin: 1.5rem 0;
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            background: var(--background-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            margin-top: 0.25rem;
         }
 
-        @media (max-width: 768px) {
-            .container {
+        .tips-item strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--text-dark);
+        }
+
+        /* Progress bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 100;
+            width: 0;
+            transition: width var(--transition-fast);
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition);
+            z-index: 99;
+            box-shadow: var(--shadow);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--background-card);
+            padding: 3rem 1.5rem;
+            margin-top: 4rem;
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-content {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-links a {
+            color: var(--text-medium);
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Example box */
+        .example-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .example-box::before {
+            content: 'Пример';
+            position: absolute;
+            top: -0.75rem;
+            left: 1rem;
+            background: var(--background-card);
+            padding: 0 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--info);
+        }
+        
+        /* Formula box */
+        .formula-box {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .formula {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.25rem;
+            padding: 0.5rem 0;
+        }
+        
+        .formula-caption {
+            font-size: 0.875rem;
+            color: var(--text-medium);
+            margin-top: 0.5rem;
+        }
+        
+        /* Адаптивные таблицы для мобильных устройств */
+        @media (max-width: 767px) {
+            .comparison-table, .comparison-table thead, .comparison-table tbody,
+            .comparison-table th, .comparison-table td, .comparison-table tr {
+                display: block;
+            }
+            
+            .comparison-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            .comparison-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: var(--border-radius-sm);
+            }
+            
+            .comparison-table td {
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            
+            .comparison-table td:before {
+                position: absolute;
+                top: 50%;
+                left: 1rem;
+                width: 45%;
+                transform: translateY(-50%);
+                white-space: nowrap;
+                font-weight: 600;
+                content: attr(data-label);
+                text-align: left;
+            }
+            
+            .comparison-table td:last-child {
+                border-bottom: none;
+            }
+        }
+        
+        /* Основные настройки для сенсорных устройств */
+        @media (hover: none) {
+            /* Увеличиваем размер интерактивных элементов для удобного касания */
+            button, .button, .nav-link, .accordion-header, .loan-card-body button {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+            
+            /* Увеличиваем отступы между элементами для предотвращения случайных кликов */
+            .nav-link, .accordion-header, .tips-item {
+                padding: 12px 16px;
+            }
+        }
+
+        /* iPhone SE и другие компактные устройства */
+        @media (max-width: 375px) {
+            html {
+                font-size: 12px;
+            }
+            
+            .page-wrapper {
+                padding: 0.5rem;
+            }
+            
+            .hero-section {
+                padding: 1.5rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 1.6rem;
+            }
+            
+            .hero-image {
+                width: 160px;
+            }
+            
+            .loan-card-header {
                 padding: 1rem;
             }
+            
+            .loan-card-body {
+                padding: 1rem;
+            }
+            
+            .card-header, .card-body {
+                padding: 0.75rem;
+            }
+            
+            /* Улучшаем отображение таблицы на очень маленьких экранах */
+            .comparison-table th, .comparison-table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            /* Одноколоночные карточки на маленьких экранах */
+            .loan-cards {
+                grid-template-columns: 1fr;
+            }
+        }
 
+        /* iPad Mini и подобные устройства */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .loan-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-layout {
+                gap: 1.5rem;
+            }
+        }
+
+        /* iPad Pro и подобные устройства */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .loan-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .main-layout {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* Ландшафтная ориентация на мобильных устройствах */
+        @media (max-width: 850px) and (orientation: landscape) {
+            .hero-section {
+                flex-direction: row;
+                padding: 1.5rem;
+                text-align: left;
+                gap: 2rem;
+            }
+            
+            .hero-content {
+                max-width: 60%;
+            }
+            
+            .hero-image {
+                width: 180px;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            /* Компактная верхняя навигация */
+            .header {
+                height: 50px;
+            }
+            
+            /* Скрываем некритичные элементы */
+            .hero-icons {
+                display: none;
+            }
+            
+            /* Адаптируем карточки */
+            .loan-cards {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+
+        /* Узкие и высокие экраны, например, складные телефоны в сложенном виде */
+        @media (max-width: 400px) and (min-aspect-ratio: 1/2) {
+            .hero-section {
+                flex-direction: column-reverse;
+                padding-bottom: 1rem;
+            }
+            
+            .hero-image {
+                width: 140px;
+                margin-bottom: -1rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            /* Уменьшаем размер шрифта заголовков */
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Большие настольные экраны высокого разрешения */
+        @media (min-width: 1600px) {
+            html {
+                font-size: 18px;
+            }
+            
+            :root {
+                --container-max-width: 1600px;
+            }
+            
+            .main-layout {
+                grid-template-columns: 3fr 1fr;
+            }
+            
+            .loan-cards {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .hero-section {
+                padding: 5rem 3rem;
+            }
+            
+            .hero-image {
+                width: 500px;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        /* Устройства с высоким DPI (Retina и т.д.) */
+        @media (-webkit-min-device-pixel-ratio: 2), 
+            (min-resolution: 192dpi) {
+            /* Оптимизация для изображений */
+            .hero-image {
+                image-rendering: -webkit-optimize-contrast;
+            }
+            
+            /* Тонкие шрифты для высоких разрешений */
+            body {
+                font-weight: 300;
+                -webkit-font-smoothing: subpixel-antialiased;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 500;
+            }
+            
+            /* Повышаем четкость тонких элементов */
+            .card-title::after,
+            .accordion-content.active {
+                transform: translateZ(0);
+            }
+        }
+
+        /* Устройства с ограниченными ресурсами */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .hero-image, .hero-icon, .card:hover, 
+            .loan-card:hover, .tips-item:hover, .back-to-top:hover {
+                transform: none !important;
+            }
+        }
+
+        /* Улучшение доступности для людей с нарушениями зрения */
+        @media (prefers-contrast: more) {
+            :root {
+                --primary: #0043c8;
+                --primary-hover: #002f8e;
+                --text-dark: #000000;
+                --text-medium: #333333;
+                --text-muted: #555555;
+            }
+            
+            .card, .loan-card, .accordion, .calculator, .tips-item {
+                border: 1px solid #000000;
+            }
+            
+            .card-title::after {
+                height: 4px;
+            }
+            
+            .term {
+                border-left-width: 4px;
+            }
+        }
+
+        /* Адаптивность для контента */
+        @media (max-width: 767px) {
+            /* Улучшение отображения формул на маленьких экранах */
+            .formula {
+                font-size: 1rem;
+                white-space: nowrap;
+                overflow-x: auto;
+                padding: 0.5rem 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Улучшение отображения определений */
+            .term {
+                padding: 0.75rem 1rem;
+            }
+            
+            /* Более компактные списки */
+            ul, ol {
+                padding-left: 1.25rem;
+            }
+            
+            /* Улучшенное отображение полей формы */
+            .calculator input[type="range"] {
+                height: 10px;
+                margin: 0.75rem 0;
+            }
+            
+            .calculator input[type="range"]::-webkit-slider-thumb {
+                height: 24px;
+                width: 24px;
+            }
+            
+            .slider-values {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Устройства с сенсорным управлением */
+        @media (pointer: coarse) {
+            /* Увеличиваем размер кнопок и интерактивных элементов */
+            button, .button, select, input[type="number"], .accordion-header {
+                font-size: 1.1rem;
+                padding: 0.75rem 1.25rem;
+            }
+            
+            /* Увеличиваем расстояние между интерактивными элементами */
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+            }
+            
+            /* Улучшаем взаимодействие с калькулятором */
+            .calculator input[type="range"]::-webkit-slider-thumb {
+                width: 26px;
+                height: 26px;
+            }
+            
+            /* Улучшаем доступность флажков и переключателей */
+            input[type="radio"], input[type="checkbox"] {
+                transform: scale(1.2);
+                margin-right: 0.5rem;
+            }
+        }
+
+        /* Складные телефоны и устройства с необычным соотношением сторон */
+        @supports (display: flex) and (gap: 1px) {
+            @media (min-aspect-ratio: 2/1) {
+                .main-layout {
+                    grid-template-columns: 1fr;
+                }
+                
+                .content-sidebar {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 1.5rem;
+                    margin-bottom: 2rem;
+                }
+                
+                .sidebar-sticky {
+                    position: static;
+                }
+            }
+        }
+
+        /* Media Queries */
+        @media (max-width: 1200px) {
+            :root {
+                --container-max-width: 1140px;
+            }
+            
+            .main-layout {
+                grid-template-columns: 1fr 300px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            :root {
+                --container-max-width: 960px;
+            }
+            
+            html {
+                font-size: 15px;
+            }
+            
+            .page-wrapper {
+                padding: 1.25rem;
+            }
+            
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-sidebar {
+                order: -1;
+            }
+            
+            .sidebar-sticky {
+                position: static;
+            }
+            
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+                padding: 3rem 1.5rem;
+                gap: 2rem;
             }
-
+            
+            .hero-content {
+                margin-bottom: 0;
+                max-width: 100%;
+            }
+            
             .hero-image {
-                width: 80%;
-                margin-top: 2rem;
+                width: 320px;
             }
-
-            .section-card {
-                padding: 1.5rem;
-            }
-
+            
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .card-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .card-header {
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .header-nav {
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                background: var(--background-card);
+                box-shadow: var(--shadow);
+                flex-direction: column;
+                padding: 1.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition);
+                z-index: 40;
+            }
+            
+            .header-nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            :root {
+                --container-max-width: 720px;
+            }
+            
+            html {
+                font-size: 14px;
+            }
+            
+            .page-wrapper {
+                padding: 1rem;
+            }
+            
+            .hero-section {
+                padding: 2.5rem 1.25rem;
+                gap: 1.5rem;
+            }
+            
             .hero-image {
+                width: 250px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            
+            .loan-cards {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 1.25rem;
+            }
+            
+            .card-header, .card-body {
+                padding: 1.25rem;
+            }
+            
+            .footer {
+                padding: 3rem 1.5rem;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            :root {
+                --container-max-width: 100%;
+                --header-height: 60px;
+            }
+            
+            html {
+                font-size: 13px;
+            }
+            
+            .page-wrapper {
+                padding: 0.75rem;
+            }
+            
+            .hero-section {
+                margin-bottom: 1.5rem;
+                padding: 2rem 1rem;
+                border-radius: var(--border-radius);
+            }
+            
+            .hero-image {
+                width: 200px;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .card {
+                border-radius: var(--border-radius-sm);
+            }
+            
+            .card-header, .card-body {
+                padding: 1rem;
+            }
+            
+            .loan-card-title {
+                font-size: 1.3rem;
+            }
+            
+            .accordion-header {
+                padding: 1rem;
+            }
+            
+            .accordion-content-inner {
+                padding: 0 1rem 1rem 1rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.75rem 1rem;
+            }
+            
+            .footer {
+                padding: 2rem 1rem;
+                margin-top: 2rem;
+            }
+            
+            .back-to-top {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                font-size: 12pt;
+                background: white;
+                color: black;
+            }
+            
+            .header, .footer, 
+            .back-to-top, button, #progress-bar,
+            .calculator button {
+                display: none;
+            }
+            
+            .page-wrapper, .main-layout {
+                display: block;
                 width: 100%;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .card, .accordion, .calculator, .tips-item {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 1cm;
+            }
+            
+            .comparison-table {
+                border: 1px solid #000;
+                white-space: normal;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                border: 1px solid #000;
+            }
+            
+            a {
+                text-decoration: none;
+                color: black;
+            }
+            
+            .card:hover, 
+            .tips-item:hover, 
+            .loan-card:hover {
+                transform: none;
+                box-shadow: none;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="hero-section">
+    <div id="progress-bar"></div>
+    <a href="#top" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    
+    <header class="header" id="top">
+        <a href="#" class="header-logo">
+            <i class="fas fa-graduation-cap"></i>
+            Банковские кредиты
+        </a>
+        <nav class="header-nav" id="headerNav">
+            <a href="#basics" class="nav-link active">Основы</a>
+            <a href="#types" class="nav-link">Виды кредитов</a>
+            <a href="#comparison" class="nav-link">Сравнение</a>
+            <a href="#calculator" class="nav-link">Калькулятор</a>
+            <a href="#process" class="nav-link">Процесс</a>
+            <a href="#terms" class="nav-link">Термины</a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+    
+    <div class="page-wrapper">
+        <div class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title">4.3. Какие кредиты дает банк</h1>
-                <p class="hero-description">Узнайте о видах кредитов и способах их получения.</p>
+                <h1 class="hero-title">Какие кредиты дает банк</h1>
+                <p class="hero-description">Учебный материал о различных видах банковских кредитов, их особенностях, отличиях и процессе оформления.</p>
+                <a href="#basics" class="button">
+                    <i class="fas fa-book-open"></i>
+                    Начать изучение
+                </a>
             </div>
-            <img src="loan-types.png" alt="Виды кредитов" class="hero-image">
-        </header>
-
-        <main>
-            <section class="section-card">
-                <h2 class="section-title">Виды кредитов</h2>
-                <p>Банки предлагают различные виды кредитов, каждый из которых подходит для определенных целей. Рассмотрим основные из них.</p>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>1. Потребительский кредит без залога</span>
-                            <i class="fas fa-chevron-down"></i>
+            <div class="hero-icons">
+                <i class="fas fa-home hero-icon" style="left: 15%; animation-duration: 20s;"></i>
+                <i class="fas fa-car hero-icon" style="left: 35%; animation-duration: 15s; animation-delay: 2s;"></i>
+                <i class="fas fa-credit-card hero-icon" style="left: 55%; animation-duration: 18s; animation-delay: 4s;"></i>
+                <i class="fas fa-shopping-cart hero-icon" style="left: 75%; animation-duration: 22s; animation-delay: 6s;"></i>
+                <i class="fas fa-coins hero-icon" style="left: 25%; animation-duration: 17s; animation-delay: 8s;"></i>
+                <i class="fas fa-piggy-bank hero-icon" style="left: 65%; animation-duration: 19s; animation-delay: 10s;"></i>
+            </div>
+        </div>
+        
+        <div class="main-layout">
+            <main class="content-main">
+                <section class="card" id="basics">
+                    <div class="card-header">
+                        <h2 class="card-title">Основы банковского кредитования</h2>
+                        <p>Кредит – это финансовые отношения между кредитором (банком) и заемщиком, при которых банк предоставляет заемщику определенную сумму денег на определенный срок и под определенный процент.</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Банковский кредит — это одна из наиболее распространенных форм кредитных отношений в экономике. Он представляет собой денежную ссуду, предоставляемую банком на определенный срок на условиях возвратности и платности.</p>
+                        
+                        <div class="term">
+                            <span class="term-title">Кредит</span>
+                            <p>Кредит (от лат. creditum — заём от лат. credere — доверять) — это экономические отношения, при которых одна сторона (кредитор) предоставляет другой стороне (заёмщику) денежные средства или имущество на условиях возвратности, срочности и, как правило, платности.</p>
                         </div>
-                        <div class="accordion-content">
-                            <p>Самый популярный вид кредита, который можно использовать для любых целей. Не требует залога.</p>
-                            <p><strong>Особенности:</strong></p>
-                            <ul>
-                                <li>Выдается в наличной или безналичной форме.</li>
-                                <li>Цель кредита не оговаривается в договоре.</li>
-                                <li>Подходит для реализации любых возможностей.</li>
-                            </ul>
-                            <img src="consumer-loan.png" alt="Потребительский кредит" style="width: 100%; max-width: 300px; margin: 1rem auto; display: block;">
+                        
+                        <h3>Основные принципы кредитования</h3>
+                        <ul>
+                            <li><strong>Возвратность</strong> — предоставленные в долг средства должны быть возвращены заемщиком.</li>
+                            <li><strong>Срочность</strong> — кредит должен быть возвращен в строго определенный срок.</li>
+                            <li><strong>Платность</strong> — за пользование кредитом заемщик выплачивает определенный процент.</li>
+                            <li><strong>Обеспеченность</strong> — наличие у заемщика гарантий возврата кредита (залог, поручительство).</li>
+                            <li><strong>Целевой характер</strong> — многие кредиты выдаются на конкретные цели (покупка жилья, автомобиля и т.д.).</li>
+                        </ul>
+                        
+                        <h3>Элементы кредитных отношений</h3>
+                        <ul>
+                            <li><strong>Субъекты кредитных отношений</strong> — кредитор (банк) и заемщик (физическое или юридическое лицо).</li>
+                            <li><strong>Объект кредитования</strong> — то, на что выдается кредит (товар, услуга, проект).</li>
+                            <li><strong>Размер кредита</strong> — сумма средств, предоставляемых заемщику.</li>
+                            <li><strong>Срок кредита</strong> — период времени, на который предоставляется кредит.</li>
+                            <li><strong>Процентная ставка</strong> — плата за пользование кредитом, выраженная в процентах к сумме кредита в годовом исчислении.</li>
+                            <li><strong>График погашения</strong> — порядок выплаты основного долга и процентов.</li>
+                        </ul>
+                        
+                        <div class="example-box">
+                            <p><strong>Иванов И.И.</strong> взял в банке кредит в размере 300 000 рублей на покупку бытовой техники на срок 3 года под 12% годовых. Ежемесячный платеж составит около 9 954 рубля. За весь срок кредитования Иванов И.И. выплатит банку 358 344 рубля, из которых 58 344 рубля составят проценты за пользование кредитом.</p>
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>2. POS-кредит</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Кредит, оформляемый прямо в магазине на покупку товара. Быстрое оформление, но высокая процентная ставка.</p>
-                            <p><strong>Особенности:</strong></p>
-                            <ul>
-                                <li>Оформляется в торговой организации (магазине, салоне связи).</li>
-                                <li>Минимальные требования к заемщику (обычно только паспорт).</li>
-                                <li>Более высокая процентная ставка по сравнению с обычным кредитом.</li>
-                            </ul>
-                            <img src="pos-loan.png" alt="POS-кредит" style="width: 100%; max-width: 300px; margin: 1rem auto; display: block;">
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>3. Автокредит</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div style="display: flex; align-items: flex-start; gap: 1 rem;">
-                                <div style="flex: 1;">
-                            <p>Кредит на покупку автомобиля. Обычно выдается под залог транспортного средства.</p>
-                            <p><strong>Особенности:</strong></p>
-                            <ul>
-                                <li>Целевой кредит на покупку нового или подержанного автомобиля.</li>
-                                <li>Автомобиль находится в залоге у банка до полного погашения кредита.</li>
-                                <li>Более низкая процентная ставка по сравнению с потребительским кредитом.</li>
-                            </ul>
-                            <img src="car-loan.png" alt="Автокредит" style="width: 300px; max-width: 100%;">
-                        </div>
-                    </div>
-                    <!-- Добавьте остальные виды кредитов аналогично -->
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">Способы получения кредита</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>1. Разовый кредит</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Кредит, который выдается одной суммой и погашается по графику.</p>
-                            <p><strong>Особенности:</strong></p>
-                            <ul>
-                                <li>Выдается единовременно.</li>
-                                <li>Погашается одним платежом или по графику.</li>
-                                <li>Подходит для крупных покупок или неотложных нужд.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>2. Кредитная линия</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Кредит, который можно использовать по частям в пределах установленного лимита.</p>
-                            <p><strong>Особенности:</strong></p>
-                            <ul>
-                                <li>Устанавливается лимит кредитных средств.</li>
-                                <li>Заемщик может брать средства по мере необходимости.</li>
-                                <li>Проценты начисляются только на использованную сумму.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>3. Овердрафт</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Возможность уйти в минус на банковском счете с последующим погашением.</p>
-                            <p><strong>Особенности:</strong></p>
-                            <ul>
-                                <li>Подключается к банковскому счету.</li>
-                                <li>Позволяет продолжать оплачивать покупки даже при отсутствии средств на счете.</li>
-                                <li>Проценты начисляются только на сумму "минуса".</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Добавьте остальные способы аналогично -->
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <div class="section-card">
-                        <h4>Тест: Виды кредитов</h4>
-                        <form id="loan-types-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="loan-type" value="consumer"> Потребительский кредит
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="loan-type" value="pos"> POS-кредит
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="loan-type" value="car"> Автокредит
-                                </label>
-                            </div>
-                            <button type="button" id="check-loan-types-btn">Проверить</button>
-                            <div id="loan-types-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <div class="section-card">
-                        <h4>Калькулятор кредита</h4>
-                        <form id="loan-calculator">
-                            <div class="form-group">
-                                <label for="loan-amount">Сумма кредита (руб):</label>
-                                <input type="number" id="loan-amount" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="loan-rate">Процентная ставка (%):</label>
-                                <input type="number" id="loan-rate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="loan-term">Срок (месяцы):</label>
-                                <input type="number" id="loan-term" required>
-                            </div>
-                            <button type="button" id="calculate-loan-btn">Рассчитать</button>
-                            <div id="calculator-result" class="result"></div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда сравнивайте условия кредитов в разных банках.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Планируйте бюджет так, чтобы выплаты по кредиту не превышали 30% дохода.
-                    </li>
-                </ul>
-            </section>
-        </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
-    </div>
-
-    <script>
-        // JavaScript для интерактивных заданий
-        document.getElementById('check-loan-types-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="loan-type"]:checked');
-            const result = document.getElementById('loan-types-result');
-            
-            if (selected && selected.value === 'consumer') {
-                result.textContent = '✅ Правильно! Потребительский кредит — самый популярный вид кредита.';
-                result.className = 'result success';
-            } else {
-                result.textContent = '❌ Неверно. Потребительский кредит — самый популярный вид кредита.';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('calculate-loan-btn').addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('loan-amount').value);
-            const rate = parseFloat(document.getElementById('loan-rate').value);
-            const term = parseFloat(document.getElementById('loan-term').value);
-            const result = document.getElementById('calculator-result');
-
-            if (!isNaN(amount) && !isNaN(rate) && !isNaN(term)) {
-                const monthlyRate = rate / 100 / 12;
-                const payment = amount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -term));
-                result.textContent = `💰 Ежемесячный платеж: ${payment.toFixed(2)} руб.`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
-        // Аккордеон
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
+                </section>
                 
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+                <section class="card" id="types">
+                    <div class="card-header">
+                        <h2 class="card-title">Виды банковских кредитов</h2>
+                        <p>Банки предлагают различные типы кредитов, каждый из которых имеет свои особенности, преимущества и недостатки. Рассмотрим основные виды кредитов, доступные физическим и юридическим лицам.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="loan-cards">
+                            <div class="loan-card">
+                                <div class="loan-card-header">
+                                    <h3 class="loan-card-title">Потребительский кредит</h3>
+                                    <p class="loan-card-subtitle">От 50 000 до 5 000 000 ₽</p>
+                                    <i class="fas fa-shopping-cart loan-card-icon"></i>
+                                </div>
+                                <div class="loan-card-body">
+                                    <p>Кредит на любые потребительские цели без обеспечения. Подходит для покупки бытовой техники, мебели, оплаты обучения, ремонта и других личных нужд.</p>
+                                    <ul class="loan-card-features">
+                                        <li><i class="fas fa-check-circle"></i> Ставка от 8,9% до 22% годовых</li>
+                                        <li><i class="fas fa-check-circle"></i> Срок до 7 лет</li>
+                                        <li><i class="fas fa-check-circle"></i> Без залога и поручителей</li>
+                                        <li><i class="fas fa-check-circle"></i> Быстрое рассмотрение заявки</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="loan-card">
+                                <div class="loan-card-header">
+                                    <h3 class="loan-card-title">Ипотека</h3>
+                                    <p class="loan-card-subtitle">От 1 000 000 до 60 000 000 ₽</p>
+                                    <i class="fas fa-home loan-card-icon"></i>
+                                </div>
+                                <div class="loan-card-body">
+                                    <p>Долгосрочный кредит на приобретение недвижимости, где сама недвижимость выступает залогом. Часто используются государственные программы поддержки.</p>
+                                    <ul class="loan-card-features">
+                                        <li><i class="fas fa-check-circle"></i> Ставка от 4,7% до 10% годовых</li>
+                                        <li><i class="fas fa-check-circle"></i> Срок до 30 лет</li>
+                                        <li><i class="fas fa-check-circle"></i> Первоначальный взнос от 10%</li>
+                                        <li><i class="fas fa-check-circle"></i> Залог приобретаемой недвижимости</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="loan-card">
+                                <div class="loan-card-header">
+                                    <h3 class="loan-card-title">Автокредит</h3>
+                                    <p class="loan-card-subtitle">От 300 000 до 10 000 000 ₽</p>
+                                    <i class="fas fa-car loan-card-icon"></i>
+                                </div>
+                                <div class="loan-card-body">
+                                    <p>Целевой кредит на покупку автомобиля, где приобретаемый автомобиль выступает залогом. Может использоваться для новых и подержанных автомобилей.</p>
+                                    <ul class="loan-card-features">
+                                        <li><i class="fas fa-check-circle"></i> Ставка от 7,5% до 15% годовых</li>
+                                        <li><i class="fas fa-check-circle"></i> Срок до 7 лет</li>
+                                        <li><i class="fas fa-check-circle"></i> Первоначальный взнос от 15%</li>
+                                        <li><i class="fas fa-check-circle"></i> Залог приобретаемого автомобиля</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="loan-card">
+                                <div class="loan-card-header">
+                                    <h3 class="loan-card-title">Кредит для бизнеса</h3>
+                                    <p class="loan-card-subtitle">От 500 000 до 150 000 000 ₽</p>
+                                    <i class="fas fa-briefcase loan-card-icon"></i>
+                                </div>
+                                <div class="loan-card-body">
+                                    <p>Кредиты для юридических лиц и ИП на различные цели: пополнение оборотных средств, приобретение оборудования, недвижимости, развитие бизнеса.</p>
+                                    <ul class="loan-card-features">
+                                        <li><i class="fas fa-check-circle"></i> Ставка от 10,5% до 18% годовых</li>
+                                        <li><i class="fas fa-check-circle"></i> Срок до 10 лет</li>
+                                        <li><i class="fas fa-check-circle"></i> Различные виды обеспечения</li>
+                                        <li><i class="fas fa-check-circle"></i> Индивидуальные условия</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Другие виды кредитов</h3>
+                        <ul>
+                            <li>
+                                <strong>Кредитная карта</strong> — возобновляемая кредитная линия с лимитом, доступным для многократного использования. Обычно имеет льготный (беспроцентный) период до 55-120 дней.
+                            </li>
+                            <li>
+                                <strong>Рефинансирование</strong> — кредит для погашения существующих кредитов на более выгодных условиях (меньшая ставка, увеличение срока, объединение нескольких кредитов).
+                            </li>
+                            <li>
+                                <strong>Образовательный кредит</strong> — целевой кредит на оплату обучения, часто с государственной поддержкой и льготным периодом.
+                            </li>
+                            <li>
+                                <strong>Микрозаём</strong> — небольшой краткосрочный кредит, обычно до 30 000 рублей, на срок до 30 дней, с высокой процентной ставкой.
+                            </li>
+                            <li>
+                                <strong>Овердрафт</strong> — форма краткосрочного кредита, при которой банк разрешает клиенту расходовать средства сверх остатка на его расчетном счете.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="card" id="comparison">
+                    <div class="card-header">
+                        <h2 class="card-title">Сравнение кредитных продуктов</h2>
+                        <p>Сравнительная характеристика основных видов кредитов поможет понять их отличия и выбрать наиболее подходящий вариант в зависимости от потребностей и возможностей.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Потребительский кредит</th>
+                                        <th>Ипотека</th>
+                                        <th>Автокредит</th>
+                                        <th>Кредит для бизнеса</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td data-label="Параметр">Процентная ставка</td>
+                                        <td data-label="Потребительский кредит">8,9% - 22%</td>
+                                        <td data-label="Ипотека">4,7% - 10%</td>
+                                        <td data-label="Автокредит">7,5% - 15%</td>
+                                        <td data-label="Кредит для бизнеса">10,5% - 18%</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Максимальная сумма</td>
+                                        <td data-label="Потребительский кредит">До 5 000 000 ₽</td>
+                                        <td data-label="Ипотека">До 60 000 000 ₽</td>
+                                        <td data-label="Автокредит">До 10 000 000 ₽</td>
+                                        <td data-label="Кредит для бизнеса">До 150 000 000 ₽</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Максимальный срок</td>
+                                        <td data-label="Потребительский кредит">7 лет</td>
+                                        <td data-label="Ипотека">30 лет</td>
+                                        <td data-label="Автокредит">7 лет</td>
+                                        <td data-label="Кредит для бизнеса">10 лет</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Обеспечение</td>
+                                        <td data-label="Потребительский кредит">Не требуется</td>
+                                        <td data-label="Ипотека">Залог недвижимости</td>
+                                        <td data-label="Автокредит">Залог автомобиля</td>
+                                        <td data-label="Кредит для бизнеса">Залог, поручительство</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Страхование</td>
+                                        <td data-label="Потребительский кредит">Добровольное</td>
+                                        <td data-label="Ипотека">Обязательное страхование недвижимости</td>
+                                        <td data-label="Автокредит">КАСКО (часто обязательно)</td>
+                                        <td data-label="Кредит для бизнеса">Зависит от типа кредита</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Срок рассмотрения</td>
+                                        <td data-label="Потребительский кредит">1-3 дня</td>
+                                        <td data-label="Ипотека">3-10 дней</td>
+                                        <td data-label="Автокредит">1-5 дней</td>
+                                        <td data-label="Кредит для бизнеса">5-30 дней</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Необходимые документы</td>
+                                        <td data-label="Потребительский кредит">Паспорт, справка о доходах</td>
+                                        <td data-label="Ипотека">Паспорт, справки, документы на недвижимость</td>
+                                        <td data-label="Автокредит">Паспорт, справки, документы на автомобиль</td>
+                                        <td data-label="Кредит для бизнеса">Комплект документов о бизнесе</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Досрочное погашение</td>
+                                        <td data-label="Потребительский кредит">Возможно без штрафов</td>
+                                        <td data-label="Ипотека">Возможно без штрафов</td>
+                                        <td data-label="Автокредит">Возможно без штрафов</td>
+                                        <td data-label="Кредит для бизнеса">Зависит от условий</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Параметр">Основные преимущества</td>
+                                        <td data-label="Потребительский кредит">Быстрое получение, минимум документов</td>
+                                        <td data-label="Ипотека">Низкая ставка, длительный срок</td>
+                                        <td data-label="Автокредит">Целевой характер, сниженная ставка</td>
+                                        <td data-label="Кредит для бизнеса">Большие суммы, индивидуальные условия</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <h3>Что влияет на выбор кредита?</h3>
+                        <p>При выборе кредитного продукта следует учитывать следующие факторы:</p>
+                        <ul>
+                            <li><strong>Цель кредита</strong> — для чего вы берете кредит (покупка жилья, автомобиля, оплата обучения, развитие бизнеса и т.д.)</li>
+                            <li><strong>Сумма и срок</strong> — сколько денег вам нужно и на какой период</li>
+                            <li><strong>Процентная ставка</strong> — чем ниже ставка, тем меньше переплата</li>
+                            <li><strong>Ежемесячный платеж</strong> — должен быть комфортным для вашего бюджета (не более 30-40% от дохода)</li>
+                            <li><strong>Требования к обеспечению</strong> — наличие залога, поручителей</li>
+                            <li><strong>Требования к страхованию</strong> — обязательное или добровольное</li>
+                            <li><strong>Возможность досрочного погашения</strong> — без комиссий и штрафов</li>
+                            <li><strong>Дополнительные комиссии и сборы</strong> — могут существенно повлиять на полную стоимость кредита</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="card" id="process">
+                    <div class="card-header">
+                        <h2 class="card-title">Процесс получения кредита</h2>
+                        <p>Получение кредита — это многоэтапный процесс, который требует тщательной подготовки и понимания всех этапов взаимодействия с банком.</p>
+                    </div>
+                    <div class="card-body">
+                        <h3>Основные этапы получения кредита</h3>
+                        <ol>
+                            <li>
+                                <strong>Подготовка и сбор документов</strong>
+                                <p>Перед обращением в банк необходимо собрать необходимые документы: паспорт, справку о доходах, трудовую книжку или трудовой договор, дополнительные документы в зависимости от вида кредита.</p>
+                            </li>
+                            <li>
+                                <strong>Подача заявки на кредит</strong>
+                                <p>Заявку можно подать через отделение банка, через интернет-банк или мобильное приложение, на сайте банка или через кредитного брокера.</p>
+                            </li>
+                            <li>
+                                <strong>Проверка кредитоспособности</strong>
+                                <p>Банк проверяет вашу кредитную историю, платежеспособность, соотношение дохода и расходов, наличие текущих кредитов.</p>
+                            </li>
+                            <li>
+                                <strong>Принятие решения банком</strong>
+                                <p>На основании проверки банк принимает решение о выдаче кредита, его сумме и условиях. Срок принятия решения зависит от вида кредита и банка.</p>
+                            </li>
+                            <li>
+                                <strong>Подписание кредитного договора</strong>
+                                <p>В случае положительного решения вы подписываете кредитный договор, в котором указаны все условия: сумма, срок, процентная ставка, график платежей, штрафы за просрочку и т.д.</p>
+                            </li>
+                            <li>
+                                <strong>Получение кредита</strong>
+                                <p>После подписания договора деньги перечисляются на ваш счет, карту или направляются напрямую продавцу (при целевом кредите).</p>
+                            </li>
+                            <li>
+                                <strong>Исполнение обязательств по кредиту</strong>
+                                <p>Регулярное внесение платежей согласно графику до полного погашения кредита.</p>
+                            </li>
+                        </ol>
+                        
+                        <div class="example-box">
+                            <p><strong>Процесс получения ипотечного кредита:</strong></p>
+                            <ol>
+                                <li>Петров П.П. подбирает квартиру и собирает необходимые документы для ипотеки.</li>
+                                <li>Подает заявку в банк с приложением справки о доходах, выписки из ЕГРН о приобретаемой квартире.</li>
+                                <li>Банк проверяет кредитоспособность Петрова П.П. и юридическую чистоту квартиры.</li>
+                                <li>Через 5 дней банк одобряет ипотеку на сумму 5 000 000 рублей на 20 лет под 6,5% годовых.</li>
+                                <li>Петров П.П. подписывает кредитный договор и договор залога недвижимости.</li>
+                                <li>Банк перечисляет средства продавцу квартиры.</li>
+                                <li>Петров П.П. ежемесячно вносит платежи в размере 37 250 рублей в течение 20 лет.</li>
+                            </ol>
+                        </div>
+                        
+                        <h3>На что обратить внимание в кредитном договоре</h3>
+                        <ul>
+                            <li><strong>Полная стоимость кредита</strong> — включает все платежи по кредиту, комиссии и обязательные платежи</li>
+                            <li><strong>График платежей</strong> — даты и суммы ежемесячных платежей</li>
+                            <li><strong>Процентная ставка</strong> — фиксированная или плавающая, условия изменения</li>
+                            <li><strong>Комиссии и дополнительные платежи</strong> — за выдачу кредита, обслуживание счета, страхование</li>
+                            <li><strong>Условия досрочного погашения</strong> — возможность, порядок, комиссии</li>
+                            <li><strong>Штрафы и пени</strong> — за просрочку платежей, нецелевое использование</li>
+                            <li><strong>Условия изменения договора</strong> — в каких случаях банк может изменить условия в одностороннем порядке</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="card" id="types-of-payments">
+                    <div class="card-header">
+                        <h2 class="card-title">Виды платежей по кредиту</h2>
+                        <p>Существует два основных типа платежей по кредиту: аннуитетный и дифференцированный. Каждый из них имеет свои особенности и влияет на общую сумму переплаты.</p>
+                    </div>
+                    <div class="card-body">
+                        <h3>Аннуитетный платеж</h3>
+                        <p>Аннуитетный платеж — равный по сумме ежемесячный платеж, который включает в себя часть основного долга и проценты. В начале срока кредита большую часть платежа составляют проценты, к концу срока — основной долг.</p>
+                        
+                        <div class="formula-box">
+                            <div class="formula">A = K × S</div>
+                            <div class="formula">K = i × (1 + i)^n / ((1 + i)^n - 1)</div>
+                            <div class="formula-caption">
+                                где: A — аннуитетный платеж, S — сумма кредита, i — месячная процентная ставка (годовая ставка / 12 / 100), n — количество платежей (срок кредита в месяцах)
+                            </div>
+                        </div>
+                        
+                        <p><strong>Преимущества аннуитетного платежа:</strong></p>
+                        <ul>
+                            <li>Равные ежемесячные платежи, что удобно для планирования бюджета</li>
+                            <li>Меньшая финансовая нагрузка в начале срока кредита</li>
+                        </ul>
+                        
+                        <p><strong>Недостатки аннуитетного платежа:</strong></p>
+                        <ul>
+                            <li>Общая переплата по кредиту больше, чем при дифференцированном</li>
+                            <li>Медленное снижение основного долга в начале срока</li>
+                        </ul>
+                        
+                        <h3>Дифференцированный платеж</h3>
+                        <p>Дифференцированный платеж — ежемесячный платеж, который включает в себя фиксированную часть основного долга и проценты, начисленные на остаток задолженности. Размер платежа постепенно уменьшается к концу срока кредита.</p>
+                        
+                        <div class="formula-box">
+                            <div class="formula">D = S/n + S × i × (1 - (m-1)/n)</div>
+                            <div class="formula-caption">
+                                где: D — дифференцированный платеж за месяц m, S — сумма кредита, i — месячная процентная ставка, n — количество платежей, m — номер платежа
+                            </div>
+                        </div>
+                        
+                        <p><strong>Преимущества дифференцированного платежа:</strong></p>
+                        <ul>
+                            <li>Меньшая общая переплата по кредиту</li>
+                            <li>Быстрое снижение основного долга</li>
+                        </ul>
+                        
+                        <p><strong>Недостатки дифференцированного платежа:</strong></p>
+                        <ul>
+                            <li>Высокая финансовая нагрузка в начале срока кредита</li>
+                            <li>Необходимость планирования бюджета с учетом изменяющегося платежа</li>
+                        </ul>
+                        
+                        <div class="example-box">
+                            <p>Сравнение аннуитетного и дифференцированного платежа на примере кредита в 500 000 рублей на 3 года под 12% годовых:</p>
+                            <p><strong>Аннуитетный платеж:</strong><br>
+                            Ежемесячный платеж: 16 616 рублей на протяжении всего срока<br>
+                            Общая сумма выплат: 598 176 рублей<br>
+                            Общая переплата: 98 176 рублей</p>
+                            
+                            <p><strong>Дифференцированный платеж:</strong><br>
+                            Первый платеж: 19 167 рублей<br>
+                            Последний платеж: 14 028 рублей<br>
+                            Общая сумма выплат: 591 667 рублей<br>
+                            Общая переплата: 91 667 рублей</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="card" id="terms">
+                    <div class="card-header">
+                        <h2 class="card-title">Основные термины и понятия</h2>
+                        <p>Понимание банковской терминологии необходимо для грамотного выбора и использования кредитных продуктов.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="term">
+                            <span class="term-title">Процентная ставка</span>
+                            <p>Сумма, указанная в процентном выражении к сумме кредита, которую заемщик уплачивает банку за пользование кредитом. Обычно рассчитывается в годовом исчислении.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Полная стоимость кредита (ПСК)</span>
+                            <p>Стандартизированный показатель, включающий в себя не только процентную ставку, но и все обязательные платежи и комиссии, связанные с кредитом. Позволяет сравнивать разные кредитные предложения.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Основной долг</span>
+                            <p>Сумма, которую банк предоставил заемщику и которую заемщик обязан вернуть без учета процентов и других платежей.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Залог</span>
+                            <p>Имущество или имущественные права, которые заемщик предоставляет кредитору в качестве обеспечения выполнения своих обязательств по кредиту.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Поручительство</span>
+                            <p>Договор, по которому поручитель обязуется перед кредитором другого лица (заемщика) отвечать за исполнение обязательства этого лица полностью или частично.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Кредитная история</span>
+                            <p>Информация о получении и погашении кредитов, своевременности платежей и других аспектах кредитных отношений заемщика, которая хранится в бюро кредитных историй.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Рефинансирование</span>
+                            <p>Получение нового кредита для погашения существующих кредитных обязательств, обычно на более выгодных условиях.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Льготный период</span>
+                            <p>Период времени, в течение которого на использованные кредитные средства не начисляются проценты или применяется пониженная процентная ставка.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Просрочка платежа</span>
+                            <p>Невыполнение заемщиком обязательств по выплате кредита или процентов в срок, указанный в кредитном договоре.</p>
+                        </div>
+                        
+                        <div class="term">
+                            <span class="term-title">Кредитный скоринг</span>
+                            <p>Система оценки кредитоспособности потенциального заемщика, основанная на численных статистических методах.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+            <aside class="content-sidebar">
+                <div class="sidebar-sticky">
+                    <section class="calculator card" id="calculator">
+                        <div class="card-header">
+                            <h2 class="card-title">Кредитный калькулятор</h2>
+                            <p>Рассчитайте платежи по кредиту и общую сумму переплаты</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="loan-type">Тип кредита</label>
+                                <select id="loan-type">
+                                    <option value="consumer">Потребительский кредит</option>
+                                    <option value="mortgage">Ипотека</option>
+                                    <option value="car">Автокредит</option>
+                                    <option value="business">Кредит для бизнеса</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loan-amount">Сумма кредита</label>
+                                <div class="range-value" id="amount-value">1 000 000 ₽</div>
+                                <input type="range" id="loan-amount" min="50000" max="5000000" step="10000" value="1000000">
+                                <div class="slider-values">
+                                    <span>50 тыс.</span>
+                                    <span>5 млн.</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loan-term">Срок кредита</label>
+                                <div class="range-value" id="term-value">5 лет</div>
+                                <input type="range" id="loan-term" min="1" max="30" step="1" value="5">
+                                <div class="slider-values">
+                                    <span>1 год</span>
+                                    <span>30 лет</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="interest-rate">Процентная ставка (%)</label>
+                                <input type="number" id="interest-rate" min="1" max="30" step="0.1" value="9.5">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Тип платежа</label>
+                                <div style="display: flex; gap: 1rem;">
+                                    <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="payment-type" value="annuity" checked>
+                                        Аннуитетный
+                                    </label>
+                                    <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                        <input type="radio" name="payment-type" value="differentiated">
+                                        Дифференцированный
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button id="calculate-btn">Рассчитать</button>
+                            
+                            <div class="result" id="result">
+                                <div class="result-item">
+                                    <span class="result-label">Ежемесячный платеж:</span>
+                                    <span class="result-value" id="monthly-payment">21 012 ₽</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Общая сумма выплат:</span>
+                                    <span class="result-value" id="total-payment">1 260 720 ₽</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Переплата по кредиту:</span>
+                                    <span class="result-value" id="overpayment">260 720 ₽</span>
+                                </div>
+                            </div>
+                            
+                            <p style="font-size: 0.875rem; margin-top: 1rem; color: var(--text-muted);">
+                                Расчет является ориентировочным. Для получения точных условий обратитесь в банк.
+                            </p>
+                        </div>
+                    </section>
+                     
+                    <section class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Важно знать</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="tips-list">
+                                <li class="tips-item">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <div>
+                                        <strong>Кредит — это финансовое обязательство</strong>
+                                        Перед оформлением кредита тщательно оцените свои финансовые возможности и необходимость займа.
+                                    </div>
+                                </li>
+                                <li class="tips-item">
+                                    <i class="fas fa-ban"></i>
+                                    <div>
+                                        <strong>Избегайте кредитной перегрузки</strong>
+                                        Соотношение платежей по всем кредитам не должно превышать 30-40% от вашего месячного дохода.
+                                    </div>
+                                </li>
+                                <li class="tips-item">
+                                    <i class="fas fa-file-contract"></i>
+                                    <div>
+                                        <strong>Читайте договор полностью</strong>
+                                        Внимательно изучите все условия кредитного договора, включая "мелкий шрифт".
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </aside>
+        </div>
+    </div>
+    
+    <script>
+        // Функция для обработки адаптивных элементов
+        function enhanceResponsiveness() {
+            // Устанавливаем --vh переменную для решения проблемы высоты на мобильных устройствах
+            function setVhVariable() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            }
+            
+            // Обрабатываем таблицы для маленьких экранов
+            function makeTablesResponsive() {
+                const tables = document.querySelectorAll('.comparison-table');
+                tables.forEach(table => {
+                    // Добавляем data-атрибуты для мобильного отображения
+                    const headerCells = table.querySelectorAll('th');
+                    const headerTexts = Array.from(headerCells).map(th => th.textContent);
+                    
+                    const rows = table.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        cells.forEach((cell, index) => {
+                            if (index > 0 && headerTexts[index]) {
+                                cell.setAttribute('data-label', headerTexts[index]);
+                            }
+                        });
+                    });
+                });
+            }
+            
+            // Обрабатываем изображения
+            function optimizeImages() {
+                const images = document.querySelectorAll('img');
+                
+                // Проверяем, поддерживается ли IntersectionObserver
+                if ('IntersectionObserver' in window) {
+                    const imageObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                // Разрешаем загрузку изображения
+                                img.src = img.dataset.src || img.src;
+                                observer.unobserve(img);
+                            }
+                        });
+                    });
+                    
+                    images.forEach(img => {
+                        // Наблюдаем за изображением
+                        imageObserver.observe(img);
+                        
+                        // Добавляем установку размеров для предотвращения скачков макета
+                        if (!img.hasAttribute('width') && !img.hasAttribute('height')) {
+                            img.style.aspectRatio = '16/9';
+                        }
+                    });
+                }
+            }
+            
+            // Оптимизируем отзывчивость на различные типы устройств
+            function detectDeviceCapabilities() {
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                const isHighDPI = window.devicePixelRatio > 1.5;
+                const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                
+                if (isTouchDevice) {
+                    document.body.classList.add('touch-device');
+                }
+                
+                if (isHighDPI) {
+                    document.body.classList.add('high-dpi');
+                }
+                
+                if (isReducedMotion) {
+                    document.body.classList.add('reduced-motion');
+                }
+                
+                // Определяем тип устройства для специфичных оптимизаций
+                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    document.body.classList.add('ios-device');
+                } else if (/Android/i.test(navigator.userAgent)) {
+                    document.body.classList.add('android-device');
+                }
+            }
+
+            // Вызываем все функции оптимизации
+            setVhVariable();
+            makeTablesResponsive();
+            optimizeImages();
+            detectDeviceCapabilities();
+            
+            // События для поддержания адаптивности при изменении размеров
+            window.addEventListener('resize', function() {
+                setVhVariable();
             });
+            
+            // Обработка ориентации устройства
+            window.addEventListener('orientationchange', function() {
+                setTimeout(function() {
+                    setVhVariable();
+                }, 200);
+            });
+        }
+
+        // Progress bar
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Back to top button
+            if (scrollTop > 500) {
+                document.getElementById('backToTop').classList.add('visible');
+            } else {
+                document.getElementById('backToTop').classList.remove('visible');
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('headerNav').classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-bars');
+            this.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                document.getElementById('headerNav').classList.remove('active');
+                document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.accordion-header').forEach(head => {
+                    head.classList.remove('active');
+                });
+                
+                // Reset all icons
+                document.querySelectorAll('.accordion-header i').forEach(icon => {
+                    icon.className = 'fas fa-chevron-down';
+                });
+                
+                // Open the clicked one if it wasn't already open
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                    this.querySelector('i').className = 'fas fa-chevron-up';
+                }
+            });
+        });
+
+        // Loan calculator
+        const loanTypeSelect = document.getElementById('loan-type');
+        const amountSlider = document.getElementById('loan-amount');
+        const termSlider = document.getElementById('loan-term');
+        const amountValue = document.getElementById('amount-value');
+        const termValue = document.getElementById('term-value');
+        const interestRateInput = document.getElementById('interest-rate');
+        const calculateBtn = document.getElementById('calculate-btn');
+        
+        // Update slider values
+        amountSlider.addEventListener('input', function() {
+            amountValue.textContent = Number(this.value).toLocaleString('ru-RU') + ' ₽';
+        });
+        
+        termSlider.addEventListener('input', function() {
+            termValue.textContent = this.value + ' ' + getYearWord(this.value);
+        });
+        
+        // Update slider ranges and default values based on loan type
+        loanTypeSelect.addEventListener('change', function() {
+            switch(this.value) {
+                case 'consumer':
+                    updateSliderConfig(50000, 5000000, 1000000, 7, 5, 9.5);
+                    break;
+                case 'mortgage':
+                    updateSliderConfig(1000000, 60000000, 5000000, 30, 20, 4.7);
+                    break;
+                case 'car':
+                    updateSliderConfig(300000, 10000000, 2000000, 7, 5, 7.5);
+                    break;
+                case 'business':
+                    updateSliderConfig(500000, 50000000, 3000000, 10, 3, 10.5);
+                    break;
+            }
+        });
+        
+        function updateSliderConfig(minAmount, maxAmount, defaultAmount, maxTerm, defaultTerm, rate) {
+            // Update amount slider
+            amountSlider.min = minAmount;
+            amountSlider.max = maxAmount;
+            amountSlider.value = defaultAmount;
+            
+            // Update min/max labels
+            document.querySelector('.slider-values span:first-child').textContent = formatCompactNumber(minAmount);
+            document.querySelector('.slider-values span:last-child').textContent = formatCompactNumber(maxAmount);
+            
+            // Update term slider
+            termSlider.max = maxTerm;
+            termSlider.value = defaultTerm;
+            
+            // Update term labels
+            document.querySelectorAll('.slider-values')[1].querySelector('span:last-child').textContent = maxTerm + ' ' + getYearWord(maxTerm);
+            
+            // Update interest rate
+            interestRateInput.value = rate;
+            
+            // Update display values
+            amountValue.textContent = Number(amountSlider.value).toLocaleString('ru-RU') + ' ₽';
+            termValue.textContent = termSlider.value + ' ' + getYearWord(termSlider.value);
+        }
+        
+        function formatCompactNumber(number) {
+            if (number >= 1000000) {
+                return (number / 1000000) + ' млн.';
+            } else if (number >= 1000) {
+                return (number / 1000) + ' тыс.';
+            }
+            return number;
+        }
+        
+        // Calculate loan
+        calculateBtn.addEventListener('click', function() {
+            const amount = Number(amountSlider.value);
+            const term = Number(termSlider.value) * 12; // Convert to months
+            const rate = Number(interestRateInput.value) / 100 / 12; // Monthly rate
+            const isAnnuity = document.querySelector('input[name="payment-type"]:checked').value === 'annuity';
+            
+            let monthlyPayment, totalPayment, overpayment;
+            
+            if (isAnnuity) {
+                // Аннуитетный платеж: P = S * (i * (1 + i)^n) / ((1 + i)^n - 1)
+                monthlyPayment = amount * (rate * Math.pow(1 + rate, term)) / (Math.pow(1 + rate, term) - 1);
+                totalPayment = monthlyPayment * term;
+                overpayment = totalPayment - amount;
+                
+                document.getElementById('monthly-payment').textContent = Math.round(monthlyPayment).toLocaleString('ru-RU') + ' ₽';
+            } else {
+                // Дифференцированный платеж: первый платеж
+                const principalPayment = amount / term;
+                const firstInterestPayment = amount * rate;
+                const firstMonthlyPayment = principalPayment + firstInterestPayment;
+                
+                // Последний платеж
+                const lastInterestPayment = principalPayment * rate;
+                const lastMonthlyPayment = principalPayment + lastInterestPayment;
+                
+                // Общая сумма
+                totalPayment = amount + (amount + principalPayment) * rate * term / 2;
+                overpayment = totalPayment - amount;
+                
+                document.getElementById('monthly-payment').textContent = 
+                    Math.round(firstMonthlyPayment).toLocaleString('ru-RU') + ' → ' + 
+                    Math.round(lastMonthlyPayment).toLocaleString('ru-RU') + ' ₽';
+            }
+            
+            document.getElementById('total-payment').textContent = Math.round(totalPayment).toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('overpayment').textContent = Math.round(overpayment).toLocaleString('ru-RU') + ' ₽';
+            
+            // Animate result
+            const result = document.getElementById('result');
+            result.classList.add('animate');
+            setTimeout(() => result.classList.remove('animate'), 500);
+        });
+        
+        // Helper function for correct word form in Russian
+        function getYearWord(number) {
+            const lastDigit = number % 10;
+            const lastTwoDigits = number % 100;
+            
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+                return 'лет';
+            }
+            
+            if (lastDigit === 1) {
+                return 'год';
+            }
+            
+            if (lastDigit >= 2 && lastDigit <= 4) {
+                return 'года';
+            }
+            
+            return 'лет';
+        }
+        
+        // Navigation highlight on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section.card, .hero-section');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Improve responsiveness
+            enhanceResponsiveness();
+            
+            // Calculate initial loan
+            calculateBtn.click();
+            
+            // Open first accordion item by default
+            if (document.querySelector('.accordion-header')) {
+                document.querySelector('.accordion-header').click();
+            }
         });
     </script>
 </body>

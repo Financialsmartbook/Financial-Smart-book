@@ -2,23 +2,54 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>4.5. Полная стоимость кредита</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --secondary: #4f46e5;
+            /* Основная цветовая палитра - современные цвета */
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #6366f1;
             --accent: #818cf8;
-            --background: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
-            --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --background: #f9fafb;
+            --background-card: #ffffff;
+            --text-dark: #111827;
+            --text-medium: #4b5563;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+            --gradient: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
+            
+            /* Семантические цвета */
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            
+            /* Эффекты */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            
+            /* Размеры */
+            --container-max-width: 1440px;
+            --header-height: 70px;
+            --sidebar-width: 300px;
+            --border-radius-sm: 0.375rem;
+            --border-radius: 0.75rem;
+            --border-radius-lg: 1.5rem;
+            
+            /* Анимация */
+            --transition-fast: 150ms ease;
+            --transition: 300ms ease;
+            --transition-slow: 500ms ease;
+            --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Переменная для мобильной высоты окна */
+            --vh: 1vh;
         }
 
         * {
@@ -27,36 +58,176 @@
             padding: 0;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--header-height);
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.7;
             background: var(--background);
             color: var(--text-dark);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.2;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        button, .button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        button:hover, .button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        button:active, .button:active {
+            transform: translateY(0);
+        }
+
+        /* Layout */
         .container {
-            max-width: 1200px;
+            width: 100%;
+            max-width: var(--container-max-width);
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            margin: 2rem 0 4rem;
-            padding: 4rem 2rem;
-            background: var(--gradient);
-            border-radius: 2rem;
-            color: white;
-            overflow: hidden;
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--background-card);
+            box-shadow: var(--shadow);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 50;
+        }
+
+        .header-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-medium);
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text-dark);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.35rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 1px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-medium);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            box-shadow: none;
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--text-dark);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        /* Hero section */
+        .hero-section {
+            background: var(--gradient);
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius-lg);
+            margin: 2rem 0 4rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
         }
 
         .hero-content {
             max-width: 600px;
+            position: relative;
             z-index: 2;
         }
 
@@ -74,29 +245,71 @@
 
         .hero-image {
             width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
-            transition: transform 0.4s ease;
+            filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.3));
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
 
-        /* Sections */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .hero-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-icon {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.2);
+            animation: floatIcon 15s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes floatIcon {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Section cards */
         .section-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
+            background: var(--background-card);
             padding: 2.5rem;
+            border-radius: var(--border-radius);
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            transition: transform var(--transition), box-shadow var(--transition);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
         .section-title {
             color: var(--text-dark);
             margin-bottom: 1.5rem;
             position: relative;
+            display: inline-block;
         }
 
         .section-title::after {
@@ -107,6 +320,7 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
         }
 
         /* Features List */
@@ -140,13 +354,14 @@
 
         /* Accordion */
         .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
+            background: var(--background-card);
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -154,32 +369,54 @@
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            font-weight: 500;
+            background: rgba(99, 102, 241, 0.05);
+            transition: background var(--transition-fast);
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-header.active {
+            background: rgba(99, 102, 241, 0.15);
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: all var(--transition);
+        }
+
+        .accordion-content-inner {
+            padding: 1.5rem;
         }
 
         .accordion-content.active {
-            padding: 1.5rem;
             max-height: 1000px;
         }
 
-        /* Forms */
+        /* Interactive grid */
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Calculator */
+        .calculator {
+            background: var(--background-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -188,39 +425,100 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: var(--text-medium);
         }
 
-        input[type="number"], input[type="text"] {
+        .calculator input[type="range"] {
+            -webkit-appearance: none;
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 0.5rem;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin: 1rem 0;
+        }
+
+        .calculator input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .calculator input[type="range"]::-webkit-slider-thumb:hover {
+            background: var(--primary-hover);
+            transform: scale(1.1);
+        }
+
+        .calculator input, 
+        .calculator select,
+        .calculator textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: var(--border-radius-sm);
             font-family: inherit;
             font-size: 1rem;
+            transition: border-color var(--transition-fast);
+            background: white;
+            margin-bottom: 1rem;
         }
 
-        button {
+        .calculator input:focus, 
+        .calculator select:focus,
+        .calculator textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .calculator h4 {
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .calculator h4::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 40px;
+            height: 2px;
             background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 1rem;
-            font-weight: 500;
+            border-radius: 2px;
         }
 
-        button:hover {
-            background: var(--secondary);
-        }
-
-        /* Results */
         .result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: var(--border-radius-sm);
             font-weight: 500;
+            background: #f3f4f6;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .result-label {
+            color: var(--text-medium);
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
         .success {
@@ -233,100 +531,397 @@
             color: var(--error);
         }
 
-        /* Tips Section */
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
+        /* Quiz styles */
+        .quiz-form label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+        }
+
+        .quiz-form input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* Tips list */
         .tips-list {
             list-style: none;
             padding: 0;
+            margin: 1.5rem 0;
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            background: var(--background-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            margin-top: 0.25rem;
         }
 
-        /* Mobile Adaptation */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .hero-section {
-                flex-direction: column;
-                text-align: center;
-                padding: 2rem 1rem;
-            }
-
-            .hero-image {
-                width: 30%;
-                margin-top: 2rem;
-            }
-
-            .section-card {
-                padding: 1.5rem;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
+        .tips-item strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--text-dark);
         }
 
-        @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
-
-            .features-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animated-image {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
+        /* Example box */
+        .example-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: var(--border-radius);
             padding: 1.5rem;
-            border-radius: 1rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .example-box::before {
+            content: 'Пример';
+            position: absolute;
+            top: -0.75rem;
+            left: 1rem;
+            background: var(--background-card);
+            padding: 0 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--info);
+        }
+
+        /* Table styles */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .info-table th, .info-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .info-table th {
+            background-color: rgba(99, 102, 241, 0.05);
+            font-weight: 600;
+        }
+
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-table tr:nth-child(even) {
+            background-color: rgba(99, 102, 241, 0.02);
+        }
+
+        /* Progress bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 100;
+            width: 0;
+            transition: width var(--transition-fast);
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition);
+            z-index: 99;
             box-shadow: var(--shadow);
         }
 
-        .calculator h4 {
-            margin-bottom: 1rem;
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .calculator input {
-            margin-bottom: 1rem;
+        .back-to-top:hover {
+            background: var(--primary-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Media Queries */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1140px;
+                padding: 1.75rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            html {
+                font-size: 15px;
+            }
+            
+            .container {
+                max-width: 960px;
+                padding: 1.5rem;
+            }
+            
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 3rem 1.5rem;
+                gap: 2rem;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-image {
+                width: 320px;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .header-nav {
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                background: var(--background-card);
+                box-shadow: var(--shadow);
+                flex-direction: column;
+                padding: 1.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all var(--transition);
+                z-index: 40;
+            }
+            
+            .header-nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+            
+            .container {
+                padding: 1.25rem;
+            }
+            
+            .hero-section {
+                padding: 2.5rem 1.25rem;
+                margin: 1.5rem 0 3rem;
+            }
+            
+            .hero-image {
+                width: 250px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            
+            .section-card {
+                padding: 1.5rem;
+            }
+            
+            .accordion-header {
+                padding: 1rem 1.25rem;
+            }
+            
+            .accordion-content-inner {
+                padding: 1.25rem;
+            }
+            
+            .features-item {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            html {
+                font-size: 13px;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+                margin: 1rem 0 2.5rem;
+                border-radius: var(--border-radius);
+            }
+            
+            .hero-image {
+                width: 200px;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-card {
+                padding: 1.25rem;
+                border-radius: var(--border-radius-sm);
+            }
+            
+            .features-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            
+            .features-item i {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                font-size: 12pt;
+                background: white;
+                color: black;
+            }
+            
+            .header, .back-to-top, button, #progress-bar,
+            .hero-section {
+                display: none;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .section-card, .accordion, .calculator, .tips-item {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 1cm;
+            }
+            
+            .info-table {
+                border: 1px solid #000;
+                white-space: normal;
+            }
+            
+            .info-table th, .info-table td {
+                border: 1px solid #000;
+            }
+            
+            a {
+                text-decoration: none;
+                color: black;
+            }
+            
+            .section-card:hover, 
+            .tips-item:hover,
+            .features-item:hover {
+                transform: none;
+                box-shadow: none;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    <a href="#top" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    
+    <header id="top" class="header">
+        <a href="#" class="header-logo">
+            <i class="fas fa-calculator"></i>
+            Финансовая грамотность
+        </a>
+        <nav class="header-nav" id="headerNav">
+            <a href="#what-is-psc" class="nav-link">Что такое ПСК</a>
+            <a href="#difference" class="nav-link">Отличия от ставки</a>
+            <a href="#calculation" class="nav-link">Расчет</a>
+            <a href="#components" class="nav-link">Компоненты</a>
+            <a href="#law" class="nav-link">Законодательство</a>
+            <a href="#practice" class="nav-link">Практика</a>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
@@ -336,43 +931,74 @@
                     Узнайте, чем отличается полная стоимость кредита от процентной ставки и как её рассчитать.
                 </p>
             </div>
-            <img src="credit-cost.png" alt="Полная стоимость кредита" class="hero-image animated-image">
+            <img src="long-term-savings.png" alt="Полная стоимость кредита" class="hero-image">
+            <div class="hero-icons">
+                <i class="fas fa-percentage hero-icon" style="left: 15%; animation-duration: 20s;"></i>
+                <i class="fas fa-file-invoice-dollar hero-icon" style="left: 35%; animation-duration: 15s; animation-delay: 2s;"></i>
+                <i class="fas fa-money-bill-wave hero-icon" style="left: 55%; animation-duration: 18s; animation-delay: 4s;"></i>
+                <i class="fas fa-calculator hero-icon" style="left: 75%; animation-duration: 22s; animation-delay: 6s;"></i>
+                <i class="fas fa-coins hero-icon" style="left: 25%; animation-duration: 17s; animation-delay: 8s;"></i>
+                <i class="fas fa-piggy-bank hero-icon" style="left: 65%; animation-duration: 19s; animation-delay: 10s;"></i>
+            </div>
         </header>
 
         <main>
             <!-- Что такое полная стоимость кредита? -->
-            <section class="section-card">
+            <section class="section-card" id="what-is-psc">
                 <h2 class="section-title">Что такое полная стоимость кредита?</h2>
                 <p style="text-align: justify;">
                     Полная стоимость кредита (ПСК) — это совокупность всех расходов заемщика при пользовании кредитными средствами банка за весь период кредитования.
                     Она включает не только проценты по кредиту, но и дополнительные комиссии, страховые платежи и другие затраты.
                 </p>
+                <p style="text-align: justify;">
+                    ПСК выражается в процентах годовых и позволяет заемщику получить полное представление обо всех расходах, связанных с кредитом. Это важный показатель, 
+                    который дает возможность сравнивать предложения разных банков на равных условиях, а не только по заявленной процентной ставке.
+                </p>
+                <p style="text-align: justify;">
+                    Банки обязаны раскрывать полную стоимость кредита в кредитном договоре. Информация о ПСК размещается в квадратной рамке на первой странице договора, в правом верхнем углу. 
+                    Указывается она хорошо читаемым шрифтом — черными буквами на белом фоне, а размер шрифта должен быть не менее чем в 2 раза больше, 
+                    чем размер шрифта основного текста договора.
+                </p>
             </section>
 
             <!-- Чем отличается ПСК от процентной ставки? -->
-            <section class="section-card">
-                <h3 class="section-title">Чем отличается ПСК от процентной ставки?</h3>
+            <section class="section-card" id="difference">
+                <h2 class="section-title">Чем отличается ПСК от процентной ставки?</h2>
                 <ul class="features-list">
                     <li class="features-item">
                         <i class="fas fa-percentage"></i>
                         <div>
                             <strong>Процентная ставка:</strong>
-                            <p>Отражает только плату за пользование кредитом.</p>
+                            <p>Отражает только плату за пользование кредитом. Это базовая ставка, которую банк заявляет в рекламных материалах и которая указывается в договоре как основная.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <div>
                             <strong>Полная стоимость кредита:</strong>
-                            <p>Включает все дополнительные расходы, такие как комиссии и страховки.</p>
+                            <p>Включает все дополнительные расходы, такие как комиссии, страховки, платежи за открытие счета, обслуживание карты и другие сопутствующие услуги.</p>
                         </div>
                     </li>
                 </ul>
+                
+                <div class="example-box">
+                    <p><strong>Пример:</strong> Банк предлагает кредит под 10% годовых, но при оформлении требует:</p>
+                    <ul>
+                        <li>Комиссию за выдачу кредита — 2% от суммы</li>
+                        <li>Страхование жизни — 1,5% от суммы кредита ежегодно</li>
+                        <li>Плату за ведение счета — 200 руб. в месяц</li>
+                    </ul>
+                    <p>В итоге, полная стоимость кредита может составлять около 15% годовых, что значительно выше заявленной ставки в 10%.</p>
+                </div>
+                
+                <p style="text-align: justify;">
+                    Таким образом, ПСК дает более точное представление о реальной стоимости кредита, помогая заемщику принять обоснованное решение и избежать неприятных сюрпризов в виде скрытых платежей.
+                </p>
             </section>
 
             <!-- Как рассчитать ПСК? -->
-            <section class="section-card">
-                <h3 class="section-title">Как рассчитать ПСК?</h3>
+            <section class="section-card" id="calculation">
+                <h2 class="section-title">Как рассчитать ПСК?</h2>
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -380,143 +1006,493 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>
-                                ПСК = (Общая сумма выплат по кредиту / Сумма кредита) × 100%.
-                                Общая сумма выплат включает основной долг, проценты, комиссии и страховки.
-                            </p>
+                            <div class="accordion-content-inner">
+                                <p style="text-align: justify;">
+                                    Для расчета полной стоимости кредита используется формула эффективной процентной ставки:
+                                </p>
+                                <div style="text-align: center; margin: 1.5rem 0; font-family: 'Times New Roman', serif; font-size: 1.2rem;">
+                                    <p>ПСК = i × 100%</p>
+                                </div>
+                                <p style="text-align: justify;">
+                                    Где <strong>i</strong> является корнем уравнения:
+                                </p>
+                                <div style="text-align: center; margin: 1.5rem 0; font-family: 'Times New Roman', serif; font-size: 1.2rem;">
+                                    <p>∑(ДПk / (1 + i)^(tk)) = ∑(ДВj / (1 + i)^(tj))</p>
+                                </div>
+                                <p style="text-align: justify;">
+                                    Где:
+                                </p>
+                                <ul>
+                                    <li><strong>ДПk</strong> — k-й денежный поток (платеж) по кредиту</li>
+                                    <li><strong>ДВj</strong> — j-й денежный поток (выплата) от банка</li>
+                                    <li><strong>tk</strong> и <strong>tj</strong> — время осуществления k-го платежа и j-й выплаты (в годах)</li>
+                                </ul>
+                                <p style="text-align: justify;">
+                                    Данная формула довольно сложна для ручного расчета, поэтому на практике часто используют упрощенный подход или специальные калькуляторы.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Упрощенный способ расчета</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p style="text-align: justify;">
+                                    Для приблизительного расчета ПСК можно использовать формулу:
+                                </p>
+                                <div style="text-align: center; margin: 1.5rem 0; font-family: 'Times New Roman', serif; font-size: 1.2rem;">
+                                    <p>ПСК ≈ (Общая сумма всех платежей по кредиту / Сумма кредита - 1) × (365 / Срок кредита в днях) × 100%</p>
+                                </div>
+                                <p style="text-align: justify;">
+                                    Где:
+                                </p>
+                                <ul>
+                                    <li><strong>Общая сумма всех платежей</strong> — сумма основного долга, процентов и всех дополнительных выплат</li>
+                                    <li><strong>Сумма кредита</strong> — фактически полученная заемщиком сумма</li>
+                                    <li><strong>Срок кредита в днях</strong> — период от даты получения кредита до даты последнего платежа</li>
+                                </ul>
+                                <p style="text-align: justify;">
+                                    Этот метод дает приблизительную оценку ПСК, но для точного расчета рекомендуется использовать специальные калькуляторы или консультироваться с финансовыми специалистами.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Компоненты полной стоимости кредита -->
+            <section class="section-card" id="components">
+                <h2 class="section-title">Компоненты полной стоимости кредита</h2>
+                <p style="text-align: justify;">
+                    В расчет полной стоимости кредита включаются различные платежи, которые заемщик должен совершить при получении и обслуживании кредита. Знание этих компонентов поможет лучше понять структуру кредитных платежей.
+                </p>
+                
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Включаются в ПСК</th>
+                            <th>Не включаются в ПСК</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>Погашение основного долга</li>
+                                    <li>Проценты по кредиту</li>
+                                    <li>Комиссии за выдачу кредита</li>
+                                    <li>Плата за открытие и ведение счетов</li>
+                                    <li>Платежи в пользу третьих лиц, если обязанность их внесения следует из договора</li>
+                                    <li>Страховые премии по договорам страхования, если страхование обязательно</li>
+                                    <li>Плата за SMS-информирование (если обязательно)</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Платежи заемщика, связанные с несоблюдением условий договора (штрафы, пени)</li>
+                                    <li>Платежи по страхованию предмета залога, если он остается у заемщика</li>
+                                    <li>Платежи, если их размер зависит от решения заемщика</li>
+                                    <li>Платежи за услуги, не связанные с кредитом</li>
+                                    <li>Государственные пошлины</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="example-box">
+                    <p><strong>Пример структуры платежей по кредиту:</strong></p>
+                    <p>Потребительский кредит на 500 000 рублей на 3 года под 12% годовых.</p>
+                    <ul>
+                        <li>Основной долг: 500 000 рублей</li>
+                        <li>Проценты за 3 года: около 100 000 рублей</li>
+                        <li>Комиссия за выдачу (2%): 10 000 рублей</li>
+                        <li>Страхование жизни (1,5% годовых): 22 500 рублей</li>
+                        <li>Ведение счета (200 руб./мес.): 7 200 рублей</li>
+                    </ul>
+                    <p>Общая сумма платежей: 639 700 рублей</p>
+                    <p>Полная стоимость кредита: около 18,5% годовых</p>
+                </div>
+            </section>
+
+            <!-- Законодательное регулирование ПСК -->
+            <section class="section-card" id="law">
+                <h2 class="section-title">Законодательное регулирование ПСК</h2>
+                <p style="text-align: justify;">
+                    Полная стоимость кредита регулируется Федеральным законом "О потребительском кредите (займе)" № 353-ФЗ от 21.12.2013. Закон устанавливает требования к расчету и раскрытию информации о ПСК.
+                </p>
+                
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <strong>Обязательное раскрытие информации:</strong>
+                            <p>Банки обязаны раскрывать полную стоимость кредита в договоре, размещая информацию в квадратной рамке в правом верхнем углу первой страницы договора.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <strong>Ограничение ПСК:</strong>
+                            <p>Центральный банк РФ ежеквартально рассчитывает и публикует среднерыночное значение ПСК по различным категориям кредитов. ПСК в договоре не может превышать среднерыночное значение более чем на одну треть.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Защита прав заемщиков:</strong>
+                            <p>Закон защищает заемщиков от недобросовестных кредиторов, которые могут скрывать реальную стоимость кредита. Нарушение требований к расчету и раскрытию ПСК может быть основанием для привлечения банка к ответственности.</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <p style="text-align: justify; margin-top: 1rem;">
+                    Законодательное регулирование ПСК направлено на обеспечение прозрачности кредитования и защиту интересов заемщиков. Оно позволяет принимать взвешенные решения о получении кредита и сравнивать предложения разных банков на равных условиях.
+                </p>
+            </section>
+
             <!-- Практические задания -->
-            <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
+            <section class="section-card" id="practice">
+                <h2 class="section-title">Практические задания</h2>
                 <div class="interactive-grid">
                     <!-- Задание 1: Расчет ПСК -->
                     <div class="calculator">
                         <h4>Задание 1: Рассчитайте ПСК</h4>
-                        <input type="number" id="loan-amount" placeholder="Сумма кредита (руб)">
-                        <input type="number" id="total-payments" placeholder="Общая сумма выплат (руб)">
-                        <button type="button" onclick="calculatePSC()">Рассчитать</button>
-                        <div id="psc-result" class="result"></div>
+                        <div class="form-group">
+                            <label for="loan-amount">Сумма кредита (руб)</label>
+                            <input type="number" id="loan-amount" placeholder="Например, 300000">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest-rate">Процентная ставка (%)</label>
+                            <input type="number" id="interest-rate" placeholder="Например, 12">
+                        </div>
+                        <div class="form-group">
+                            <label for="loan-term">Срок кредита (месяцев)</label>
+                            <input type="number" id="loan-term" placeholder="Например, 36">
+                        </div>
+                        <div class="form-group">
+                            <label for="commission">Комиссия за выдачу (% от суммы)</label>
+                            <input type="number" id="commission" placeholder="Например, 2">
+                        </div>
+                        <div class="form-group">
+                            <label for="insurance">Страхование (% от суммы в год)</label>
+                            <input type="number" id="insurance" placeholder="Например, 1.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="account-fee">Плата за ведение счета (руб/мес)</label>
+                            <input type="number" id="account-fee" placeholder="Например, 200">
+                        </div>
+                        <button type="button" id="calculate-psc-btn">Рассчитать</button>
+                        <div id="psc-result" class="result">
+                            <div class="result-item">
+                                <span class="result-label">Сумма процентов:</span>
+                                <span class="result-value" id="interest-total">0 ₽</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Общая сумма платежей:</span>
+                                <span class="result-value" id="total-payment">0 ₽</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Полная стоимость кредита:</span>
+                                <span class="result-value" id="total-cost">0%</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Задание 2: Тест на знание ПСК -->
                     <div class="calculator">
                         <h4>Задание 2: Тест на знание ПСК</h4>
-                        <form id="psc-test">
-                            <label>
-                                <input type="radio" name="psc-question" value="correct">
-                                ПСК включает все расходы по кредиту, включая комиссии и страховки.
-                            </label><br>
-                            <label>
-                                <input type="radio" name="psc-question" value="incorrect">
-                                ПСК равна только процентной ставке по кредиту.
-                            </label><br>
-                            <button type="button" onclick="checkPSC()">Проверить</button>
-                            <div id="psc-test-result" class="result"></div>
+                        <form id="psc-test" class="quiz-form">
+                            <div class="quiz-question">
+                                <p><strong>1. Что входит в расчет полной стоимости кредита?</strong></p>
+                                <label>
+                                    <input type="radio" name="q1" value="a"> Только проценты по кредиту
+                                </label>
+                                <label>
+                                    <input type="radio" name="q1" value="b"> Проценты и комиссии банка
+                                </label>
+                                <label>
+                                    <input type="radio" name="q1" value="c"> Проценты, комиссии, страховки и другие обязательные платежи
+                                </label>
+                            </div>
+                            
+                            <div class="quiz-question">
+                                <p><strong>2. Где должна быть указана полная стоимость кредита?</strong></p>
+                                <label>
+                                    <input type="radio" name="q2" value="a"> В рекламных материалах банка
+                                </label>
+                                <label>
+                                    <input type="radio" name="q2" value="b"> В правом верхнем углу первой страницы договора
+                                </label>
+                                <label>
+                                    <input type="radio" name="q2" value="c"> В приложении к договору
+                                </label>
+                            </div>
+                            
+                            <div class="quiz-question">
+                                <p><strong>3. Каким образом ограничивается ПСК в России?</strong></p>
+                                <label>
+                                    <input type="radio" name="q3" value="a"> Не может превышать ключевую ставку ЦБ РФ более чем на 10%
+                                </label>
+                                <label>
+                                    <input type="radio" name="q3" value="b"> Не может превышать среднерыночное значение более чем на одну треть
+                                </label>
+                                <label>
+                                    <input type="radio" name="q3" value="c"> Не может превышать 50% годовых
+                                </label>
+                            </div>
+                            
+                            <button type="button" id="check-test-btn">Проверить ответы</button>
+                            <div id="test-result" class="result" style="display: none;"></div>
                         </form>
-                    </div>
-
-                    <!-- Задание 3: Досрочное погашение -->
-                    <div class="calculator">
-                        <h4>Задание 3: Экономия при досрочном погашении</h4>
-                        <input type="number" id="remaining-debt" placeholder="Остаток долга (руб)">
-                        <input type="number" id="interest-rate" placeholder="Процентная ставка (%)">
-                        <input type="number" id="months-left" placeholder="Оставшиеся месяцы">
-                        <button type="button" onclick="calculateSavings()">Рассчитать экономию</button>
-                        <div id="savings-result" class="result"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- Полезные советы -->
+            <!-- Советы по снижению ПСК -->
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
+                <h2 class="section-title">Как снизить полную стоимость кредита</h2>
+                <p style="text-align: justify;">
+                    Знание полной стоимости кредита позволяет заемщику принимать более взвешенные финансовые решения. Вот несколько советов, как снизить ПСК:
+                </p>
+                
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Внимательно читайте кредитный договор перед подписанием.
+                        <i class="fas fa-search"></i>
+                        <div>
+                            <strong>Сравнивайте предложения разных банков</strong>
+                            Не соглашайтесь на первое предложение. Изучите условия разных банков, сравнивая именно полную стоимость кредита, а не только процентную ставку.
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Избегайте просрочек, чтобы не допустить штрафов и пеней.
+                        <i class="fas fa-ban"></i>
+                        <div>
+                            <strong>Отказывайтесь от ненужных услуг</strong>
+                            Некоторые дополнительные услуги, такие как SMS-информирование или страхование, могут быть необязательными. Уточняйте у банка, от каких услуг можно отказаться.
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Проверяйте размер ПСК в правом верхнем углу договора.
+                        <i class="fas fa-money-check"></i>
+                        <div>
+                            <strong>Ищите банки с низкими комиссиями</strong>
+                            Комиссии за выдачу кредита, ведение счета и другие операции могут существенно увеличить ПСК. Выбирайте банки, где эти комиссии минимальны или отсутствуют.
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Выбирайте оптимальные страховые программы</strong>
+                            Если страхование обязательно, сравните страховые предложения. Иногда выгоднее оформить страховку не в банке, а в страховой компании.
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <strong>Берите кредит на оптимальный срок</strong>
+                            Слишком короткий срок увеличивает ежемесячные платежи, а слишком длинный — общую переплату. Найдите золотую середину.
+                        </div>
                     </li>
                 </ul>
             </section>
         </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
     </div>
-
+    
     <script>
-        // Аккордеон
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+        // Progress bar
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            
+            // Back to top button
+            if (scrollTop > 500) {
+                document.getElementById('backToTop').classList.add('visible');
+            } else {
+                document.getElementById('backToTop').classList.remove('visible');
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('headerNav').classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-bars');
+            this.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                if (document.getElementById('headerNav').classList.contains('active')) {
+                    document.getElementById('headerNav').classList.remove('active');
+                    document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
 
-        // Задание 1: Расчет ПСК
-        function calculatePSC() {
-            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
-            const totalPayments = parseFloat(document.getElementById('total-payments').value);
-            const resultElement = document.getElementById('psc-result');
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Close all accordion items
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.accordion-header').forEach(head => {
+                    head.classList.remove('active');
+                });
+                
+                // Reset all icons
+                document.querySelectorAll('.accordion-header i').forEach(icon => {
+                    icon.className = 'fas fa-chevron-down';
+                });
+                
+                // Open the clicked one if it wasn't already open
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                    this.querySelector('i').className = 'fas fa-chevron-up';
+                }
+            });
+        });
 
-            if (!isNaN(loanAmount) && !isNaN(totalPayments)) {
-                const psc = (totalPayments / loanAmount) * 100;
-                resultElement.textContent = `💰 Полная стоимость кредита: ${psc.toFixed(2)}%.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                resultElement.className = 'result error';
+        // Navigation highlight on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section.section-card');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Calculate PSC
+        document.getElementById('calculate-psc-btn').addEventListener('click', function() {
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value) || 0;
+            const interestRate = parseFloat(document.getElementById('interest-rate').value) || 0;
+            const loanTerm = parseFloat(document.getElementById('loan-term').value) || 0;
+            const commission = parseFloat(document.getElementById('commission').value) || 0;
+            const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+            const accountFee = parseFloat(document.getElementById('account-fee').value) || 0;
+            
+            if (loanAmount <= 0 || interestRate <= 0 || loanTerm <= 0) {
+                alert('Пожалуйста, введите корректные данные.');
+                return;
             }
-        }
+            
+            // Расчет аннуитетного платежа
+            const monthlyRate = interestRate / 100 / 12;
+            const annuityFactor = (monthlyRate * Math.pow(1 + monthlyRate, loanTerm)) / (Math.pow(1 + monthlyRate, loanTerm) - 1);
+            const monthlyPayment = loanAmount * annuityFactor;
+            
+            // Расчет общей суммы процентов
+            const totalInterest = (monthlyPayment * loanTerm) - loanAmount;
+            
+            // Расчет дополнительных платежей
+            const commissionPayment = loanAmount * (commission / 100);
+            const insurancePayment = loanAmount * (insurance / 100) * (loanTerm / 12);
+            const accountFeeTotal = accountFee * loanTerm;
+            
+            // Расчет общей суммы платежей
+            const totalPayment = loanAmount + totalInterest + commissionPayment + insurancePayment + accountFeeTotal;
+            
+            // Расчет ПСК (упрощенный способ)
+            const psc = ((totalPayment / loanAmount - 1) * (365 / (loanTerm * 30)) * 100).toFixed(2);
+            
+            // Вывод результатов
+            document.getElementById('interest-total').textContent = totalInterest.toFixed(2) + ' ₽';
+            document.getElementById('total-payment').textContent = totalPayment.toFixed(2) + ' ₽';
+            document.getElementById('total-cost').textContent = psc + '%';
+        });
 
-        // Задание 2: Тест на знание ПСК
-        function checkPSC() {
-            const selected = document.querySelector('input[name="psc-question"]:checked');
-            const resultElement = document.getElementById('psc-test-result');
-
-            if (selected && selected.value === 'correct') {
-                resultElement.textContent = '✅ Верно! ПСК включает все расходы по кредиту.';
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '❌ Неверно. ПСК включает все расходы, а не только процентную ставку.';
-                resultElement.className = 'result error';
+        // Check test answers
+        document.getElementById('check-test-btn').addEventListener('click', function() {
+            const answers = {
+                q1: 'c',
+                q2: 'b',
+                q3: 'b'
+            };
+            
+            let score = 0;
+            let feedback = '';
+            
+            // Check answers
+            for (let question in answers) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                
+                if (!selectedAnswer) {
+                    feedback += `<p>Пожалуйста, ответьте на все вопросы.</p>`;
+                    break;
+                }
+                
+                if (selectedAnswer.value === answers[question]) {
+                    score++;
+                }
             }
-        }
-
-        // Задание 3: Экономия при досрочном погашении
-        function calculateSavings() {
-            const remainingDebt = parseFloat(document.getElementById('remaining-debt').value);
-            const interestRate = parseFloat(document.getElementById('interest-rate').value);
-            const monthsLeft = parseFloat(document.getElementById('months-left').value);
-            const resultElement = document.getElementById('savings-result');
-
-            if (!isNaN(remainingDebt) && !isNaN(interestRate) && !isNaN(monthsLeft)) {
-                const monthlyInterest = interestRate / 100 / 12;
-                const totalInterest = remainingDebt * monthlyInterest * monthsLeft;
-                const savings = totalInterest * 0.3; // Примерная экономия при досрочном погашении
-                resultElement.textContent = `💰 Экономия при досрочном погашении: ${savings.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
+            
+            if (feedback === '') {
+                // All questions answered
+                let resultClass = '';
+                let resultEmoji = '';
+                
+                if (score === 0) {
+                    resultClass = 'error';
+                    resultEmoji = '😔';
+                    feedback = 'Стоит изучить тему подробнее.';
+                } else if (score < 3) {
+                    resultClass = 'warning';
+                    resultEmoji = '🤔';
+                    feedback = 'Неплохо, но есть над чем поработать.';
+                } else {
+                    resultClass = 'success';
+                    resultEmoji = '🎉';
+                    feedback = 'Отлично! Вы хорошо разбираетесь в теме.';
+                }
+                
+                const resultElement = document.getElementById('test-result');
+                resultElement.className = `result ${resultClass}`;
+                resultElement.innerHTML = `<p>${resultEmoji} Вы ответили правильно на ${score} из 3 вопросов.</p><p>${feedback}</p>`;
+                resultElement.style.display = 'block';
             } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                resultElement.className = 'result error';
+                // Some questions not answered
+                const resultElement = document.getElementById('test-result');
+                resultElement.className = 'result warning';
+                resultElement.innerHTML = feedback;
+                resultElement.style.display = 'block';
             }
-        }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Open first accordion item by default
+            if (document.querySelector('.accordion-header')) {
+                document.querySelector('.accordion-header').click();
+            }
+        });
     </script>
 </body>
 </html>

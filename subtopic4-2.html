@@ -19,6 +19,8 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         * {
@@ -171,7 +173,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -190,7 +192,7 @@
             font-weight: 500;
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -233,6 +235,16 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -253,6 +265,219 @@
             color: var(--primary);
             font-size: 1.2rem;
         }
+        
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(248, 249, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Cards for types of lenders */
+        .lender-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .lender-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .lender-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .lender-card-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .lender-card-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        .lender-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .lender-card-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .lender-card-body {
+            padding: 1.5rem;
+        }
+
+        .lender-card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lender-stat {
+            text-align: center;
+        }
+
+        .lender-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .lender-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            opacity: 0.7;
+        }
+
+        .lender-card-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .lender-card-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lender-card-features li i {
+            color: var(--primary);
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 1000;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Loan Calculator Visualization */
+        .calculator-visualization {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        .loan-option {
+            width: 150px;
+            height: 200px;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .loan-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .loan-option-header {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .loan-option-body {
+            height: calc(100% - 40px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.75rem;
+        }
+
+        .loan-option-total {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .loan-option-rate {
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            opacity: 0.7;
+        }
 
         /* Mobile Adaptation */
         @media (max-width: 768px) {
@@ -267,7 +492,7 @@
             }
 
             .hero-image {
-                width: 30%;
+                width: 60%;
                 margin-top: 2rem;
             }
 
@@ -277,6 +502,22 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+            
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lender-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.75rem 0.5rem;
             }
         }
 
@@ -288,6 +529,11 @@
             .features-item {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+            
+            .loan-option {
+                width: 120px;
+                height: 180px;
             }
         }
 
@@ -327,6 +573,8 @@
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
@@ -343,12 +591,17 @@
             <!-- Кто участвует в кредитных отношениях? -->
             <section class="section-card">
                 <h2 class="section-title">Кто участвует в кредитных отношениях?</h2>
-                <p style="text-align: justify;">
+                <p style="margin-bottom: 1.5rem;">
                     Физическое лицо может взять кредит в любом коммерческом банке. Прежде всего, банк – это тот институт,
                     который является кредитной организацией, то есть предназначен для предоставления кредитов.
                     Помимо банков занять деньги в долг можно и у других кредиторов – небанковских финансовых организаций,
                     которые отнесены Банком России – государственным мегарегулятором рынка финансовых услуг к субъектам
                     рынка микрофинансирования.
+                </p>
+                <p>
+                    В России рынок кредитования регулируется Центральным банком РФ. Все организации, выдающие кредиты и займы, 
+                    должны быть зарегистрированы в соответствующих реестрах ЦБ РФ и действовать в рамках установленного 
+                    законодательства. Это сделано для защиты прав заемщиков и обеспечения прозрачности финансовых отношений.
                 </p>
             </section>
 
@@ -360,28 +613,35 @@
                         <i class="fas fa-university"></i>
                         <div>
                             <strong>Банки:</strong>
-                            <p>Выдают кредиты на основании лицензии Центрального банка РФ.</p>
+                            <p>Выдают кредиты на основании лицензии Центрального банка РФ. Предлагают различные кредитные продукты: потребительские кредиты, ипотека, автокредиты, кредитные карты и т.д.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-building"></i>
                         <div>
-                            <strong>Микрофинансовые организации:</strong>
-                            <p>Предоставляют займы до 500 тыс. рублей на срок не более года.</p>
+                            <strong>Микрофинансовые организации (МФО):</strong>
+                            <p>Предоставляют займы до 500 тыс. рублей на срок не более года. Процедура получения займа упрощенная, но процентные ставки значительно выше банковских.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-coins"></i>
                         <div>
                             <strong>Ломбарды:</strong>
-                            <p>Выдают займы под залог имущества на срок до 1 года.</p>
+                            <p>Выдают займы под залог имущества (ювелирные изделия, техника, транспортные средства) на срок до 1 года. Если заем не возвращается, залог становится собственностью ломбарда.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-handshake"></i>
                         <div>
-                            <strong>Кредитные кооперативы:</strong>
-                            <p>Предоставляют займы только членам кооператива.</p>
+                            <strong>Кредитные потребительские кооперативы (КПК):</strong>
+                            <p>Предоставляют займы только членам кооператива. Для получения займа необходимо вступить в кооператив и внести вступительный взнос.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <strong>Частные лица:</strong>
+                            <p>Займы между физическими лицами (друзья, родственники). Условия займа определяются по договоренности между сторонами, однако рекомендуется оформлять даже такие займы документально.</p>
                         </div>
                     </li>
                 </ul>
@@ -398,94 +658,533 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Предельная сумма переплаты по договору займа не может превышать 130% от суммы займа,
-                                если срок возврата не превышает одного года.
+                                По закону предельная сумма переплаты по договору займа, заключенному с МФО, не может превышать:
+                            </p>
+                            <ul>
+                                <li>150% от суммы займа (включая проценты, неустойки, штрафы и иные платежи), если срок возврата не превышает одного года</li>
+                                <li>Максимальная ежедневная процентная ставка ограничена 1% в день (365% годовых)</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Эти ограничения введены для защиты заемщиков от чрезмерно высоких процентных ставок и непосильной долговой нагрузки.
                             </p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Займы в ломбардах</span>
+                            <span>Запрет на выдачу займов под залог жилья</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Максимальный срок займа в ломбарде не может быть больше 1 года. Договор считается заключенным
-                                после передачи залогового имущества.
+                                С 1 ноября 2019 года МФО запрещено выдавать займы под залог жилого помещения или доли в нем. Это ограничение введено для защиты заемщиков от потери единственного жилья.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                Исключение составляют ипотечные займы, выдаваемые банками и некоторыми другими организациями, соответствующими специальным требованиям.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Особые требования к заемщикам</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                С 1 октября 2019 года финансовые организации обязаны рассчитывать показатель долговой нагрузки (ПДН) заемщика при выдаче кредита/займа на сумму свыше 10 000 рублей.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                ПДН — это отношение суммы ежемесячных платежей по всем кредитам и займам заемщика к его ежемесячному доходу. Если ПДН превышает 50%, организация может отказать в выдаче кредита/займа.
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Практические задания -->
+            <!-- Детальный обзор кредиторов -->
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <div class="task-card">
-                        <h4>Задание 1: Рассчитайте безопасную сумму кредита</h4>
-                        <form id="safe-loan-form">
-                            <label for="monthly-income">Ежемесячный доход (руб):</label>
-                            <input type="number" id="monthly-income" placeholder="Введите сумму" required><br><br>
-                            <label for="monthly-expenses">Ежемесячные обязательства (руб):</label>
-                            <input type="number" id="monthly-expenses" placeholder="Введите сумму" required><br><br>
-                            <button type="button" onclick="calculateSafeLoan()">Рассчитать</button>
-                            <p id="safe-loan-result"></p>
-                        </form>
+                <h3 class="section-title">Подробный обзор кредиторов</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Каждый тип кредитора имеет свои особенности, преимущества и недостатки. Рассмотрим их подробнее:
+                </p>
+                
+                <div class="lender-cards">
+                    <!-- Банки -->
+                    <div class="lender-card">
+                        <div class="lender-card-header">
+                            <i class="fas fa-university lender-card-icon"></i>
+                            <h4 class="lender-card-title">Банки</h4>
+                            <p class="lender-card-subtitle">Традиционные кредитные организации</p>
+                        </div>
+                        <div class="lender-card-body">
+                            <div class="lender-card-stats">
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">6-30%</div>
+                                    <div class="lender-stat-label">Процентная ставка</div>
+                                </div>
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">до 30 лет</div>
+                                    <div class="lender-stat-label">Максимальный срок</div>
+                                </div>
+                            </div>
+                            <ul class="lender-card-features">
+                                <li><i class="fas fa-check"></i> Низкие процентные ставки</li>
+                                <li><i class="fas fa-check"></i> Большие суммы кредитов</li>
+                                <li><i class="fas fa-check"></i> Длительные сроки погашения</li>
+                                <li><i class="fas fa-times"></i> Строгие требования к заемщикам</li>
+                                <li><i class="fas fa-times"></i> Длительное рассмотрение заявки</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Микрофинансовые организации -->
+                    <div class="lender-card">
+                        <div class="lender-card-header">
+                            <i class="fas fa-building lender-card-icon"></i>
+                            <h4 class="lender-card-title">МФО</h4>
+                            <p class="lender-card-subtitle">Микрофинансовые организации</p>
+                        </div>
+                        <div class="lender-card-body">
+                            <div class="lender-card-stats">
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">до 365%</div>
+                                    <div class="lender-stat-label">Процентная ставка</div>
+                                </div>
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">до 1 года</div>
+                                    <div class="lender-stat-label">Максимальный срок</div>
+                                </div>
+                            </div>
+                            <ul class="lender-card-features">
+                                <li><i class="fas fa-check"></i> Быстрое получение займа</li>
+                                <li><i class="fas fa-check"></i> Минимум документов</li>
+                                <li><i class="fas fa-check"></i> Высокая вероятность одобрения</li>
+                                <li><i class="fas fa-times"></i> Очень высокие проценты</li>
+                                <li><i class="fas fa-times"></i> Риск попасть в долговую яму</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Ломбарды -->
+                    <div class="lender-card">
+                        <div class="lender-card-header">
+                            <i class="fas fa-coins lender-card-icon"></i>
+                            <h4 class="lender-card-title">Ломбарды</h4>
+                            <p class="lender-card-subtitle">Займы под залог имущества</p>
+                        </div>
+                        <div class="lender-card-body">
+                            <div class="lender-card-stats">
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">60-180%</div>
+                                    <div class="lender-stat-label">Процентная ставка</div>
+                                </div>
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">до 1 года</div>
+                                    <div class="lender-stat-label">Максимальный срок</div>
+                                </div>
+                            </div>
+                            <ul class="lender-card-features">
+                                <li><i class="fas fa-check"></i> Мгновенная выдача займа</li>
+                                <li><i class="fas fa-check"></i> Не требуется подтверждение дохода</li>
+                                <li><i class="fas fa-check"></i> Не проверяется кредитная история</li>
+                                <li><i class="fas fa-times"></i> Риск потери залога</li>
+                                <li><i class="fas fa-times"></i> Сумма займа меньше стоимости залога</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Кредитные кооперативы -->
+                    <div class="lender-card">
+                        <div class="lender-card-header">
+                            <i class="fas fa-handshake lender-card-icon"></i>
+                            <h4 class="lender-card-title">КПК</h4>
+                            <p class="lender-card-subtitle">Кредитные потребительские кооперативы</p>
+                        </div>
+                        <div class="lender-card-body">
+                            <div class="lender-card-stats">
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">15-35%</div>
+                                    <div class="lender-stat-label">Процентная ставка</div>
+                                </div>
+                                <div class="lender-stat">
+                                    <div class="lender-stat-value">до 5 лет</div>
+                                    <div class="lender-stat-label">Максимальный срок</div>
+                                </div>
+                            </div>
+                            <ul class="lender-card-features">
+                                <li><i class="fas fa-check"></i> Более низкие ставки, чем у МФО</li>
+                                <li><i class="fas fa-check"></i> Лояльное отношение к заемщикам</li>
+                                <li><i class="fas fa-check"></i> Возможность получения крупных сумм</li>
+                                <li><i class="fas fa-times"></i> Необходимость членства в кооперативе</li>
+                                <li><i class="fas fa-times"></i> Уплата членских взносов</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Полезные советы -->
+            <!-- Сравнение условий займов -->
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
+                <h3 class="section-title">Сравнение условий займов у разных кредиторов</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Параметр</th>
+                                <th>Банки</th>
+                                <th>МФО</th>
+                                <th>Ломбарды</th>
+                                <th>КПК</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Сумма займа</td>
+                                <td>от 10 тыс. до нескольких млн руб.</td>
+                                <td>от 1 тыс. до 500 тыс. руб.</td>
+                                <td>от 1 тыс. до 100 тыс. руб.</td>
+                                <td>от 10 тыс. до 3 млн руб.</td>
+                            </tr>
+                            <tr>
+                                <td>Процентная ставка</td>
+                                <td>6-30% годовых</td>
+                                <td>до 365% годовых</td>
+                                <td>60-180% годовых</td>
+                                <td>15-35% годовых</td>
+                            </tr>
+                            <tr>
+                                <td>Срок рассмотрения</td>
+                                <td>1-5 дней</td>
+                                <td>15 минут - 1 день</td>
+                                <td>15-30 минут</td>
+                                <td>1-3 дня</td>
+                            </tr>
+                            <tr>
+                                <td>Требуемые документы</td>
+                                <td>Паспорт, справка о доходах, трудовая книжка</td>
+                                <td>Паспорт</td>
+                                <td>Паспорт, предмет залога</td>
+                                <td>Паспорт, справка о доходах</td>
+                            </tr>
+                            <tr>
+                                <td>Проверка кредитной истории</td>
+                                <td>Обязательно</td>
+                                <td>Часто</td>
+                                <td>Нет</td>
+                                <td>Часто</td>
+                            </tr>
+                            <tr>
+                                <td>Обеспечение</td>
+                                <td>Может требоваться залог или поручитель</td>
+                                <td>Обычно не требуется</td>
+                                <td>Обязательно (залог)</td>
+                                <td>Может требоваться</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Калькулятор сравнения займов -->
+            <section class="section-card">
+                <h3 class="section-title">Калькулятор сравнения займов</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Сравните стоимость займа у разных кредиторов, чтобы выбрать наиболее выгодный вариант:
+                </p>
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="loan-amount">Необходимая сумма (руб.):</label>
+                        <input type="number" id="loan-amount" min="1000" max="500000" value="30000">
+                    </div>
+                    <div class="form-group">
+                        <label for="loan-term">Срок займа (дней):</label>
+                        <input type="number" id="loan-term" min="1" max="365" value="30">
+                    </div>
+                    <button id="calculate-comparison">Сравнить варианты</button>
+                    <div id="comparison-result" class="result"></div>
+                </div>
+                
+                <div class="calculator-visualization" id="loan-comparison-chart">
+                    <!-- Здесь будет визуализация сравнения займов -->
+                </div>
+            </section>
+
+            <!-- Безопасное получение займа -->
+            <section class="section-card">
+                <h3 class="section-title">Как безопасно получить деньги в долг</h3>
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Перед оформлением кредита проверьте наличие действующей лицензии у кредитора.
+                        <i class="fas fa-search"></i>
+                        <div>
+                            <strong>Проверяйте легальность кредитора</strong>
+                            <p>Удостоверьтесь, что организация зарегистрирована в официальных реестрах ЦБ РФ. Это можно сделать на сайте Банка России (cbr.ru) или через Государственный реестр МФО.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Ежемесячный платеж по кредиту не должен превышать половины свободных средств.
+                        <i class="fas fa-file-contract"></i>
+                        <div>
+                            <strong>Внимательно читайте договор</strong>
+                            <p>Перед подписанием внимательно изучите условия договора, включая мелкий шрифт. Обратите особое внимание на процентную ставку, полную стоимость кредита, штрафы за просрочку.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <strong>Оцените свои возможности по выплате</strong>
+                            <p>Рассчитайте, сможете ли вы вернуть долг с процентами в срок. Ежемесячный платеж не должен превышать 30% от вашего дохода.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Защищайте персональные данные</strong>
+                            <p>Не передавайте никому данные банковских карт, CVV-код, пароли от интернет-банкинга. Используйте только защищенные соединения при оформлении займа онлайн.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <div>
+                            <strong>Избегайте нелегальных кредиторов</strong>
+                            <p>Никогда не обращайтесь к "черным кредиторам" и частным лицам, предлагающим займы на сомнительных условиях. Это может привести к серьезным проблемам.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-receipt"></i>
+                        <div>
+                            <strong>Сохраняйте документы и квитанции</strong>
+                            <p>Храните договор, все квитанции и другие документы, подтверждающие выплаты, до полного погашения долга и некоторое время после.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
-        </main>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+            <!-- Частые вопросы -->
+            <section class="section-card">
+                <h3 class="section-title">Часто задаваемые вопросы</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как проверить МФО на легальность?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Для проверки легальности микрофинансовой организации необходимо:
+                            </p>
+                            <ol>
+                                <li>Посетить официальный сайт Банка России (cbr.ru)</li>
+                                <li>Перейти в раздел "Финансовые организации" → "Микрофинансовые организации"</li>
+                                <li>Ввести название МФО или ее регистрационный номер в поисковую строку</li>
+                            </ol>
+                            <p style="margin-top: 0.75rem;">
+                                Если организация есть в реестре, значит она работает легально. Также можно проверить МФО по номеру телефона горячей линии ЦБ РФ: 8-800-300-30-00.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что делать, если нечем платить займ?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Если возникли трудности с выплатой займа, следуйте этим шагам:
+                            </p>
+                            <ol>
+                                <li><strong>Свяжитесь с кредитором</strong> - сообщите о проблеме и попросите о реструктуризации долга</li>
+                                <li><strong>Запросите кредитные каникулы</strong> - временная отсрочка платежей</li>
+                                <li><strong>Рефинансируйте долг</strong> - оформите новый кредит с более выгодными условиями для погашения старого</li>
+                                <li><strong>Обратитесь за бесплатной юридической консультацией</strong> - многие регионы предоставляют такую услугу</li>
+                                <li>В крайнем случае, рассмотрите возможность <strong>банкротства</strong></li>
+                            </ol>
+                            <p style="margin-top: 0.75rem; color: var(--error);">
+                                <strong>Важно!</strong> Не игнорируйте проблему и не скрывайтесь от кредитора. Это только усугубит ситуацию.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Можно ли взять займ с плохой кредитной историей?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Да, получить заём с плохой кредитной историей возможно, но условия будут менее выгодными:
+                            </p>
+                            <ul>
+                                <li><strong>Банки</strong> скорее всего откажут или предложат высокую процентную ставку</li>
+                                <li><strong>МФО</strong> часто выдают займы клиентам с плохой кредитной историей, но под очень высокие проценты</li>
+                                <li><strong>Ломбарды</strong> не проверяют кредитную историю вообще, но требуют залог</li>
+                                <li><strong>КПК</strong> могут быть более лояльными, особенно если вы давно являетесь членом кооператива</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Помните, что частое обращение за займами может еще больше ухудшить вашу кредитную историю. Постарайтесь сначала исправить ее, своевременно погашая текущие обязательства.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что такое PDL-займы?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                PDL-займы (Pay Day Loan) или займы "до зарплаты" — это краткосрочные микрозаймы на небольшие суммы, которые выдаются МФО на срок от нескольких дней до месяца.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Особенности PDL-займов:</strong>
+                            </p>
+                            <ul>
+                                <li>Суммы от 1 000 до 30 000 рублей</li>
+                                <li>Срок от 7 до 30 дней</li>
+                                <li>Очень высокие процентные ставки (до 1% в день)</li>
+                                <li>Мгновенное одобрение и выдача денег</li>
+                                <li>Минимум документов (часто только паспорт)</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem; color: var(--warning);">
+                                <strong>Внимание!</strong> PDL-займы — самый дорогой вид займов. Их следует использовать только в крайних случаях и на очень короткий срок.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Закрываем все активные аккордеоны
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.classList.remove('active');
+                });
+                
+                // Если текущий аккордеон был неактивен, открываем его
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                }
             });
         });
 
-        // Задание 1: Расчет безопасной суммы кредита
-        function calculateSafeLoan() {
-            const income = parseFloat(document.getElementById('monthly-income').value);
-            const expenses = parseFloat(document.getElementById('monthly-expenses').value);
-            const resultElement = document.getElementById('safe-loan-result');
-
-            if (!isNaN(income) && !isNaN(expenses)) {
-                const freeMoney = income - expenses;
-                const safeLoan = freeMoney / 2;
-                resultElement.textContent = `💰 Безопасная сумма кредита: ${safeLoan.toFixed(2)} руб.`;
-                resultElement.style.color = 'green';
+        // Кнопка "наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
             } else {
-                resultElement.textContent = '❌ Пожалуйста, введите корректные значения.';
-                resultElement.style.color = 'red';
+                backToTopButton.classList.remove('visible');
             }
-        }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Прогресс-бар
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset / windowHeight * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Калькулятор сравнения займов
+        document.getElementById('calculate-comparison').addEventListener('click', () => {
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            const loanTerm = parseInt(document.getElementById('loan-term').value);
+            
+            // Проверка валидности введенных данных
+            if (isNaN(loanAmount) || isNaN(loanTerm) || loanAmount <= 0 || loanTerm <= 0) {
+                document.getElementById('comparison-result').innerHTML = 'Пожалуйста, заполните все поля корректно.';
+                document.getElementById('comparison-result').className = 'result error';
+                return;
+            }
+            
+            // Расчет для разных видов кредиторов
+            
+            // Банк (примерная ставка 15% годовых)
+            const bankRate = 15 / 100 / 365; // дневная ставка
+            const bankTotal = loanAmount * (1 + bankRate * loanTerm);
+            const bankOverpayment = bankTotal - loanAmount;
+            
+            // МФО (примерная ставка 1% в день, максимум)
+            const mfoRate = 0.01; // дневная ставка
+            const mfoTotal = loanAmount * (1 + mfoRate * loanTerm);
+            const mfoOverpayment = mfoTotal - loanAmount;
+            
+            // Ломбард (примерная ставка 0.3% в день)
+            const lombardRate = 0.003; // дневная ставка
+            const lombardTotal = loanAmount * (1 + lombardRate * loanTerm);
+            const lombardOverpayment = lombardTotal - loanAmount;
+            
+            // КПК (примерная ставка 25% годовых)
+            const kpkRate = 25 / 100 / 365; // дневная ставка
+            const kpkTotal = loanAmount * (1 + kpkRate * loanTerm);
+            const kpkOverpayment = kpkTotal - loanAmount;
+            
+            // Отображение результатов
+            document.getElementById('comparison-result').innerHTML = `
+                <p><strong>Сравнение стоимости займа в ${loanAmount.toLocaleString()} руб. на ${loanTerm} дней:</strong></p>
+                <p>🏦 <strong>Банк:</strong> Общая сумма к возврату: ${Math.round(bankTotal).toLocaleString()} руб. (переплата: ${Math.round(bankOverpayment).toLocaleString()} руб.)</p>
+                <p>🏢 <strong>МФО:</strong> Общая сумма к возврату: ${Math.round(mfoTotal).toLocaleString()} руб. (переплата: ${Math.round(mfoOverpayment).toLocaleString()} руб.)</p>
+                <p>💰 <strong>Ломбард:</strong> Общая сумма к возврату: ${Math.round(lombardTotal).toLocaleString()} руб. (переплата: ${Math.round(lombardOverpayment).toLocaleString()} руб.)</p>
+                <p>🤝 <strong>КПК:</strong> Общая сумма к возврату: ${Math.round(kpkTotal).toLocaleString()} руб. (переплата: ${Math.round(kpkOverpayment).toLocaleString()} руб.)</p>
+            `;
+            document.getElementById('comparison-result').className = 'result info';
+            
+            // Создание визуализации
+            const comparisonChart = document.getElementById('loan-comparison-chart');
+            comparisonChart.innerHTML = '';
+            
+            // Создаем карточки для каждого типа кредитора
+            const createLoanOption = (title, total, rate) => {
+                const option = document.createElement('div');
+                option.className = 'loan-option';
+                
+                const header = document.createElement('div');
+                header.className = 'loan-option-header';
+                header.textContent = title;
+                
+                const body = document.createElement('div');
+                body.className = 'loan-option-body';
+                
+                const totalEl = document.createElement('div');
+                totalEl.className = 'loan-option-total';
+                totalEl.textContent = `${Math.round(total).toLocaleString()} ₽`;
+                
+                const rateEl = document.createElement('div');
+                rateEl.className = 'loan-option-rate';
+                rateEl.textContent = rate;
+                
+                body.appendChild(totalEl);
+                body.appendChild(rateEl);
+                
+                option.appendChild(header);
+                option.appendChild(body);
+                
+                comparisonChart.appendChild(option);
+            };
+            
+            createLoanOption('Банк', bankTotal, '15% годовых');
+            createLoanOption('МФО', mfoTotal, '1% в день');
+            createLoanOption('Ломбард', lombardTotal, '0.3% в день');
+            createLoanOption('КПК', kpkTotal, '25% годовых');
+        });
     </script>
 </body>
 </html>

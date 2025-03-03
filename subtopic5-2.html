@@ -19,6 +19,8 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         * {
@@ -171,7 +173,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -190,7 +192,7 @@
             font-weight: 500;
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -233,6 +235,16 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -254,6 +266,148 @@
             font-size: 1.2rem;
         }
 
+        /* Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(248, 249, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Risk-Return Slider */
+        .risk-return-container {
+            padding: 1.5rem;
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .slider-fill {
+            position: absolute;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 5px;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .risk-return-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-items: center;
+        }
+
+        .instrument-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            opacity: 0.5;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .instrument-card.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .instrument-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress circle for risk-return */
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 0%, #e2e8f0 0%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .progress-circle::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .progress-value {
+            position: relative;
+            z-index: 2;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Quiz styles */
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .quiz-option input[type="checkbox"], 
+        .quiz-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
+
         /* Mobile Adaptation */
         @media (max-width: 768px) {
             .container {
@@ -267,7 +421,7 @@
             }
 
             .hero-image {
-                width: 30%;
+                width: 60%;
                 margin-top: 2rem;
             }
 
@@ -277,6 +431,14 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-return-display {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -288,6 +450,14 @@
             .features-item {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th, .comparison-table td {
+                padding: 0.75rem 0.5rem;
             }
         }
 
@@ -324,9 +494,50 @@
         .calculator input {
             margin-bottom: 1rem;
         }
+
+        /* Progress bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 9999;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
@@ -352,24 +563,87 @@
                         <i class="fas fa-file-contract"></i>
                         <div>
                             <strong>Облигации:</strong>
-                            <p>Долговые обязательства, дающие право на получение процентов.</p>
+                            <p>Долговые обязательства, дающие право на получение регулярных фиксированных процентов (купонов) и возврат номинальной стоимости в конце срока.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-chart-bar"></i>
                         <div>
                             <strong>Акции:</strong>
-                            <p>Участие в управлении компанией и получение дивидендов.</p>
+                            <p>Доля в уставном капитале компании, дающая право на участие в управлении компанией и получение части прибыли в виде дивидендов.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-handshake"></i>
                         <div>
                             <strong>Инвестиционные паи:</strong>
-                            <p>Доля в имуществе паевого инвестиционного фонда.</p>
+                            <p>Доля в имуществе паевого инвестиционного фонда (ПИФа), которым управляет профессиональная управляющая компания.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-exchange-alt"></i>
+                        <div>
+                            <strong>ETF (Биржевые фонды):</strong>
+                            <p>Фонды, торгующиеся на бирже и отслеживающие индексы, отрасли или товары, позволяющие инвестировать сразу в диверсифицированный портфель.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-university"></i>
+                        <div>
+                            <strong>Государственные облигации:</strong>
+                            <p>Надежные долговые ценные бумаги, выпускаемые государством для финансирования бюджетных расходов.</p>
                         </div>
                     </li>
                 </ul>
+            </section>
+
+            <!-- Сравнение ценных бумаг -->
+            <section class="section-card">
+                <h3 class="section-title">Сравнение основных ценных бумаг</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Характеристика</th>
+                                <th>Акции</th>
+                                <th>Облигации</th>
+                                <th>ПИФы/ETF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Риск</td>
+                                <td>Высокий</td>
+                                <td>Низкий - Средний</td>
+                                <td>Средний (зависит от фонда)</td>
+                            </tr>
+                            <tr>
+                                <td>Потенциальная доходность</td>
+                                <td>Высокая</td>
+                                <td>Ограниченная (фиксированная)</td>
+                                <td>Средняя - Высокая</td>
+                            </tr>
+                            <tr>
+                                <td>Права владельца</td>
+                                <td>Участие в управлении, дивиденды</td>
+                                <td>Возврат долга и проценты</td>
+                                <td>Доля в портфеле</td>
+                            </tr>
+                            <tr>
+                                <td>Срок инвестирования</td>
+                                <td>Обычно долгосрочный</td>
+                                <td>Фиксированный срок</td>
+                                <td>Любой</td>
+                            </tr>
+                            <tr>
+                                <td>Налогообложение</td>
+                                <td>НДФЛ на дивиденды и прирост стоимости</td>
+                                <td>НДФЛ на купонный доход</td>
+                                <td>НДФЛ при погашении/продаже</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- Механизмы инвестирования -->
@@ -384,7 +658,16 @@
                         <div class="accordion-content">
                             <p>
                                 Брокерский счет открывается через брокера или банк. 
-                                С него можно торговать ценными бумагами на бирже.
+                                С него можно торговать ценными бумагами на бирже. Для открытия брокерского счета необходимо:
+                            </p>
+                            <ol>
+                                <li>Выбрать брокерскую компанию или банк с брокерскими услугами</li>
+                                <li>Заполнить анкету (онлайн или в офисе)</li>
+                                <li>Пройти процедуру идентификации и подписать договор (часто возможно дистанционно)</li>
+                                <li>Пополнить счет и начать торговлю</li>
+                            </ol>
+                            <p>
+                                Через брокерский счет вы можете покупать и продавать различные ценные бумаги: акции, облигации, ETF и другие инструменты, доступные на бирже.
                             </p>
                         </div>
                     </div>
@@ -395,10 +678,154 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                ИИС предоставляет налоговые льготы и подходит для долгосрочных инвестиций.
+                                ИИС предоставляет налоговые льготы и подходит для долгосрочных инвестиций. Существует два типа налоговых вычетов на ИИС:
                             </p>
+                            <ul>
+                                <li><strong>Тип А:</strong> Вычет в размере 13% от суммы взносов на ИИС (до 52 000 руб. в год при взносе 400 000 руб.)</li>
+                                <li><strong>Тип Б:</strong> Освобождение от НДФЛ с дохода, полученного на ИИС</li>
+                            </ul>
+                            <p>
+                                Особенности ИИС:
+                            </p>
+                            <ul>
+                                <li>Минимальный срок владения — 3 года</li>
+                                <li>Максимальная сумма взносов — 1 млн руб. в год</li>
+                                <li>У одного человека может быть только один ИИС</li>
+                            </ul>
                         </div>
                     </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Паевые инвестиционные фонды (ПИФы)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                ПИФы — это коллективные инвестиции, где средства множества инвесторов объединяются и управляются профессиональными управляющими. Преимущества ПИФов:
+                            </p>
+                            <ul>
+                                <li>Профессиональное управление</li>
+                                <li>Диверсификация рисков</li>
+                                <li>Низкий порог входа</li>
+                                <li>Возможность выбора стратегии (консервативной, сбалансированной, агрессивной)</li>
+                            </ul>
+                            <p>
+                                Типы ПИФов:
+                            </p>
+                            <ul>
+                                <li><strong>Открытые</strong> — можно купить и продать в любой рабочий день</li>
+                                <li><strong>Интервальные</strong> — покупка и продажа в определенные периоды</li>
+                                <li><strong>Закрытые</strong> — фиксированный срок существования</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>ETF (Биржевые инвестиционные фонды)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                ETF — это фонды, акции которых торгуются на бирже как обычные акции. Они сочетают преимущества ПИФов (диверсификация) и акций (ликвидность). Особенности ETF:
+                            </p>
+                            <ul>
+                                <li>Высокая ликвидность — можно продать в любой торговый день</li>
+                                <li>Низкие издержки управления</li>
+                                <li>Прозрачная структура портфеля</li>
+                                <li>Возможность инвестировать в целые сектора экономики или индексы</li>
+                            </ul>
+                            <p>
+                                Популярные типы ETF:
+                            </p>
+                            <ul>
+                                <li>Индексные ETF (следуют за индексом, например, S&P 500)</li>
+                                <li>Отраслевые ETF (телекоммуникации, энергетика и т.д.)</li>
+                                <li>Товарные ETF (золото, нефть)</li>
+                                <li>Облигационные ETF</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Риск и доходность -->
+            <section class="section-card">
+                <h3 class="section-title">Соотношение риска и доходности</h3>
+                <p>
+                    В инвестировании действует принцип: чем выше потенциальная доходность, тем выше риск. Передвигайте ползунок, чтобы увидеть, какие инструменты соответствуют разным уровням риска и потенциальной доходности.
+                </p>
+                
+                <div class="risk-return-container">
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="50" class="risk-slider" id="riskSlider">
+                        <div class="slider">
+                            <div class="slider-fill" id="sliderFill"></div>
+                        </div>
+                        <div class="slider-labels">
+                            <span>Низкий риск</span>
+                            <span>Высокий риск</span>
+                        </div>
+                    </div>
+
+                    <div class="risk-return-display">
+                        <div class="instrument-card" data-min="0" data-max="20">
+                            <i class="fas fa-piggy-bank instrument-icon"></i>
+                            <h4>Банковские депозиты</h4>
+                            <div class="progress-circle" data-value="5">
+                                <span class="progress-value">5%</span>
+                            </div>
+                            <p>Минимальный риск, гарантированная, но низкая доходность</p>
+                        </div>
+                        
+                        <div class="instrument-card" data-min="15" data-max="35">
+                            <i class="fas fa-university instrument-icon"></i>
+                            <h4>Гос. облигации</h4>
+                            <div class="progress-circle" data-value="7">
+                                <span class="progress-value">7%</span>
+                            </div>
+                            <p>Низкий риск, стабильная доходность выше депозитов</p>
+                        </div>
+                        
+                        <div class="instrument-card" data-min="30" data-max="50">
+                            <i class="fas fa-file-contract instrument-icon"></i>
+                            <h4>Корп. облигации</h4>
+                            <div class="progress-circle" data-value="10">
+                                <span class="progress-value">10%</span>
+                            </div>
+                            <p>Средний риск, доходность зависит от надежности эмитента</p>
+                        </div>
+                        
+                        <div class="instrument-card" data-min="45" data-max="65">
+                            <i class="fas fa-handshake instrument-icon"></i>
+                            <h4>ETF и ПИФы</h4>
+                            <div class="progress-circle" data-value="12">
+                                <span class="progress-value">12%</span>
+                            </div>
+                            <p>Средний риск, умеренная доходность с диверсификацией</p>
+                        </div>
+                        
+                        <div class="instrument-card" data-min="60" data-max="80">
+                            <i class="fas fa-chart-line instrument-icon"></i>
+                            <h4>Акции "голубых фишек"</h4>
+                            <div class="progress-circle" data-value="15">
+                                <span class="progress-value">15%</span>
+                            </div>
+                            <p>Высокий риск, потенциально высокая доходность</p>
+                        </div>
+                        
+                        <div class="instrument-card" data-min="75" data-max="100">
+                            <i class="fas fa-rocket instrument-icon"></i>
+                            <h4>Акции роста</h4>
+                            <div class="progress-circle" data-value="20">
+                                <span class="progress-value">20%+</span>
+                            </div>
+                            <p>Очень высокий риск, потенциально максимальная доходность</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result info">
+                    <p>Помните: высокая доходность в прошлом не гарантирует высокую доходность в будущем. Диверсификация — ключевой принцип снижения рисков.</p>
                 </div>
             </section>
 
@@ -410,213 +837,364 @@
                     <div class="calculator">
                         <h4>Тест: Какие права дают акции?</h4>
                         <form id="stock-rights-test">
-                            <label>
-                                <input type="radio" name="stock-rights" value="voting">
-                                Право голоса
-                            </label><br>
-                            <label>
-                                <input type="radio" name="stock-rights" value="dividends">
-                                Получение дивидендов
-                            </label><br>
-                            <button type="button" onclick="checkStockRights()">Проверить</button>
-                            <p id="stock-rights-result" class="result"></p>
+                            <div class="quiz-option">
+                                <input type="checkbox" id="right1" name="stockRights" value="right1">
+                                <label for="right1">Право на получение дивидендов</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="checkbox" id="right2" name="stockRights" value="right2">
+                                <label for="right2">Право голоса на собрании акционеров</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="checkbox" id="right3" name="stockRights" value="right3">
+                                <label for="right3">Гарантированный возврат инвестиций</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="checkbox" id="right4" name="stockRights" value="right4">
+                                <label for="right4">Право на часть имущества при ликвидации компании</label>
+                            </div>
+                            <div class="quiz-option">
+                                <input type="checkbox" id="right5" name="stockRights" value="right5">
+                                <label for="right5">Право требовать погашения по номиналу</label>
+                            </div>
+                            <button type="button" id="check-rights">Проверить</button>
                         </form>
+                        <div id="rights-result" class="result"></div>
                     </div>
 
-                    <!-- Задача: Расчет дохода по облигациям -->
+                    <!-- Калькулятор доходности облигаций -->
                     <div class="calculator">
-                        <h4>Задача: Расчет дохода по облигациям</h4>
-                        <input type="number" id="bond-face-value" placeholder="Номинальная стоимость (руб)">
-                        <input type="number" id="bond-rate" placeholder="Процентная ставка (%)">
-                        <button type="button" onclick="calculateBondIncome()">Рассчитать</button>
-                        <p id="bond-income-result" class="result"></p>
+                        <h4>Калькулятор доходности облигаций</h4>
+                        <div class="form-group">
+                            <label for="bond-price">Цена облигации (в % от номинала):</label>
+                            <input type="number" id="bond-price" value="95">
+                        </div>
+                        <div class="form-group">
+                            <label for="bond-coupon">Купонная ставка (% годовых):</label>
+                            <input type="number" id="bond-coupon" value="8">
+                        </div>
+                        <div class="form-group">
+                            <label for="bond-term">Срок до погашения (лет):</label>
+                            <input type="number" id="bond-term" value="3">
+                        </div>
+                        <button type="button" id="calculate-yield">Рассчитать доходность</button>
+                        <div id="yield-result" class="result"></div>
                     </div>
+                </div>
 
-                    <!-- Тест: Что такое ИИС? -->
-                    <div class="calculator">
-                        <h4>Тест: Что такое ИИС?</h4>
-                        <form id="iis-test">
-                            <label>
-                                <input type="radio" name="iis-type" value="tax-benefits">
-                                Налоговые льготы
-                            </label><br>
-                            <label>
-                                <input type="radio" name="iis-type" value="short-term">
-                                Краткосрочные инвестиции
-                            </label><br>
-                            <button type="button" onclick="checkIISType()">Проверить</button>
-                            <p id="iis-test-result" class="result"></p>
-                        </form>
+                <!-- Калькулятор дивидендной доходности -->
+                <div class="calculator" style="margin-top: 1.5rem;">
+                    <h4>Калькулятор дивидендной доходности акций</h4>
+                    <div class="form-group">
+                        <label for="stock-price">Цена акции:</label>
+                        <input type="number" id="stock-price" value="100">
                     </div>
-
-                    <!-- Задача: Расчет налога на доход -->
-                    <div class="calculator">
-                        <h4>Задача: Расчет налога на доход</h4>
-                        <input type="number" id="income-amount" placeholder="Сумма дохода (руб)">
-                        <button type="button" onclick="calculateTax()">Рассчитать</button>
-                        <p id="tax-calculation-result" class="result"></p>
+                    <div class="form-group">
+                        <label for="dividend">Годовой дивиденд на акцию:</label>
+                        <input type="number" id="dividend" value="5">
                     </div>
+                    <button type="button" id="calculate-dividend-yield">Рассчитать доходность</button>
+                    <div id="dividend-result" class="result"></div>
                 </div>
             </section>
 
-            <!-- Полезные советы -->
+            <!-- Советы начинающим инвесторам -->
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
+                <h3 class="section-title">Советы начинающим инвесторам</h3>
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте надежность эмитента перед покупкой ценных бумаг.
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Начинайте с малого</strong>
+                            <p>Инвестируйте только те деньги, потерю которых вы можете себе позволить.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Диверсифицируйте портфель для снижения рисков.
+                        <i class="fas fa-book"></i>
+                        <div>
+                            <strong>Изучайте</strong>
+                            <p>Читайте книги, смотрите образовательные видео, посещайте вебинары по инвестированию.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Учитывайте налоговые льготы при открытии ИИС.
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <strong>Диверсифицируйте</strong>
+                            <p>Не вкладывайте все средства в один инструмент. Распределяйте инвестиции между разными активами.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Создайте финансовую подушку</strong>
+                            <p>Перед тем как инвестировать, создайте резерв на 3-6 месяцев расходов.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div>
+                            <strong>Инвестируйте на долгий срок</strong>
+                            <p>Рынок ценных бумаг волатилен в краткосрочной перспективе, но имеет тенденцию к росту в долгосрочной.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Реинвестируйте доходы</strong>
+                            <p>Для максимального эффекта сложного процента реинвестируйте полученные дивиденды и купоны.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
 
-            <!-- Практические задания -->
+            <!-- Часто задаваемые вопросы -->
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Какие права дают акции? -->
-                    <div class="calculator">
-                        <h4>Тест: Какие права дают акции?</h4>
-                        <form id="stock-rights-test">
-                            <label>
-                                <input type="radio" name="stock-rights" value="voting">
-                                Право голоса
-                            </label><br>
-                            <label>
-                                <input type="radio" name="stock-rights" value="dividends">
-                                Получение дивидендов
-                            </label><br>
-                            <button type="button" onclick="checkStockRights()">Проверить</button>
-                            <p id="stock-rights-result" class="result"></p>
-                        </form>
+                <h3 class="section-title">Часто задаваемые вопросы (FAQ)</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>С какой суммы можно начать инвестировать?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Начать инвестировать можно практически с любой суммы, даже с 1000 рублей. Многие брокеры не устанавливают минимальную сумму пополнения счета. Для покупки ценных бумаг достаточно средств на их приобретение.
+                            </p>
+                            <p>
+                                Но важно понимать, что:
+                            </p>
+                            <ul>
+                                <li>Для создания по-настоящему диверсифицированного портфеля понадобится более существенная сумма</li>
+                                <li>Комиссии могут "съедать" значительную часть дохода при работе с очень маленькими суммами</li>
+                            </ul>
+                            <p>
+                                Оптимально начинать с суммы от 30 000 рублей, но даже с меньшими суммами можно купить паи ETF или несколько недорогих акций.
+                            </p>
+                        </div>
                     </div>
-
-                    <!-- Задача: Расчет дохода по облигациям -->
-                    <div class="calculator">
-                        <h4>Задача: Расчет дохода по облигациям</h4>
-                        <input type="number" id="bond-face-value" placeholder="Номинальная стоимость (руб)">
-                        <input type="number" id="bond-rate" placeholder="Процентная ставка (%)">
-                        <button type="button" onclick="calculateBondIncome()">Рассчитать</button>
-                        <p id="bond-income-result" class="result"></p>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Какой брокерский счет выбрать — обычный или ИИС?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Выбор между обычным брокерским счетом и ИИС зависит от ваших целей:
+                            </p>
+                            <ul>
+                                <li><strong>Выбирайте ИИС, если:</strong>
+                                    <ul>
+                                        <li>Вы инвестируете на срок от 3 лет (минимальный срок ИИС)</li>
+                                        <li>Хотите получить налоговый вычет (тип А или Б)</li>
+                                        <li>Планируете вносить до 1 млн рублей в год</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Выбирайте обычный брокерский счет, если:</strong>
+                                    <ul>
+                                        <li>Вам нужна возможность вывода средств в любой момент без потери льгот</li>
+                                        <li>Планируете инвестировать суммы больше 1 млн рублей в год</li>
+                                        <li>Хотите иметь доступ к иностранным биржам и инструментам (некоторые недоступны на ИИС)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p>
+                                Многие инвесторы имеют и ИИС, и обычный брокерский счет одновременно.
+                            </p>
+                        </div>
                     </div>
-
-                    <!-- Тест: Что такое ИИС? -->
-                    <div class="calculator">
-                        <h4>Тест: Что такое ИИС?</h4>
-                        <form id="iis-test">
-                            <label>
-                                <input type="radio" name="iis-type" value="tax-benefits">
-                                Налоговые льготы
-                            </label><br>
-                            <label>
-                                <input type="radio" name="iis-type" value="short-term">
-                                Краткосрочные инвестиции
-                            </label><br>
-                            <button type="button" onclick="checkIISType()">Проверить</button>
-                            <p id="iis-test-result" class="result"></p>
-                        </form>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как облагаются налогом доходы от ценных бумаг?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Налогообложение доходов от ценных бумаг в России:
+                            </p>
+                            <ul>
+                                <li><strong>Доход от продажи ценных бумаг:</strong> НДФЛ 13% (для резидентов РФ) с разницы между ценой продажи и ценой покупки</li>
+                                <li><strong>Дивиденды по российским акциям:</strong> НДФЛ 13%</li>
+                                <li><strong>Купонный доход по облигациям:</strong> НДФЛ 13%, но есть исключения:
+                                    <ul>
+                                        <li>Купоны по государственным облигациям не облагаются НДФЛ</li>
+                                        <li>Купоны по корпоративным облигациям, выпущенным после 1 января 2017 года, не облагаются НДФЛ, если ставка купона не превышает ключевую ставку ЦБ РФ + 5%</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p>
+                                Важно: При использовании ИИС тип А вы можете вернуть 13% от внесенных средств, а при использовании ИИС тип Б — полностью освободиться от налога на доходы от операций на этом счете (при соблюдении условий).
+                            </p>
+                        </div>
                     </div>
-
-                    <!-- Задача: Расчет налога на доход -->
-                    <div class="calculator">
-                        <h4>Задача: Расчет налога на доход</h4>
-                        <input type="number" id="income-amount" placeholder="Сумма дохода (руб)">
-                        <button type="button" onclick="calculateTax()">Рассчитать</button>
-                        <p id="tax-calculation-result" class="result"></p>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как выбрать брокера?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>При выборе брокера обратите внимание на следующие факторы:</p>
+                            <ul>
+                                <li><strong>Надежность:</strong> Лицензия ЦБ РФ, срок работы на рынке, рейтинги</li>
+                                <li><strong>Тарифы:</strong> Комиссии за сделки, абонентская плата, плата за депозитарное обслуживание</li>
+                                <li><strong>Функциональность торговой платформы:</strong> Удобство интерфейса, аналитические инструменты</li>
+                                <li><strong>Доступные рынки и инструменты:</strong> Российский и зарубежные рынки, разнообразие инструментов</li>
+                                <li><strong>Качество поддержки:</strong> Скорость ответов, компетентность специалистов</li>
+                                <li><strong>Дополнительные сервисы:</strong> Аналитика, образовательные материалы, мобильное приложение</li>
+                            </ul>
+                            <p>
+                                Крупнейшие брокеры в России обычно предлагают схожие условия, поэтому часто выбор делается на основе удобства интерфейса и качества обслуживания.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
+    </div>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
-        // Проверка теста: Какие права дают акции?
-        function checkStockRights() {
-            const selected = document.querySelector('input[name="stock-rights"]:checked');
-            const resultElement = document.getElementById('stock-rights-result');
-
-            if (selected && selected.value === 'dividends') {
-                resultElement.textContent = '✅ Верно! Акции дают право на получение дивидендов.';
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '❌ Неверно. Акции дают право на получение дивидендов.';
-                resultElement.className = 'result error';
-            }
-        }
-
-        // Расчет дохода по облигациям
-        function calculateBondIncome() {
-            const faceValue = parseFloat(document.getElementById('bond-face-value').value);
-            const rate = parseFloat(document.getElementById('bond-rate').value);
-            const resultElement = document.getElementById('bond-income-result');
-
-            if (!isNaN(faceValue) && !isNaN(rate)) {
-                const income = (faceValue * rate) / 100;
-                resultElement.textContent = `💰 Доход по облигации: ${income.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                resultElement.className = 'result error';
-            }
-        }
-
-        // Проверка теста: Что такое ИИС?
-        function checkIISType() {
-            const selected = document.querySelector('input[name="iis-type"]:checked');
-            const resultElement = document.getElementById('iis-test-result');
-
-            if (selected && selected.value === 'tax-benefits') {
-                resultElement.textContent = '✅ Верно! ИИС предоставляет налоговые льготы.';
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '❌ Неверно. ИИС предоставляет налоговые льготы.';
-                resultElement.className = 'result error';
-            }
-        }
-
-        // Расчет налога на доход
-        function calculateTax() {
-            const income = parseFloat(document.getElementById('income-amount').value);
-            const resultElement = document.getElementById('tax-calculation-result');
-
-            if (!isNaN(income)) {
-                let tax = 0;
-                if (income <= 2400000) {
-                    tax = income * 0.13;
-                } else {
-                    tax = 2400000 * 0.13 + (income - 2400000) * 0.15;
-                }
-                resultElement.textContent = `💰 Налог на доход: ${tax.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректную сумму дохода.';
-                resultElement.className = 'result error';
-            }
-        }
-
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Закрываем все активные аккордеоны
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.classList.remove('active');
+                });
+                
+                // Если текущий аккордеон был неактивен, открываем его
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                }
             });
         });
+
+        // Кнопка "наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Прогресс-бар
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset / windowHeight * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Тест на права акционеров
+        document.getElementById('check-rights').addEventListener('click', () => {
+            const correctAnswers = ['right1', 'right2', 'right4'];
+            const selectedAnswers = Array.from(document.querySelectorAll('input[name="stockRights"]:checked')).map(input => input.value);
+            
+            let correctCount = 0;
+            let incorrectCount = 0;
+            
+            // Проверяем правильные ответы
+            selectedAnswers.forEach(answer => {
+                if (correctAnswers.includes(answer)) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+            
+            // Проверяем пропущенные правильные ответы
+            const missedCount = correctAnswers.length - correctCount;
+            
+            const resultElement = document.getElementById('rights-result');
+            
+            if (correctCount === correctAnswers.length && incorrectCount === 0) {
+                resultElement.textContent = 'Правильно! Акции дают право на дивиденды, голосование и часть имущества при ликвидации.';
+                resultElement.className = 'result success';
+            } else {
+                resultElement.textContent = `Не совсем верно. Правильных ответов: ${correctCount}, неправильных: ${incorrectCount}, пропущено: ${missedCount}.`;
+                resultElement.className = 'result error';
+            }
+        });
+
+        // Калькулятор доходности облигаций
+        document.getElementById('calculate-yield').addEventListener('click', () => {
+            const price = parseFloat(document.getElementById('bond-price').value);
+            const coupon = parseFloat(document.getElementById('bond-coupon').value);
+            const term = parseFloat(document.getElementById('bond-term').value);
+            
+            // Простая формула приблизительного расчета доходности к погашению
+            // YTM = (купон + (100 - цена) / срок) / ((100 + цена) / 2)
+            const ytm = (coupon + (100 - price) / term) / ((100 + price) / 2) * 100;
+            
+            const resultElement = document.getElementById('yield-result');
+            resultElement.textContent = `Приблизительная доходность к погашению: ${ytm.toFixed(2)}% годовых`;
+            resultElement.className = 'result success';
+        });
+
+        // Калькулятор дивидендной доходности
+        document.getElementById('calculate-dividend-yield').addEventListener('click', () => {
+            const price = parseFloat(document.getElementById('stock-price').value);
+            const dividend = parseFloat(document.getElementById('dividend').value);
+            
+            const yield = (dividend / price) * 100;
+            
+            const resultElement = document.getElementById('dividend-result');
+            resultElement.textContent = `Дивидендная доходность: ${yield.toFixed(2)}% годовых`;
+            resultElement.className = 'result success';
+        });
+
+        // Ползунок риск-доходность
+        const riskSlider = document.getElementById('riskSlider');
+        const sliderFill = document.getElementById('sliderFill');
+        const instrumentCards = document.querySelectorAll('.instrument-card');
+        
+        // Обновление прогресс-кругов
+        document.querySelectorAll('.progress-circle').forEach(circle => {
+            const value = parseInt(circle.getAttribute('data-value'));
+            circle.style.background = `conic-gradient(var(--primary) ${value * 5}%, #e2e8f0 0%)`;
+        });
+        
+        // Функция обновления отображения инструментов при движении ползунка
+        function updateInstruments() {
+            const riskValue = parseInt(riskSlider.value);
+            sliderFill.style.width = riskValue + '%';
+            
+            instrumentCards.forEach(card => {
+                const minRisk = parseInt(card.getAttribute('data-min'));
+                const maxRisk = parseInt(card.getAttribute('data-max'));
+                
+                if (riskValue >= minRisk && riskValue <= maxRisk) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+        
+        // Инициализация
+        updateInstruments();
+        
+        // Обработчик события изменения ползунка
+        riskSlider.addEventListener('input', updateInstruments);
     </script>
 </body>
 </html>

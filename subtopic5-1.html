@@ -19,6 +19,8 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         * {
@@ -171,7 +173,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -190,7 +192,7 @@
             font-weight: 500;
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -233,6 +235,16 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -267,7 +279,7 @@
             }
 
             .hero-image {
-                width: 30%;
+                width: 60%;
                 margin-top: 2rem;
             }
 
@@ -277,6 +289,10 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -324,9 +340,208 @@
         .calculator input {
             margin-bottom: 1rem;
         }
+
+        /* Progress bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 9999;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Chart Styles */
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            background: var(--gradient);
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease-in-out;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Investment Type Cards */
+        .investment-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .investment-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .investment-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .investment-icon i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .investment-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Risk meter styles */
+        .risk-meter-container {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .risk-meter {
+            height: 40px;
+            background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
+            border-radius: 20px;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .risk-slider {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 0;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: left 0.3s ease;
+        }
+
+        .risk-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .risk-labels span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(248, 249, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Quiz Styles */
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .quiz-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
@@ -343,38 +558,77 @@
             <!-- Зачем нужно инвестировать? -->
             <section class="section-card">
                 <h2 class="section-title">Зачем нужно инвестировать?</h2>
-                <p style="text-align: justify;">
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
                     Инвестирование — это вложение свободных средств в активы с целью получения дохода в будущем.
-                    Основные цели инвестирования:
+                    Основная цель инвестирования — заставить деньги работать и приносить доход. Кроме того, инвестирование помогает защититься от инфляции, которая постепенно снижает покупательную способность денег.
                 </p>
                 <ul class="features-list">
                     <li class="features-item">
                         <i class="fas fa-shield-alt"></i>
                         <div>
                             <strong>Формирование «подушки безопасности»:</strong>
-                            <p>Защита от потери доходов.</p>
+                            <p>Накопление средств для покрытия непредвиденных расходов (потеря работы, болезнь, срочный ремонт). Рекомендуемый размер — 3-6 месячных расходов.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-coins"></i>
                         <div>
                             <strong>Накопление на крупные покупки:</strong>
-                            <p>Создание капитала для важных целей.</p>
+                            <p>Создание капитала для важных целей (покупка жилья, автомобиля, образование детей). Благодаря инвестициям вы достигнете этих целей быстрее, чем просто откладывая деньги.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-chart-line"></i>
                         <div>
                             <strong>Пассивный доход:</strong>
-                            <p>Дополнительный источник прибыли.</p>
+                            <p>Создание дополнительного источника дохода, не зависящего от вашей основной работы. В перспективе пассивный доход может обеспечить финансовую независимость.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <div>
+                            <strong>Образование детей:</strong>
+                            <p>Заблаговременное накопление средств на получение качественного образования для детей, с учетом постоянного роста стоимости обучения.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-umbrella"></i>
+                        <div>
+                            <strong>Обеспечение пенсии:</strong>
+                            <p>Создание дополнительного источника дохода к государственной пенсии для обеспечения достойного уровня жизни в старости.</p>
                         </div>
                     </li>
                 </ul>
             </section>
 
+            <!-- Правило 72 -->
+            <section class="section-card">
+                <h2 class="section-title">Правило 72 - сила сложного процента</h2>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    Правило 72 позволяет быстро оценить, за какой срок ваши инвестиции удвоятся при определенной годовой доходности. Для этого нужно разделить число 72 на годовую процентную ставку.
+                </p>
+                <div class="calculator">
+                    <h4>Калькулятор удвоения инвестиций</h4>
+                    <div class="form-group">
+                        <label for="interest-rate">Годовая доходность (%):</label>
+                        <input type="number" id="interest-rate" min="1" max="100" value="8">
+                    </div>
+                    <button id="calculate-doubling">Рассчитать время удвоения</button>
+                    <div id="doubling-result" class="result"></div>
+                </div>
+                
+                <div class="info result" style="margin-top: 1.5rem;">
+                    <p>Помните, что чем выше доходность, тем выше риск потери капитала. Важно находить баланс между риском и доходностью!</p>
+                </div>
+            </section>
+
             <!-- Виды инвестиций -->
             <section class="section-card">
                 <h2 class="section-title">Виды инвестиций</h2>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    Существует множество способов инвестирования денег. Выбор конкретного инструмента зависит от ваших финансовых целей, отношения к риску и горизонта инвестирования.
+                </p>
+                
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -383,8 +637,23 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                Вложения в имущество: недвижимость, бизнес, предметы искусства.
+                                Реальные инвестиции — это вложения в материальные активы. К ним относятся:
                             </p>
+                            <ul>
+                                <li><strong>Недвижимость</strong> — покупка квартир, домов, коммерческих помещений для получения арендного дохода или последующей перепродажи.</li>
+                                <li><strong>Бизнес</strong> — создание собственного предприятия или покупка доли в существующем бизнесе.</li>
+                                <li><strong>Предметы искусства и коллекционирования</strong> — приобретение картин, антиквариата, редких монет, марок, которые могут вырасти в цене.</li>
+                                <li><strong>Драгоценные металлы</strong> — покупка золота, серебра, платины в слитках или монетах.</li>
+                            </ul>
+                            <p>
+                                Особенности реальных инвестиций:
+                            </p>
+                            <ul>
+                                <li>Обычно требуют значительного первоначального капитала</li>
+                                <li>Имеют низкую ликвидность (долго продаются)</li>
+                                <li>Часто требуют дополнительных затрат на содержание и обслуживание</li>
+                                <li>Могут приносить как текущий доход (аренда), так и доход от роста стоимости</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -392,175 +661,557 @@
                             <span>Финансовые инвестиции</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
-                        
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span>Венчурные инвестиции</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <p>
-                                    Высокорискованные вложения в новые проекты или стартапы.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span>Интеллектуальные инвестиции</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="accordion-content">
-                                <p>
-                                    Вложения в образование, науку, искусство и другие интеллектуальные активы.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-        
-                <!-- Факторы, определяющие ваши инвестиции -->
-                <section class="section-card">
-                    <h2 class="section-title">Факторы, определяющие ваши инвестиции</h2>
-                    <ul class="features-list">
-                        <li class="features-item">
-                            <i class="fas fa-bullseye"></i>
-                            <div>
-                                <strong>Цели:</strong>
-                                <p>Четкое понимание, зачем вы инвестируете.</p>
-                            </div>
-                        </li>
-                        <li class="features-item">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <strong>Срок:</strong>
-                                <p>На какой период вы готовы вложить средства.</p>
-                            </div>
-                        </li>
-                        <li class="features-item">
-                            <i class="fas fa-hand-holding-usd"></i>
-                            <div>
-                                <strong>Ликвидность:</strong>
-                                <p>Возможность быстро конвертировать активы в деньги.</p>
-                            </div>
-                        </li>
-                        <li class="features-item">
-                            <i class="fas fa-chart-bar"></i>
-                            <div>
-                                <strong>Доходность:</strong>
-                                <p>Ожидаемая прибыль от инвестиций.</p>
-                            </div>
-                        </li>
-                        <li class="features-item">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <div>
-                                <strong>Риск:</strong>
-                                <p>Вероятность потери капитала.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </section>
-        
-                <!-- Практические задания -->
-                <section class="section-card">
-                    <h3 class="section-title">Практические задания</h3>
-                    <div class="interactive-grid">
-                        <!-- Тест: Какие бывают инвестиции? -->
-                        <div class="calculator">
-                            <h4>Тест: Какие бывают инвестиции?</h4>
-                            <form id="investment-types-test">
-                                <label>
-                                    <input type="radio" name="investment-type" value="real">
-                                    Реальные инвестиции
-                                </label><br>
-                                <label>
-                                    <input type="radio" name="investment-type" value="financial">
-                                    Финансовые инвестиции
-                                </label><br>
-                                <button type="button" onclick="checkInvestmentType()">Проверить</button>
-                                <p id="investment-type-result" class="result"></p>
-                            </form>
-                        </div>
-        
-                        <!-- Калькулятор доходности -->
-                        <div class="calculator">
-                            <h4>Калькулятор доходности</h4>
-                            <input type="number" id="initial-investment" placeholder="Начальная сумма (руб)">
-                            <input type="number" id="annual-return" placeholder="Годовая доходность (%)">
-                            <input type="number" id="years" placeholder="Срок (годы)">
-                            <button type="button" onclick="calculateReturn()">Рассчитать</button>
-                            <p id="return-result" class="result"></p>
+                        <div class="accordion-content">
+                            <p>
+                                Финансовые инвестиции — это вложения в финансовые инструменты. К ним относятся:
+                            </p>
+                            <ul>
+                                <li><strong>Банковские вклады</strong> — самый простой и надежный способ инвестирования с фиксированной, но небольшой доходностью.</li>
+                                <li><strong>Акции</strong> — доли в капитале компаний, дающие право на получение дивидендов и рост стоимости.</li>
+                                <li><strong>Облигации</strong> — долговые ценные бумаги, по которым эмитент обязуется выплатить определенный процент и вернуть номинал в конце срока.</li>
+                                <li><strong>Паевые инвестиционные фонды (ПИФы)</strong> — коллективные инвестиции под управлением профессиональных управляющих.</li>
+                                <li><strong>Биржевые инвестиционные фонды (ETF)</strong> — фонды, торгующиеся на бирже и отслеживающие различные индексы.</li>
+                                <li><strong>Страховые продукты с инвестиционной составляющей</strong> — накопительное страхование жизни, инвестиционное страхование жизни.</li>
+                            </ul>
+                            <p>
+                                Особенности финансовых инвестиций:
+                            </p>
+                            <ul>
+                                <li>Обычно требуют меньше капитала для старта</li>
+                                <li>Имеют высокую ликвидность (быстро покупаются и продаются)</li>
+                                <li>Не требуют дополнительных затрат на содержание</li>
+                                <li>Управление может осуществляться удаленно</li>
+                            </ul>
                         </div>
                     </div>
-                </section>
-        
-                <!-- Полезные советы -->
-                <section class="section-card">
-                    <h3 class="section-title">Полезные советы</h3>
-                    <ul class="tips-list">
-                        <li class="tips-item">
-                            <i class="fas fa-info-circle"></i>
-                            Определяйте цели инвестиций заранее.
-                        </li>
-                        <li class="tips-item">
-                            <i class="fas fa-info-circle"></i>
-                            Диверсифицируйте портфель для снижения рисков.
-                        </li>
-                        <li class="tips-item">
-                            <i class="fas fa-info-circle"></i>
-                            Учитывайте уровень инфляции при расчете доходности.
-                        </li>
-                    </ul>
-                </section>
-            </main>
-        
-            <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-                <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-            </footer>
-        </div>
-        
-        <script>
-            // Аккордеон
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const content = header.nextElementSibling;
-                    const icon = header.querySelector('i');
-                    header.classList.toggle('active');
-                    content.classList.toggle('active');
-                    icon.classList.toggle('fa-chevron-up');
-                    icon.classList.toggle('fa-chevron-down');
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Венчурные инвестиции</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Венчурные инвестиции — это высокорискованные вложения в новые проекты или стартапы, находящиеся на ранних стадиях развития.
+                            </p>
+                            <p>
+                                Особенности венчурных инвестиций:
+                            </p>
+                            <ul>
+                                <li>Очень высокий риск потери всех вложенных средств (до 90% стартапов терпят неудачу)</li>
+                                <li>Возможность сверхвысокой доходности (10x, 100x и более от первоначальных инвестиций)</li>
+                                <li>Длительный срок инвестирования (5-10 лет)</li>
+                                <li>Низкая ликвидность (сложно продать долю до выхода на IPO или продажи компании)</li>
+                                <li>Часто требуют активного участия инвестора в управлении компанией</li>
+                            </ul>
+                            <p>
+                                Венчурные инвестиции подходят только опытным инвесторам, готовым к высоким рискам и имеющим достаточную финансовую подушку безопасности.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Интеллектуальные инвестиции</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Интеллектуальные инвестиции — это вложения в развитие человеческого капитала, знаний и навыков. К ним относятся:
+                            </p>
+                            <ul>
+                                <li><strong>Образование</strong> — получение дополнительного образования, прохождение курсов, тренингов для повышения квалификации.</li>
+                                <li><strong>Здоровье</strong> — затраты на поддержание здоровья, профилактические медицинские осмотры, занятия спортом.</li>
+                                <li><strong>Самообразование</strong> — покупка книг, подписки на образовательные ресурсы, участие в конференциях.</li>
+                                <li><strong>Нетворкинг</strong> — построение профессиональных связей, участие в деловых сообществах.</li>
+                            </ul>
+                            <p>
+                                Особенности интеллектуальных инвестиций:
+                            </p>
+                            <ul>
+                                <li>Трудно измерить конкретную финансовую отдачу</li>
+                                <li>Результат обычно проявляется в долгосрочной перспективе</li>
+                                <li>Повышают вашу конкурентоспособность на рынке труда</li>
+                                <li>Могут привести к карьерному росту и увеличению дохода</li>
+                            </ul>
+                            <p>
+                                Интеллектуальные инвестиции часто дают самую высокую отдачу в долгосрочной перспективе.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Инвестиционные профили -->
+            <section class="section-card">
+                <h2 class="section-title">Инвестиционные профили</h2>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    В зависимости от отношения к риску инвесторы делятся на три основных типа. Определите, какой профиль больше подходит вам.
+                </p>
+                
+                <div class="risk-meter-container">
+                    <h3 style="margin-bottom: 1rem;">Ваше отношение к риску</h3>
+                    <p>Передвиньте ползунок, чтобы определить свой инвестиционный профиль:</p>
+                    
+                    <div class="risk-meter">
+                        <div class="risk-slider" id="risk-slider"></div>
+                    </div>
+                    
+                    <div class="risk-labels">
+                        <span>Консервативный</span>
+                        <span>Умеренный</span>
+                        <span>Агрессивный</span>
+                    </div>
+                    
+                    <div id="risk-profile-description" class="result info" style="margin-top: 1.5rem;">
+                        <p><strong>Консервативный профиль:</strong> Главная цель — сохранение капитала. Предпочитаете надежные инструменты с низким, но стабильным доходом.</p>
+                    </div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Профиль</th>
+                            <th>Отношение к риску</th>
+                            <th>Горизонт инвестирования</th>
+                            <th>Рекомендуемые инструменты</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Консервативный</td>
+                            <td>Низкое</td>
+                            <td>1-3 года</td>
+                            <td>Депозиты, ОФЗ, корпоративные облигации высокого кредитного качества</td>
+                        </tr>
+                        <tr>
+                            <td>Умеренный</td>
+                            <td>Среднее</td>
+                            <td>3-5 лет</td>
+                            <td>Сбалансированный портфель из облигаций и акций (60/40), ПИФы, ETF</td>
+                        </tr>
+                        <tr>
+                            <td>Агрессивный</td>
+                            <td>Высокое</td>
+                            <td>Более 5 лет</td>
+                            <td>Преимущественно акции, высокодоходные облигации, структурные продукты</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Принципы успешного инвестирования -->
+            <section class="section-card">
+                <h2 class="section-title">Принципы успешного инвестирования</h2>
+                <ul class="tips-list">
+                    <li class="tips-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <strong>Диверсификация</strong>
+                            <p>Не вкладывайте все средства в один актив. Распределяйте инвестиции между разными классами активов и инструментами.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div>
+                            <strong>Долгосрочный подход</strong>
+                            <p>Инвестирование — это марафон, а не спринт. Чем дольше срок инвестирования, тем выше потенциальная доходность.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-coins"></i>
+                        <div>
+                            <strong>Регулярность</strong>
+                            <p>Инвестируйте регулярно, независимо от состояния рынка. Это позволяет усреднить цену покупки активов.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Реинвестирование дохода</strong>
+                            <p>Реинвестируйте полученные дивиденды, купоны и другие доходы. Это ускорит рост вашего капитала за счет сложного процента.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-book"></i>
+                        <div>
+                            <strong>Финансовая грамотность</strong>
+                            <p>Постоянно повышайте свои знания о финансах и инвестициях. Это поможет принимать более осознанные решения.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Защита от рисков</strong>
+                            <p>Инвестируйте только свободные средства, после формирования резервного фонда. Защищайте основной капитал от возможных потерь.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Калькулятор сложного процента -->
+            <section class="section-card">
+                <h2 class="section-title">Калькулятор сложного процента</h2>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    Сложный процент — одна из самых мощных сил в инвестировании. Он позволяет получать доход не только на первоначальные вложения, но и на накопленные проценты. Рассчитайте, какую сумму вы можете накопить, регулярно инвестируя и реинвестируя доход.
+                </p>
+                
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="initial-amount">Начальная сумма (руб.):</label>
+                        <input type="number" id="initial-amount" min="0" value="10000">
+                    </div>
+                    <div class="form-group">
+                        <label for="monthly-contribution">Ежемесячный взнос (руб.):</label>
+                        <input type="number" id="monthly-contribution" min="0" value="5000">
+                    </div>
+                    <div class="form-group">
+                        <label for="annual-rate">Годовая ставка (%):</label>
+                        <input type="number" id="annual-rate" min="1" max="100" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="years">Срок (лет):</label>
+                        <input type="number" id="years" min="1" max="50" value="10">
+                    </div>
+                    <button id="calculate-compound">Рассчитать</button>
+                    <div id="compound-result" class="result"></div>
+                </div>
+                
+                <div class="chart-container" id="compound-chart">
+                    <!-- Здесь будет график роста инвестиций -->
+                </div>
+            </section>
+
+            <!-- Тест на знание основ инвестирования -->
+            <section class="section-card">
+                <h2 class="section-title">Проверьте свои знания</h2>
+                <div class="calculator">
+                    <h4>Тест: Основы инвестирования</h4>
+                    
+                    <div class="form-group">
+                        <p><strong>1. Что из перечисленного не является целью инвестирования?</strong></p>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1-a" name="q1" value="a">
+                            <label for="q1-a">Получение пассивного дохода</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1-b" name="q1" value="b">
+                            <label for="q1-b">Защита от инфляции</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1-c" name="q1" value="c">
+                            <label for="q1-c">Быстрое обогащение</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q1-d" name="q1" value="d">
+                            <label for="q1-d">Накопление на пенсию</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <p><strong>2. Какой принцип инвестирования помогает снизить риски?</strong></p>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2-a" name="q2" value="a">
+                            <label for="q2-a">Вложение всех средств в один перспективный актив</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2-b" name="q2" value="b">
+                            <label for="q2-b">Диверсификация</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2-c" name="q2" value="c">
+                            <label for="q2-c">Частая покупка и продажа активов</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q2-d" name="q2" value="d">
+                            <label for="q2-d">Инвестирование только в активы с высокой доходностью</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <p><strong>3. Какой тип инвестора предпочитает менее рискованные инструменты?</strong></p>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3-a" name="q3" value="a">
+                            <label for="q3-a">Агрессивный</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3-b" name="q3" value="b">
+                            <label for="q3-b">Умеренный</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3-c" name="q3" value="c">
+                            <label for="q3-c">Консервативный</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" id="q3-d" name="q3" value="d">
+                            <label for="q3-d">Спекулятивный</label>
+                        </div>
+                    </div>
+                    
+                    <button id="check-quiz">Проверить ответы</button>
+                    <div id="quiz-result" class="result"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script>
+        // Аккордеон
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Закрываем все активные аккордеоны
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
                 });
+                
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.classList.remove('active');
+                });
+                
+                // Если текущий аккордеон был неактивен, открываем его
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                }
             });
+        });
+
+        // Кнопка "наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
         
-            // Тест: Какие бывают инвестиции?
-            function checkInvestmentType() {
-                const selected = document.querySelector('input[name="investment-type"]:checked');
-                const resultElement = document.getElementById('investment-type-result');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
         
-                if (selected && selected.value === 'financial') {
-                    resultElement.textContent = '✅ Верно! Мы рассматриваем финансовые инвестиции.';
-                    resultElement.className = 'result success';
-                } else {
-                    resultElement.textContent = '❌ Неверно. В данном разделе мы говорим о финансовых инвестициях.';
-                    resultElement.className = 'result error';
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Прогресс-бар
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset / windowHeight * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Калькулятор правила 72
+        document.getElementById('calculate-doubling').addEventListener('click', () => {
+            const rate = parseFloat(document.getElementById('interest-rate').value);
+            
+            if (rate <= 0) {
+                document.getElementById('doubling-result').innerHTML = 'Пожалуйста, введите положительное значение.';
+                document.getElementById('doubling-result').className = 'result error';
+                return;
+            }
+            
+            const years = Math.round(72 / rate * 10) / 10; // Округляем до одного знака после запятой
+            
+            document.getElementById('doubling-result').innerHTML = `При доходности ${rate}% годовых ваши инвестиции удвоятся примерно через ${years} лет.`;
+            document.getElementById('doubling-result').className = 'result success';
+        });
+
+        // Слайдер риск-профиля
+        const riskSlider = document.getElementById('risk-slider');
+        const riskDescription = document.getElementById('risk-profile-description');
+        
+        // Обработка перетаскивания слайдера
+        let isDragging = false;
+        
+        riskSlider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const riskMeter = document.querySelector('.risk-meter');
+            const rect = riskMeter.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            
+            // Ограничиваем перемещение слайдера в пределах шкалы риска
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
+            
+            const percentage = (x / rect.width) * 100;
+            updateRiskProfile(percentage);
+        });
+
+        // Обработка нажатия на шкалу риска
+        document.querySelector('.risk-meter').addEventListener('click', (e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = (x / rect.width) * 100;
+            updateRiskProfile(percentage);
+        });
+
+        // Обновление профиля риска
+        function updateRiskProfile(percentage) {
+            riskSlider.style.left = `${percentage}%`;
+            
+            if (percentage < 33) {
+                riskDescription.innerHTML = `<p><strong>Консервативный профиль:</strong> Главная цель — сохранение капитала. Предпочитаете надежные инструменты с низким, но стабильным доходом.</p>`;
+            } else if (percentage < 66) {
+                riskDescription.innerHTML = `<p><strong>Умеренный профиль:</strong> Стремитесь к балансу между сохранностью и доходностью. Готовы принять умеренный риск для получения дохода выше инфляции.</p>`;
+            } else {
+                riskDescription.innerHTML = `<p><strong>Агрессивный профиль:</strong> Нацелены на максимальную доходность. Готовы принимать высокий риск ради потенциально высокой прибыли.</p>`;
+            }
+        }
+
+        // Калькулятор сложного процента
+        document.getElementById('calculate-compound').addEventListener('click', () => {
+            const initialAmount = parseFloat(document.getElementById('initial-amount').value);
+            const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value);
+            const annualRate = parseFloat(document.getElementById('annual-rate').value);
+            const years = parseInt(document.getElementById('years').value);
+            
+            if (isNaN(initialAmount) || isNaN(monthlyContribution) || isNaN(annualRate) || isNaN(years)) {
+                document.getElementById('compound-result').innerHTML = 'Пожалуйста, заполните все поля корректно.';
+                document.getElementById('compound-result').className = 'result error';
+                return;
+            }
+            
+            const monthlyRate = annualRate / 100 / 12;
+            const totalMonths = years * 12;
+            
+            let futureValue = initialAmount;
+            let yearlyValues = [initialAmount];
+            
+            for (let i = 1; i <= totalMonths; i++) {
+                futureValue = (futureValue + monthlyContribution) * (1 + monthlyRate);
+                
+                // Сохраняем значения по годам для графика
+                if (i % 12 === 0) {
+                    yearlyValues.push(Math.round(futureValue));
                 }
             }
-        
-            // Калькулятор доходности
-            function calculateReturn() {
-                const initialInvestment = parseFloat(document.getElementById('initial-investment').value);
-                const annualReturn = parseFloat(document.getElementById('annual-return').value);
-                const years = parseFloat(document.getElementById('years').value);
-                const resultElement = document.getElementById('return-result');
-        
-                if (!isNaN(initialInvestment) && !isNaN(annualReturn) && !isNaN(years)) {
-                    const finalAmount = initialInvestment * Math.pow(1 + annualReturn / 100, years);
-                    resultElement.textContent = `💰 Итоговая сумма: ${finalAmount.toFixed(2)} руб.`;
-                    resultElement.className = 'result success';
+            
+            const totalContributions = initialAmount + (monthlyContribution * totalMonths);
+            const totalInterest = futureValue - totalContributions;
+            
+            document.getElementById('compound-result').innerHTML = `
+                <p>Начальная сумма: ${initialAmount.toLocaleString()} руб.</p>
+                <p>Ежемесячные взносы: ${monthlyContribution.toLocaleString()} руб.</p>
+                <p>Итоговая сумма через ${years} лет: ${Math.round(futureValue).toLocaleString()} руб.</p>
+                <p>Общая сумма взносов: ${Math.round(totalContributions).toLocaleString()} руб.</p>
+                <p>Заработано на процентах: ${Math.round(totalInterest).toLocaleString()} руб.</p>
+            `;
+            document.getElementById('compound-result').className = 'result success';
+            
+            // Отображение графика роста инвестиций
+            renderCompoundChart(yearlyValues, years);
+        });
+
+        // Функция для отображения графика роста инвестиций
+        function renderCompoundChart(yearlyValues, years) {
+            const chartContainer = document.getElementById('compound-chart');
+            chartContainer.innerHTML = '';
+            
+            const maxValue = Math.max(...yearlyValues);
+            const chartHeight = 250;
+            
+            // Создаем столбцы для каждого года
+            for (let i = 0; i < yearlyValues.length; i++) {
+                const barHeight = (yearlyValues[i] / maxValue) * chartHeight;
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = '0'; // Начальная высота для анимации
+                bar.style.left = `${i * (100 / (yearlyValues.length - 1))}%`;
+                bar.style.transform = 'translateX(-50%)';
+                
+                // Добавляем подпись со значением
+                const valueLabel = document.createElement('div');
+                valueLabel.style.position = 'absolute';
+                valueLabel.style.bottom = `${barHeight + 10}px`;
+                valueLabel.style.left = '50%';
+                valueLabel.style.transform = 'translateX(-50%)';
+                valueLabel.style.fontSize = '0.8rem';
+                valueLabel.style.fontWeight = '500';
+                valueLabel.textContent = yearlyValues[i].toLocaleString();
+                
+                bar.appendChild(valueLabel);
+                chartContainer.appendChild(bar);
+                
+                // Анимация роста столбцов
+                setTimeout(() => {
+                    bar.style.height = `${barHeight}px`;
+                }, 100 * i);
+            }
+            
+            // Добавляем подписи лет
+            const chartLabels = document.createElement('div');
+            chartLabels.className = 'chart-labels';
+            
+            for (let i = 0; i <= years; i++) {
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = `Год ${i}`;
+                chartLabels.appendChild(label);
+            }
+            
+            chartContainer.appendChild(chartLabels);
+        }
+
+        // Проверка ответов в тесте
+        document.getElementById('check-quiz').addEventListener('click', () => {
+            // Правильные ответы: 1-c, 2-b, 3-c
+            const correctAnswers = {
+                q1: 'c',
+                q2: 'b',
+                q3: 'c'
+            };
+            
+            let score = 0;
+            let feedback = '';
+            
+            // Проверяем каждый вопрос
+            for (const question in correctAnswers) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                
+                if (!selectedAnswer) {
+                    feedback += `<p>Вопрос ${question.slice(1)}: Не выбран ответ</p>`;
+                    continue;
+                }
+                
+                if (selectedAnswer.value === correctAnswers[question]) {
+                    score++;
+                    feedback += `<p>Вопрос ${question.slice(1)}: Правильно!</p>`;
                 } else {
-                    resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                    resultElement.className = 'result error';
+                    feedback += `<p>Вопрос ${question.slice(1)}: Неправильно.</p>`;
                 }
             }
-        </script>
-        </body>
-        </html>
+            
+            // Отображаем результат
+            const resultElement = document.getElementById('quiz-result');
+            resultElement.innerHTML = `<p>Ваш результат: ${score} из 3</p>${feedback}`;
+            
+            if (score === 3) {
+                resultElement.className = 'result success';
+            } else if (score >= 1) {
+                resultElement.className = 'result warning';
+            } else {
+                resultElement.className = 'result error';
+            }
+        });
+
+        // Инициализация
+        // Установка начального положения слайдера риска
+        updateRiskProfile(0);
+    </script>
+</body>
+</html>

@@ -19,6 +19,8 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         * {
@@ -171,7 +173,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -191,7 +193,8 @@
         }
 
         input[type="number"],
-        input[type="text"] {
+        input[type="text"],
+        select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -234,6 +237,16 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -255,6 +268,120 @@
             font-size: 1.2rem;
         }
 
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(248, 249, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 1000;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Interest Visualization */
+        .interest-visualization {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .interest-bar {
+            background: #e2e8f0;
+            height: 300px;
+            width: 80px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .principal {
+            background: var(--primary);
+            height: 70%;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            transition: height 0.5s ease;
+        }
+
+        .interest {
+            background: var(--accent);
+            height: 30%;
+            width: 100%;
+            position: absolute;
+            bottom: 70%;
+            transition: height 0.5s ease;
+        }
+
+        .bar-label {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         /* Mobile Adaptation */
         @media (max-width: 768px) {
             .container {
@@ -268,7 +395,7 @@
             }
 
             .hero-image {
-                width: 30%;
+                width: 60%;
                 margin-top: 2rem;
             }
 
@@ -278,6 +405,18 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+            
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.75rem 0.5rem;
             }
         }
 
@@ -290,7 +429,12 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            .interest-bar {
+                width: 60px;
+            }
         }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -320,419 +464,650 @@
         .calculator input {
             margin-bottom: 1rem;
         }
-        :root {
-            --primary: #6366f1;
-            --secondary: #4f46e5;
-            --accent: #818cf8;
-            --background: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
-            --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
-            background: var(--background);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .hero-section {
-            background: var(--gradient);
-            padding: 4rem 2rem;
-            border-radius: 2rem;
-            margin: 2rem 0;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .hero-content {
-            max-width: 600px;
-        }
-
-        .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-description {
-            font-size: 1.2rem;
-            opacity: 0.95;
-        }
-
-        .hero-image {
-            width: 400px;
-            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .section-card {
-            background: var(--glass);
-            padding: 2rem;
-            border-radius: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .section-title {
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -0.5rem;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--primary);
-        }
-
-        .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
-            overflow: hidden;
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-
-        .accordion-header {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
-        }
-
-        .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
-        }
-
-        .accordion-content {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .accordion-content.active {
-            padding: 1.5rem;
-            max-height: 1000px;
-        }
-
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calculator h4 {
-            margin-bottom: 1rem;
-        }
-
-        .calculator input {
-            margin-bottom: 1rem;
-        }
-
-        .result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-        }
-
-        .success {
-            background: #d1fae5;
-            color: #10b981;
-        }
-
-        .error {
-            background: #fee2e2;
-            color: #ef4444;
-        }
-
-        .tips-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tips-item {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .tips-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .hero-section {
-                flex-direction: column;
-                text-align: center;
-                padding: 2rem 1rem;
-            }
-
-            .hero-image {
-                width: 80%;
-                margin-top: 2rem;
-            }
-
-            .section-card {
-                padding: 1.5rem;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
+        <!-- Hero Section -->
         <header class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title">4.1. Кредит и заем – в чем разница</h1>
-                <p class="hero-description">Узнайте, когда кредит становится благом, и как правильно его использовать.</p>
+                <p class="hero-description">
+                    Узнайте о ключевых отличиях кредита и займа, и когда заемные средства могут принести пользу, а не стать финансовым бременем.
+                </p>
             </div>
-            <img src="loan.png" alt="Кредит и заем" class="hero-image">
+            <img src="interest.png" alt="Кредит и заем" class="hero-image animated-image">
         </header>
 
         <main>
+            <!-- Определение кредита и займа -->
             <section class="section-card">
-                <h2 class="section-title">Чем отличаются кредиты и займы?</h2>
-                <p>Кредит и заем — это разные финансовые инструменты. Кредит выдается только банками, всегда в денежной форме и с обязательной уплатой процентов. Заем может быть беспроцентным, предоставляться в виде вещей и оформляться устно.</p>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Особенности кредита</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <ul>
-                                <li>Выдается только банками.</li>
-                                <li>Всегда в денежной форме.</li>
-                                <li>Обязательная уплата процентов.</li>
-                                <li>Оформляется письменным договором.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Особенности займа</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <ul>
-                                <li>Может быть беспроцентным.</li>
-                                <li>Предоставляется в виде денег или вещей.</li>
-                                <li>Может оформляться устно.</li>
-                                <li>Выдается не только банками.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">7 причин взять кредит</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>1. Приобретение жилья</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Кредит на жилье помогает улучшить качество жизни, особенно для молодых семей.</p>
-                            <img src="house.png" alt="Жилье" style="width: 100%; max-width: 300px; margin: 1rem auto; display: block;">
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>2. Оплата обучения</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Образование — это вложение в будущее, которое окупается высокооплачиваемой работой.</p>
-                            <img src="education.png" alt="Образование" style="width: 100%; max-width: 300px; margin: 1rem auto; display: block;">
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>3. Оплата лечения</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Кредит на лечение может спасти жизнь или сохранить здоровье.</p>
-                            <img src="health.png" alt="Лечение" style="width: 100%; max-width: 300px; margin: 1rem auto; display: block;">
-                        </div>
-                    </div>
-                    <!-- Добавьте остальные 4 причины аналогично -->
-                </div>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
+                <h2 class="section-title">Что такое кредит и заем?</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    Кредит и заем — это финансовые инструменты, которые позволяют получить средства сейчас, а вернуть их позже. 
+                    Несмотря на схожесть, между ними есть существенные различия, которые важно понимать для принятия верных финансовых решений.
+                </p>
+                
                 <div class="interactive-grid">
-                    <div class="section-card">
-                        <h4>Тест: Кредит или заем?</h4>
-                        <form id="loan-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="loan-type" value="credit"> Кредит
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="loan-type" value="loan"> Заем
-                                </label>
-                            </div>
-                            <button type="button" id="check-loan-btn">Проверить</button>
-                            <div id="loan-result" class="result"></div>
-                        </form>
+                    <div class="calculator">
+                        <h4><i class="fas fa-university"></i> Кредит</h4>
+                        <p>
+                            Кредит — это денежные средства, предоставляемые <strong>банком или кредитной организацией</strong> заемщику на определенный срок на условиях возвратности, платности и срочности.
+                        </p>
+                        <p style="margin-top: 1rem;">
+                            <strong>Характеристики:</strong>
+                        </p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Только денежная форма</li>
+                            <li>Обязательно взимается процент</li>
+                            <li>Строгая регламентация законодательством</li>
+                            <li>Выдается банками и кредитными организациями</li>
+                            <li>Целевое использование (часто)</li>
+                        </ul>
                     </div>
-
-                    <div class="section-card">
-                        <h4>Калькулятор кредита</h4>
-                        <form id="loan-calculator">
-                            <div class="form-group">
-                                <label for="loan-amount">Сумма кредита (руб):</label>
-                                <input type="number" id="loan-amount" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="loan-rate">Процентная ставка (%):</label>
-                                <input type="number" id="loan-rate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="loan-term">Срок (месяцы):</label>
-                                <input type="number" id="loan-term" required>
-                            </div>
-                            <button type="button" id="calculate-loan-btn">Рассчитать</button>
-                            <div id="calculator-result" class="result"></div>
-                        </form>
+                    
+                    <div class="calculator">
+                        <h4><i class="fas fa-handshake"></i> Заем</h4>
+                        <p>
+                            Заем — это передача <strong>любым лицом</strong> (гражданином или организацией) денег или вещей другому лицу, которое обязуется вернуть их через определенное время.
+                        </p>
+                        <p style="margin-top: 1rem;">
+                            <strong>Характеристики:</strong>
+                        </p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Может быть в денежной или натуральной форме</li>
+                            <li>Может быть беспроцентным</li>
+                            <li>Менее жесткая регламентация</li>
+                            <li>Может быть предоставлен любым лицом</li>
+                            <li>Как правило, без указания цели</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
+            <!-- Сравнение кредита и займа -->
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда читайте условия кредитного договора перед подписанием.
+                <h3 class="section-title">Сравнение кредита и займа</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Критерий</th>
+                                <th>Кредит</th>
+                                <th>Заем</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Кто предоставляет</td>
+                                <td>Банки и кредитные организации</td>
+                                <td>Любые лица (физические и юридические)</td>
+                            </tr>
+                            <tr>
+                                <td>Форма</td>
+                                <td>Только деньги</td>
+                                <td>Деньги или вещи</td>
+                            </tr>
+                            <tr>
+                                <td>Проценты</td>
+                                <td>Обязательно</td>
+                                <td>Могут отсутствовать</td>
+                            </tr>
+                            <tr>
+                                <td>Оформление</td>
+                                <td>Кредитный договор</td>
+                                <td>Договор займа</td>
+                            </tr>
+                            <tr>
+                                <td>Целевое использование</td>
+                                <td>Часто обязательно</td>
+                                <td>Обычно не требуется</td>
+                            </tr>
+                            <tr>
+                                <td>Проверка заемщика</td>
+                                <td>Тщательная (кредитная история, доходы)</td>
+                                <td>Может отсутствовать</td>
+                            </tr>
+                            <tr>
+                                <td>Ответственность за невозврат</td>
+                                <td>Штрафы, санкции, суд, испорченная кредитная история</td>
+                                <td>Зависит от условий договора</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Виды кредитов -->
+            <section class="section-card">
+                <h3 class="section-title">Основные виды кредитов</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Современный финансовый рынок предлагает различные виды кредитов, каждый из которых имеет свои особенности и назначение:
+                </p>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Потребительский кредит</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                <strong>Определение:</strong> Кредит, выдаваемый банком на потребительские цели: покупку товаров, оплату услуг, ремонт и т.д.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Особенности:</strong>
+                            </p>
+                            <ul>
+                                <li>Сумма: от 10 000 до 3 000 000 рублей</li>
+                                <li>Срок: от 3 месяцев до 7 лет</li>
+                                <li>Процентная ставка: 9-30% годовых</li>
+                                <li>Обеспечение: обычно не требуется</li>
+                                <li>Документы: паспорт, справка о доходах</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Ипотечный кредит</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                <strong>Определение:</strong> Долгосрочный кредит, выдаваемый под залог недвижимости для ее покупки, строительства или ремонта.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Особенности:</strong>
+                            </p>
+                            <ul>
+                                <li>Сумма: от 300 000 до 100 000 000 рублей</li>
+                                <li>Срок: от 1 года до 30 лет</li>
+                                <li>Процентная ставка: 5-12% годовых</li>
+                                <li>Обеспечение: залог приобретаемой недвижимости</li>
+                                <li>Первоначальный взнос: обычно от 10% стоимости</li>
+                                <li>Документы: паспорт, справка о доходах, договор купли-продажи, оценка недвижимости</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Автокредит</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                <strong>Определение:</strong> Целевой кредит на покупку автомобиля, который становится залогом по кредиту.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Особенности:</strong>
+                            </p>
+                            <ul>
+                                <li>Сумма: от 100 000 до 5 000 000 рублей</li>
+                                <li>Срок: от 1 года до 7 лет</li>
+                                <li>Процентная ставка: 8-20% годовых</li>
+                                <li>Обеспечение: залог приобретаемого автомобиля</li>
+                                <li>Первоначальный взнос: от 0% до 30%</li>
+                                <li>Документы: паспорт, справка о доходах, договор купли-продажи, ПТС</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Кредитная карта</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                <strong>Определение:</strong> Банковская карта с возобновляемым кредитным лимитом для совершения платежей.
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Особенности:</strong>
+                            </p>
+                            <ul>
+                                <li>Сумма (лимит): от 10 000 до 1 000 000 рублей</li>
+                                <li>Льготный период: обычно 50-100 дней</li>
+                                <li>Процентная ставка: 15-35% годовых</li>
+                                <li>Минимальный платеж: 5-10% от задолженности ежемесячно</li>
+                                <li>Обеспечение: не требуется</li>
+                                <li>Документы: паспорт, иногда справка о доходах</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Микрозаем</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                <strong>Определение:</strong> Краткосрочный заем на небольшую сумму, предоставляемый микрофинансовыми организациями (МФО).
+                            </p>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Особенности:</strong>
+                            </p>
+                            <ul>
+                                <li>Сумма: от 1 000 до 30 000 рублей</li>
+                                <li>Срок: от 1 дня до 30 дней</li>
+                                <li>Процентная ставка: до 1% в день (с ограничениями по закону)</li>
+                                <li>Обеспечение: не требуется</li>
+                                <li>Скорость выдачи: от нескольких минут до нескольких часов</li>
+                                <li>Документы: обычно только паспорт</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem; color: var(--error);">
+                                <strong>Внимание!</strong> Из-за высоких процентных ставок микрозаймы рекомендуется использовать только в крайних случаях и на очень короткий срок.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Когда кредит благо -->
+            <section class="section-card">
+                <h3 class="section-title">Когда кредит может быть благом</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Разумное использование кредитов может принести пользу вашему финансовому благополучию. 
+                    Вот ситуации, когда заемные средства могут стать финансовым инструментом, а не обузой:
+                </p>
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-home"></i>
+                        <div>
+                            <strong>Покупка недвижимости</strong>
+                            <p>Ипотека позволяет не тратить десятилетия на накопление всей суммы, а сразу приобрести жилье и жить в нем, постепенно выплачивая кредит. Со временем недвижимость обычно растет в цене, что делает это вложением.</p>
+                        </div>
                     </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Планируйте бюджет так, чтобы выплаты по кредиту не превышали 30% дохода.
+                    <li class="features-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <strong>Инвестиции в образование</strong>
+                            <p>Кредит на образование может быть оправдан, если оно существенно повысит вашу квалификацию и увеличит будущий доход. Дополнительное образование часто окупается за счет роста зарплаты.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-briefcase"></i>
+                        <div>
+                            <strong>Развитие бизнеса</strong>
+                            <p>Кредит для развития собственного дела может принести значительную прибыль, если бизнес-план тщательно просчитан, а риски минимизированы.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <div>
+                            <strong>Экстренные ситуации</strong>
+                            <p>В случае серьезных проблем со здоровьем или других чрезвычайных ситуаций, кредит может стать необходимым источником средств, если отсутствует финансовая подушка безопасности.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <strong>Рефинансирование долгов</strong>
+                            <p>Новый кредит с более низкой процентной ставкой для погашения предыдущих кредитов может сэкономить значительную сумму на процентах и упростить управление долгами.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
-        </main>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+            <!-- Когда кредит вреден -->
+            <section class="section-card">
+                <h3 class="section-title">Когда следует избегать заемных средств</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    В некоторых ситуациях использование кредитов и займов может привести к финансовым проблемам:
+                </p>
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div>
+                            <strong>Импульсивные покупки</strong>
+                            <p>Брать кредит для покупки вещей, которые быстро теряют ценность (гаджеты, модная одежда, отпуск), нерационально. Лучше накопить на них заранее.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-credit-card"></i>
+                        <div>
+                            <strong>Погашение других кредитов</strong>
+                            <p>Использование нового кредита для выплаты старых (кроме случаев выгодного рефинансирования) часто приводит к долговой яме, так как общая сумма долга растет из-за новых процентов.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Инвестиции с высоким риском</strong>
+                            <p>Вкладывать заемные средства в рискованные активы (криптовалюты, акции с высокой волатильностью, азартные игры) крайне опасно, так как вы можете потерять деньги, но долг останется.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-coins"></i>
+                        <div>
+                            <strong>Регулярные расходы</strong>
+                            <p>Если вы постоянно берете кредиты на повседневные расходы (продукты, коммунальные платежи), это признак серьезных финансовых проблем, требующих пересмотра бюджета.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-percentage"></i>
+                        <div>
+                            <strong>Высокие процентные ставки</strong>
+                            <p>Микрозаймы и кредиты с высокими процентами (более 30% годовых) стоит избегать в большинстве случаев из-за их высокой стоимости.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Калькулятор кредитов -->
+            <section class="section-card">
+                <h3 class="section-title">Калькулятор кредита</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Рассчитайте ежемесячный платеж и общую сумму переплаты по кредиту:
+                </p>
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="loan-amount">Сумма кредита (руб.):</label>
+                        <input type="number" id="loan-amount" min="1000" value="300000">
+                    </div>
+                    <div class="form-group">
+                        <label for="loan-term">Срок кредита (месяцев):</label>
+                        <input type="number" id="loan-term" min="1" max="360" value="36">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest-rate">Процентная ставка (% годовых):</label>
+                        <input type="number" id="interest-rate" min="1" max="60" step="0.1" value="12">
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-type">Тип платежей:</label>
+                        <select id="payment-type">
+                            <option value="annuity">Аннуитетные (равные платежи)</option>
+                            <option value="differentiated">Дифференцированные (уменьшающиеся)</option>
+                        </select>
+                    </div>
+                    <button id="calculate-loan">Рассчитать</button>
+                    <div id="loan-result" class="result"></div>
+                </div>
+                
+                <div class="interest-visualization">
+                    <div class="interest-bar">
+                        <div class="principal" id="principal-bar"></div>
+                        <div class="interest" id="interest-bar"></div>
+                        <div class="bar-label">Структура платежей</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Советы по управлению кредитами -->
+            <section class="section-card">
+                <h3 class="section-title">Советы по разумному использованию кредитов</h3>
+                <ul class="tips-list">
+                    <li class="tips-item">
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <strong>Оцените свои возможности</strong>
+                            <p>Перед получением кредита трезво оцените свой бюджет. Ежемесячный платеж не должен превышать 30% вашего дохода.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-search"></i>
+                        <div>
+                            <strong>Сравнивайте предложения</strong>
+                            <p>Изучите предложения разных банков, обращая внимание не только на процентную ставку, но и на комиссии, штрафы и другие условия.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <strong>Внимательно читайте договор</strong>
+                            <p>Перед подписанием тщательно изучите все пункты кредитного договора, особенно написанные мелким шрифтом.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <strong>Платите вовремя</strong>
+                            <p>Не допускайте просрочек платежей, чтобы избежать штрафов и испорченной кредитной истории. Настройте автоплатеж или напоминания.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-piggy-bank"></i>
+                        <div>
+                            <strong>Создайте резервный фонд</strong>
+                            <p>Имейте финансовую подушку безопасности на случай потери дохода или других непредвиденных обстоятельств.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <div>
+                            <strong>Используйте рефинансирование</strong>
+                            <p>Если процентные ставки снизились, рассмотрите возможность рефинансирования кредита на более выгодных условиях.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Вопросы и ответы -->
+            <section class="section-card">
+                <h3 class="section-title">Часто задаваемые вопросы</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что такое полная стоимость кредита (ПСК)?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Полная стоимость кредита (ПСК) — это все расходы заемщика по кредиту, выраженные в годовых процентах. ПСК включает:
+                            </p>
+                            <ul>
+                                <li>Процентную ставку по кредиту</li>
+                                <li>Комиссии за выдачу и обслуживание кредита</li>
+                                <li>Страховые платежи (если они обязательны)</li>
+                                <li>Другие платежи в пользу кредитора</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                По закону банк обязан указывать ПСК в кредитном договоре. Это помогает заемщику понять реальную стоимость кредита и сравнивать предложения разных банков.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что влияет на одобрение кредита?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Основные факторы, влияющие на решение банка о выдаче кредита:
+                            </p>
+                            <ul>
+                                <li><strong>Кредитная история</strong> — наличие текущих и прошлых кредитов, своевременность платежей</li>
+                                <li><strong>Доход и трудовая деятельность</strong> — размер и стабильность заработка, стаж работы</li>
+                                <li><strong>Кредитная нагрузка</strong> — отношение платежей по всем кредитам к доходу</li>
+                                <li><strong>Возраст и семейное положение</strong> — демографические характеристики</li>
+                                <li><strong>Наличие обеспечения</strong> — залог, поручительство</li>
+                                <li><strong>Наличие судебных решений</strong> — непогашенные долги, исполнительные производства</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Банки используют скоринговые системы, которые оценивают все эти факторы и выносят решение о выдаче кредита и его условиях.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Можно ли досрочно погасить кредит?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Да, по закону заемщик имеет право досрочно погасить кредит полностью или частично в любое время. При этом:
+                            </p>
+                            <ul>
+                                <li>Необходимо уведомить банк не менее чем за 30 дней (если иной срок не указан в договоре)</li>
+                                <li>Банк не имеет права взимать комиссию или штраф за досрочное погашение потребительского кредита</li>
+                                <li>При частичном досрочном погашении можно уменьшить либо размер ежемесячного платежа, либо срок кредита</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Досрочное погашение кредита позволяет существенно сэкономить на процентах. Чем раньше вы погасите кредит, тем меньше переплата.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что делать, если нечем платить кредит?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Если у вас возникли финансовые трудности с выплатой кредита, следуйте этим шагам:
+                            </p>
+                            <ol>
+                                <li><strong>Не избегайте контакта с банком</strong> — немедленно сообщите о возникших трудностях</li>
+                                <li><strong>Запросите реструктуризацию</strong> — банк может предложить изменить график платежей, уменьшить ежемесячный платеж за счет увеличения срока</li>
+                                <li><strong>Узнайте о кредитных каникулах</strong> — временная отсрочка платежей</li>
+                                <li><strong>Рассмотрите рефинансирование</strong> — получение нового кредита с более низкой ставкой</li>
+                                <li><strong>Оптимизируйте расходы</strong> — пересмотрите бюджет, найдите источники дополнительного дохода</li>
+                                <li><strong>В крайнем случае, изучите процедуру банкротства</strong> — если долговая нагрузка непосильна</li>
+                            </ol>
+                            <p style="margin-top: 0.75rem;">
+                                <strong>Важно!</strong> Не игнорируйте проблему и не берите новые кредиты для погашения старых (кроме случаев выгодного рефинансирования), так как это может только ухудшить ситуацию.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
-        // JavaScript для интерактивных заданий
-        document.getElementById('check-loan-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="loan-type"]:checked');
-            const result = document.getElementById('loan-result');
-            
-            if (selected && selected.value === 'credit') {
-                result.textContent = '✅ Правильно! Кредит выдается только банками.';
-                result.className = 'result success';
-            } else {
-                result.textContent = '❌ Неверно. Кредит выдается только банками.';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('calculate-loan-btn').addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('loan-amount').value);
-            const rate = parseFloat(document.getElementById('loan-rate').value);
-            const term = parseFloat(document.getElementById('loan-term').value);
-            const result = document.getElementById('calculator-result');
-
-            if (!isNaN(amount) && !isNaN(rate) && !isNaN(term)) {
-                const monthlyRate = rate / 100 / 12;
-                const payment = amount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -term));
-                result.textContent = `💰 Ежемесячный платеж: ${payment.toFixed(2)} руб.`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
                 
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+                // Закрываем все активные аккордеоны
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.classList.remove('active');
+                });
+                
+                // Если текущий аккордеон был неактивен, открываем его
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                }
             });
+        });
+
+        // Кнопка "наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Прогресс-бар
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset / windowHeight * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Калькулятор кредита
+        document.getElementById('calculate-loan').addEventListener('click', () => {
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            const loanTerm = parseInt(document.getElementById('loan-term').value);
+            const interestRate = parseFloat(document.getElementById('interest-rate').value);
+            const paymentType = document.getElementById('payment-type').value;
+            
+            // Проверка валидности введенных данных
+            if (isNaN(loanAmount) || isNaN(loanTerm) || isNaN(interestRate) || loanAmount <= 0 || loanTerm <= 0 || interestRate <= 0) {
+                document.getElementById('loan-result').innerHTML = 'Пожалуйста, заполните все поля корректно.';
+                document.getElementById('loan-result').className = 'result error';
+                return;
+            }
+            
+            // Расчет ежемесячной процентной ставки
+            const monthlyRate = interestRate / 100 / 12;
+            
+            // Расчет для аннуитетных платежей
+            if (paymentType === 'annuity') {
+                // Формула аннуитетного платежа: P = S * (i * (1 + i)^n) / ((1 + i)^n - 1)
+                const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, loanTerm)) / (Math.pow(1 + monthlyRate, loanTerm) - 1);
+                const totalPayment = monthlyPayment * loanTerm;
+                const totalInterest = totalPayment - loanAmount;
+                
+                document.getElementById('loan-result').innerHTML = `
+                    <p><strong>Результаты расчета (аннуитетные платежи):</strong></p>
+                    <p>Ежемесячный платеж: ${monthlyPayment.toFixed(2)} руб.</p>
+                    <p>Общая сумма выплат: ${totalPayment.toFixed(2)} руб.</p>
+                    <p>Сумма переплаты: ${totalInterest.toFixed(2)} руб.</p>
+                    <p>Эффективная процентная ставка: ${interestRate.toFixed(2)}% годовых</p>
+                `;
+                
+                // Обновляем визуализацию
+                const principalPercentage = (loanAmount / totalPayment) * 100;
+                const interestPercentage = (totalInterest / totalPayment) * 100;
+                
+                document.getElementById('principal-bar').style.height = `${principalPercentage}%`;
+                document.getElementById('interest-bar').style.height = `${interestPercentage}%`;
+                document.getElementById('interest-bar').style.bottom = `${principalPercentage}%`;
+            } else {
+                // Расчет для дифференцированных платежей
+                const principalPayment = loanAmount / loanTerm;
+                let totalPayment = 0;
+                let firstPayment = 0;
+                let lastPayment = 0;
+                
+                for (let i = 0; i < loanTerm; i++) {
+                    const remainingDebt = loanAmount - i * principalPayment;
+                    const interestPayment = remainingDebt * monthlyRate;
+                    const monthlyPayment = principalPayment + interestPayment;
+                    
+                    totalPayment += monthlyPayment;
+                    
+                    if (i === 0) firstPayment = monthlyPayment;
+                    if (i === loanTerm - 1) lastPayment = monthlyPayment;
+                }
+                
+                const totalInterest = totalPayment - loanAmount;
+                
+                document.getElementById('loan-result').innerHTML = `
+                    <p><strong>Результаты расчета (дифференцированные платежи):</strong></p>
+                    <p>Первый платеж: ${firstPayment.toFixed(2)} руб.</p>
+                    <p>Последний платеж: ${lastPayment.toFixed(2)} руб.</p>
+                    <p>Общая сумма выплат: ${totalPayment.toFixed(2)} руб.</p>
+                    <p>Сумма переплаты: ${totalInterest.toFixed(2)} руб.</p>
+                `;
+                
+                // Обновляем визуализацию
+                const principalPercentage = (loanAmount / totalPayment) * 100;
+                const interestPercentage = (totalInterest / totalPayment) * 100;
+                
+                document.getElementById('principal-bar').style.height = `${principalPercentage}%`;
+                document.getElementById('interest-bar').style.height = `${interestPercentage}%`;
+                document.getElementById('interest-bar').style.bottom = `${principalPercentage}%`;
+            }
+            
+            document.getElementById('loan-result').className = 'result success';
         });
     </script>
 </body>

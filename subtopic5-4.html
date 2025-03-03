@@ -20,6 +20,8 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         * {
@@ -172,7 +174,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -191,7 +193,7 @@
             font-weight: 500;
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -234,6 +236,16 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -255,6 +267,139 @@
             font-size: 1.2rem;
         }
 
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(248, 249, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 50px;
+            background: var(--gradient);
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease-in-out;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Step Process */
+        .step-process {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 1000;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
         /* Mobile Adaptation */
         @media (max-width: 768px) {
             .container {
@@ -268,7 +413,7 @@
             }
 
             .hero-image {
-                width: 30%;
+                width: 60%;
                 margin-top: 2rem;
             }
 
@@ -278,6 +423,24 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+            
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.75rem 0.5rem;
             }
         }
 
@@ -289,6 +452,10 @@
             .features-item {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+            
+            .comparison-table {
+                font-size: 0.8rem;
             }
         }
 
@@ -328,6 +495,8 @@
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
@@ -344,14 +513,18 @@
             <!-- Что такое ПДС? -->
             <section class="section-card">
                 <h2 class="section-title">Что такое Программа долгосрочных сбережений?</h2>
-                <p>
+                <p style="margin-bottom: 1rem;">
                     Программа долгосрочных сбережений (ПДС) действует на территории Российской Федерации с 2024 года. 
                     Она представляет собой добровольный способ самостоятельного формирования гражданами своих пенсионных накоплений 
                     с одновременным софинансированием части этих накоплений со стороны государства.
                 </p>
-                <p>
+                <p style="margin-bottom: 1rem;">
                     Цель такой программы – создать дополнительный источник будущей пенсии для увеличения ее размера. 
                     Для этого гражданину необходимо заключить договор с негосударственным пенсионным фондом (НПФ), который является оператором ПДС.
+                </p>
+                <p>
+                    ПДС является частью пенсионной реформы и направлена на стимулирование граждан к формированию личных пенсионных накоплений, 
+                    что должно обеспечить более комфортный уровень жизни после выхода на пенсию.
                 </p>
             </section>
 
@@ -363,35 +536,35 @@
                         <i class="fas fa-coins"></i>
                         <div>
                             <strong>Собственные взносы:</strong>
-                            <p>Разовый начальный и регулярные последующие взносы.</p>
+                            <p>Разовый начальный и регулярные последующие взносы, которые гражданин вносит самостоятельно. Минимальный размер взноса составляет 1000 рублей в год.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-chart-line"></i>
                         <div>
                             <strong>Пенсионные накопления:</strong>
-                            <p>Хранятся на лицевых счетах в НПФ и получены из взносов за 2002–2014 годы.</p>
+                            <p>Средства, хранящиеся на лицевых счетах в НПФ, которые были сформированы из обязательных страховых взносов за период 2002–2014 годов.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-hand-holding-usd"></i>
                         <div>
                             <strong>Средства материнского капитала:</strong>
-                            <p>Могут быть использованы при наличии.</p>
+                            <p>При наличии сертификата на материнский капитал можно направить его средства (полностью или частично) на формирование пенсионных накоплений в рамках ПДС.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-percentage"></i>
                         <div>
                             <strong>Инвестиционный доход:</strong>
-                            <p>Доход от инвестирования средств в рамках ПДС.</p>
+                            <p>Доход, полученный от инвестирования средств НПФ в различные финансовые инструменты. Все накопления инвестируются для получения дополнительного дохода.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-piggy-bank"></i>
                         <div>
                             <strong>Бюджетные средства:</strong>
-                            <p>Софинансирование из федерального бюджета до 36 тыс. рублей в год.</p>
+                            <p>Государственное софинансирование, которое может составлять до 36 000 рублей в год в зависимости от выбранной схемы и суммы взносов участника.</p>
                         </div>
                     </li>
                 </ul>
@@ -400,6 +573,10 @@
             <!-- Схемы софинансирования -->
             <section class="section-card">
                 <h3 class="section-title">Схемы софинансирования</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Программа долгосрочных сбережений предусматривает различные схемы государственного софинансирования. 
+                    Выбор схемы зависит от суммы взносов участника и его статуса.
+                </p>
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
@@ -407,193 +584,575 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>
-                                Государство добавляет 1 рубль на каждый рубль личных взносов участника ПДС. 
-                                Схема распространяется на граждан с ежемесячным доходом до 80 тыс. рублей.
-                            </p>
+                            <p><strong>Подходит для:</strong> всех участников программы.</p>
+                            <p><strong>Условия:</strong> государство добавляет рубль на каждый рубль взноса участника, но не более 12 000 рублей в год.</p>
+                            <p><strong>Пример:</strong> если вы внесли 12 000 рублей за год, государство добавит еще 12 000 рублей. Если вы внесли 15 000 рублей, государство все равно добавит только 12 000 рублей.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Схема 2: 0,5 : 1</span>
+                            <span>Схема 2: 1 : 2</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>
-                                Государство добавляет половину от персональных взносов участника ПДС. 
-                                Схема распространяется на граждан с доходом в диапазоне 80–150 тыс. рублей.
-                            </p>
+                            <p><strong>Подходит для:</strong> участников программы старше 45 лет.</p>
+                            <p><strong>Условия:</strong> государство добавляет 2 рубля на каждый рубль взноса участника, но не более 24 000 рублей в год.</p>
+                            <p><strong>Пример:</strong> если вы старше 45 лет и внесли 12 000 рублей за год, государство добавит еще 24 000 рублей. Если вы внесли 15 000 рублей, государство все равно добавит только 24 000 рублей.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Схема 3: 0,25 : 1</span>
+                            <span>Схема 3: 1 : 3</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>
-                                Государство добавляет 25 копеек на каждый рубль собственных взносов. 
-                                Схема распространяется на граждан с доходом свыше 150 тыс. рублей.
-                            </p>
+                            <p><strong>Подходит для:</strong> участников программы старше 55 лет.</p>
+                            <p><strong>Условия:</strong> государство добавляет 3 рубля на каждый рубль взноса участника, но не более 36 000 рублей в год.</p>
+                            <p><strong>Пример:</strong> если вы старше 55 лет и внесли 12 000 рублей за год, государство добавит еще 36 000 рублей.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Схема для льготных категорий граждан</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p><strong>Подходит для:</strong> граждан с инвалидностью, многодетных семей, участников специальных программ.</p>
+                            <p><strong>Условия:</strong> для этих категорий граждан могут действовать дополнительные льготные условия софинансирования. Конкретные условия зависят от категории и региона проживания.</p>
+                            <p><strong>Важно:</strong> для получения информации о дополнительных льготах необходимо обратиться в региональное отделение НПФ или к финансовому консультанту.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Получение сбережений -->
+            <!-- Преимущества ПДС -->
             <section class="section-card">
-                <h3 class="section-title">Как получить свои сбережения назад?</h3>
-                <p>
-                    Получение накопленных пенсионных сбережений возможно в следующих случаях:
-                </p>
+                <h3 class="section-title">Преимущества Программы долгосрочных сбережений</h3>
                 <ul class="features-list">
                     <li class="features-item">
-                        <i class="fas fa-calendar-check"></i>
+                        <i class="fas fa-plus-circle"></i>
                         <div>
-                            <strong>Достижение возраста:</strong>
-                            <p>55 лет для женщин и 60 лет для мужчин.</p>
+                            <strong>Государственное софинансирование:</strong>
+                            <p>Гарантированное пополнение счета за счет федерального бюджета, что увеличивает размер накоплений и ускоряет их рост.</p>
                         </div>
                     </li>
                     <li class="features-item">
-                        <i class="fas fa-stopwatch"></i>
+                        <i class="fas fa-lock"></i>
                         <div>
-                            <strong>Истечение 15 лет:</strong>
-                            <p>С момента заключения договора ПДС с НПФ.</p>
+                            <strong>Защита от инфляции:</strong>
+                            <p>Доходность инвестирования средств обычно превышает уровень инфляции, что позволяет сохранить и приумножить покупательную способность накоплений.</p>
                         </div>
                     </li>
                     <li class="features-item">
-                        <i class="fas fa-heartbeat"></i>
+                        <i class="fas fa-file-invoice-dollar"></i>
                         <div>
-                            <strong>Особая жизненная ситуация:</strong>
-                            <p>Потеря кормильца или опасное заболевание.</p>
+                            <strong>Налоговые льготы:</strong>
+                            <p>Возможность получения налогового вычета в размере 13% от суммы взносов (до 15 600 рублей в год).</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Правовая защита накоплений:</strong>
+                            <p>Средства в рамках ПДС защищены законодательством, не могут быть изъяты или конфискованы, не делятся при разводе и не подлежат наследованию.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <div>
+                            <strong>Гибкие условия:</strong>
+                            <p>Возможность самостоятельно определять размер и периодичность взносов, а также приостанавливать участие в программе без потери накопленных средств.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <strong>Профессиональное управление:</strong>
+                            <p>Средства находятся под управлением профессиональных финансистов, что потенциально увеличивает доходность по сравнению с самостоятельными инвестициями.</p>
                         </div>
                     </li>
                 </ul>
             </section>
 
-            <!-- Практические задания -->
+            <!-- Сравнение с другими инструментами -->
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Какая схема софинансирования подходит? -->
-                    <div class="calculator">
-                        <h4>Тест: Какая схема софинансирования подходит вам?</h4>
-                        <form id="cofinancing-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="income-level" value="low"> Доход до 80 тыс. рублей
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="income-level" value="medium"> Доход 80–150 тыс. рублей
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="income-level" value="high"> Доход свыше 150 тыс. рублей
-                                </label>
-                            </div>
-                            <button type="button" id="check-cofinancing-btn">Проверить</button>
-                            <div id="cofinancing-result" class="result"></div>
-                        </form>
-                    </div>
+                <h3 class="section-title">Сравнение ПДС с другими инструментами накопления</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Перед участием в Программе долгосрочных сбережений полезно сравнить её с другими инструментами накопления средств на пенсию.
+                </p>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Характеристика</th>
+                                <th>ПДС</th>
+                                <th>ИИС</th>
+                                <th>НПФ</th>
+                                <th>Банковские вклады</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Государственная поддержка</td>
+                                <td>Софинансирование до 36 000 руб. в год</td>
+                                <td>Налоговый вычет до 52 000 руб. в год</td>
+                                <td>Нет</td>
+                                <td>Нет</td>
+                            </tr>
+                            <tr>
+                                <td>Срок инвестирования</td>
+                                <td>До выхода на пенсию</td>
+                                <td>Минимум 3 года</td>
+                                <td>До выхода на пенсию</td>
+                                <td>От 1 месяца</td>
+                            </tr>
+                            <tr>
+                                <td>Доходность</td>
+                                <td>Средняя + софинансирование</td>
+                                <td>Потенциально высокая</td>
+                                <td>Средняя</td>
+                                <td>Низкая</td>
+                            </tr>
+                            <tr>
+                                <td>Риски</td>
+                                <td>Низкие</td>
+                                <td>Средние-высокие</td>
+                                <td>Низкие</td>
+                                <td>Минимальные</td>
+                            </tr>
+                            <tr>
+                                <td>Гибкость управления</td>
+                                <td>Ограниченная</td>
+                                <td>Высокая</td>
+                                <td>Ограниченная</td>
+                                <td>Низкая</td>
+                            </tr>
+                            <tr>
+                                <td>Доступность средств</td>
+                                <td>Только после выхода на пенсию</td>
+                                <td>После 3 лет</td>
+                                <td>Только после выхода на пенсию</td>
+                                <td>В конце срока вклада</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-                    <!-- Калькулятор софинансирования -->
-                    <div class="calculator">
-                        <h4>Калькулятор софинансирования</h4>
-                        <input type="number" id="personal-contribution" placeholder="Ваш взнос (руб)">
-                        <select id="income-level-select">
-                            <option value="1">Доход до 80 тыс. рублей</option>
-                            <option value="0.5">Доход 80–150 тыс. рублей</option>
-                            <option value="0.25">Доход свыше 150 тыс. рублей</option>
-                        </select>
-                        <button type="button" id="calculate-cofinancing-btn">Рассчитать</button>
-                        <div id="cofinancing-calculation-result" class="result"></div>
+            <!-- Как участвовать в ПДС -->
+            <section class="section-card">
+                <h3 class="section-title">Как стать участником ПДС</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Чтобы стать участником Программы долгосрочных сбережений, необходимо выполнить несколько шагов:
+                </p>
+                <div class="step-process">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4 class="step-title">Выбор НПФ</h4>
+                            <p>Изучите рейтинги, доходность и условия различных негосударственных пенсионных фондов. Обратите внимание на размер комиссий, историю деятельности, инвестиционную стратегию и отзывы клиентов.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4 class="step-title">Обращение в выбранный НПФ</h4>
+                            <p>Посетите офис фонда, обратитесь через официальный сайт или используйте портал Госуслуг для подачи заявления о вступлении в программу.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4 class="step-title">Заключение договора</h4>
+                            <p>Подпишите договор об участии в ПДС, который включает условия внесения взносов, выбор схемы софинансирования и порядок выплаты средств.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4 class="step-title">Внесение первоначального взноса</h4>
+                            <p>Сделайте первый взнос в выбранный НПФ (минимальная сумма обычно составляет 1000 рублей). Можно настроить регулярные автоматические платежи.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4 class="step-title">Отслеживание состояния счета</h4>
+                            <p>Регулярно проверяйте состояние своего счета через личный кабинет на сайте НПФ или в мобильном приложении, чтобы контролировать прирост накоплений.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Полезные советы -->
+            <!-- Калькулятор накоплений по ПДС -->
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
+                <h3 class="section-title">Калькулятор накоплений по ПДС</h3>
+                <p style="margin-bottom: 1.5rem;">
+                    Рассчитайте потенциальный размер накоплений и будущей пенсии при участии в Программе долгосрочных сбережений:
+                </p>
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="current-age">Ваш текущий возраст:</label>
+                        <input type="number" id="current-age" min="18" max="65" value="35">
+                    </div>
+                    <div class="form-group">
+                        <label for="retirement-age">Планируемый возраст выхода на пенсию:</label>
+                        <input type="number" id="retirement-age" min="55" max="70" value="65">
+                    </div>
+                    <div class="form-group">
+                        <label for="monthly-contribution">Ежемесячный взнос (руб.):</label>
+                        <input type="number" id="monthly-contribution" min="100" value="3000">
+                    </div>
+                    <div class="form-group">
+                        <label for="investment-return">Ожидаемая годовая доходность инвестиций (%):</label>
+                        <input type="number" id="investment-return" min="1" max="15" value="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="co-financing-scheme">Схема софинансирования:</label>
+                        <select id="co-financing-scheme">
+                            <option value="1">Схема 1:1 (до 45 лет)</option>
+                            <option value="2">Схема 1:2 (от 45 до 55 лет)</option>
+                            <option value="3">Схема 1:3 (от 55 лет)</option>
+                        </select>
+                    </div>
+                    <button id="calculate-pds">Рассчитать накопления</button>
+                    <div id="pds-result" class="result"></div>
+                </div>
+                <div class="chart-container" id="pds-chart">
+                    <!-- Здесь будет график роста накоплений -->
+                </div>
+            </section>
+
+            <!-- FAQ по ПДС -->
+            <section class="section-card">
+                <h3 class="section-title">Часто задаваемые вопросы о ПДС</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Когда можно будет получить накопления по ПДС?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Накопления по Программе долгосрочных сбережений становятся доступны участнику при наступлении пенсионного возраста. Согласно текущему законодательству, это 65 лет для мужчин и 60 лет для женщин (с учетом переходного периода).</p>
+                            <p style="margin-top: 0.75rem;">Программой также предусмотрены особые случаи, когда средства могут быть получены досрочно:</p>
+                            <ul>
+                                <li>При наступлении инвалидности I или II группы</li>
+                                <li>При наличии заболеваний, ведущих к сокращению продолжительности жизни</li>
+                                <li>При чрезвычайных ситуациях (уточнять в НПФ)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Можно ли прекратить участие в программе?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Да, участие в ПДС является добровольным, и вы можете прекратить делать взносы в любой момент. При этом:</p>
+                            <ul>
+                                <li>Уже накопленные средства останутся на вашем счете и будут продолжать инвестироваться</li>
+                                <li>Государственное софинансирование прекратится, если вы перестанете делать взносы</li>
+                                <li>Вы можете возобновить взносы в любое время и снова получать софинансирование</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">Однако полностью забрать накопленные средства до наступления пенсионного возраста нельзя, за исключением особых случаев, предусмотренных законодательством.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что будет с накоплениями в случае смерти участника?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>В случае смерти участника ПДС до момента начала выплат, накопленные средства переходят к наследникам. Порядок наследования следующий:</p>
+                            <ul>
+                                <li>Средства выплачиваются указанным в договоре выгодоприобретателям</li>
+                                <li>Если выгодоприобретатели не указаны, средства переходят наследникам по закону или по завещанию</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">Для получения средств наследники должны обратиться в НПФ с заявлением и документами, подтверждающими смерть участника и право на наследство.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>В каком виде будут выплачиваться накопления?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Выплаты накоплений по ПДС могут осуществляться в следующих формах:</p>
+                            <ul>
+                                <li><strong>Пожизненная пенсия</strong> — ежемесячные выплаты до конца жизни получателя</li>
+                                <li><strong>Срочная пенсия</strong> — выплаты в течение определенного периода (не менее 10 лет)</li>
+                                <li><strong>Единовременная выплата</strong> — в случае, если размер накоплений незначителен</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">Форма выплаты указывается в договоре с НПФ и может быть изменена при достижении пенсионного возраста по согласованию с фондом.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Какие гарантии сохранности средств в ПДС?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Программа долгосрочных сбережений предусматривает несколько уровней защиты средств участников:</p>
+                            <ul>
+                                <li><strong>Регулирование ЦБ РФ</strong> — все НПФ находятся под строгим надзором Центрального банка</li>
+                                <li><strong>Система гарантирования</strong> — средства участников ПДС защищены Агентством по страхованию вкладов</li>
+                                <li><strong>Консервативная инвестиционная политика</strong> — НПФ вкладывают средства только в надежные финансовые инструменты</li>
+                                <li><strong>Обособленный учет</strong> — средства клиентов учитываются отдельно от имущества НПФ</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">Важно отметить, что гарантируется сохранность внесенных взносов, но доходность от инвестирования не является гарантированной и зависит от ситуации на финансовых рынках.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Советы по участию в ПДС -->
+            <section class="section-card">
+                <h3 class="section-title">Советы по эффективному участию в ПДС</h3>
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте условия договора с НПФ перед подписанием.
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <strong>Начните как можно раньше</strong>
+                            <p>Чем раньше вы начнете участвовать в программе, тем больше времени будет для накопления и роста ваших сбережений благодаря сложному проценту.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Регулярно отслеживайте состояние своего счета в ПДС.
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <strong>Максимизируйте государственное софинансирование</strong>
+                            <p>Старайтесь ежегодно вносить сумму, позволяющую получить максимальное софинансирование согласно вашей схеме (от 12 000 до 36 000 рублей).</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Используйте налоговые вычеты для максимизации выгоды.
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Регулярно мониторьте доходность НПФ</strong>
+                            <p>Сравнивайте доходность вашего фонда с другими и при необходимости рассмотрите возможность перевода средств в более эффективный НПФ.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-file-invoice"></i>
+                        <div>
+                            <strong>Используйте налоговый вычет</strong>
+                            <p>Не забывайте ежегодно оформлять налоговый вычет с ваших взносов в ПДС, это позволит вернуть до 13% от внесенной суммы.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <div>
+                            <strong>Комбинируйте с другими инструментами</strong>
+                            <p>Для максимальной эффективности используйте ПДС в комбинации с другими финансовыми инструментами, такими как ИИС, добровольное страхование и инвестиции в ценные бумаги.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <div>
+                            <strong>Повышайте финансовую грамотность</strong>
+                            <p>Постоянно изучайте особенности пенсионной системы и финансовых инструментов, чтобы принимать взвешенные решения о своих накоплениях.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
         </main>
+    </div>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
-        // Тест: Какая схема софинансирования подходит?
-        document.getElementById('check-cofinancing-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="income-level"]:checked');
-            const resultElement = document.getElementById('cofinancing-result');
-
-            if (selected) {
-                let message = '';
-                switch (selected.value) {
-                    case 'low':
-                        message = '✅ Вам подходит схема 1 : 1.';
-                        break;
-                    case 'medium':
-                        message = '✅ Вам подходит схема 0,5 : 1.';
-                        break;
-                    case 'high':
-                        message = '✅ Вам подходит схема 0,25 : 1.';
-                        break;
-                }
-                resultElement.textContent = message;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '❌ Пожалуйста, выберите вариант.';
-                resultElement.className = 'result error';
-            }
-        });
-
-        // Калькулятор софинансирования
-        document.getElementById('calculate-cofinancing-btn').addEventListener('click', () => {
-            const personalContribution = parseFloat(document.getElementById('personal-contribution').value);
-            const incomeLevel = parseFloat(document.getElementById('income-level-select').value);
-            const resultElement = document.getElementById('cofinancing-calculation-result');
-
-            if (!isNaN(personalContribution)) {
-                const governmentContribution = personalContribution * incomeLevel;
-                const total = personalContribution + governmentContribution;
-
-                resultElement.textContent = `💰 Ваш взнос: ${personalContribution.toFixed(2)} руб., государственный взнос: ${governmentContribution.toFixed(2)} руб., итого: ${total.toFixed(2)} руб.`;
-                resultElement.className = 'result success';
-            } else {
-                resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                resultElement.className = 'result error';
-            }
-        });
-
         // Аккордеон
         document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Закрываем все активные аккордеоны
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    header.classList.remove('active');
+                });
+                
+                // Если текущий аккордеон был неактивен, открываем его
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                }
             });
+        });
+
+        // Кнопка "наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Прогресс-бар
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset / windowHeight * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Калькулятор накоплений по ПДС
+        document.getElementById('calculate-pds').addEventListener('click', () => {
+            const currentAge = parseInt(document.getElementById('current-age').value);
+            const retirementAge = parseInt(document.getElementById('retirement-age').value);
+            const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value);
+            const investmentReturn = parseFloat(document.getElementById('investment-return').value) / 100;
+            const coFinancingScheme = parseInt(document.getElementById('co-financing-scheme').value);
+            
+            // Проверка валидности введенных данных
+            if (isNaN(currentAge) || isNaN(retirementAge) || isNaN(monthlyContribution) || 
+                isNaN(investmentReturn) || isNaN(coFinancingScheme)) {
+                document.getElementById('pds-result').innerHTML = 'Пожалуйста, заполните все поля корректно.';
+                document.getElementById('pds-result').className = 'result error';
+                return;
+            }
+            
+            if (currentAge >= retirementAge) {
+                document.getElementById('pds-result').innerHTML = 'Возраст выхода на пенсию должен быть больше текущего возраста.';
+                document.getElementById('pds-result').className = 'result error';
+                return;
+            }
+            
+            // Расчет параметров
+            const yearsTillRetirement = retirementAge - currentAge;
+            const annualContribution = monthlyContribution * 12;
+            
+            // Определение суммы софинансирования
+            let coFinancingMultiplier = 1;
+            let maxCoFinancing = 12000;
+            
+            if (coFinancingScheme === 2) {
+                coFinancingMultiplier = 2;
+                maxCoFinancing = 24000;
+            } else if (coFinancingScheme === 3) {
+                coFinancingMultiplier = 3;
+                maxCoFinancing = 36000;
+            }
+            
+            // Рассчитываем годовое софинансирование
+            const yearlyCoFinancing = Math.min(annualContribution, 12000) * coFinancingMultiplier;
+            
+            // Расчет накоплений
+            let totalSavings = 0;
+            let yearlyValues = [];
+            let totalContributed = 0;
+            let totalCoFinancing = 0;
+            
+            for (let year = 1; year <= yearsTillRetirement; year++) {
+                // Начисление дохода на текущие накопления
+                totalSavings = totalSavings * (1 + investmentReturn);
+                
+                // Добавление взноса участника
+                totalSavings += annualContribution;
+                totalContributed += annualContribution;
+                
+                // Добавление софинансирования
+                totalSavings += yearlyCoFinancing;
+                totalCoFinancing += yearlyCoFinancing;
+                
+                // Сохраняем значения по годам для графика
+                yearlyValues.push(Math.round(totalSavings));
+            }
+            
+            // Расчет ежемесячной пенсии (приблизительно, исходя из срока выплаты 20 лет)
+            const monthlyPension = totalSavings / (20 * 12);
+            
+            // Отображение результатов
+            document.getElementById('pds-result').innerHTML = `
+                <p><strong>Результаты расчета:</strong></p>
+                <p>Срок накопления: ${yearsTillRetirement} лет</p>
+                <p>Ваши взносы: ${Math.round(totalContributed).toLocaleString()} руб.</p>
+                <p>Государственное софинансирование: ${Math.round(totalCoFinancing).toLocaleString()} руб.</p>
+                <p>Инвестиционный доход: ${Math.round(totalSavings - totalContributed - totalCoFinancing).toLocaleString()} руб.</p>
+                <p>Общая сумма накоплений: ${Math.round(totalSavings).toLocaleString()} руб.</p>
+                <p>Примерная ежемесячная пенсия: ${Math.round(monthlyPension).toLocaleString()} руб. (при сроке выплаты 20 лет)</p>
+            `;
+            document.getElementById('pds-result').className = 'result success';
+            
+            // Отображение графика роста накоплений
+            renderPdsChart(yearlyValues, yearsTillRetirement);
+        });
+
+        // Функция для отображения графика роста накоплений
+        function renderPdsChart(yearlyValues, years) {
+            const chartContainer = document.getElementById('pds-chart');
+            chartContainer.innerHTML = '';
+            
+            const maxValue = Math.max(...yearlyValues);
+            const chartHeight = 250;
+            
+            // Создаем столбцы для каждого года
+            for (let i = 0; i < yearlyValues.length; i++) {
+                const barHeight = (yearlyValues[i] / maxValue) * chartHeight;
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = '0'; // Начальная высота для анимации
+                bar.style.left = `${(i + 1) * (100 / (yearlyValues.length + 1))}%`;
+                bar.style.transform = 'translateX(-50%)';
+                
+                // Добавляем подпись со значением
+                const valueLabel = document.createElement('div');
+                valueLabel.style.position = 'absolute';
+                valueLabel.style.bottom = `${barHeight + 10}px`;
+                valueLabel.style.left = '50%';
+                valueLabel.style.transform = 'translateX(-50%)';
+                valueLabel.style.fontSize = '0.8rem';
+                valueLabel.style.fontWeight = '500';
+                valueLabel.textContent = `${yearlyValues[i].toLocaleString()} ₽`;
+                
+                bar.appendChild(valueLabel);
+                chartContainer.appendChild(bar);
+                
+                // Анимация роста столбцов
+                setTimeout(() => {
+                    bar.style.height = `${barHeight}px`;
+                }, 100 * i);
+            }
+            
+            // Добавляем подписи лет
+            const chartLabels = document.createElement('div');
+            chartLabels.className = 'chart-labels';
+            
+            for (let i = 0; i < yearlyValues.length; i += Math.max(1, Math.floor(yearlyValues.length / 5))) {
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = `Год ${i + 1}`;
+                chartLabels.appendChild(label);
+            }
+            
+            chartContainer.appendChild(chartLabels);
+        }
+
+        // Обработка динамического выбора схемы софинансирования
+        document.getElementById('current-age').addEventListener('change', function() {
+            const age = parseInt(this.value);
+            const schemeSelector = document.getElementById('co-financing-scheme');
+            
+            if (age >= 55) {
+                schemeSelector.value = '3';
+            } else if (age >= 45) {
+                schemeSelector.value = '2';
+            } else {
+                schemeSelector.value = '1';
+            }
         });
     </script>
 </body>

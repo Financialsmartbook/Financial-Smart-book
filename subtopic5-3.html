@@ -20,6 +20,8 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
         }
 
         * {
@@ -172,7 +174,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -191,7 +193,7 @@
             font-weight: 500;
         }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -234,6 +236,16 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .info {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -255,6 +267,148 @@
             font-size: 1.2rem;
         }
 
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(248, 249, 255, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Investment Type Cards */
+        .investment-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .investment-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .investment-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .investment-icon i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .investment-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Chart Styles */
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            background: var(--gradient);
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease-in-out;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Progress bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 9999;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
         /* Mobile Adaptation */
         @media (max-width: 768px) {
             .container {
@@ -268,7 +422,7 @@
             }
 
             .hero-image {
-                width: 30%;
+                width: 60%;
                 margin-top: 2rem;
             }
 
@@ -278,6 +432,10 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -289,6 +447,18 @@
             .features-item {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th, .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .investment-types {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -325,9 +495,24 @@
         .calculator input {
             margin-bottom: 1rem;
         }
+
+        /* Quiz Styles */
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .quiz-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+        }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
+    
     <div class="container">
         <!-- Hero Section -->
         <header class="hero-section">
@@ -341,6 +526,17 @@
         </header>
 
         <main>
+            <!-- Что такое коллективные инвестиции -->
+            <section class="section-card">
+                <h2 class="section-title">Что такое коллективные инвестиции</h2>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    Коллективные инвестиции — это объединение средств многих инвесторов для совместного инвестирования под управлением профессионального менеджера. Такой подход позволяет частным инвесторам с небольшими суммами получить доступ к тем же возможностям на финансовом рынке, что и крупные игроки.
+                </p>
+                <p style="text-align: justify;">
+                    Средства инвесторов объединяются в единый фонд, который вкладывается в различные активы согласно заявленной стратегии: акции, облигации, недвижимость, сырьевые товары и другие финансовые инструменты.
+                </p>
+            </section>
+
             <!-- Преимущества коллективных инвестиций -->
             <section class="section-card">
                 <h2 class="section-title">Преимущества коллективных инвестиций</h2>
@@ -349,21 +545,35 @@
                         <i class="fas fa-users"></i>
                         <div>
                             <strong>Профессиональное управление:</strong>
-                            <p>Управление активами осуществляется профессионалами финансового рынка.</p>
+                            <p>Активами управляют профессиональные менеджеры с опытом и знаниями финансового рынка, которые анализируют рынок, отбирают перспективные инструменты и принимают инвестиционные решения.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-chart-pie"></i>
                         <div>
                             <strong>Диверсификация рисков:</strong>
-                            <p>Инвестиции распределяются между различными активами.</p>
+                            <p>Средства распределяются между различными активами, что снижает зависимость от одного инструмента и уменьшает риск потери всех средств в случае негативного развития событий.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-hand-holding-usd"></i>
                         <div>
                             <strong>Доступ к крупным проектам:</strong>
-                            <p>Объединение средств позволяет участвовать в масштабных инвестициях.</p>
+                            <p>Объединение средств позволяет участвовать в масштабных инвестициях, недоступных для индивидуальных инвесторов с небольшим капиталом (например, инвестиции в коммерческую недвижимость).</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <strong>Низкий порог входа:</strong>
+                            <p>Минимальная сумма для начала инвестирования значительно ниже, чем для самостоятельных вложений в портфель с хорошей диверсификацией (от 1000 рублей для некоторых фондов).</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Правовая защита:</strong>
+                            <p>Деятельность организаций, управляющих коллективными инвестициями, регулируется законодательством и контролируется государственными органами (ЦБ РФ).</p>
                         </div>
                     </li>
                 </ul>
@@ -380,8 +590,57 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                ПИФы объединяют средства инвесторов для управления портфелем активов. 
-                                Виды: открытые, интервальные, закрытые. Доходность зависит от стратегии.
+                                Паевые инвестиционные фонды (ПИФы) — это форма коллективного инвестирования, при которой средства участников объединяются в единый фонд под управлением профессиональной управляющей компании.
+                            </p>
+                            <p style="margin-top: 0.75rem;"><strong>Типы ПИФов по возможности покупки и продажи паев:</strong></p>
+                            <ul>
+                                <li><strong>Открытые ПИФы</strong> — паи можно купить и продать в любой рабочий день по текущей стоимости.</li>
+                                <li><strong>Интервальные ПИФы</strong> — покупка и продажа паев возможна только в определенные периоды (интервалы).</li>
+                                <li><strong>Закрытые ПИФы</strong> — паи приобретаются только при формировании фонда, продать их можно только по окончании срока действия фонда.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;"><strong>Типы ПИФов по направлению инвестирования:</strong></p>
+                            <ul>
+                                <li><strong>Фонды акций</strong> — инвестируют преимущественно в акции компаний.</li>
+                                <li><strong>Фонды облигаций</strong> — инвестируют в государственные и корпоративные облигации.</li>
+                                <li><strong>Смешанные фонды</strong> — вкладывают средства и в акции, и в облигации.</li>
+                                <li><strong>Фонды денежного рынка</strong> — инвестируют в краткосрочные долговые инструменты.</li>
+                                <li><strong>Фонды недвижимости</strong> — вкладывают в объекты недвижимости или ценные бумаги, связанные с недвижимостью.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Доходность ПИФов зависит от стратегии и состава активов фонда. Фонды акций потенциально более доходны, но и более рискованны, в то время как фонды облигаций стабильнее, но обычно менее доходны.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Биржевые инвестиционные фонды (ETF, БПИФ)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Биржевые инвестиционные фонды — это форма коллективных инвестиций, паи которых торгуются на бирже, как обычные акции. Существуют в двух форматах:
+                            </p>
+                            <ul>
+                                <li><strong>ETF (Exchange Traded Fund)</strong> — иностранные биржевые фонды, обращающиеся на российской бирже.</li>
+                                <li><strong>БПИФ (Биржевой ПИФ)</strong> — российский аналог ETF, созданный по российскому законодательству.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;"><strong>Особенности ETF и БПИФ:</strong></p>
+                            <ul>
+                                <li><strong>Высокая ликвидность</strong> — можно купить и продать в любой торговый день по рыночной цене.</li>
+                                <li><strong>Прозрачность</strong> — состав активов фонда известен и обновляется регулярно.</li>
+                                <li><strong>Низкие издержки</strong> — комиссии за управление обычно ниже, чем у традиционных ПИФов.</li>
+                                <li><strong>Индексная стратегия</strong> — многие ETF и БПИФ следуют за определенным индексом (например, S&P 500, РТС).</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;"><strong>Типы биржевых фондов:</strong></p>
+                            <ul>
+                                <li><strong>Индексные</strong> — следуют за индексом акций или облигаций.</li>
+                                <li><strong>Отраслевые</strong> — инвестируют в определенные секторы экономики.</li>
+                                <li><strong>Товарные</strong> — вкладывают в сырьевые товары (золото, нефть).</li>
+                                <li><strong>Облигационные</strong> — включают различные виды облигаций.</li>
+                                <li><strong>Мультиактивные</strong> — содержат разные классы активов.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                ETF и БПИФ идеально подходят для пассивных инвесторов, которые хотят инвестировать в рынок в целом, а не выбирать отдельные ценные бумаги.
                             </p>
                         </div>
                     </div>
@@ -392,8 +651,18 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                АИФы выпускают акции, которые можно покупать и продавать на бирже. 
-                                Прибыль распределяется в виде дивидендов.
+                                Акционерные инвестиционные фонды (АИФ) — это юридические лица в форме акционерного общества, исключительным видом деятельности которых является инвестирование имущества в ценные бумаги и иные объекты.
+                            </p>
+                            <p style="margin-top: 0.75rem;"><strong>Особенности АИФ:</strong></p>
+                            <ul>
+                                <li>АИФ выпускает акции, которые могут торговаться на бирже.</li>
+                                <li>Инвесторы становятся акционерами фонда, а не просто пайщиками.</li>
+                                <li>Прибыль от инвестиций распределяется в виде дивидендов.</li>
+                                <li>АИФ имеет собственный баланс, имущество и органы управления.</li>
+                                <li>Как и любое акционерное общество, АИФ проводит собрания акционеров.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                В России АИФы менее распространены, чем ПИФы, из-за более сложной структуры управления и административных требований. Однако они предоставляют акционерам большую степень контроля через участие в общих собраниях.
                             </p>
                         </div>
                     </div>
@@ -404,131 +673,515 @@
                         </div>
                         <div class="accordion-content">
                             <p>
-                                НПФ накапливают средства для будущей пенсии. 
-                                Участники фонда получают доход от управления средствами, но результат зависит от выбранной стратегии.
+                                Негосударственные пенсионные фонды (НПФ) — организации, которые занимаются выплатами пенсий за счет добровольных взносов, а также инвестирования пенсионных накоплений.
+                            </p>
+                            <p style="margin-top: 0.75rem;"><strong>Особенности НПФ:</strong></p>
+                            <ul>
+                                <li><strong>Долгосрочное инвестирование</strong> — НПФ инвестируют средства на длительный срок (до выхода на пенсию).</li>
+                                <li><strong>Консервативные стратегии</strong> — из-за социальной важности большая часть средств вкладывается в надежные, но менее доходные инструменты.</li>
+                                <li><strong>Налоговые льготы</strong> — взносы в НПФ могут дать право на налоговый вычет (до 15 600 рублей в год).</li>
+                                <li><strong>Регулярные выплаты</strong> — средства выплачиваются в виде регулярных пенсионных платежей, а не единовременно.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;"><strong>Виды программ НПФ:</strong></p>
+                            <ul>
+                                <li><strong>Обязательное пенсионное страхование (ОПС)</strong> — управление накопительной частью государственной пенсии.</li>
+                                <li><strong>Негосударственное пенсионное обеспечение (НПО)</strong> — добровольные взносы для формирования дополнительной пенсии.</li>
+                                <li><strong>Корпоративные пенсионные программы</strong> — программы для сотрудников компаний, финансируемые работодателем.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                НПФ — это инструмент для долгосрочного инвестирования с целью формирования пенсионных накоплений, а не для получения быстрой прибыли.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Инвестиционное страхование жизни (ИСЖ)</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Инвестиционное страхование жизни (ИСЖ) — это финансовый продукт, сочетающий в себе страховую защиту и возможность инвестирования.
+                            </p>
+                            <p style="margin-top: 0.75rem;"><strong>Особенности ИСЖ:</strong></p>
+                            <ul>
+                                <li><strong>Двойная функция</strong> — защита жизни (страховка) и инвестиционный инструмент.</li>
+                                <li><strong>Гарантия возврата капитала</strong> — страховая компания гарантирует возврат внесенных средств по окончании срока действия полиса.</li>
+                                <li><strong>Потенциальный доход</strong> — часть взносов инвестируется в рыночные инструменты для получения дополнительного дохода.</li>
+                                <li><strong>Фиксированный срок</strong> — обычно от 3 до 5 лет, с возможностью досрочного расторжения с потерями.</li>
+                                <li><strong>Налоговые льготы</strong> — право на налоговый вычет и отсутствие налога на доходы при выплате по истечении 5 лет.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;"><strong>Важно понимать:</strong></p>
+                            <ul>
+                                <li>Доходность ИСЖ не гарантирована и может быть ниже ожидаемой.</li>
+                                <li>Досрочное расторжение договора обычно приводит к существенным потерям.</li>
+                                <li>Комиссии по ИСЖ часто выше, чем у других инвестиционных инструментов.</li>
+                                <li>ИСЖ не застрахованы государственной системой страхования вкладов.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                ИСЖ может быть подходящим инструментом для консервативных инвесторов, которым важно сочетание страховой защиты и потенциального дохода.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Краудинвестинг</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Краудинвестинг — модель коллективного финансирования проектов, при которой инвесторы получают долю в компании или проекте, или долговые обязательства.
+                            </p>
+                            <p style="margin-top: 0.75rem;"><strong>Особенности краудинвестинга:</strong></p>
+                            <ul>
+                                <li><strong>Инвестиции в стартапы и МСБ</strong> — возможность вложения в молодые компании на ранних стадиях.</li>
+                                <li><strong>Онлайн-платформы</strong> — инвестирование происходит через специализированные интернет-площадки.</li>
+                                <li><strong>Низкий порог входа</strong> — можно начать с небольших сумм (от 10 000 рублей).</li>
+                                <li><strong>Высокие риски</strong> — значительная часть стартапов не выживает, что может привести к полной потере инвестиций.</li>
+                                <li><strong>Потенциально высокая доходность</strong> — успешные проекты могут принести многократную прибыль.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;"><strong>Формы краудинвестинга:</strong></p>
+                            <ul>
+                                <li><strong>Акционерный краудинвестинг</strong> — инвестор получает долю в капитале компании.</li>
+                                <li><strong>Долговой краудинвестинг (P2P-кредитование)</strong> — инвестор выдает займ компании под определенный процент.</li>
+                                <li><strong>Краудинвестинг в недвижимость</strong> — коллективные инвестиции в объекты недвижимости.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Краудинвестинг подходит для опытных инвесторов, готовых к высоким рискам и желающих диверсифицировать свой инвестиционный портфель альтернативными инструментами.
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
-            
+
+            <!-- Сравнение форм коллективных инвестиций -->
             <section class="section-card">
-                <h3 class="section-title">Преимущества коллективных инвестиций</h3>
-                <ul class="features-list">
-                    <li class="features-item">
-                        <i class="fas fa-users"></i>
+                <h3 class="section-title">Сравнение форм коллективных инвестиций</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Критерий</th>
+                                <th>ПИФы</th>
+                                <th>ETF/БПИФ</th>
+                                <th>НПФ</th>
+                                <th>ИСЖ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Минимальная сумма</td>
+                                <td>От 1 000 руб.</td>
+                                <td>Стоимость 1 пая</td>
+                                <td>От 1 000 руб.</td>
+                                <td>От 30 000 руб.</td>
+                            </tr>
+                            <tr>
+                                <td>Ликвидность</td>
+                                <td>Средняя (зависит от типа)</td>
+                                <td>Высокая</td>
+                                <td>Низкая</td>
+                                <td>Низкая</td>
+                            </tr>
+                            <tr>
+                                <td>Доходность</td>
+                                <td>Средняя-высокая</td>
+                                <td>Средняя-высокая</td>
+                                <td>Низкая-средняя</td>
+                                <td>Низкая-средняя</td>
+                            </tr>
+                            <tr>
+                                <td>Риск</td>
+                                <td>Средний-высокий</td>
+                                <td>Средний-высокий</td>
+                                <td>Низкий-средний</td>
+                                <td>Низкий-средний</td>
+                            </tr>
+                            <tr>
+                                <td>Комиссии</td>
+                                <td>1-3% годовых</td>
+                                <td>0.5-1.5% годовых</td>
+                                <td>0.5-2% годовых</td>
+                                <td>2-4% годовых</td>
+                            </tr>
+                            <tr>
+                                <td>Налоговые льготы</td>
+                                <td>Нет</td>
+                                <td>Нет</td>
+                                <td>Да</td>
+                                <td>Да</td>
+                            </tr>
+                            <tr>
+                                <td>Срок инвестирования</td>
+                                <td>Любой</td>
+                                <td>Любой</td>
+                                <td>Долгосрочный</td>
+                                <td>3-5 лет</td>
+                            </tr>
+                            <tr>
+                                <td>Страхование</td>
+                                <td>Нет</td>
+                                <td>Нет</td>
+                                <td>Частично</td>
+                                <td>Да</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Как выбрать инвестиционный фонд -->
+            <section class="section-card">
+                <h3 class="section-title">Как выбрать инвестиционный фонд</h3>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    Выбор правильного инвестиционного фонда — важный шаг на пути к успешным инвестициям. Вот ключевые критерии, на которые стоит обратить внимание:
+                </p>
+
+                <ul class="tips-list">
+                    <li class="tips-item">
+                        <i class="fas fa-bullseye"></i>
                         <div>
-                            <strong>Профессиональное управление:</strong>
-                            <p>Управляющие компании имеют опыт и доступ к аналитическим данным.</p>
+                            <strong>Определите свои цели и горизонт инвестирования</strong>
+                            <p>Долгосрочные цели (пенсия, образование детей) требуют иных фондов, чем краткосрочные задачи (покупка автомобиля через 2-3 года).</p>
                         </div>
                     </li>
-                    <li class="features-item">
-                        <i class="fas fa-chart-pie"></i>
+                    <li class="tips-item">
+                        <i class="fas fa-chart-line"></i>
                         <div>
-                            <strong>Диверсификация рисков:</strong>
-                            <p>Средства распределяются между различными активами, снижая риск потерь.</p>
+                            <strong>Оцените исторические показатели доходности</strong>
+                            <p>Сравните доходность фонда с бенчмарком (эталонным индексом) за разные периоды. Не ориентируйтесь только на краткосрочные результаты.</p>
                         </div>
                     </li>
-                    <li class="features-item">
-                        <i class="fas fa-hand-holding-usd"></i>
+                    <li class="tips-item">
+                        <i class="fas fa-coins"></i>
                         <div>
-                            <strong>Доступ к крупным проектам:</strong>
-                            <p>Объединение средств позволяет участвовать в масштабных инвестициях.</p>
+                            <strong>Изучите комиссии и расходы</strong>
+                            <p>Обращайте внимание на комиссию за управление, надбавки при покупке и скидки при продаже паев. Высокие комиссии существенно снижают итоговую доходность.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-user-tie"></i>
+                        <div>
+                            <strong>Проверьте управляющую компанию</strong>
+                            <p>Оцените репутацию, опыт, размер активов под управлением и квалификацию команды управляющих.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-wallet"></i>
+                        <div>
+                            <strong>Рассмотрите состав и структуру активов</strong>
+                            <p>Изучите, во что инвестирует фонд, насколько диверсифицирован портфель и соответствует ли это вашей стратегии.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Проанализируйте риски</strong>
+                            <p>Оцените волатильность фонда, максимальные исторические падения и то, как фонд проявлял себя в кризисные периоды.</p>
                         </div>
                     </li>
                 </ul>
             </section>
-            
+
+            <!-- Калькулятор доходности инвестиционного фонда -->
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <!-- Тест: Какой фонд выбрать? -->
-                    <div class="calculator">
-                        <h4>Тест: Какой фонд выбрать?</h4>
-                        <form id="fund-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="fund-type" value="pif"> Паевой инвестиционный фонд (ПИФ)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="fund-type" value="aif"> Акционерный инвестиционный фонд (АИФ)
-                                </label>
-                            </div>
-                            <button type="button" id="check-fund-btn">Проверить</button>
-                            <div id="fund-test-result" class="result"></div>
-                        </form>
+                <h3 class="section-title">Калькулятор доходности инвестиционного фонда</h3>
+                <p style="text-align: justify; margin-bottom: 1.5rem;">
+                    Рассчитайте потенциальную доходность инвестиций в ПИФ или ETF с учетом разных сценариев развития рынка.
+                </p>
+                
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="initial-investment">Начальная инвестиция (руб.):</label>
+                        <input type="number" id="initial-investment" min="1000" value="100000">
                     </div>
-            
-                    <!-- Калькулятор доходности ПИФа -->
-                    <div class="calculator">
-                        <h4>Калькулятор доходности ПИФа</h4>
-                        <input type="number" id="investment-amount" placeholder="Сумма инвестиции (руб)">
-                        <input type="number" id="return-rate" placeholder="Процентная ставка (%)">
-                        <button type="button" id="calculate-pif-btn">Рассчитать</button>
-                        <div id="pif-income-result" class="result"></div>
+                    <div class="form-group">
+                        <label for="monthly-contribution">Ежемесячное пополнение (руб.):</label>
+                        <input type="number" id="monthly-contribution" min="0" value="10000">
+                    </div>
+                    <div class="form-group">
+                        <label for="investment-period">Срок инвестирования (лет):</label>
+                        <input type="number" id="investment-period" min="1" max="40" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="expected-return">Ожидаемая годовая доходность (%):</label>
+                        <input type="number" id="expected-return" min="1" max="30" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="management-fee">Комиссия за управление (% годовых):</label>
+                        <input type="number" id="management-fee" min="0" max="10" step="0.1" value="1.5">
+                    </div>
+                    
+                    <button id="calculate-fund">Рассчитать</button>
+                    <div id="fund-result" class="result"></div>
+                </div>
+                
+                <div class="chart-container" id="fund-chart">
+                    <!-- Здесь будет график роста инвестиций в фонд -->
+                </div>
+            </section>
+
+            <!-- Частые вопросы -->
+            <section class="section-card">
+                <h3 class="section-title">Частые вопросы о коллективных инвестициях</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как начать инвестировать в ПИФы или ETF?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Для начала инвестирования в ПИФы или ETF вам потребуется:
+                            </p>
+                            <ol>
+                                <li><strong>Выбрать брокера или управляющую компанию.</strong> Для покупки ETF и БПИФов нужен брокерский счет, для ПИФов можно обратиться напрямую в управляющую компанию.</li>
+                                <li><strong>Открыть счет.</strong> Заполните анкету и пройдите процедуру идентификации (часто можно сделать онлайн).</li>
+                                <li><strong>Пополнить счет.</strong> Внесите сумму, которую планируете инвестировать.</li>
+                                <li><strong>Выбрать фонд.</strong> Определитесь с типом фонда и конкретным инструментом.</li>
+                                <li><strong>Совершить покупку.</strong> ETF и БПИФ покупаются как акции через торговый терминал, паи ПИФа — через подачу заявки.</li>
+                            </ol>
+                            <p style="margin-top: 0.75rem;">
+                                Большинство крупных брокеров и банков предлагают удобные мобильные приложения для инвестирования, что делает процесс максимально простым.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как налогообложаются доходы от инвестиций в фонды?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Налогообложение доходов от инвестиций в фонды в России:
+                            </p>
+                            <ul>
+                                <li><strong>ПИФы:</strong> НДФЛ 13% с разницы между ценой покупки и продажи паев. Налоговым агентом выступает управляющая компания, которая удерживает налог при продаже паев.</li>
+                                <li><strong>ETF и БПИФ:</strong> НДФЛ 13% с дохода от продажи и с полученных дивидендов. Налоговым агентом является брокер.</li>
+                                <li><strong>НПФ:</strong> Пенсионные выплаты не облагаются НДФЛ. Взносы в НПФ могут дать право на налоговый вычет (13% от суммы взносов, но не более 15 600 руб. в год).</li>
+                                <li><strong>ИСЖ:</strong> При сроке владения полисом более 5 лет доход не облагается НДФЛ. Также возможен налоговый вычет на взносы до 120 000 руб. в год.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Важно: инвестиции через индивидуальный инвестиционный счет (ИИС) могут дать дополнительные налоговые льготы (вычет до 52 000 руб. в год или освобождение от налога на доходы).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Чем ETF лучше обычных ПИФов?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                ETF (биржевые инвестиционные фонды) имеют ряд преимуществ перед обычными ПИФами:
+                            </p>
+                            <ul>
+                                <li><strong>Более низкие комиссии.</strong> ETF обычно имеют меньшие комиссии за управление (0.5-1.5% против 1-3% у ПИФов).</li>
+                                <li><strong>Высокая ликвидность.</strong> ETF можно купить и продать в любой торговый день по рыночной цене, тогда как для продажи паев некоторых ПИФов могут быть ограничения.</li>
+                                <li><strong>Прозрачность.</strong> Состав ETF известен и обновляется ежедневно, что позволяет точно знать, во что вы инвестируете.</li>
+                                <li><strong>Отсутствие надбавок и скидок.</strong> При покупке и продаже ETF вы платите только комиссию брокеру, тогда как ПИФы могут взимать дополнительные сборы.</li>
+                                <li><strong>Возможность торговли в течение дня.</strong> Цена ETF меняется в течение торговой сессии, что дает возможность использовать внутридневные колебания.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Однако обычные ПИФы тоже имеют свои преимущества: более широкий выбор активных стратегий и иногда лучший доступ к некоторым рынкам.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Какие риски связаны с коллективными инвестициями?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>
+                                Коллективные инвестиции, как и любые другие, сопряжены с определенными рисками:
+                            </p>
+                            <ul>
+                                <li><strong>Рыночный риск.</strong> Стоимость активов фонда может снижаться из-за общих изменений на рынке.</li>
+                                <li><strong>Риск управления.</strong> Решения управляющих могут оказаться неудачными и привести к потере части капитала.</li>
+                                <li><strong>Ликвидационный риск.</strong> В некоторых случаях (особенно для закрытых фондов) может быть сложно продать паи в желаемый момент.</li>
+                                <li><strong>Валютный риск.</strong> Для фондов, инвестирующих в зарубежные активы, колебания курсов валют могут влиять на стоимость пая.</li>
+                                <li><strong>Кредитный риск.</strong> Для фондов облигаций существует риск дефолта эмитентов.</li>
+                                <li><strong>Риск инфляции.</strong> Доходность инвестиций может не перекрывать инфляцию, что ведет к снижению покупательной способности вложенных средств.</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">
+                                Для минимизации рисков рекомендуется диверсифицировать инвестиции между разными типами фондов и классами активов, а также инвестировать на долгосрочной основе.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
-            
-            <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда изучайте условия фонда перед инвестированием.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Диверсифицируйте инвестиции, чтобы снизить риски.
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Регулярно отслеживайте результаты работы фонда.
-                    </li>
-                </ul>
-            </section>
-            <script>
-                // Проверка теста: Какой фонд выбрать?
-                document.getElementById('check-fund-btn').addEventListener('click', () => {
-                    const selected = document.querySelector('input[name="fund-type"]:checked');
-                    const resultElement = document.getElementById('fund-test-result');
-            
-                    if (selected && selected.value === 'pif') {
-                        resultElement.textContent = '✅ Верно! ПИФы подходят для начинающих инвесторов.';
-                        resultElement.className = 'result success';
-                    } else {
-                        resultElement.textContent = '❌ Неверно. ПИФы чаще всего выбирают начинающие инвесторы.';
-                        resultElement.className = 'result error';
-                    }
+        </main>
+    </div>
+
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script>
+        // Аккордеон
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = content.classList.contains('active');
+                
+                // Закрываем все активные аккордеоны
+                document.querySelectorAll('.accordion-content').forEach(item => {
+                    item.classList.remove('active');
                 });
-            
-                // Расчет доходности ПИФа
-                document.getElementById('calculate-pif-btn').addEventListener('click', () => {
-                    const investmentAmount = parseFloat(document.getElementById('investment-amount').value);
-                    const returnRate = parseFloat(document.getElementById('return-rate').value);
-                    const resultElement = document.getElementById('pif-income-result');
-            
-                    if (!isNaN(investmentAmount) && !isNaN(returnRate)) {
-                        const income = (investmentAmount * returnRate) / 100;
-                        resultElement.textContent = `💰 Доход по ПИФу: ${income.toFixed(2)} руб.`;
-                        resultElement.className = 'result success';
-                    } else {
-                        resultElement.textContent = '⚠️ Пожалуйста, введите корректные значения.';
-                        resultElement.className = 'result error';
-                    }
-                });
-            
-                // Аккордеон
+                
                 document.querySelectorAll('.accordion-header').forEach(header => {
-                    header.addEventListener('click', () => {
-                        const content = header.nextElementSibling;
-                        const icon = header.querySelector('i');
-                        header.classList.toggle('active');
-                        content.classList.toggle('active');
-                        icon.classList.toggle('fa-chevron-up');
-                        icon.classList.toggle('fa-chevron-down');
-                    });
+                    header.classList.remove('active');
                 });
-            </script>
+                
+                // Если текущий аккордеон был неактивен, открываем его
+                if (!isActive) {
+                    content.classList.add('active');
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Кнопка "наверх"
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Прогресс-бар
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.pageYOffset / windowHeight * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Калькулятор доходности инвестиционного фонда
+        document.getElementById('calculate-fund').addEventListener('click', () => {
+            const initialInvestment = parseFloat(document.getElementById('initial-investment').value);
+            const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value);
+            const investmentPeriod = parseInt(document.getElementById('investment-period').value);
+            const expectedReturn = parseFloat(document.getElementById('expected-return').value) / 100;
+            const managementFee = parseFloat(document.getElementById('management-fee').value) / 100;
+            
+            // Проверка валидности введенных данных
+            if (isNaN(initialInvestment) || isNaN(monthlyContribution) || isNaN(investmentPeriod) || 
+                isNaN(expectedReturn) || isNaN(managementFee)) {
+                document.getElementById('fund-result').innerHTML = 'Пожалуйста, заполните все поля корректно.';
+                document.getElementById('fund-result').className = 'result error';
+                return;
+            }
+            
+            // Расчет чистой доходности с учетом комиссии
+            const netReturn = expectedReturn - managementFee;
+            const monthlyReturn = Math.pow(1 + netReturn, 1/12) - 1;
+            
+            // Расчет итоговой суммы
+            let totalAmount = initialInvestment;
+            let yearlyValues = [initialInvestment];
+            let totalContributions = initialInvestment;
+            
+            for (let month = 1; month <= investmentPeriod * 12; month++) {
+                totalAmount = totalAmount * (1 + monthlyReturn) + monthlyContribution;
+                totalContributions += monthlyContribution;
+                
+                // Сохраняем значения по годам для графика
+                if (month % 12 === 0) {
+                    yearlyValues.push(Math.round(totalAmount));
+                }
+            }
+            
+            // Расчет для разных сценариев
+            const pessimisticReturn = netReturn - 0.03; // на 3% меньше
+            const optimisticReturn = netReturn + 0.03; // на 3% больше
+            
+            let pessimisticAmount = initialInvestment;
+            let optimisticAmount = initialInvestment;
+            
+            for (let month = 1; month <= investmentPeriod * 12; month++) {
+                pessimisticAmount = pessimisticAmount * (1 + pessimisticReturn/12) + monthlyContribution;
+                optimisticAmount = optimisticAmount * (1 + optimisticReturn/12) + monthlyContribution;
+            }
+            
+            // Отображение результатов
+            document.getElementById('fund-result').innerHTML = `
+                <p>Параметры расчета:</p>
+                <p>- Начальная инвестиция: ${initialInvestment.toLocaleString()} руб.</p>
+                <p>- Ежемесячное пополнение: ${monthlyContribution.toLocaleString()} руб.</p>
+                <p>- Срок инвестирования: ${investmentPeriod} лет</p>
+                <p>- Ожидаемая доходность (за вычетом комиссии): ${(netReturn * 100).toFixed(2)}% годовых</p>
+                <p><strong>Результаты:</strong></p>
+                <p>- Базовый сценарий: ${Math.round(totalAmount).toLocaleString()} руб.</p>
+                <p>- Пессимистичный сценарий (-3%): ${Math.round(pessimisticAmount).toLocaleString()} руб.</p>
+                <p>- Оптимистичный сценарий (+3%): ${Math.round(optimisticAmount).toLocaleString()} руб.</p>
+                <p>- Всего внесено: ${Math.round(totalContributions).toLocaleString()} руб.</p>
+                <p>- Доход от инвестиций: ${Math.round(totalAmount - totalContributions).toLocaleString()} руб.</p>
+            `;
+            document.getElementById('fund-result').className = 'result success';
+            
+            // Отображение графика роста инвестиций
+            renderFundChart(yearlyValues, investmentPeriod);
+        });
+
+        // Функция для отображения графика роста инвестиций
+        function renderFundChart(yearlyValues, years) {
+            const chartContainer = document.getElementById('fund-chart');
+            chartContainer.innerHTML = '';
+            
+            const maxValue = Math.max(...yearlyValues);
+            const chartHeight = 250;
+            
+            // Создаем столбцы для каждого года
+            for (let i = 0; i < yearlyValues.length; i++) {
+                const barHeight = (yearlyValues[i] / maxValue) * chartHeight;
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = '0'; // Начальная высота для анимации
+                bar.style.left = `${i * (100 / (yearlyValues.length - 1))}%`;
+                bar.style.transform = 'translateX(-50%)';
+                
+                // Добавляем подпись со значением
+                const valueLabel = document.createElement('div');
+                valueLabel.style.position = 'absolute';
+                valueLabel.style.bottom = `${barHeight + 10}px`;
+                valueLabel.style.left = '50%';
+                valueLabel.style.transform = 'translateX(-50%)';
+                valueLabel.style.fontSize = '0.8rem';
+                valueLabel.style.fontWeight = '500';
+                valueLabel.textContent = yearlyValues[i].toLocaleString();
+                
+                bar.appendChild(valueLabel);
+                chartContainer.appendChild(bar);
+                
+                // Анимация роста столбцов
+                setTimeout(() => {
+                    bar.style.height = `${barHeight}px`;
+                }, 100 * i);
+            }
+            
+            // Добавляем подписи лет
+            const chartLabels = document.createElement('div');
+            chartLabels.className = 'chart-labels';
+            
+            for (let i = 0; i <= years; i++) {
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = `Год ${i}`;
+                chartLabels.appendChild(label);
+            }
+            
+            chartContainer.appendChild(chartLabels);
+        }
+    </script>
+</body>
+</html>
