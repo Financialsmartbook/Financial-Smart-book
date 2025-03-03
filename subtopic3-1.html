@@ -11,14 +11,22 @@
             --primary: #6366f1;
             --secondary: #4f46e5;
             --accent: #818cf8;
+            --accent-light: #c7d2fe;
             --background: #f8fafc;
+            --card-bg: #ffffff;
             --text-dark: #1e293b;
             --text-light: #f1f5f9;
+            --text-muted: #64748b;
             --glass: rgba(255, 255, 255, 0.9);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --border-radius: 1.25rem;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -41,18 +49,89 @@
             padding: 2rem;
         }
 
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero-section {
             position: relative;
             margin: 2rem 0 4rem;
             padding: 4rem 2rem;
             background: var(--gradient);
-            border-radius: 2rem;
+            border-radius: var(--border-radius);
             color: white;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
         }
 
         .hero-content {
@@ -61,42 +140,68 @@
         }
 
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
         }
 
         .hero-description {
             font-size: 1.2rem;
             opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .hero-image {
             width: 400px;
             filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
             transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-10px);
         }
 
         /* Sections */
         .section-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
         .section-title {
             color: var(--text-dark);
             margin-bottom: 1.5rem;
             position: relative;
+            font-weight: 700;
         }
 
         .section-title::after {
@@ -107,6 +212,7 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
         }
 
         /* Features List */
@@ -114,39 +220,49 @@
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .features-item {
-            padding: 1.2rem;
+            padding: 1.5rem;
             background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: 1.25rem;
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .features-item:hover {
             transform: translateX(5px);
+            background: rgba(99, 102, 241, 0.08);
         }
 
         .features-item i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-top: 3px;
             flex-shrink: 0;
+            background: var(--accent-light);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
         }
 
         /* Accordion */
         .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -159,19 +275,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(99, 102, 241, 0.05);
+            transition: var(--transition);
+            font-weight: 600;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-header .icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .icon {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -188,16 +313,50 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
         }
 
         input[type="number"],
-        input[type="text"] {
+        input[type="text"],
+        select {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            border-radius: 0.5rem 0 0 0.5rem;
+            border-right: none;
+        }
+
+        .input-group-append {
+            background: #e2e8f0;
+            padding: 0.8rem 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         button {
@@ -207,13 +366,15 @@
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
         }
 
         button:hover {
             background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         /* Results */
@@ -222,6 +383,7 @@
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            display: none;
         }
 
         .success {
@@ -241,30 +403,309 @@
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
             background: rgba(248, 249, 255, 0.8);
             border-radius: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            transform: translateX(5px);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            background: var(--accent-light);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-feature {
+            color: var(--success);
+        }
+
+        .comparison-missing {
+            color: var(--error);
+        }
+
+        /* Calculator */
+        .calculator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .calculator-result {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .result-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+            margin: 1rem 0;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            margin-left: 0.5rem;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            background: var(--gradient);
+            color: white;
+            padding: 3rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.9;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
         }
 
         /* Mobile Adaptation */
+        @media (max-width: 1024px) {
+            .calculator-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
 
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+                padding: 2rem 1rem 3rem;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
             }
 
             .hero-image {
@@ -276,12 +717,30 @@
                 padding: 1.5rem;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
         @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
             .hero-image {
                 width: 100%;
             }
@@ -290,15 +749,36 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            .calculator-result {
+                padding: 1.5rem;
+            }
+            
+            .result-amount {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-piggy-bank"></i>
+                ФинГрамотность
+            </div>
+            <div class="nav-links">
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
         <header class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title">3.1. Банковский вклад: как открыть и какой выбрать</h1>
-                <p class="hero-description">Узнайте о преимуществах банковских вкладов и научитесь выбирать подходящий.</p>
+                <p class="hero-description">Узнайте о преимуществах банковских вкладов и научитесь выбирать подходящий для достижения ваших финансовых целей.</p>
+                <a href="#calculator" class="hero-btn">Рассчитать доходность</a>
             </div>
             <img src="deposit.png" alt="Банковский вклад" class="hero-image">
         </header>
@@ -308,6 +788,7 @@
                 <h2 class="section-title">Что такое банковский вклад?</h2>
                 <p><strong>Банковский вклад (депозит)</strong> – это форма накопления свободных денежных средств с целью получения пассивного дохода в виде процентов.</p>
                 <p>Банк использует ваши средства для выдачи кредитов другим клиентам, а вы получаете проценты за то, что временно предоставили свои деньги банку.</p>
+                <p>Это один из самых надежных финансовых инструментов, особенно с учетом системы страхования вкладов, которая защищает ваши сбережения в пределах 1,4 млн рублей в большинстве банков РФ.</p>
             </section>
 
             <section class="section-card">
@@ -317,24 +798,77 @@
                         <i class="fas fa-shield-alt"></i>
                         <div>
                             <strong>Надежность:</strong>
-                            <p>Вклады застрахованы государством.</p>
+                            <p>Вклады застрахованы государственной системой страхования вкладов, что гарантирует сохранность ваших средств даже в случае проблем у банка.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-percentage"></i>
                         <div>
                             <strong>Пассивный доход:</strong>
-                            <p>Получайте проценты без активного участия.</p>
+                            <p>Получайте проценты без активного участия. Деньги работают на вас, а не вы на деньги.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-piggy-bank"></i>
                         <div>
                             <strong>Накопления:</strong>
-                            <p>Помогает накопить на крупные покупки.</p>
+                            <p>Помогает сформировать финансовую дисциплину и накопить на крупные покупки или создать финансовую подушку безопасности.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-coins"></i>
+                        <div>
+                            <strong>Доступность:</strong>
+                            <p>Минимальная сумма для открытия вклада часто начинается от 1000 рублей, что делает этот инструмент доступным практически для каждого.</p>
                         </div>
                     </li>
                 </ul>
+            </section>
+
+            <section class="section-card">
+                <h3 class="section-title">Типы банковских вкладов</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Параметр</th>
+                            <th>Срочный вклад</th>
+                            <th>Вклад до востребования</th>
+                            <th>Накопительный счет</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Процентная ставка</td>
+                            <td>Высокая</td>
+                            <td>Низкая</td>
+                            <td>Средняя</td>
+                        </tr>
+                        <tr>
+                            <td>Возможность пополнения</td>
+                            <td>Иногда <i class="fas fa-check comparison-feature"></i></td>
+                            <td>Да <i class="fas fa-check comparison-feature"></i></td>
+                            <td>Да <i class="fas fa-check comparison-feature"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Возможность снятия</td>
+                            <td>С потерей процентов <i class="fas fa-times comparison-missing"></i></td>
+                            <td>В любой момент <i class="fas fa-check comparison-feature"></i></td>
+                            <td>С ограничениями <i class="fas fa-check comparison-feature"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Срок</td>
+                            <td>Фиксированный</td>
+                            <td>Без ограничений</td>
+                            <td>Без ограничений</td>
+                        </tr>
+                        <tr>
+                            <td>Капитализация процентов</td>
+                            <td>Возможна <i class="fas fa-check comparison-feature"></i></td>
+                            <td>Редко <i class="fas fa-times comparison-missing"></i></td>
+                            <td>Обычно есть <i class="fas fa-check comparison-feature"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
 
             <section class="section-card">
@@ -343,193 +877,245 @@
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Шаг 1: Выбор банка</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Проверьте лицензию банка и его рейтинг надежности.</p>
+                            <p>При выборе банка обратите внимание на следующие моменты:</p>
+                            <ul>
+                                <li>Наличие лицензии ЦБ РФ</li>
+                                <li>Участие в системе страхования вкладов</li>
+                                <li>Рейтинг надежности банка</li>
+                                <li>Отзывы клиентов</li>
+                                <li>Удобство обслуживания (наличие мобильного приложения, сеть отделений)</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Шаг 2: Выбор типа вклада</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Определитесь с целями: срочный вклад или вклад до востребования.</p>
+                            <p>Определитесь с целями размещения средств:</p>
+                            <ul>
+                                <li><strong>Срочный вклад</strong> - подходит для получения максимального дохода, если вы точно знаете, что не потребуется снимать деньги до окончания срока</li>
+                                <li><strong>Вклад до востребования</strong> - если важна возможность снять деньги в любой момент</li>
+                                <li><strong>Накопительный счет</strong> - промежуточный вариант, сочетающий относительно высокую доходность и возможность частичного снятия</li>
+                            </ul>
+                            <p>Также обратите внимание на условия: минимальную сумму, срок, возможность пополнения и капитализацию процентов.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Шаг 3: Оформление</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Оформите вклад онлайн или в отделении банка.</p>
+                            <p>Для открытия вклада вам понадобятся:</p>
+                            <ul>
+                                <li>Паспорт</li>
+                                <li>Сумма для внесения на вклад</li>
+                            </ul>
+                            <p>Вы можете оформить вклад:</p>
+                            <ul>
+                                <li>В отделении банка</li>
+                                <li>Через интернет-банк</li>
+                                <li>В мобильном приложении (у большинства крупных банков)</li>
+                            </ul>
+                            <p>После оформления вы получите договор банковского вклада, который нужно хранить до закрытия вклада.</p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section id="calculator" class="section-card">
+                <h3 class="section-title">Калькулятор доходности вклада</h3>
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="deposit-amount">Сумма вклада (₽)</label>
+                        <input type="number" id="deposit-amount" min="1000" value="100000">
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-term">Срок вклада (месяцев)</label>
+                        <input type="number" id="deposit-term" min="1" max="60" value="12">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest-rate">Процентная ставка (%)</label>
+                        <div class="input-group">
+                            <input type="number" id="interest-rate" min="0.1" max="20" step="0.1" value="7.5">
+                            <div class="input-group-append">%</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="capitalization">Капитализация процентов</label>
+                        <select id="capitalization">
+                            <option value="none">Нет</option>
+                            <option value="monthly">Ежемесячно</option>
+                            <option value="quarterly">Ежеквартально</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="calculate-btn">Рассчитать доход</button>
+                <div class="calculator-result">
+                    <div>Ваш доход составит:</div>
+                    <div class="result-amount">7 500 ₽</div>
+                    <div>Итоговая сумма: <strong>107 500 ₽</strong></div>
                 </div>
             </section>
 
             <section class="section-card">
                 <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <div class="section-card">
-                        <h4>Тест: Выбор вклада</h4>
-                        <form id="deposit-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="deposit-type" value="demand"> Вклад до востребования
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="deposit-type" value="fixed"> Срочный вклад
-                                </label>
-                            </div>
-                            <button type="button" id="check-deposit-btn">Проверить</button>
-                            <div id="deposit-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <div class="section-card">
-                        <h4>Калькулятор вклада</h4>
-                        <form id="deposit-calculator">
-                            <div class="form-group">
-                                <label for="deposit-amount">Сумма вклада (руб):</label>
-                                <input type="number" id="deposit-amount" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="interest-rate">Процентная ставка (%):</label>
-                                <input type="number" id="interest-rate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="deposit-term">Срок вклада (месяцы):</label>
-                                <input type="number" id="deposit-term" required>
-                            </div>
-                            <button type="button" id="calculate-deposit-btn">Рассчитать</button>
-                            <div id="calculator-result" class="result"></div>
-                        </form>
-                    </div>
-
-                    <div class="section-card">
-                        <h4>Проверка знаний</h4>
-                        <form id="knowledge-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="knowledge" value="insurance"> Вклады застрахованы государством
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="knowledge" value="rate"> Процентная ставка по вкладам выше, чем по кредитам
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="knowledge" value="demand"> Вклад до востребования имеет высокую процентную ставку
-                                </label>
-                            </div>
-                            <button type="button" id="check-knowledge-btn">Проверить</button>
-                            <div id="knowledge-result" class="result"></div>
-                        </form>
-                    </div>
+                <div class="section-card">
+                    <h4>Тест: Выбор вклада</h4>
+                    <p>Какой тип вклада подойдет, если вы хотите получить максимальный доход и уверены, что не понадобится снимать деньги в ближайшее время?</p>
+                    <form id="deposit-test">
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="deposit-type" value="demand"> Вклад до востребования
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="deposit-type" value="fixed"> Срочный вклад
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="deposit-type" value="saving"> Накопительный счет
+                            </label>
+                        </div>
+                        <button type="button" id="check-deposit-btn">Проверить</button>
+                        <div id="test-result" class="result"></div>
+                    </form>
                 </div>
             </section>
 
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
+                <h3 class="section-title">Советы по выбору вклада</h3>
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте рейтинг надежности банка перед открытием вклада.
+                        <i class="fas fa-search"></i>
+                        <div>
+                            <strong>Сравнивайте предложения</strong>
+                            <p>Не ограничивайтесь одним банком. Сравните условия нескольких банков перед принятием решения.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Внимательно читайте условия договора, особенно пункты о досрочном расторжении.
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <strong>Учитывайте срок вклада</strong>
+                            <p>Чем дольше срок, тем выше ставка. Но убедитесь, что вы не будете нуждаться в этих деньгах до окончания срока.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <strong>Обращайте внимание на капитализацию</strong>
+                            <p>Вклад с капитализацией процентов может быть выгоднее, даже если базовая ставка немного ниже.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <div>
+                            <strong>Не превышайте сумму страхования</strong>
+                            <p>Размещайте в одном банке не более суммы, застрахованной АСВ (сейчас это 1,4 млн рублей).</p>
+                        </div>
                     </li>
                 </ul>
             </section>
-        </main>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+            <section class="section-card">
+                <h3 class="section-title">Часто задаваемые вопросы</h3>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <p class="faq-question">Что происходит с вкладом после окончания срока?</p>
+                        <p>Если вы не закрыли вклад, то в зависимости от условий договора он может быть автоматически продлен на тот же срок по текущей ставке или переведен на вклад до востребования с более низкой ставкой.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-question">Облагаются ли проценты по вкладам налогом?</p>
+                        <p>Да, с процентного дохода по вкладам, превышающего необлагаемый минимум, взимается налог 13% (для налоговых резидентов) или 15% (для нерезидентов).</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-question">Можно ли снять деньги со срочного вклада досрочно?</p>
+                        <p>Да, но в большинстве случаев вы потеряете проценты. Обычно при досрочном снятии банк начисляет проценты по ставке вклада до востребования.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-question">Что делать, если банк обанкротился?</p>
+                        <p>Если банк участвует в системе страхования вкладов, вы получите возмещение в размере 100% вклада, но не более 1,4 млн рублей, включая проценты.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
+
+    
     <script>
-        // JavaScript для интерактивных заданий
-        document.getElementById('check-deposit-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="deposit-type"]:checked');
-            const result = document.getElementById('deposit-result');
-            
-            if (selected && selected.value === 'fixed') {
-                result.textContent = '✅ Правильно! Срочный вклад обычно предлагает более высокие проценты.';
-                result.className = 'result success';
-            } else {
-                result.textContent = '❌ Неверно. Срочный вклад обычно выгоднее.';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('calculate-deposit-btn').addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('deposit-amount').value);
-            const rate = parseFloat(document.getElementById('interest-rate').value);
-            const term = parseFloat(document.getElementById('deposit-term').value);
-            const result = document.getElementById('calculator-result');
-
-            if (!isNaN(amount) && !isNaN(rate) && !isNaN(term)) {
-                const interest = amount * (rate / 100) * (term / 12);
-                const total = amount + interest;
-                result.textContent = `💰 Итоговая сумма: ${total.toFixed(2)} руб.`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('check-knowledge-btn').addEventListener('click', () => {
-            const selected = Array.from(document.querySelectorAll('input[name="knowledge"]:checked'))
-                                .map(input => input.value);
-            const correctAnswers = ['insurance'];
-            const result = document.getElementById('knowledge-result');
-
-            if (selected.length === 0) {
-                result.textContent = '❌ Выберите хотя бы один вариант';
-                result.className = 'result error';
-                return;
-            }
-
-            const isCorrect = selected.every(answer => correctAnswers.includes(answer)) 
-                            && selected.length === correctAnswers.length;
-
-            if (isCorrect) {
-                result.textContent = '✅ Все верно! Вклады действительно застрахованы государством.';
-                result.className = 'result success';
-            } else {
-                result.textContent = '❌ Не все ответы правильные';
-                result.className = 'result error';
-            }
-        });
-                // Аккордеон
-                document.querySelectorAll('.accordion-header').forEach(button => {
-            button.addEventListener('click', () => {
-                const item = button.closest('.accordion-item');
-                const isOpen = item.classList.contains('open');
-                
-                document.querySelectorAll('.accordion-item').forEach(el => {
-                    el.classList.remove('open');
-                    el.querySelector('.accordion-content').style.maxHeight = null;
-                });
-
-                if (!isOpen) {
-                    item.classList.add('open');
-                    const content = item.querySelector('.accordion-content');
-                    content.style.maxHeight = content.scrollHeight + 'px';
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                header.classList.toggle('active');
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
                 }
             });
         });
 
+        // Deposit test
+        document.getElementById('check-deposit-btn').addEventListener('click', () => {
+            const selected = document.querySelector('input[name="deposit-type"]:checked');
+            const resultDiv = document.getElementById('test-result');
+            
+            if (!selected) {
+                resultDiv.textContent = 'Пожалуйста, выберите один из вариантов';
+                resultDiv.className = 'result error';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            if (selected.value === 'fixed') {
+                resultDiv.textContent = 'Верно! Срочный вклад обеспечивает максимальный доход при условии сохранения средств на весь срок.';
+                resultDiv.className = 'result success';
+            } else {
+                resultDiv.textContent = 'Неверно. Срочный вклад обеспечивает максимальный доход при условии сохранения средств на весь срок.';
+                resultDiv.className = 'result error';
+            }
+            resultDiv.style.display = 'block';
+        });
+
+        // Calculator
+        document.getElementById('calculate-btn').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const term = parseInt(document.getElementById('deposit-term').value);
+            const rate = parseFloat(document.getElementById('interest-rate').value) / 100;
+            const capitalization = document.getElementById('capitalization').value;
+            
+            let finalAmount = 0;
+            
+            if (capitalization === 'none') {
+                // Simple interest
+                finalAmount = amount * (1 + rate * (term / 12));
+            } else if (capitalization === 'monthly') {
+                // Monthly capitalization
+                finalAmount = amount * Math.pow(1 + rate/12, term);
+            } else if (capitalization === 'quarterly') {
+                // Quarterly capitalization
+                finalAmount = amount * Math.pow(1 + rate/4, term/3);
+            }
+            
+            const profit = finalAmount - amount;
+            
+            document.querySelector('.result-amount').textContent = Math.round(profit).toLocaleString('ru-RU') + ' ₽';
+            document.querySelector('.calculator-result strong').textContent = Math.round(finalAmount).toLocaleString('ru-RU') + ' ₽';
+        });
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
     </script>
 </body>
 </html>

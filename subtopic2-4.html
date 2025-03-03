@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2.3. Что такое финансовое положение и зачем его оценивать</title>
+    <title>2.4. Что такое финансовое положение и зачем его оценивать</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
@@ -19,6 +22,21 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --border-radius: 1.5rem;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #818cf8;
+            --secondary: #6366f1;
+            --accent: #a5b4fc;
+            --background: #0f172a;
+            --text-dark: #f1f5f9;
+            --text-light: #1e293b;
+            --glass: rgba(30, 41, 59, 0.8);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -33,6 +51,23 @@
             background: var(--background);
             color: var(--text-dark);
             overflow-x: hidden;
+            transition: var(--transition);
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--background);
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 20px;
         }
 
         .container {
@@ -41,18 +76,106 @@
             padding: 2rem;
         }
 
+        /* Header & Navigation */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+            background: var(--glass);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+        }
+
         /* Hero Section */
         .hero-section {
             position: relative;
             margin: 2rem 0 4rem;
             padding: 4rem 2rem;
             background: var(--gradient);
-            border-radius: 2rem;
+            border-radius: var(--border-radius);
             color: white;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--card-shadow);
         }
 
         .hero-content {
@@ -70,6 +193,7 @@
         .hero-description {
             font-size: 1.2rem;
             opacity: 0.95;
+            margin-bottom: 2rem;
         }
 
         .hero-image {
@@ -78,25 +202,89 @@
             transition: transform 0.4s ease;
         }
 
+        .hero-image:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-primary {
+            background: white;
+            color: var(--primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-secondary {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .cta-secondary i {
+            transition: var(--transition);
+        }
+
+        .cta-secondary:hover i {
+            transform: translateX(4px);
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+        }
+
         /* Sections */
         .section-card {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
         }
 
         .section-title {
             color: var(--text-dark);
             margin-bottom: 1.5rem;
             position: relative;
+            display: inline-block;
         }
 
         .section-title::after {
@@ -107,6 +295,53 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .section-card:hover .section-title::after {
+            width: 100%;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Features List */
@@ -124,11 +359,15 @@
             display: flex;
             align-items: flex-start;
             gap: 1rem;
-            transition: transform 0.2s ease;
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            cursor: pointer;
         }
 
         .features-item:hover {
             transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
         }
 
         .features-item i {
@@ -136,13 +375,19 @@
             font-size: 1.2rem;
             margin-top: 3px;
             flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .features-item:hover i {
+            transform: scale(1.2);
         }
 
         /* Accordion */
         .accordion {
             background: var(--glass);
-            border-radius: 1.5rem;
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .accordion-item {
@@ -160,18 +405,27 @@
             justify-content: space-between;
             align-items: center;
             background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            transition: var(--transition);
+            font-weight: 500;
         }
 
         .accordion-header:hover {
             background: rgba(99, 102, 241, 0.2);
         }
 
+        .accordion-icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: var(--transition);
         }
 
         .accordion-content.active {
@@ -193,35 +447,137 @@
         input[type="number"],
         input[type="text"] {
             width: 100%;
-            padding: 0.8rem;
+            padding: 1rem;
             border: 2px solid #e2e8f0;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 0.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            color: var(--text-dark);
+            text-align: center;
+            border-radius: 0.5rem;
+            padding: 0.8rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
         }
 
         button {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        button:hover::after {
+            left: 100%;
         }
 
         button:hover {
             background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .cta-button {
+            margin-top: 1.5rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-value {
+            position: absolute;
+            right: 5px;
+            top: -20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
         }
 
         /* Results */
         .result {
             margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
             font-weight: 500;
+            animation: fadeIn 0.5s ease;
         }
 
         .success {
@@ -241,194 +597,1320 @@
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.2rem;
             margin-bottom: 1rem;
             background: rgba(248, 249, 255, 0.8);
             border-radius: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        /* Карточки ключевых показателей */
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-icon {
+            background: var(--gradient);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover .metric-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .metric-value i {
+            font-size: 1.2rem;
+        }
+
+        .metric-title {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-description {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* Калькулятор */
+        .calculator {
+            margin-top: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .inputs-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+            margin: 1rem 0;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Графики */
+        .chart-container {
+            margin: 2rem 0;
+            height: 300px;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .chart-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .chart-tab {
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chart-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Таблица */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .data-table th, 
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table th {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-dark);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr {
+            transition: var(--transition);
+        }
+
+        .data-table tr:hover td {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .data-table td i.trend-up {
+            color: var(--success);
+        }
+
+        .data-table td i.trend-down {
+            color: var(--error);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--background);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .modal-close:hover {
+            color: var(--error);
+            background: none;
+            transform: none;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #64748b;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Анимации */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
         /* Mobile Adaptation */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
+        @media (max-width: 992px) {
+            .metrics-container {
+                grid-template-columns: repeat(2, 1fr);
             }
-
+            
             .hero-section {
                 flex-direction: column;
                 text-align: center;
-                padding: 2rem 1rem;
+                padding: 3rem 1.5rem;
             }
-
+            
+            .hero-content {
+                margin-bottom: 2rem;
+            }
+            
             .hero-image {
-                width: 80%;
-                margin-top: 2rem;
+                width: 300px;
             }
-
-            .section-card {
-                padding: 1.5rem;
-            }
-
+            
             .hero-title {
                 font-size: 2rem;
             }
         }
 
-        @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
             }
-
-            .features-item {
+            
+            .hero-section {
+                margin: 1.5rem 0 3rem;
+            }
+            
+            .metrics-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-card {
+                padding: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
                 flex-direction: column;
-                align-items: flex-start;
+                background: var(--glass);
+                padding: 1rem;
+                gap: 1rem;
+                text-align: center;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .inputs-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .tabs-nav {
+                flex-wrap: wrap;
+            }
+            
+            .chart-tabs {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-image {
+                width: 250px;
+            }
+            
+            .data-table {
+                font-size: 0.9rem;
+            }
+            
+            .data-table th, 
+            .data-table td {
+                padding: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">2.3. Что такое финансовое положение и зачем его оценивать</h1>
-                <p class="hero-description">Узнайте, как оценить свои финансовые возможности и обязательства.</p>
-            </div>
-            <img src="finance.png" alt="Финансовое положение" class="hero-image">
-        </header>
-
-        <main>
-            <section class="section-card">
-                <h2 class="section-title">Что дает оценка своего финансового положения?</h2>
-                <p>Осуществлять грамотное финансовое планирование невозможно без предварительной оценки своего финансового положения. Что же под ним понимают?</p>
-                <p><strong>Финансовое положение</strong> – это объективная оценка ваших финансовых возможностей и финансовых обязательств, то есть оценка того, какими источниками доходов вы располагаете, насколько они стабильны, сколько у вас имеется накоплений и долгов.</p>
-                <button class="cta-button" onclick="location.href='#'">Начать оценку</button>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">Преимущества оценки финансового положения</h3>
-                <ul class="features-list">
-                    <li class="features-item">
-                        <i class="fas fa-chart-line"></i>
-                        <div>
-                            <strong>Лучшее понимание расходов:</strong>
-                            <p>Вы будете четко видеть, на что уходят ваши доходы.</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-hand-holding-usd"></i>
-                        <div>
-                            <strong>Контроль расходов:</strong>
-                            <p>Осознанное управление тратами, избегание импульсивных покупок.</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-piggy-bank"></i>
-                        <div>
-                            <strong>Разумная экономия:</strong>
-                            <p>Возможность накапливать избыточные доходы.</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <div>
-                            <strong>Финансовая безопасность:</strong>
-                            <p>Создание резервов ("подушки безопасности").</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-coins"></i>
-                        <div>
-                            <strong>Пассивный доход:</strong>
-                            <p>Создание источников, где деньги работают на вас.</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-trophy"></i>
-                        <div>
-                            <strong>Расширение целей:</strong>
-                            <p>Повышение качества жизни через новые финансовые цели.</p>
-                        </div>
-                    </li>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-chart-line"></i>
+                ФинАнализ
+            </a>
+            <nav>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#concept" class="nav-link">Что такое финансовое положение</a></li>
+                    <li><a href="#importance" class="nav-link">Зачем оценивать</a></li>
+                    <li><a href="#calculator" class="nav-link">Калькулятор</a></li>
+                    <li><a href="#analytics" class="nav-link">Аналитика</a></li>
                 </ul>
-            </section>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
 
-            <section class="section-card">
-                <h3 class="section-title">Как начать оценку?</h3>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Шаг 1: Сбор информации</span>
-                            <i class="fas fa-chevron-down"></i>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section" data-aos="fade-up">
+            <div class="hero-content">
+                <h1 class="hero-title">Что такое финансовое положение и зачем его оценивать</h1>
+                <p class="hero-description">Узнайте, как правильно анализировать финансовое состояние компании и принимать обоснованные решения с помощью ключевых показателей.</p>
+                <div class="hero-cta">
+                    <a href="#calculator" class="cta-primary">Рассчитать показатели</a>
+                    <a href="#concept" class="cta-secondary">Узнать больше <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <img src="floating-coin.png" alt="Финансовый анализ" class="hero-image">
+            <div class="hero-particles" id="particles"></div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section class="section-card" data-aos="fade-up" id="concept">
+            <h2 class="section-title">Что такое финансовое положение</h2>
+            
+            <div class="tabs">
+                <div class="tab-nav">
+                    <button class="tab-button active" data-tab="tab1">Определение</button>
+                    <button class="tab-button" data-tab="tab2">Компоненты</button>
+                    <button class="tab-button" data-tab="tab3">Подходы к оценке</button>
+                </div>
+                
+                <div class="tab-content active" id="tab1">
+                    <p>Финансовое положение - это комплексная характеристика состояния финансовых ресурсов компании, эффективности их использования и способности компании финансировать свою деятельность на текущий момент и в перспективе.</p>
+                    
+                    <div class="features-list">
+                        <div class="features-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <div>
+                                <strong>Ключевой показатель устойчивости</strong>
+                                <p>Финансовое положение отражает способность компании оставаться стабильной в изменяющихся экономических условиях.</p>
+                            </div>
                         </div>
-                        <div class="accordion-content">
-                            <p>Соберите данные о всех источниках доходов, текущих расходах, накоплениях и обязательствах.</p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Шаг 2: Анализ данных</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>Проанализируйте, на что уходят средства, какие статьи расходов можно оптимизировать.</p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Шаг 3: Планирование</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <p>На основе анализа составьте план улучшения финансового положения.</p>
+                        <div class="features-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <div>
+                                <strong>Результат хозяйственной деятельности</strong>
+                                <p>Характеризует итоги всех управленческих решений за анализируемый период времени.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
+                
+                <div class="tab-content" id="tab2">
+                    <p>Финансовое положение компании складывается из нескольких ключевых компонентов, каждый из которых характеризует различные аспекты финансовой деятельности.</p>
+                    
+                    <div class="metrics-container">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <h3 class="metric-title">Платежеспособность</h3>
+                            <p class="metric-description">Способность компании своевременно погашать свои обязательства перед контрагентами.</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="metric-title">Финансовая устойчивость</h3>
+                            <p class="metric-description">Независимость от внешних источников финансирования и стабильность деятельности.</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="metric-title">Рентабельность</h3>
+                            <p class="metric-description">Эффективность использования ресурсов и способность генерировать прибыль.</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3 class="metric-title">Деловая активность</h3>
+                            <p class="metric-description">Интенсивность использования ресурсов и скорость оборота средств.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab3">
+                    <p>Существуют различные методики и подходы к оценке финансового положения компании. Они отличаются набором показателей, методами расчета и интерпретацией результатов.</p>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Коэффициентный анализ</span>
+                                <i class="fas fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Расчет и интерпретация финансовых коэффициентов, характеризующих различные аспекты деятельности компании. Включает показатели ликвидности, рентабельности, финансовой устойчивости и деловой активности.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Горизонтальный и вертикальный анализ</span>
+                                <i class="fas fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Изучение динамики показателей во времени и структуры активов, пассивов, доходов и расходов компании. Позволяет выявить тенденции изменения финансового состояния.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span>Интегральные методики</span>
+                                <i class="fas fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Комплексная оценка финансового положения на основе агрегированных показателей, учитывающих взаимосвязь различных аспектов деятельности. Примеры: модель Альтмана, модель Бивера, скоринговые модели.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+        <!-- Why Evaluate Section -->
+        <section class="section-card" data-aos="fade-up" id="importance">
+            <h2 class="section-title">Зачем оценивать финансовое положение</h2>
+            
+            <div class="features-list">
+                <div class="features-item">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <strong>Выявление проблем на ранних стадиях</strong>
+                        <p>Регулярный анализ позволяет своевременно обнаружить негативные тенденции и принять меры до наступления кризиса.</p>
+                    </div>
+                </div>
+                
+                <div class="features-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <div>
+                        <strong>Обоснование управленческих решений</strong>
+                        <p>Оценка финансового положения предоставляет информационную базу для принятия стратегических и тактических решений.</p>
+                    </div>
+                </div>
+                
+                <div class="features-item">
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                        <strong>Привлечение инвесторов и кредиторов</strong>
+                        <p>Положительная оценка финансового состояния повышает инвестиционную привлекательность компании.</p>
+                    </div>
+                </div>
+                
+                <div class="features-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <div>
+                        <strong>Оптимизация структуры капитала</strong>
+                        <p>Анализ помогает определить оптимальное соотношение собственных и заемных средств.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container" data-aos="fade-up">
+                <div class="chart-tabs">
+                    <div class="chart-tab active" data-chart="financialHealth">Финансовое здоровье</div>
+                    <div class="chart-tab" data-chart="stakeholders">Заинтересованные стороны</div>
+                </div>
+                <canvas id="financialChart"></canvas>
+            </div>
+            
+            <p>По данным исследований, компании, регулярно проводящие анализ своего финансового положения, на 35% чаще принимают эффективные управленческие решения и на 47% реже сталкиваются с кризисными ситуациями.</p>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="section-card" data-aos="fade-up" id="calculator">
+            <h2 class="section-title">Калькулятор финансового положения</h2>
+            
+            <div class="calculator">
+                <p>Введите данные из отчетности вашей компании для расчета ключевых показателей финансового положения.</p>
+                
+                <div class="inputs-row">
+                    <div class="form-group">
+                        <label for="currentAssets">Оборотные активы (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1200 бухгалтерского баланса</span></span></label>
+                        <input type="number" id="currentAssets" min="0" placeholder="Введите сумму">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="currentLiabilities">Краткосрочные обязательства (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1500 бухгалтерского баланса</span></span></label>
+                        <input type="number" id="currentLiabilities" min="0" placeholder="Введите сумму">
+                    </div>
+                </div>
+                
+                <div class="inputs-row">
+                    <div class="form-group">
+                        <label for="totalAssets">Общая сумма активов (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1600 бухгалтерского баланса</span></span></label>
+                        <input type="number" id="totalAssets" min="0" placeholder="Введите сумму">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="equity">Собственный капитал (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1300 бухгалтерского баланса</span></span></label>
+                        <input type="number" id="equity" min="0" placeholder="Введите сумму">
+                    </div>
+                </div>
+                
+                <div class="inputs-row">
+                    <div class="form-group">
+                        <label for="revenue">Выручка (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 2110 отчета о финансовых результатах</span></span></label>
+                        <input type="number" id="revenue" min="0" placeholder="Введите сумму">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="netProfit">Чистая прибыль (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 2400 отчета о финансовых результатах</span></span></label>
+                        <input type="number" id="netProfit" min="0" placeholder="Введите сумму">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="riskLevel">Уровень риска отрасли</label>
+                    <input type="range" id="riskLevel" class="range-slider" min="1" max="5" value="3">
+                    <div class="range-labels">
+                        <span>Низкий</span>
+                        <span>Средний</span>
+                        <span>Высокий</span>
+                    </div>
+                </div>
+                
+                <button id="calculateBtn" class="cta-button">
+                    <i class="fas fa-calculator"></i> Рассчитать показатели
+                </button>
+                
+                <div id="calculationResults" style="display: none;">
+                    <h3 style="margin-top: 2rem;">Результаты расчета</h3>
+                    
+                    <div class="metrics-container">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <h3 class="metric-title">Коэффициент текущей ликвидности</h3>
+                            <div class="metric-value" id="currentRatio">0.00 <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Оборотные активы / Краткосрочные обязательства</span></i></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="currentRatioProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="metric-description" id="currentRatioStatus">Требуется расчет</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="metric-title">Коэффициент автономии</h3>
+                            <div class="metric-value" id="equityRatio">0.00 <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Собственный капитал / Общая сумма активов</span></i></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="equityRatioProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="metric-description" id="equityRatioStatus">Требуется расчет</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <h3 class="metric-title">Рентабельность продаж</h3>
+                            <div class="metric-value" id="profitMargin">0.00% <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Чистая прибыль / Выручка × 100%</span></i></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="profitMarginProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="metric-description" id="profitMarginStatus">Требуется расчет</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result" id="overallResult">
+                        <strong>Общая оценка: </strong> <span id="overallStatus">Требуется расчет</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="section-card" data-aos="fade-up" id="analytics">
+            <h2 class="section-title">Аналитика и тренды</h2>
+            
+            <div class="tabs">
+                <div class="tab-nav">
+                    <button class="tab-button active" data-tab="industryTab">Отраслевые тренды</button>
+                    <button class="tab-button" data-tab="recommendationsTab">Рекомендации</button>
+                </div>
+                
+                <div class="tab-content active" id="industryTab">
+                    <p>Средние показатели финансового положения компаний по отраслям (2024 г.):</p>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Отрасль</th>
+                                    <th>Коэффициент текущей ликвидности</th>
+                                    <th>Коэффициент автономии</th>
+                                    <th>Рентабельность продаж</th>
+                                    <th>Тренд</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Торговля</td>
+                                    <td>1.36</td>
+                                    <td>0.35</td>
+                                    <td>2.8%</td>
+                                    <td><i class="fas fa-arrow-up trend-up"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Производство</td>
+                                    <td>1.64</td>
+                                    <td>0.42</td>
+                                    <td>5.2%</td>
+                                    <td><i class="fas fa-arrow-down trend-down"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Услуги</td>
+                                    <td>1.52</td>
+                                    <td>0.38</td>
+                                    <td>7.1%</td>
+                                    <td><i class="fas fa-arrow-up trend-up"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>IT и телекоммуникации</td>
+                                    <td>2.05</td>
+                                    <td>0.48</td>
+                                    <td>11.3%</td>
+                                    <td><i class="fas fa-arrow-up trend-up"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>Строительство</td>
+                                    <td>1.29</td>
+                                    <td>0.31</td>
+                                    <td>4.2%</td>
+                                    <td><i class="fas fa-arrow-down trend-down"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="recommendationsTab">
+                    <p>Рекомендации по улучшению финансового положения компании:</p>
+                    
+                    <div class="tips-list">
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Оптимизация оборотного капитала</strong>
+                                <p>Управление запасами, дебиторской и кредиторской задолженностью для повышения ликвидности и эффективности использования средств.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Контроль затрат</strong>
+                                <p>Регулярный анализ и оптимизация расходов для повышения рентабельности и конкурентоспособности.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Диверсификация источников финансирования</strong>
+                                <p>Поиск оптимального соотношения собственных и заемных средств, использование различных финансовых инструментов.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tips-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Внедрение системы финансового планирования</strong>
+                                <p>Разработка бюджетов, прогнозирование денежных потоков и контроль исполнения финансовых планов.</p>
+                            </div>
+                        </div>
+                        
+                        <button class="cta-button" id="showMoreTips">
+                            <i class="fas fa-plus-circle"></i> Показать больше рекомендаций
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="tipsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Дополнительные рекомендации</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tips-list">
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Внедрение системы управления рисками</strong>
+                            <p>Идентификация, оценка и минимизация финансовых рисков для обеспечения стабильности компании.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Инвестиции в цифровизацию</strong>
+                            <p>Внедрение современных информационных технологий для автоматизации процессов и снижения затрат.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Повышение эффективности использования активов</strong>
+                            <p>Регулярный анализ фондоотдачи и выявление незадействованных или неэффективно используемых активов.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Оптимизация налогообложения</strong>
+                            <p>Использование законных способов минимизации налоговой нагрузки и повышения чистой прибыли.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>© 2025 ФинАнализ. Все права защищены.</p>
+        </div>
+    </footer>
+
     <script>
-  // Анимации при скролле
-  const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+        // Инициализация AOS (анимация при прокрутке)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Создание частиц для фона секции Hero
+            createParticles();
+            
+            // Инициализация графиков
+            initCharts();
+            
+            // Обработчики событий
+            setupEventListeners();
+        });
+        
+        // Создание плавающих частиц для Hero секции
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particlesCount = 20;
+            
+            for (let i = 0; i < particlesCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                particle.style.opacity = Math.random() * 0.5;
+                
+                // Анимация плавания
+                particle.style.animation = `float ${Math.random() * 10 + 5}s linear infinite`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Инициализация графиков
+        function initCharts() {
+            const ctx = document.getElementById('financialChart').getContext('2d');
+            
+            // Данные для первого графика (финансовое здоровье)
+            const financialHealthData = {
+                labels: ['Ликвидность', 'Платежеспособность', 'Финансовая устойчивость', 'Рентабельность', 'Деловая активность', 'Потенциал роста'],
+                datasets: [{
+                    label: 'Среднеотраслевое значение',
+                    data: [70, 65, 60, 75, 80, 65],
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: 'rgba(99, 102, 241, 1)',
+                    pointHoverBackgroundColor: 'rgba(99, 102, 241, 1)',
+                    pointHoverBorderColor: '#fff',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            };
+            
+            // Данные для второго графика (заинтересованные стороны)
+            const stakeholdersData = {
+                labels: ['Инвесторы', 'Кредиторы', 'Поставщики', 'Клиенты', 'Сотрудники', 'Гос. органы'],
+                datasets: [{
+                    label: 'Важность оценки для стейкхолдеров',
+                    data: [90, 85, 65, 40, 55, 75],
+                    backgroundColor: 'rgba(129, 140, 248, 0.2)',
+                    borderColor: 'rgba(129, 140, 248, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: 'rgba(129, 140, 248, 1)',
+                    pointHoverBackgroundColor: 'rgba(129, 140, 248, 1)',
+                    pointHoverBorderColor: '#fff',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            };
+            
+            // Опции графика
+            const chartOptions = {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            };
+            
+            // Создание экземпляра графика
+            window.financialChart = new Chart(ctx, {
+                type: 'radar',
+                data: financialHealthData,
+                options: chartOptions
+            });
+            
+            // Обработчики переключения графиков
+            document.querySelectorAll('.chart-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (this.dataset.chart === 'financialHealth') {
+                        window.financialChart.data = financialHealthData;
+                    } else {
+                        window.financialChart.data = stakeholdersData;
+                    }
+                    
+                    window.financialChart.update();
+                });
+            });
+        }
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Переключение тем (светлая/темная)
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.hasAttribute('data-theme') 
+                    ? document.body.removeAttribute('data-theme') 
+                    : document.body.setAttribute('data-theme', 'dark');
+                
+                this.innerHTML = document.body.hasAttribute('data-theme') 
+                    ? '<i class="fas fa-sun"></i>' 
+                    : '<i class="fas fa-moon"></i>';
+            });
+            
+            // Мобильная навигация
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.innerHTML = navLinks.classList.contains('active')
+                    ? '<i class="fas fa-times"></i>'
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Навигация по ссылкам
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Обработка аккордеона
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                });
+            });
+            
+            // Обработка табов
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // Деактивация всех табов
+                    document.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Активация выбранного таба
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Калькулятор финансового положения
+            const calculateBtn = document.getElementById('calculateBtn');
+            calculateBtn.addEventListener('click', calculateFinancialIndicators);
+            
+            // Кнопка "вверх"
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
                 }
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.section-card, .hero-section').forEach(el => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-
-        // Аккордеон
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
-        });
-
+            
+            // Модальное окно с дополнительными рекомендациями
+            const showMoreTipsBtn = document.getElementById('showMoreTips');
+            const tipsModal = document.getElementById('tipsModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            
+            showMoreTipsBtn.addEventListener('click', function() {
+                tipsModal.classList.add('active');
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                tipsModal.classList.remove('active');
+            });
+            
+            // Закрытие модального окна по клику вне него
+            tipsModal.addEventListener('click', function(e) {
+                if (e.target === tipsModal) {
+                    tipsModal.classList.remove('active');
+                }
+            });
+        }
+        
+        // Расчет финансовых показателей
+        function calculateFinancialIndicators() {
+            // Получение значений из формы
+            const currentAssets = parseFloat(document.getElementById('currentAssets').value) || 0;
+            const currentLiabilities = parseFloat(document.getElementById('currentLiabilities').value) || 0;
+            const totalAssets = parseFloat(document.getElementById('totalAssets').value) || 0;
+            const equity = parseFloat(document.getElementById('equity').value) || 0;
+            const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+            const netProfit = parseFloat(document.getElementById('netProfit').value) || 0;
+            const riskLevel = parseInt(document.getElementById('riskLevel').value) || 3;
+            
+            // Проверка на наличие данных
+            if (currentAssets === 0 || currentLiabilities === 0 || totalAssets === 0 || 
+                equity === 0 || revenue === 0) {
+                alert('Пожалуйста, заполните все поля формы для расчета показателей.');
+                return;
+            }
+            
+            // Расчет показателей
+            const currentRatio = currentAssets / currentLiabilities;
+            const equityRatio = equity / totalAssets;
+            const profitMargin = (netProfit / revenue) * 100;
+            
+            // Отображение результатов
+            document.getElementById('currentRatio').innerHTML = 
+                currentRatio.toFixed(2) + ' <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Оборотные активы / Краткосрочные обязательства</span></i>';
+            document.getElementById('equityRatio').innerHTML = 
+                equityRatio.toFixed(2) + ' <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Собственный капитал / Общая сумма активов</span></i>';
+            document.getElementById('profitMargin').innerHTML = 
+                profitMargin.toFixed(2) + '% <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Чистая прибыль / Выручка × 100%</span></i>';
+            
+            // Установка прогресс-баров
+            const currentRatioProgress = document.getElementById('currentRatioProgress');
+            const equityRatioProgress = document.getElementById('equityRatioProgress');
+            const profitMarginProgress = document.getElementById('profitMarginProgress');
+            
+            currentRatioProgress.style.width = Math.min(currentRatio * 33, 100) + '%';
+            equityRatioProgress.style.width = Math.min(equityRatio * 100, 100) + '%';
+            profitMarginProgress.style.width = Math.min(profitMargin * 5, 100) + '%';
+            
+            // Оценка показателей
+            const currentRatioStatus = document.getElementById('currentRatioStatus');
+            const equityRatioStatus = document.getElementById('equityRatioStatus');
+            const profitMarginStatus = document.getElementById('profitMarginStatus');
+            
+            // Оценка коэффициента текущей ликвидности
+            if (currentRatio < 1) {
+                currentRatioStatus.textContent = 'Низкая ликвидность, возможны проблемы с платежеспособностью';
+                currentRatioProgress.style.backgroundColor = '#ef4444';
+            } else if (currentRatio >= 1 && currentRatio < 2) {
+                currentRatioStatus.textContent = 'Нормальная ликвидность, компания способна погашать обязательства';
+                currentRatioProgress.style.backgroundColor = '#f59e0b';
+            } else {
+                currentRatioStatus.textContent = 'Высокая ликвидность, компания имеет запас прочности';
+                currentRatioProgress.style.backgroundColor = '#10b981';
+            }
+            
+            // Оценка коэффициента автономии
+            if (equityRatio < 0.3) {
+                equityRatioStatus.textContent = 'Низкая финансовая устойчивость, высокая зависимость от заемных средств';
+                equityRatioProgress.style.backgroundColor = '#ef4444';
+            } else if (equityRatio >= 0.3 && equityRatio < 0.5) {
+                equityRatioStatus.textContent = 'Средняя финансовая устойчивость, допустимая зависимость от заемных средств';
+                equityRatioProgress.style.backgroundColor = '#f59e0b';
+            } else {
+                equityRatioStatus.textContent = 'Высокая финансовая устойчивость, низкая зависимость от заемных средств';
+                equityRatioProgress.style.backgroundColor = '#10b981';
+            }
+            
+            // Оценка рентабельности продаж
+            if (profitMargin < 3) {
+                profitMarginStatus.textContent = 'Низкая рентабельность, необходимо оптимизировать расходы';
+                profitMarginProgress.style.backgroundColor = '#ef4444';
+            } else if (profitMargin >= 3 && profitMargin < 8) {
+                profitMarginStatus.textContent = 'Средняя рентабельность, соответствует отраслевым нормам';
+                profitMarginProgress.style.backgroundColor = '#f59e0b';
+            } else {
+                profitMarginStatus.textContent = 'Высокая рентабельность, эффективное управление затратами';
+                profitMarginProgress.style.backgroundColor = '#10b981';
+            }
+            
+            // Общая оценка финансового положения
+            const overallResult = document.getElementById('overallResult');
+            const overallStatus = document.getElementById('overallStatus');
+            
+            // Рассчитываем интегральный показатель с учетом уровня риска отрасли
+            let score = 0;
+            
+            if (currentRatio < 1) score += 1;
+            else if (currentRatio >= 1 && currentRatio < 2) score += 2;
+            else score += 3;
+            
+            if (equityRatio < 0.3) score += 1;
+            else if (equityRatio >= 0.3 && equityRatio < 0.5) score += 2;
+            else score += 3;
+            
+            if (profitMargin < 3) score += 1;
+            else if (profitMargin >= 3 && profitMargin < 8) score += 2;
+            else score += 3;
+            
+            // Корректировка с учетом риска отрасли
+            score = score - (riskLevel - 3) * 0.5;
+            
+            if (score < 4) {
+                overallStatus.textContent = 'Кризисное финансовое положение. Требуются срочные меры по стабилизации.';
+                overallResult.className = 'result error';
+            } else if (score >= 4 && score < 6) {
+                overallStatus.textContent = 'Неустойчивое финансовое положение. Необходимо обратить внимание на проблемные показатели.';
+                overallResult.className = 'result error';
+            } else if (score >= 6 && score < 8) {
+                overallStatus.textContent = 'Нормальное финансовое положение с отдельными проблемными зонами.';
+                overallResult.className = 'result success';
+            } else {
+                overallStatus.textContent = 'Устойчивое финансовое положение. Компания эффективно управляет ресурсами.';
+                overallResult.className = 'result success';
+            }
+            
+            // Отображение результатов
+            document.getElementById('calculationResults').style.display = 'block';
+            
+            // Плавный скролл к результатам
+            document.getElementById('calculationResults').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     </script>
 </body>
 </html>

@@ -11,14 +11,22 @@
             --primary: #6366f1;
             --secondary: #4f46e5;
             --accent: #818cf8;
+            --accent-light: #c7d2fe;
             --background: #f8fafc;
+            --card-bg: #ffffff;
             --text-dark: #1e293b;
             --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.95);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --border-radius: 1.25rem;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -41,18 +49,90 @@
             padding: 2rem;
         }
 
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero-section {
             position: relative;
             margin: 2rem 0 4rem;
             padding: 4rem 2rem;
             background: var(--gradient);
-            border-radius: 2rem;
+            border-radius: var(--border-radius);
             color: white;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
         }
 
         .hero-content {
@@ -61,42 +141,68 @@
         }
 
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
         }
 
         .hero-description {
             font-size: 1.2rem;
             opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .hero-image {
             width: 400px;
             filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
             transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-10px);
         }
 
         /* Sections */
         .section-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
         .section-title {
             color: var(--text-dark);
             margin-bottom: 1.5rem;
             position: relative;
+            font-weight: 700;
         }
 
         .section-title::after {
@@ -107,6 +213,7 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
         }
 
         /* Features List */
@@ -114,39 +221,49 @@
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .features-item {
-            padding: 1.2rem;
+            padding: 1.5rem;
             background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: 1.25rem;
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .features-item:hover {
             transform: translateX(5px);
+            background: rgba(99, 102, 241, 0.08);
         }
 
         .features-item i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-top: 3px;
             flex-shrink: 0;
+            background: var(--accent-light);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
         }
 
         /* Accordion */
         .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -159,19 +276,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(99, 102, 241, 0.05);
+            transition: var(--transition);
+            font-weight: 600;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-header .icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .icon {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -188,16 +314,50 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
         }
 
         input[type="number"],
-        input[type="text"] {
+        input[type="text"],
+        select {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            border-radius: 0.5rem 0 0 0.5rem;
+            border-right: none;
+        }
+
+        .input-group-append {
+            background: #e2e8f0;
+            padding: 0.8rem 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         button {
@@ -207,13 +367,15 @@
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
         }
 
         button:hover {
             background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         /* Results */
@@ -222,16 +384,19 @@
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            display: none;
         }
 
         .success {
             background: #d1fae5;
             color: var(--success);
+            display: block;
         }
 
         .error {
             background: #fee2e2;
             color: var(--error);
+            display: block;
         }
 
         /* Tips Section */
@@ -241,18 +406,33 @@
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
             background: rgba(248, 249, 255, 0.8);
             border-radius: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            transform: translateX(5px);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            background: var(--accent-light);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
         }
 
         /* Mobile Adaptation */
@@ -261,14 +441,47 @@
                 padding: 1rem;
             }
 
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: var(--glass);
+                padding: 1rem;
+                border-radius: 0 0 1rem 1rem;
+                box-shadow: var(--shadow);
+                z-index: 100;
+                backdrop-filter: blur(10px);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .hero-section {
                 flex-direction: column;
                 text-align: center;
                 padding: 2rem 1rem;
             }
 
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
             .hero-image {
-                width: 30%;
+                width: 80%;
                 margin-top: 2rem;
             }
 
@@ -278,6 +491,15 @@
 
             .hero-title {
                 font-size: 2rem;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
@@ -291,6 +513,7 @@
                 align-items: flex-start;
             }
         }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -307,27 +530,388 @@
         }
 
         .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
+            background: var(--card-bg);
+            padding: 1.8rem;
             border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
             box-shadow: var(--shadow);
         }
 
         .calculator h4 {
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .calculator input, .calculator select {
             margin-bottom: 1rem;
         }
 
-        .calculator input {
+        /* Comparison Chart */
+        .comparison-chart {
+            width: 100%;
+            height: 300px;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Formula Cards */
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .formula-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .formula-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .formula-title {
+            font-weight: 600;
             margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .formula-equation {
+            background: rgba(99, 102, 241, 0.05);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .formula-description {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            background: var(--gradient);
+            color: white;
+            padding: 3rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.9;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Growth Visualization */
+        .growth-visualization {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 250px;
+            gap: 2rem;
+            margin: 3rem 0;
+            padding: 1rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 1rem;
+        }
+
+        .growth-bar {
+            width: 100px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bar-inner {
+            width: 100%;
+            background: linear-gradient(to top, var(--primary), var(--accent));
+            border-radius: 0.5rem 0.5rem 0 0;
+            transition: height 1s ease-in-out;
+        }
+
+        .bar-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 4px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-left {
+            left: 0;
+        }
+
+        .timeline-right {
+            left: 50%;
+        }
+
+        .timeline-right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 1.2rem;
+            background-color: white;
+            position: relative;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+
+        .tab-item {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .tab-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tab-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .tab-item.active::after {
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-piggy-bank"></i>
+                ФинГрамотность
+            </a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
         <header class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title">3.2. Разбираемся с процентами по вкладу</h1>
-                <p class="hero-description">Узнайте, как начисляются проценты и как рассчитать доход по вкладу.</p>
+                <p class="hero-description">Узнайте, как начисляются проценты, научитесь различать виды начислений и рассчитывать реальный доход по вкладу.</p>
+                <a href="#calculators" class="hero-btn">Рассчитать проценты</a>
             </div>
             <img src="interest.png" alt="Проценты по вкладу" class="hero-image animated-image">
         </header>
@@ -337,6 +921,7 @@
                 <h2 class="section-title">Как начисляются проценты?</h2>
                 <p>Проценты по вкладу — это доход, который банк выплачивает за использование ваших средств. Они рассчитываются на основе процентной ставки, суммы вклада и срока.</p>
                 <img src="calculation.png" alt="Расчет процентов" class="animated-image" style="width: 50%; max-width: 200px; margin: 1rem auto; display: block;">
+                <p>При открытии вклада банк указывает годовую процентную ставку. Например, если вы положили 100 000 рублей под 7% годовых на год, то по истечении срока вы получите 107 000 рублей (при условии начисления простых процентов).</p>
             </section>
 
             <section class="section-card">
@@ -346,14 +931,21 @@
                         <i class="fas fa-percentage"></i>
                         <div>
                             <strong>Номинальная ставка:</strong>
-                            <p>Указывается в договоре и определяет доход в номинальном выражении.</p>
+                            <p>Указывается в договоре и определяет доход в номинальном выражении. Это "сырая" процентная ставка без учета дополнительных факторов.</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-chart-line"></i>
                         <div>
                             <strong>Реальная ставка:</strong>
-                            <p>Учитывает инфляцию и показывает реальный рост покупательной способности.</p>
+                            <p>Учитывает инфляцию и показывает реальный рост покупательной способности ваших денег. Рассчитывается по формуле: (1 + номинальная ставка) / (1 + инфляция) - 1.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <strong>Эффективная ставка:</strong>
+                            <p>Учитывает периодичность начисления процентов. При капитализации эффективная ставка выше номинальной и показывает реальную доходность.</p>
                         </div>
                     </li>
                 </ul>
@@ -365,144 +957,525 @@
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Простые проценты</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Начисляются на первоначальную сумму вклада. Пример: 150 000 ₽ под 20% годовых на 181 день принесут 14 876,7 ₽ дохода.</p>
+                            <p>Начисляются только на первоначальную сумму вклада. При этом ранее начисленные проценты не учитываются при дальнейшем начислении.</p>
+                            <p><strong>Формула:</strong> FV = PV × (1 + r × t)</p>
+                            <p><strong>где:</strong><br>
+                            FV — итоговая сумма<br>
+                            PV — начальная сумма вклада<br>
+                            r — годовая процентная ставка (в десятичном виде)<br>
+                            t — срок вклада в годах</p>
+                            <p><strong>Пример:</strong> 150 000 ₽ под 20% годовых на 181 день (0.5 года) принесут:</p>
+                            <p>150 000 × (1 + 0.2 × 0.5) = 150 000 × 1.1 = 165 000 ₽</p>
+                            <p>Доход составит 15 000 ₽</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Сложные проценты</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <p>Начисляются на сумму вклада с учетом ранее начисленных процентов (капитализация). Пример: 150 000 ₽ под 20% годовых с ежемесячной капитализацией на 181 день принесут 15 642,3 ₽ дохода.</p>
+                            <p>Начисляются на сумму вклада с учетом ранее начисленных процентов. Это называется капитализацией процентов.</p>
+                            <p><strong>Формула:</strong> FV = PV × (1 + r/n)^(n×t)</p>
+                            <p><strong>где:</strong><br>
+                            FV — итоговая сумма<br>
+                            PV — начальная сумма вклада<br>
+                            r — годовая процентная ставка (в десятичном виде)<br>
+                            t — срок вклада в годах<br>
+                            n — количество периодов капитализации в году</p>
+                            <p><strong>Пример:</strong> 150 000 ₽ под 20% годовых на 181 день (0.5 года) с ежемесячной капитализацией (n=12) принесут:</p>
+                            <p>150 000 × (1 + 0.2/12)^(12×0.5) = 150 000 × (1 + 0.0167)^6 = 150 000 × 1.1041 = 165 615 ₽</p>
+                            <p>Доход составит 15 615 ₽, что на 615 ₽ больше, чем при простых процентах.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="growth-visualization">
+                    <div class="growth-bar">
+                        <div class="bar-value">165 000 ₽</div>
+                        <div class="bar-inner" style="height: 200px;"></div>
+                        <div class="bar-label">Простые проценты</div>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="bar-value">165 615 ₽</div>
+                        <div class="bar-inner" style="height: 205px;"></div>
+                        <div class="bar-label">Сложные проценты</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h3 class="section-title">Периодичность начисления процентов</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Периодичность</th>
+                            <th>Описание</th>
+                            <th>Эффект на доходность</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>По окончании срока</td>
+                            <td>Все проценты выплачиваются в конце срока вклада</td>
+                            <td>Соответствует номинальной ставке</td>
+                        </tr>
+                        <tr>
+                            <td>Ежегодно</td>
+                            <td>Проценты начисляются 1 раз в год</td>
+                            <td>Небольшое увеличение при капитализации</td>
+                        </tr>
+                        <tr>
+                            <td>Ежеквартально</td>
+                            <td>Проценты начисляются 4 раза в год</td>
+                            <td>Заметное увеличение при капитализации</td>
+                        </tr>
+                        <tr>
+                            <td>Ежемесячно</td>
+                            <td>Проценты начисляются каждый месяц</td>
+                            <td>Значительное увеличение при капитализации</td>
+                        </tr>
+                        <tr>
+                            <td>Ежедневно</td>
+                            <td>Проценты начисляются каждый день</td>
+                            <td>Максимальное увеличение доходности</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="formula" class="section-card">
+                <h3 class="section-title">Формулы для расчета процентов</h3>
+                <div class="formula-grid">
+                    <div class="formula-card">
+                        <h4 class="formula-title">Простые проценты</h4>
+                        <div class="formula-equation">
+                            FV = PV × (1 + r × t)
+                        </div>
+                        <p class="formula-description">
+                            Подходит для расчета дохода по вкладам без капитализации, где проценты выплачиваются в конце срока.
+                        </p>
+                    </div>
+                    <div class="formula-card">
+                        <h4 class="formula-title">Сложные проценты</h4>
+                        <div class="formula-equation">
+                            FV = PV × (1 + r/n)^(n×t)
+                        </div>
+                        <p class="formula-description">
+                            Используется для расчета дохода по вкладам с капитализацией процентов. Чем чаще капитализация, тем выше итоговый доход.
+                        </p>
+                    </div>
+                    <div class="formula-card">
+                        <h4 class="formula-title">Эффективная ставка</h4>
+                        <div class="formula-equation">
+                            r_eff = (1 + r/n)^n - 1
+                        </div>
+                        <p class="formula-description">
+                            Позволяет сравнивать вклады с разной периодичностью капитализации, приводя их к годовой ставке.
+                        </p>
+                    </div>
+                    <div class="formula-card">
+                        <h4 class="formula-title">Реальная процентная ставка</h4>
+                        <div class="formula-equation">
+                            r_real = (1 + r_nom) / (1 + i) - 1
+                        </div>
+                        <p class="formula-description">
+                            Учитывает влияние инфляции (i) на доходность вклада и показывает реальное изменение покупательной способности.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="calculators" class="section-card">
+                <h3 class="section-title">Практические задания</h3>
+                <div class="tab-nav">
+                    <div class="tab-item active" data-tab="simple">Простые проценты</div>
+                    <div class="tab-item" data-tab="compound">Сложные проценты</div>
+                    <div class="tab-item" data-tab="effective">Эффективная ставка</div>
+                </div>
+                
+                <div class="tab-content active" id="simple-tab">
+                    <div class="calculator">
+                        <h4>Калькулятор простых процентов</h4>
+                        <div class="form-group">
+                            <label for="simple-amount">Сумма вклада (₽)</label>
+                            <input type="number" id="simple-amount" placeholder="Например, 100000" min="1000">
+                        </div>
+                        <div class="form-group">
+                            <label for="simple-rate">Процентная ставка (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="simple-rate" placeholder="Например, 7" min="0.1" max="30" step="0.1">
+                                <div class="input-group-append">%</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="simple-days">Срок (дни)</label>
+                            <input type="number" id="simple-days" placeholder="Например, 365" min="1" max="3650">
+                        </div>
+                        <button type="button" id="calculate-simple-btn">Рассчитать</button>
+                        <div id="simple-result" class="result">
+                            <!-- Результат будет здесь -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="compound-tab">
+                    <div class="calculator">
+                        <h4>Калькулятор сложных процентов</h4>
+                        <div class="form-group">
+                            <label for="compound-amount">Сумма вклада (₽)</label>
+                            <input type="number" id="compound-amount" placeholder="Например, 100000" min="1000">
+                        </div>
+                        <div class="form-group">
+                            <label for="compound-rate">Процентная ставка (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="compound-rate" placeholder="Например, 7" min="0.1" max="30" step="0.1">
+                                <div class="input-group-append">%</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="compound-days">Срок (дни)</label>
+                            <input type="number" id="compound-days" placeholder="Например, 365" min="1" max="3650">
+                        </div>
+                        <div class="form-group">
+                            <label for="capitalization">Периодичность капитализации</label>
+                            <select id="capitalization">
+                                <option value="1">Ежегодно</option>
+                                <option value="4">Ежеквартально</option>
+                                <option value="12" selected>Ежемесячно</option>
+                                <option value="365">Ежедневно</option>
+                            </select>
+                        </div>
+                        <button type="button" id="calculate-compound-btn">Рассчитать</button>
+                        <div id="compound-result" class="result">
+                            <!-- Результат будет здесь -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="effective-tab">
+                    <div class="calculator">
+                        <h4>Калькулятор эффективной ставки</h4>
+                        <div class="form-group">
+                            <label for="effective-rate">Номинальная ставка (%)</label>
+                            <div class="input-group">
+                                <input type="number" id="effective-rate" placeholder="Например, 7" min="0.1" max="30" step="0.1">
+                                <div class="input-group-append">%</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="effective-capitalization">Периодичность капитализации</label>
+                            <select id="effective-capitalization">
+                                <option value="1">Ежегодно</option>
+                                <option value="2">Раз в полгода</option>
+                                <option value="4">Ежеквартально</option>
+                                <option value="12" selected>Ежемесячно</option>
+                                <option value="365">Ежедневно</option>
+                            </select>
+                        </div>
+                        <button type="button" id="calculate-effective-btn">Рассчитать</button>
+                        <div id="effective-result" class="result">
+                            <!-- Результат будет здесь -->
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <div class="calculator">
-                        <h4>Калькулятор простых процентов</h4>
-                        <input type="number" id="simple-amount" placeholder="Сумма вклада (руб)">
-                        <input type="number" id="simple-rate" placeholder="Процентная ставка (%)">
-                        <input type="number" id="simple-days" placeholder="Срок (дни)">
-                        <button type="button" id="calculate-simple-btn">Рассчитать</button>
-                        <div id="simple-result" class="result"></div>
-                    </div>
-
-                    <div class="calculator">
-                        <h4>Калькулятор сложных процентов</h4>
-                        <input type="number" id="compound-amount" placeholder="Сумма вклада (руб)">
-                        <input type="number" id="compound-rate" placeholder="Процентная ставка (%)">
-                        <input type="number" id="compound-months" placeholder="Срок (месяцы)">
-                        <button type="button" id="calculate-compound-btn">Рассчитать</button>
-                        <div id="compound-result" class="result"></div>
-                    </div>
-
-                    <div class="section-card">
-                        <h4>Тест: Проценты по вкладу</h4>
-                        <form id="interest-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="interest-type" value="simple"> Простые проценты
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="radio" name="interest-type" value="compound"> Сложные проценты
-                                </label>
-                            </div>
-                            <button type="button" id="check-interest-btn">Проверить</button>
-                            <div id="interest-result" class="result"></div>
-                        </form>
-                    </div>
+                <h3 class="section-title">Влияние капитализации на доходность</h3>
+                <p>Капитализация процентов может существенно увеличить итоговый доход по вкладу, особенно при длительных сроках размещения.</p>
+                <div class="comparison-chart" id="capitalization-chart">
+                    <!-- Здесь будет график сравнения доходности -->
                 </div>
+                <p class="chart-caption">На графике показано, как с течением времени растет разница между вкладами с простыми процентами и с процентами с ежемесячной капитализацией.</p>
             </section>
 
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
+                <h3 class="section-title">Советы по выбору типа начисления процентов</h3>
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда сравнивайте номинальную и реальную процентные ставки.
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Выбирайте капитализацию при длительных вкладах</strong>
+                            <p>Эффект от капитализации усиливается с течением времени, поэтому для долгосрочных вкладов (от года) капитализация выгоднее.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Вклады с капитализацией процентов обычно выгоднее.
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <div>
+                            <strong>Учитывайте потребность в деньгах</strong>
+                            <p>Если вам нужен регулярный доход, выбирайте вклад с выплатой процентов на отдельный счет, а не с капитализацией.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <strong>Сравнивайте эффективные ставки</strong>
+                            <p>При выборе между вкладами с разной периодичностью капитализации, сравнивайте их эффективные годовые ставки.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <strong>Учитывайте инфляцию</strong>
+                            <p>Для сохранения покупательной способности вашего вклада, процентная ставка должна быть выше уровня инфляции.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
-        </main>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+            <section class="section-card">
+                <h3 class="section-title">Часто задаваемые вопросы</h3>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <p class="faq-question">Что выгоднее: капитализация или ежемесячная выплата процентов?</p>
+                        <p>С точки зрения максимизации дохода по вкладу, капитализация всегда выгоднее. Однако если вам нужен регулярный доход для текущих расходов, лучше выбрать ежемесячную выплату процентов.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-question">Как рассчитываются проценты при досрочном закрытии вклада?</p>
+                        <p>При досрочном закрытии вклада банк обычно пересчитывает проценты по ставке вклада до востребования, которая значительно ниже первоначальной. Условия пересчета нужно уточнять в договоре.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-question">Почему эффективная ставка важнее номинальной?</p>
+                        <p>Эффективная ставка учитывает капитализацию и показывает реальную годовую доходность вклада. Она позволяет корректно сравнивать вклады с разными условиями капитализации.</p>
+                    </div>
+                    <div class="faq-item">
+                        <p class="faq-question">Как влияет налогообложение на доходность вклада?</p>
+                        <p>Процентный доход по вкладам, превышающий необлагаемый минимум, облагается НДФЛ в размере 13% (для резидентов). Это снижает фактическую доходность вклада и должно учитываться при расчетах.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
-        // JavaScript для интерактивных заданий
-        document.getElementById('calculate-simple-btn').addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('simple-amount').value);
-            const rate = parseFloat(document.getElementById('simple-rate').value);
-            const days = parseFloat(document.getElementById('simple-days').value);
-            const result = document.getElementById('simple-result');
-
-            if (!isNaN(amount) && !isNaN(rate) && !isNaN(days)) {
-                const income = amount * (rate / 100) * (days / 365);
-                result.textContent = `💰 Доход: ${income.toFixed(2)} руб.`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('calculate-compound-btn').addEventListener('click', () => {
-            const amount = parseFloat(document.getElementById('compound-amount').value);
-            const rate = parseFloat(document.getElementById('compound-rate').value);
-            const months = parseFloat(document.getElementById('compound-months').value);
-            const result = document.getElementById('compound-result');
-
-            if (!isNaN(amount) && !isNaN(rate) && !isNaN(months)) {
-                const income = amount * Math.pow(1 + (rate / 100) / 12, months) - amount;
-                result.textContent = `💰 Доход: ${income.toFixed(2)} руб.`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('check-interest-btn').addEventListener('click', () => {
-            const selected = document.querySelector('input[name="interest-type"]:checked');
-            const result = document.getElementById('interest-result');
-            
-            if (selected && selected.value === 'compound') {
-                result.textContent = '✅ Правильно! Сложные проценты с капитализацией обычно выгоднее.';
-                result.className = 'result success';
-            } else {
-                result.textContent = '❌ Неверно. Сложные проценты с капитализацией обычно выгоднее.';
-                result.className = 'result error';
-            }
-        });
-                // Аккордеон
-                document.querySelectorAll('.accordion-header').forEach(header => {
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
             header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                
                 header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+                const content = header.nextElementSibling;
+                
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
         });
 
+        // Tab navigation
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Deactivate all tabs
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Activate selected tab
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Simple interest calculator
+        document.getElementById('calculate-simple-btn').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('simple-amount').value);
+            const rate = parseFloat(document.getElementById('simple-rate').value) / 100;
+            const days = parseInt(document.getElementById('simple-days').value);
+            const resultDiv = document.getElementById('simple-result');
+            
+            if (isNaN(amount) || isNaN(rate) || isNaN(days)) {
+                resultDiv.textContent = 'Пожалуйста, заполните все поля корректно';
+                resultDiv.className = 'result error';
+                return;
+            }
+            
+            // Calculate using simple interest formula
+            const interest = amount * rate * (days / 365);
+            const total = amount + interest;
+            
+            resultDiv.innerHTML = `
+                <p>Сумма вклада: <strong>${amount.toLocaleString('ru-RU')} ₽</strong></p>
+                <p>Начисленные проценты: <strong>${interest.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p>
+                <p>Итоговая сумма: <strong>${total.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p>
+            `;
+            resultDiv.className = 'result success';
+        });
+
+        // Compound interest calculator
+        document.getElementById('calculate-compound-btn').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('compound-amount').value);
+            const rate = parseFloat(document.getElementById('compound-rate').value) / 100;
+            const days = parseInt(document.getElementById('compound-days').value);
+            const capitalization = parseInt(document.getElementById('capitalization').value);
+            const resultDiv = document.getElementById('compound-result');
+            
+            if (isNaN(amount) || isNaN(rate) || isNaN(days)) {
+                resultDiv.textContent = 'Пожалуйста, заполните все поля корректно';
+                resultDiv.className = 'result error';
+                return;
+            }
+            
+            // Calculate using compound interest formula
+            const years = days / 365;
+            const total = amount * Math.pow(1 + rate / capitalization, capitalization * years);
+            const interest = total - amount;
+            
+            resultDiv.innerHTML = `
+                <p>Сумма вклада: <strong>${amount.toLocaleString('ru-RU')} ₽</strong></p>
+                <p>Начисленные проценты: <strong>${interest.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p>
+                <p>Итоговая сумма: <strong>${total.toLocaleString('ru-RU', {maximumFractionDigits: 2})} ₽</strong></p>
+            `;
+            resultDiv.className = 'result success';
+        });
+
+        // Effective rate calculator
+        document.getElementById('calculate-effective-btn').addEventListener('click', () => {
+            const rate = parseFloat(document.getElementById('effective-rate').value) / 100;
+            const capitalization = parseInt(document.getElementById('effective-capitalization').value);
+            const resultDiv = document.getElementById('effective-result');
+            
+            if (isNaN(rate)) {
+                resultDiv.textContent = 'Пожалуйста, введите корректную процентную ставку';
+                resultDiv.className = 'result error';
+                return;
+            }
+            
+            // Calculate effective annual rate
+            const effectiveRate = Math.pow(1 + rate / capitalization, capitalization) - 1;
+            const effectivePercentage = effectiveRate * 100;
+            
+            resultDiv.innerHTML = `
+                <p>Номинальная ставка: <strong>${(rate * 100).toFixed(2)}%</strong></p>
+                <p>Эффективная годовая ставка: <strong>${effectivePercentage.toFixed(2)}%</strong></p>
+            `;
+            resultDiv.className = 'result success';
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Simulating a chart with Canvas API
+        function drawCapitalizationChart() {
+            const canvas = document.createElement('canvas');
+            canvas.width = document.getElementById('capitalization-chart').offsetWidth;
+            canvas.height = document.getElementById('capitalization-chart').offsetHeight;
+            document.getElementById('capitalization-chart').appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Chart data simulation
+            const years = 10;
+            const initialAmount = 100000;
+            const rate = 0.07; // 7%
+            
+            const simpleData = [];
+            const compoundData = [];
+            const labels = [];
+            
+            for (let i = 0; i <= years; i++) {
+                labels.push(`Год ${i}`);
+                simpleData.push(initialAmount * (1 + rate * i));
+                compoundData.push(initialAmount * Math.pow(1 + rate, i));
+            }
+            
+            // Chart configuration
+            const maxValue = Math.max(...compoundData) * 1.1;
+            const chartHeight = canvas.height - 60;
+            const chartWidth = canvas.width - 80;
+            const xStep = chartWidth / years;
+            const yScale = chartHeight / maxValue;
+            
+            // Draw axes
+            ctx.beginPath();
+            ctx.moveTo(40, 20);
+            ctx.lineTo(40, chartHeight + 30);
+            ctx.lineTo(chartWidth + 60, chartHeight + 30);
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw y-axis labels
+            ctx.font = '12px Inter';
+            ctx.fillStyle = '#64748b';
+            for (let i = 0; i <= 5; i++) {
+                const value = Math.round(maxValue * i / 5);
+                const y = chartHeight + 30 - (value * yScale);
+                ctx.fillText(value.toLocaleString('ru-RU') + ' ₽', 5, y + 4);
+                
+                // Draw horizontal grid lines
+                ctx.beginPath();
+                ctx.moveTo(40, y);
+                ctx.lineTo(chartWidth + 60, y);
+                ctx.strokeStyle = 'rgba(100, 116, 139, 0.1)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+            
+            // Draw x-axis labels
+            for (let i = 0; i <= years; i += 2) {
+                const x = 40 + i * xStep;
+                ctx.fillText(`Год ${i}`, x - 15, chartHeight + 50);
+            }
+            
+            // Draw simple interest line
+            ctx.beginPath();
+            for (let i = 0; i <= years; i++) {
+                const x = 40 + i * xStep;
+                const y = chartHeight + 30 - (simpleData[i] * yScale);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.strokeStyle = '#6366f1';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Draw compound interest line
+            ctx.beginPath();
+            for (let i = 0; i <= years; i++) {
+                const x = 40 + i * xStep;
+                const y = chartHeight + 30 - (compoundData[i] * yScale);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Draw legend
+            ctx.fillStyle = '#6366f1';
+            ctx.fillRect(chartWidth - 150, 30, 15, 15);
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(chartWidth - 150, 55, 15, 15);
+            
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '14px Inter';
+            ctx.fillText('Простые проценты', chartWidth - 125, 43);
+            ctx.fillText('Сложные проценты', chartWidth - 125, 68);
+        }
+        
+        // Draw chart when page loads
+        window.addEventListener('load', drawCapitalizationChart);
+        
+        // Redraw chart on window resize
+        window.addEventListener('resize', () => {
+            document.getElementById('capitalization-chart').innerHTML = '';
+            drawCapitalizationChart();
+        });
     </script>
 </body>
 </html>

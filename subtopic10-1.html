@@ -1,1705 +1,2094 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinCheck - Тестирование финансовой грамотности</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
+    <title>FinSkills - Платформа финансовой грамотности</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            /* Основные цвета - светлая тема */
-            --bg-primary: #f3f5f9;
-            --bg-secondary: #ffffff;
-            --text-primary: #111827;
-            --text-secondary: #4b5563;
-            --primary: #2563eb;
-            --primary-light: #3b82f6;
-            --accent: #10b981;
-            --accent-light: #34d399;
-            --warn: #f59e0b;
-            --error: #ef4444;
-            --success: #10b981;
-            
-            /* Градиенты */
-            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
-            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-            --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #fcd34d 100%);
-            --gradient-bg: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent), 
-                           radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.03), transparent);
-            
-            /* Тени */
-            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
-            
-            /* Тени неоморфизм */
-            --neomorphism-light: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff;
-            --neomorphism-dark: 10px 10px 20px #d1d5db, -10px -10px 20px #ffffff, 
-                               inset 5px 5px 10px rgba(255, 255, 255, 0.5),
-                               inset -5px -5px 10px rgba(0, 0, 0, 0.02);
-            --neomorphism-pressed: inset 5px 5px 10px rgba(0, 0, 0, 0.05),
-                               inset -5px -5px 10px rgba(255, 255, 255, 0.8);
-            
-            /* Скругления */
-            --radius-sm: 0.5rem;
-            --radius-md: 1rem;
-            --radius-lg: 1.5rem;
-            --radius-xl: 2rem;
-            --radius-full: 9999px;
-            
-            /* Стеклянный эффект */
-            --glass: rgba(255, 255, 255, 0.85);
-            --glass-hover: rgba(255, 255, 255, 0.95);
-            --glass-dark: rgba(17, 24, 39, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            
-            /* Анимации */
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s ease;
-            --transition-slow: 0.5s ease;
-            --easing: cubic-bezier(0.65, 0, 0.35, 1);
-            
-            /* Типографика */
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
-        }
-
-        /* Переменные для темного режима */
-        [data-theme="dark"] {
-            --bg-primary: #111827;
-            --bg-secondary: #1f2937;
-            --text-primary: #f3f4f6;
-            --text-secondary: #d1d5db;
             --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
             --primary-light: #60a5fa;
-            --accent: #34d399;
-            --accent-light: #6ee7b7;
-            
-            /* Тени для темной темы */
-            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
-            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.5);
-            
-            /* Тени неоморфизм для темной темы */
-            --neomorphism-light: 10px 10px 20px #0c111b, -10px -10px 20px #1a202c;
-            --neomorphism-dark: 5px 5px 10px #0c111b, -5px -5px 10px #1a202c,
-                                inset 5px 5px 10px rgba(26, 32, 44, 0.5),
-                                inset -5px -5px 10px rgba(12, 17, 27, 0.8);
-            --neomorphism-pressed: inset 5px 5px 10px rgba(12, 17, 27, 0.8),
-                                   inset -5px -5px 10px rgba(26, 32, 44, 0.5);
-            
-            /* Стеклянный эффект для темной темы */
-            --glass: rgba(31, 41, 55, 0.7);
-            --glass-hover: rgba(31, 41, 55, 0.9);
-            --glass-dark: rgba(17, 24, 39, 0.9);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            
-            /* Градиенты для темной темы */
-            --gradient-bg: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 60%),
-                          radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent 60%);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --radius: 12px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 6px 10px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: var(--font-sans);
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            transition: background-color var(--transition-normal);
-            background-image: var(--gradient-bg);
-            background-attachment: fixed;
-            min-height: 100vh;
+            color: var(--neutral-800);
+            background-color: var(--neutral-100);
+            padding: 0;
+            margin: 0;
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: clamp(1rem, 5vw, 3rem);
-            position: relative;
+            padding: 0 20px;
         }
 
-        .progress-bar-top {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-            z-index: 999;
-            transition: width var(--transition-normal);
-        }
-
-        .fixed-image {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: clamp(80px, 10vw, 120px);
-            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.1));
-            z-index: 90;
-            animation: float 6s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .card {
-            background: var(--bg-secondary);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-            overflow: hidden;
-            margin-bottom: clamp(1.5rem, 4vw, 3rem);
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .neomorphic-card {
-            background: var(--bg-primary);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--neomorphism-light);
-            padding: clamp(1.5rem, 4vw, 2.5rem);
-            margin-bottom: clamp(1.5rem, 4vw, 3rem);
-            position: relative;
-            transition: box-shadow var(--transition-normal), transform var(--transition-normal);
-        }
-
-        .neomorphic-card:hover {
-            box-shadow: var(--neomorphism-dark);
-            transform: translateY(-5px);
-        }
-
-        .hero-section {
-            position: relative;
-            margin: clamp(1rem, 3vw, 2rem) 0 clamp(2rem, 5vw, 4rem);
-            padding: clamp(2rem, 6vw, 4rem);
-            background-image: var(--gradient-primary);
-            border-radius: var(--radius-xl);
+        header {
+            background-color: var(--primary);
             color: white;
-            overflow: hidden;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        header .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow-lg);
         }
 
-        .hero-section::before {
-            content: "";
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-menu a:after {
+            content: '';
             position: absolute;
+            width: 0;
+            height: 2px;
+            background: white;
             bottom: 0;
             left: 0;
-            width: 100%;
-            height: 40%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,224L60,229.3C120,235,240,245,360,218.7C480,192,600,128,720,117.3C840,107,960,149,1080,160C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-            background-size: cover;
-            opacity: 0.8;
-            z-index: 1;
+            transition: width 0.3s ease;
         }
 
-        .hero-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius-full);
-            font-size: 0.875rem;
+        .nav-menu a:hover:after {
+            width: 100%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .login-btn {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius);
             font-weight: 600;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: var(--neutral-100);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 160px 0 100px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100px;
+            background: white;
+            bottom: -50px;
+            left: -20%;
+            border-radius: 50%;
         }
 
         .hero-content {
-            max-width: 60%;
-            z-index: 2;
             position: relative;
+            z-index: 10;
+            max-width: 600px;
         }
 
-        .hero-title {
-            font-size: clamp(1.75rem, 4vw, 3rem);
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
 
-        .hero-title span {
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-title span::after {
-            content: '';
-            position: absolute;
-            bottom: 0.125em;
-            left: 0;
-            width: 100%;
-            height: 0.2em;
-            background-color: var(--accent);
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        .hero-description {
-            font-size: clamp(1rem, 1.8vw, 1.25rem);
+        .sub-heading {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
             opacity: 0.9;
-            max-width: 90%;
         }
 
-        .hero-image {
-            width: clamp(220px, 35vw, 400px);
-            border-radius: var(--radius-lg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transition: transform var(--transition-normal);
-            z-index: 2;
-            position: relative;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            animation: float 5s ease-in-out infinite;
+        .cta-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stats {
+            display: flex;
+            margin-top: 3rem;
+            gap: 30px;
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .features {
+            padding: 80px 0;
+            text-align: center;
         }
 
         .section-title {
-            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: clamp(1.5rem, 3vw, 2rem);
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            color: var(--neutral-800);
         }
 
-        .section-title i {
-            color: var(--primary);
+        .section-subtitle {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: var(--neutral-600);
+            font-size: 1.1rem;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -0.75rem;
-            left: 0;
-            width: 3rem;
-            height: 0.25rem;
-            background: var(--primary);
-            border-radius: var(--radius-full);
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
         }
 
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--glass-border);
-            padding: clamp(1.5rem, 4vw, 2.5rem);
-            transition: transform var(--transition-normal), backdrop-filter var(--transition-normal);
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: left;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
 
-        .glass-card:hover {
-            backdrop-filter: blur(10px);
+        .feature-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--gradient-primary);
-            z-index: 5;
-        }
-
-        .btn {
-            display: inline-flex;
+        .feature-icon {
+            background: var(--primary-light);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            padding: 0.875rem 1.75rem;
-            background: var(--primary);
+            font-size: 1.5rem;
             color: white;
-            border: none;
-            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
             font-weight: 600;
-            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--neutral-800);
+        }
+
+        .feature-description {
+            color: var(--neutral-600);
+        }
+
+        .categories {
+            padding: 80px 0;
+            background-color: var(--neutral-50);
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .category-tab {
+            padding: 12px 24px;
+            background-color: white;
+            border-radius: var(--radius);
             cursor: pointer;
-            transition: all var(--transition-normal);
-            position: relative;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            color: var(--neutral-700);
+        }
+
+        .category-tab:hover {
+            background-color: var(--neutral-200);
+        }
+
+        .category-tab.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .test-card {
+            background: white;
+            border-radius: var(--radius);
             overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
             box-shadow: var(--shadow-md);
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .test-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .test-image img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.7s var(--easing);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .btn-primary {
-            background-image: var(--gradient-primary);
-        }
-
-        .btn-accent {
-            background-image: var(--gradient-secondary);
-        }
-
-        .btn-neomorphic {
-            background: var(--bg-primary);
-            color: var(--primary);
-            box-shadow: var(--neomorphism-light);
-        }
-
-        .btn-neomorphic:hover {
-            box-shadow: var(--neomorphism-dark);
-        }
-
-        .btn-neomorphic:active {
-            box-shadow: var(--neomorphism-pressed);
-            transform: translateY(0);
-        }
-
-        .test-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .category-card {
-            background: var(--bg-secondary);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-            box-shadow: var(--shadow-md);
-            position: relative;
-            cursor: pointer;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .category-card-image {
-            width: 100%;
-            aspect-ratio: 16 / 9;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .category-card-content {
-            padding: 1.25rem;
+        .test-card:hover .test-image img {
+            transform: scale(1.05);
         }
 
-        .category-card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .test-content {
+            padding: 20px;
         }
 
-        .category-card-desc {
-            color: var(--text-secondary);
+        .difficulty {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .difficulty.beginner {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty.intermediate {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .difficulty.advanced {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .test-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--neutral-800);
+        }
+
+        .test-description {
+            color: var(--neutral-600);
+            margin-bottom: 20px;
             font-size: 0.95rem;
         }
 
-        .category-card-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .category-card-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .badge-beginner {
-            background-color: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-        }
-
-        .badge-intermediate {
-            background-color: rgba(245, 158, 11, 0.15);
-            color: var(--warn);
-        }
-
-        .badge-advanced {
-            background-color: rgba(239, 68, 68, 0.15);
-            color: var(--error);
-        }
-
-        .accordion {
-            margin: 2rem 0;
-            border-radius: var(--radius-lg);
-            background: var(--bg-secondary);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-
-        .accordion-header {
-            padding: 1.25rem 1.5rem;
-            cursor: pointer;
+        .test-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.125rem;
-            color: var(--text-primary);
-            background: var(--bg-secondary);
-            transition: background var(--transition-normal), transform var(--transition-normal);
-            position: relative;
+            color: var(--neutral-500);
+            font-size: 0.9rem;
         }
 
-        .accordion-header:hover {
-            background: rgba(0, 0, 0, 0.02);
-            transform: translateY(-2px);
-        }
-
-        .accordion-header span {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .accordion-header i {
-            color: var(--primary);
-            transition: transform var(--transition-normal);
-        }
-
-        .accordion-header.active {
-            background: rgba(0, 0, 0, 0.02);
-        }
-
-        .accordion-header.active i.chevron {
-            transform: rotate(180deg);
-        }
-
-        .accordion-header::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--primary);
-            opacity: 0;
-            transition: opacity var(--transition-normal);
-        }
-
-        .accordion-header.active::before {
-            opacity: 1;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height var(--transition-slow);
-            background: var(--bg-secondary);
-            padding: 0 1.5rem;
-        }
-
-        .accordion-content.active {
-            max-height: 2000px;
-            padding: 1.5rem;
-        }
-
-        .quiz-container {
-            background: var(--bg-secondary);
-            padding: clamp(1.5rem, 4vw, 2.5rem);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            margin-top: 1.5rem;
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-        }
-
-        .quiz-container:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .quiz-question {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .quiz-question:last-of-type {
-            border-bottom: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .quiz-question p {
-            font-weight: 600;
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .quiz-question p i {
-            color: var(--primary);
-            margin-top: 0.25rem;
-        }
-
-        .quiz-options {
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .quiz-option {
-            position: relative;
-        }
-
-        .quiz-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .quiz-option label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 1rem 1.25rem;
-            border-radius: var(--radius-md);
-            transition: all var(--transition-normal);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quiz-option label::before {
-            content: '';
-            display: inline-block;
-            width: 1.25rem;
-            height: 1.25rem;
-            margin-right: 0.75rem;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--primary-light);
-            transition: all var(--transition-normal);
-            flex-shrink: 0;
-        }
-
-        .quiz-option input[type="radio"]:checked + label {
-            background: rgba(37, 99, 235, 0.05);
-            border-color: var(--primary);
-        }
-
-        .quiz-option input[type="radio"]:checked + label::before {
-            background-color: var(--primary);
-            box-shadow: 0 0 0 2px var(--bg-secondary) inset;
-        }
-
-        .quiz-option label:hover {
-            transform: translateX(5px);
-            background: rgba(37, 99, 235, 0.025);
-        }
-
-        .quiz-result {
-            margin-top: 1.5rem;
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            font-weight: 500;
-            display: none;
-            animation: fadeIn 0.5s var(--easing);
-            border-left: 4px solid transparent;
-        }
-
-        .quiz-result.success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border-color: var(--success);
-        }
-
-        .quiz-result.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border-color: var(--error);
-        }
-
-        .quiz-result.partial {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warn);
-            border-color: var(--warn);
-        }
-
-        .final-score {
+        .test-start {
+            display: block;
+            width: 100%;
+            padding: 12px;
             text-align: center;
-            margin: 2.5rem 0;
-            padding: clamp(1.5rem, 4vw, 2.5rem);
-            background: var(--gradient-primary);
-            border-radius: var(--radius-xl);
+            background-color: var(--primary);
             color: white;
-            display: none;
-            animation: fadeIn 0.8s var(--easing);
-            box-shadow: var(--shadow-lg);
+            border: none;
+            border-radius: 0 0 var(--radius) var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
 
-        .final-score h2 {
-            margin-bottom: 1.25rem;
-            font-size: 1.75rem;
-            font-weight: 700;
+        .test-start:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonials-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background-color: var(--neutral-50);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-content {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--neutral-700);
+            font-style: italic;
+        }
+
+        .testimonial-author {
             display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--neutral-500);
+            font-size: 0.9rem;
+        }
+
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section .section-title {
+            color: white;
+        }
+
+        .cta-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+
+        .footer {
+            background-color: var(--neutral-800);
+            color: var(--neutral-300);
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--neutral-400);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--neutral-700);
+            color: white;
+            transition: all 0.3s ease;
         }
 
-        .score-display {
-            font-size: 4rem;
-            font-weight: 800;
-            margin: 1.5rem 0;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-            display: inline-block;
-        }
-
-        .score-display::after {
-            content: '';
-            position: absolute;
-            bottom: -0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: var(--radius-full);
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-full);
-            margin: 1.5rem 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--accent);
-            border-radius: var(--radius-full);
-            transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
-        }
-
-        .info-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            margin: 1.5rem 0;
-            transition: transform var(--transition-normal);
-        }
-
-        .info-card:hover {
+        .social-links a:hover {
+            background-color: var(--primary);
             transform: translateY(-3px);
         }
 
-        .info-card i {
-            font-size: 1.5rem;
-            margin-top: 0.25rem;
+        .footer-bottom {
+            border-top: 1px solid var(--neutral-700);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
         }
 
-        .info-card-primary {
-            background: rgba(37, 99, 235, 0.05);
-            border-left: 4px solid var(--primary);
+        .copyright {
+            color: var(--neutral-500);
         }
 
-        .info-card-primary i {
-            color: var(--primary);
+        .footer-secondary-links a {
+            color: var(--neutral-500);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
         }
 
-        .info-card-warning {
-            background: rgba(245, 158, 11, 0.05);
-            border-left: 4px solid var(--warn);
+        .footer-secondary-links a:hover {
+            color: white;
         }
 
-        .info-card-warning i {
-            color: var(--warn);
-        }
-
-        .theme-toggle {
+        /* Modal для теста */
+        .modal {
+            display: none;
             position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            background: var(--bg-secondary);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            max-width: 800px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
             border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            z-index: 100;
-            transition: background var(--transition-normal), transform var(--transition-normal);
-            box-shadow: var(--shadow-md);
-            color: var(--text-primary);
         }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
+        .modal-body {
+            padding: 30px;
         }
 
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
+        .test-progress {
+            margin-bottom: 30px;
         }
 
-        .nav-logo {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-logo span {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .progress-tracker {
-            display: flex;
-            flex-direction: column;
-            margin: 2rem 0;
-        }
-
-        .progress-header {
+        .progress-text {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
         }
 
-        .progress-header h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .progress-header span {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .progress-bar-container {
-            height: 0.5rem;
-            background: var(--bg-primary);
-            border-radius: var(--radius-full);
+        .progress-bar {
+            height: 10px;
+            background-color: var(--neutral-200);
+            border-radius: 5px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--primary);
-            border-radius: var(--radius-full);
-            width: 65%;
-            transition: width 0.5s ease;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 0.3s ease;
         }
 
-        .certification-badge {
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--neutral-800);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-item {
+            padding: 15px;
+            border: 2px solid var(--neutral-300);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-light);
+            background-color: var(--neutral-50);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--neutral-400);
+            margin-right: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
-            padding: 2rem;
-            border-radius: var(--radius-lg);
-            margin-top: 2rem;
-            box-shadow: var(--shadow-md);
-            border: 2px dashed rgba(37, 99, 235, 0.3);
+            font-weight: 600;
+            color: var(--neutral-400);
         }
 
-        .certification-badge img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 1rem;
+        .option-item.selected .option-marker {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
         }
 
-        .certification-badge h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+        .option-text {
+            flex: 1;
         }
 
-        .certification-badge p {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
+        .feedback-container {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: var(--radius);
+            display: none;
+        }
+
+        .feedback-container.correct {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+        }
+
+        .feedback-container.incorrect {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feedback-title i {
+            margin-right: 10px;
+        }
+
+        .feedback-container.correct .feedback-title {
+            color: var(--success);
+        }
+
+        .feedback-container.incorrect .feedback-title {
+            color: var(--danger);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .next-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .next-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .prev-btn {
+            background-color: var(--neutral-100);
+            color: var(--neutral-700);
+            border: none;
+        }
+
+        .prev-btn:hover {
+            background-color: var(--neutral-200);
+        }
+
+        .submit-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background-color: #0d9668;
+        }
+
+        .results-container {
             text-align: center;
+            padding: 30px;
+            display: none;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .results-score {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
+        .results-message {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--neutral-800);
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+        .results-details {
+            margin: 30px 0;
+            text-align: left;
         }
 
-        .pulse {
-            animation: pulse 2s infinite var(--easing);
+        .result-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--neutral-200);
+            display: flex;
+            align-items: center;
         }
 
-        @media (max-width: 992px) {
-            .hero-content {
-                max-width: 100%;
+        .result-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .result-icon.correct {
+            color: var(--success);
+        }
+
+        .result-icon.incorrect {
+            color: var(--danger);
+        }
+
+        .result-text {
+            flex: 1;
+        }
+
+        .share-results {
+            margin-top: 30px;
+        }
+
+        .share-title {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--neutral-700);
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .share-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .share-btn.facebook {
+            background-color: #1877F2;
+        }
+
+        .share-btn.twitter {
+            background-color: #1DA1F2;
+        }
+
+        .share-btn.linkedin {
+            background-color: #0A66C2;
+        }
+
+        .share-btn.whatsapp {
+            background-color: #25D366;
+        }
+
+        .actions-container {
+            margin-top: 30px;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: var(--neutral-900);
+            color: var(--neutral-200);
+        }
+
+        body.dark-mode .feature-card,
+        body.dark-mode .test-card,
+        body.dark-mode .modal-content,
+        body.dark-mode .testimonial-card,
+        body.dark-mode .category-tab {
+            background-color: var(--neutral-800);
+            color: var(--neutral-200);
+        }
+
+        body.dark-mode .features,
+        body.dark-mode .testimonials {
+            background-color: var(--neutral-900);
+        }
+
+        body.dark-mode .categories {
+            background-color: var(--neutral-800);
+        }
+
+        body.dark-mode .section-title {
+            color: var(--neutral-100);
+        }
+
+        body.dark-mode .section-subtitle,
+        body.dark-mode .feature-description,
+        body.dark-mode .test-description {
+            color: var(--neutral-400);
+        }
+
+        body.dark-mode .test-title,
+        body.dark-mode .feature-title {
+            color: var(--neutral-100);
+        }
+
+        body.dark-mode .test-meta {
+            color: var(--neutral-400);
+        }
+
+        body.dark-mode .modal-body {
+            background-color: var(--neutral-800);
+        }
+
+        body.dark-mode .question-text {
+            color: var(--neutral-100);
+        }
+
+        body.dark-mode .option-item {
+            border-color: var(--neutral-600);
+            color: var(--neutral-200);
+        }
+
+        body.dark-mode .option-item:hover {
+            background-color: var(--neutral-700);
+        }
+
+        body.dark-mode .option-item.selected {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        body.dark-mode .prev-btn {
+            background-color: var(--neutral-700);
+            color: var(--neutral-200);
+        }
+
+        body.dark-mode .prev-btn:hover {
+            background-color: var(--neutral-600);
+        }
+
+        body.dark-mode .results-message {
+            color: var(--neutral-100);
+        }
+
+        body.dark-mode .result-item {
+            border-bottom-color: var(--neutral-700);
+        }
+
+        /* Animations */
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 2.5rem;
             }
-            
-            .hero-image {
-                width: 300px;
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .hero-section {
+            header .container {
                 flex-direction: column;
-                text-align: center;
-                padding: 2rem 1.5rem;
+                gap: 15px;
             }
-            
-            .hero-content {
-                order: 1;
+            .nav-menu, .user-menu {
+                gap: 15px;
             }
-            
-            .hero-image {
-                order: 0;
-                width: 80%;
-                max-width: 300px;
-                margin-bottom: 1.5rem;
+            .hero {
+                padding: 180px 0 100px;
             }
-            
-            .hero-title::after {
-                left: 50%;
-                transform: translateX(-50%);
+            h1 {
+                font-size: 2rem;
             }
-            
-            .hero-description {
-                max-width: 100%;
+            .stats {
+                flex-direction: column;
+                gap: 20px;
             }
-            
-            .section-title {
-                text-align: center;
-            }
-            
-            .section-title::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .fixed-image {
-                width: 60px;
-                bottom: 1rem;
-                right: 1rem;
-            }
-            
-            .theme-toggle {
-                top: 1rem;
-                right: 1rem;
-                width: 2.5rem;
-                height: 2.5rem;
-            }
-            
-            .accordion-header {
-                font-size: 1rem;
-                padding: 1rem;
-            }
-            
-            .accordion-content.active {
-                padding: 1rem;
-            }
-            
-            .test-categories {
+            .features-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 1.5rem;
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
-            
-            .hero-description {
-                font-size: 0.875rem;
-            }
-            
-            .hero-badge {
-                padding: 0.25rem 0.75rem;
-                font-size: 0.75rem;
-            }
-            
-            .section-title {
-                font-size: 1.25rem;
-            }
-            
-            .quiz-question p {
-                font-size: 1rem;
-            }
-            
-            .quiz-option label {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-            }
-            
-            .btn {
-                width: 100%;
-                padding: 0.75rem 1.25rem;
-                font-size: 0.875rem;
-            }
-            
-            .score-display {
-                font-size: 3rem;
-            }
-            
-            .info-card {
+            .footer-bottom {
                 flex-direction: column;
+                gap: 20px;
+                text-align: center;
             }
-            
-            .info-card i {
-                margin-bottom: 0.5rem;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme]) {
-                --bg-primary: #111827;
-                --bg-secondary: #1f2937;
-                --text-primary: #f3f4f6;
-                --text-secondary: #d1d5db;
-                /* ... остальные переменные для темной темы */
+            .footer-secondary-links a {
+                margin: 0 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="progress-bar-top" id="progress-bar"></div>
-    <button class="theme-toggle" id="theme-toggle">
-        <i class="fas fa-moon"></i>
-    </button>
-    
-    <!-- Фиксированный PNG-элемент -->
-    <img src="https://i.imgur.com/zLWcIp0.png" alt="FinCheck Mascot" class="fixed-image">
-    
-    <div class="container">
-        <nav class="nav">
-            <div class="nav-logo">
-                <i class="fas fa-piggy-bank"></i> Fin<span>Check</span>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i> FinSkills
             </div>
-        </nav>
-        
-        <section class="hero-section">
+            <div class="nav-menu">
+                <a href="#features">Возможности</a>
+                <a href="#tests">Тесты</a>
+                <a href="#testimonials">Отзывы</a>
+                <a href="#about">О нас</a>
+            </div>
+            <div class="user-menu">
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <button class="login-btn">Войти</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">Финансовая грамотность</div>
-                <h1 class="hero-title">Проверьте свои <span>финансовые</span> знания</h1>
-                <p class="hero-description">Интерактивная платформа для тестирования знаний по финансовой грамотности, защите от мошенничества и управлению личными финансами</p>
+                <h1>Повысьте свою финансовую грамотность</h1>
+                <div class="sub-heading">Проходите тесты, решайте практические задачи и становитесь финансово независимыми</div>
+                <a href="#tests" class="cta-btn">Начать обучение</a>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Тестов</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Пользователей</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">93%</div>
+                        <div class="stat-label">Положительных отзывов</div>
+                    </div>
+                </div>
             </div>
-            <img src="https://i.imgur.com/wOv8zez.png" alt="Financial Literacy Tests" class="hero-image">
-        </section>
+        </div>
+    </section>
 
-        <div class="neomorphic-card">
-            <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Категории тестов</h2>
-            <p>Выберите интересующую вас тему для проверки финансовых знаний и получите персонализированные рекомендации.</p>
-            
-            <div class="test-categories">
-                <div class="category-card" id="category-1">
-                    <img src="https://i.imgur.com/0d0mXd8.jpg" alt="Базовая финансовая грамотность" class="category-card-image">
-                    <div class="category-card-content">
-                        <h3 class="category-card-title"><i class="fas fa-chart-pie"></i> Базовые знания</h3>
-                        <p class="category-card-desc">Проверьте знания в области личного бюджета, финансового планирования и сбережений</p>
-                        <div class="category-card-meta">
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Почему стоит выбрать нашу платформу</h2>
+            <div class="section-subtitle">FinSkills помогает вам улучшить свои финансовые навыки через интерактивное обучение и практические задания</div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="feature-title">Обучение в игровой форме</h3>
+                    <p class="feature-description">Наши тесты разработаны в формате увлекательных заданий и кейсов из реальной жизни</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #f59e0b;">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="feature-title">Детальная аналитика</h3>
+                    <p class="feature-description">Отслеживайте свой прогресс и получайте персональные рекомендации для улучшения навыков</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #ef4444;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="feature-title">Экспертное содержание</h3>
+                    <p class="feature-description">Материалы разработаны финансовыми экспертами и педагогами с многолетним опытом</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #10b981;">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="feature-title">Сертификаты и достижения</h3>
+                    <p class="feature-description">Получайте сертификаты после прохождения курсов и делитесь своими успехами</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #06b6d4;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Сообщество</h3>
+                    <p class="feature-description">Присоединяйтесь к сообществу единомышленников, делитесь опытом и учитесь вместе</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: #8b5cf6;">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Доступно всегда</h3>
+                    <p class="feature-description">Учитесь в любое время и в любом месте с нашим адаптивным приложением</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories" id="tests">
+        <div class="container">
+            <h2 class="section-title">Проверьте свои финансовые знания</h2>
+            <div class="section-subtitle">Выберите интересующую вас категорию и пройдите тесты, чтобы определить уровень своих знаний</div>
+
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">Все тесты</div>
+                <div class="category-tab" data-category="basics">Основы финансов</div>
+                <div class="category-tab" data-category="budget">Личный бюджет</div>
+                <div class="category-tab" data-category="invest">Инвестиции</div>
+                <div class="category-tab" data-category="credit">Кредиты</div>
+                <div class="category-tab" data-category="tax">Налоги</div>
+                <div class="category-tab" data-category="security">Финансовая безопасность</div>
+            </div>
+
+            <div class="tests-grid">
+                <div class="test-card" data-category="basics">
+                    <div class="test-image">
+                        <img src="https://images.unsplash.com/photo-1554768804-50c1e2b50a6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Основы финансовой грамотности">
+                    </div>
+                    <div class="test-content">
+                        <span class="difficulty beginner">Начальный</span>
+                        <h3 class="test-title">Основы финансовой грамотности</h3>
+                        <p class="test-description">Тест на знание базовых финансовых понятий и принципов личных финансов</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-question-circle"></i> 15 вопросов</span>
                             <span><i class="fas fa-clock"></i> 15 минут</span>
-                            <span><i class="fas fa-question-circle"></i> 10 вопросов</span>
                         </div>
                     </div>
-                    <span class="badge badge-beginner">Начальный</span>
+                    <button class="test-start" data-test="basics">Начать тест</button>
                 </div>
-                
-                <div class="category-card" id="category-2">
-                    <img src="https://i.imgur.com/Bq4N47o.jpg" alt="Защита от мошенничества" class="category-card-image">
-                    <div class="category-card-content">
-                        <h3 class="category-card-title"><i class="fas fa-shield-alt"></i> Защита от мошенничества</h3>
-                        <p class="category-card-desc">Тест на знание методов защиты от финансовых мошенников и киберпреступников</p>
-                        <div class="category-card-meta">
-                            <span><i class="fas fa-clock"></i> 20 минут</span>
-                            <span><i class="fas fa-question-circle"></i> 15 вопросов</span>
-                        </div>
-                    </div>
-                    <span class="badge badge-intermediate">Средний</span>
-                </div>
-                
-                <div class="category-card" id="category-3">
-                    <img src="https://i.imgur.com/8fhTkA3.jpg" alt="Инвестиции и накопления" class="category-card-image">
-                    <div class="category-card-content">
-                        <h3 class="category-card-title"><i class="fas fa-chart-line"></i> Инвестиции</h3>
-                        <p class="category-card-desc">Проверьте понимание основ инвестирования, финансовых инструментов и стратегий</p>
-                        <div class="category-card-meta">
-                            <span><i class="fas fa-clock"></i> 25 минут</span>
-                            <span><i class="fas fa-question-circle"></i> 20 вопросов</span>
-                        </div>
-                    </div>
-                    <span class="badge badge-advanced">Продвинутый</span>
-                </div>
-                
-                <div class="category-card" id="category-4">
-                    <img src="https://i.imgur.com/5jBc2JH.jpg" alt="Кредиты и займы" class="category-card-image">
-                    <div class="category-card-content">
-                        <h3 class="category-card-title"><i class="fas fa-credit-card"></i> Кредиты и займы</h3>
-                        <p class="category-card-desc">Тест на знание кредитных продуктов, условий займов и эффективного управления долгом</p>
-                        <div class="category-card-meta">
-                            <span><i class="fas fa-clock"></i> 20 минут</span>
-                            <span><i class="fas fa-question-circle"></i> 15 вопросов</span>
-                        </div>
-                    </div>
-                    <span class="badge badge-intermediate">Средний</span>
-                </div>
-            </div>
-            
-            <div class="progress-tracker">
-                <div class="progress-header">
-                    <h4>Ваш прогресс</h4>
-                    <span>65%</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-            
-            <div class="certification-badge">
-                <img src="https://i.imgur.com/fA3rxxu.png" alt="Certification Badge" />
-                <h3>Сертификат финансовой грамотности</h3>
-                <p>Пройдите все тесты и получите персональный сертификат, подтверждающий ваши знания</p>
-            </div>
-        </div>
 
-        <div class="glass-card">
-            <h2 class="section-title"><i class="fas fa-shield-alt"></i> Защита от финансового мошенничества</h2>
-            <p>Проверьте свои знания о методах защиты от финансовых мошенников и безопасном использовании финансовых инструментов.</p>
-            
-            <div class="info-card info-card-warning">
-                <i class="fas fa-exclamation-circle"></i>
-                <div>
-                    <h3>Важное напоминание</h3>
-                    <p>По данным Центрального банка, в 2024 году резко возросло число случаев финансового мошенничества. Знание базовых правил безопасности поможет защитить ваши средства.</p>
-                </div>
-            </div>
-            
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i class="fas fa-phone-alt"></i> Телефонное мошенничество</span>
-                        <i class="fas fa-chevron-down chevron"></i>
+                <div class="test-card" data-category="budget">
+                    <div class="test-image">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Планирование личного бюджета">
                     </div>
-                    <div class="accordion-content">
-                        <div class="quiz-container">
-                            <form id="quiz-form-1">
-                                <div class="quiz-question">
-                                    <p><i class="fas fa-question-circle"></i> 1. Какие данные нельзя сообщать по телефону сотрудникам банка?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q1a" value="a">
-                                            <label for="q1a">Ваше полное имя</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q1b" value="b">
-                                            <label for="q1b">Название вашего банка</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q1c" value="c">
-                                            <label for="q1c">CVV/CVC-код карты и коды из SMS</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q1d" value="d">
-                                            <label for="q1d">Адрес электронной почты</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="quiz-question">
-                                    <p><i class="fas fa-question-circle"></i> 2. Что делать при звонке от «сотрудника службы безопасности банка»?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2a" value="a">
-                                            <label for="q2a">Сообщить данные карты для проверки</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2b" value="b">
-                                            <label for="q2b">Прервать разговор и самостоятельно позвонить на официальный номер банка</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2c" value="c">
-                                            <label for="q2c">Продиктовать код из SMS для подтверждения личности</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2d" value="d">
-                                            <label for="q2d">Перезвонить по номеру, с которого звонили</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <button type="button" class="btn btn-primary" onclick="checkQuiz1()">
-                                    <i class="fas fa-check-circle"></i> Проверить ответы
-                                </button>
-                                
-                                <div class="quiz-result" id="quiz-result-1"></div>
-                            </form>
+                    <div class="test-content">
+                        <span class="difficulty intermediate">Средний</span>
+                        <h3 class="test-title">Планирование личного бюджета</h3>
+                        <p class="test-description">Проверьте, насколько хорошо вы умеете управлять своими доходами и расходами</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-question-circle"></i> 12 вопросов</span>
+                            <span><i class="fas fa-clock"></i> 20 минут</span>
                         </div>
                     </div>
+                    <button class="test-start" data-test="budget">Начать тест</button>
                 </div>
-                
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i class="fas fa-globe"></i> Интернет-мошенничество</span>
-                        <i class="fas fa-chevron-down chevron"></i>
+
+                <div class="test-card" data-category="invest">
+                    <div class="test-image">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Инвестиции для начинающих">
                     </div>
-                    <div class="accordion-content">
-                        <div class="quiz-container">
-                            <form id="quiz-form-2">
-                                <div class="quiz-question">
-                                    <p><i class="fas fa-question-circle"></i> 1. Как распознать фишинговый сайт?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q2-1a" value="a">
-                                            <label for="q2-1a">По отсутствию логотипа компании</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q2-1b" value="b">
-                                            <label for="q2-1b">По ошибкам в URL адресе (sberbamk вместо sberbank)</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q2-1c" value="c">
-                                            <label for="q2-1c">По яркому дизайну сайта</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q2-1d" value="d">
-                                            <label for="q2-1d">По медленной загрузке страниц</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="quiz-question">
-                                    <p><i class="fas fa-question-circle"></i> 2. Что делать, если вы обнаружили подозрительную транзакцию в мобильном банке?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2-2a" value="a">
-                                            <label for="q2-2a">Подождать несколько дней, возможно это технический сбой</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2-2b" value="b">
-                                            <label for="q2-2b">Немедленно заблокировать карту и связаться с банком</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2-2c" value="c">
-                                            <label for="q2-2c">Сменить только пароль от личного кабинета</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q2-2d" value="d">
-                                            <label for="q2-2d">Проверить антивирус на компьютере</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <button type="button" class="btn btn-primary" onclick="checkQuiz2()">
-                                    <i class="fas fa-check-circle"></i> Проверить ответы
-                                </button>
-                                
-                                <div class="quiz-result" id="quiz-result-2"></div>
-                            </form>
+                    <div class="test-content">
+                        <span class="difficulty intermediate">Средний</span>
+                        <h3 class="test-title">Инвестиции для начинающих</h3>
+                        <p class="test-description">Тест на понимание основных принципов инвестирования и финансовых инструментов</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-question-circle"></i> 20 вопросов</span>
+                            <span><i class="fas fa-clock"></i> 25 минут</span>
                         </div>
                     </div>
+                    <button class="test-start" data-test="invest">Начать тест</button>
                 </div>
-                
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i class="fas fa-money-bill-wave"></i> Инвестиционное мошенничество</span>
-                        <i class="fas fa-chevron-down chevron"></i>
+
+                <div class="test-card" data-category="credit">
+                    <div class="test-image">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Кредиты и займы">
                     </div>
-                    <div class="accordion-content">
-                        <div class="quiz-container">
-                            <form id="quiz-form-3">
-                                <div class="quiz-question">
-                                    <p><i class="fas fa-question-circle"></i> 1. Какие признаки могут указывать на финансовую пирамиду?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q3-1a" value="a">
-                                            <label for="q3-1a">Гарантия высокой доходности выше рыночной</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q3-1b" value="b">
-                                            <label for="q3-1b">Наличие лицензии Центрального банка</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q3-1c" value="c">
-                                            <label for="q3-1c">Прозрачная структура инвестиций</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q1" id="q3-1d" value="d">
-                                            <label for="q3-1d">Регулярная публикация финансовой отчетности</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="quiz-question">
-                                    <p><i class="fas fa-question-circle"></i> 2. Как безопасно выбрать инвестиционную компанию?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q3-2a" value="a">
-                                            <label for="q3-2a">По рекламе в социальных сетях</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q3-2b" value="b">
-                                            <label for="q3-2b">Проверить наличие лицензии в реестре ЦБ РФ</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q3-2c" value="c">
-                                            <label for="q3-2c">По рекомендациям знакомых в мессенджерах</label>
-                                        </div>
-                                        <div class="quiz-option">
-                                            <input type="radio" name="q2" id="q3-2d" value="d">
-                                            <label for="q3-2d">По отзывам на сайте компании</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <button type="button" class="btn btn-primary" onclick="checkQuiz3()">
-                                    <i class="fas fa-check-circle"></i> Проверить ответы
-                                </button>
-                                
-                                <div class="quiz-result" id="quiz-result-3"></div>
-                            </form>
+                    <div class="test-content">
+                        <span class="difficulty intermediate">Средний</span>
+                        <h3 class="test-title">Кредиты и займы</h3>
+                        <p class="test-description">Проверьте свои знания о различных видах кредитов и правилах их использования</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-question-circle"></i> 18 вопросов</span>
+                            <span><i class="fas fa-clock"></i> 20 минут</span>
                         </div>
                     </div>
+                    <button class="test-start" data-test="credit">Начать тест</button>
+                </div>
+
+                <div class="test-card" data-category="tax">
+                    <div class="test-image">
+                        <img src="https://images.unsplash.com/photo-1586486942853-511cda39a6e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Основы налогообложения">
+                    </div>
+                    <div class="test-content">
+                        <span class="difficulty advanced">Продвинутый</span>
+                        <h3 class="test-title">Основы налогообложения</h3>
+                        <p class="test-description">Тест на знание налоговой системы и оптимизации налоговых выплат</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-question-circle"></i> 15 вопросов</span>
+                            <span><i class="fas fa-clock"></i> 25 минут</span>
+                        </div>
+                    </div>
+                    <button class="test-start" data-test="tax">Начать тест</button>
+                </div>
+
+                <div class="test-card" data-category="security">
+                    <div class="test-image">
+                        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Финансовая безопасность">
+                    </div>
+                    <div class="test-content">
+                        <span class="difficulty beginner">Начальный</span>
+                        <h3 class="test-title">Финансовая безопасность</h3>
+                        <p class="test-description">Проверьте свои знания о защите от финансового мошенничества и безопасных онлайн-платежах</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-question-circle"></i> 12 вопросов</span>
+                            <span><i class="fas fa-clock"></i> 15 минут</span>
+                        </div>
+                    </div>
+                    <button class="test-start" data-test="security">Начать тест</button>
                 </div>
             </div>
-            
-            <div class="info-card info-card-primary">
-                <i class="fas fa-lightbulb"></i>
-                <div>
-                    <h3>Совет эксперта</h3>
-                    <p>Всегда проверяйте официальные источники перед принятием финансовых решений. Помните, что банки никогда не запрашивают полные данные карты, CVV-код или пароли из SMS по телефону.</p>
-                </div>
-            </div>
-            
-            <button id="show-final-result" class="btn btn-neomorphic pulse">
-                <i class="fas fa-poll"></i> Посмотреть итоговый результат
-            </button>
         </div>
-        
-        <div class="final-score" id="final-score">
-            <h2><i class="fas fa-award"></i> Ваш результат</h2>
-            <p>Вы правильно ответили на <span id="correct-answers">0</span> из <span id="total-questions">6</span> вопросов</p>
-            
-            <div class="score-display">0%</div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" style="width: 0%"></div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Что говорят наши пользователи</h2>
+            <div class="section-subtitle">Тысячи людей уже улучшили свои финансовые навыки с помощью нашей платформы</div>
+
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Платформа FinSkills полностью изменила мое отношение к финансам. Благодаря интерактивным тестам и доступно изложенной информации, я научилась грамотно планировать свой бюджет и начала инвестировать. Теперь я чувствую уверенность в своем финансовом будущем!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Анна Смирнова">
+                        </div>
+                        <div class="author-info">
+                            <h4>Анна Смирнова</h4>
+                            <p>Маркетолог, 28 лет</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Я всегда думал, что инвестиции - это сложно и только для богатых. FinSkills буквально открыл мне глаза. Пройдя тесты по основам инвестирования, я понял, что можно начать даже с небольших сумм. Сейчас у меня уже есть диверсифицированный портфель и конкретный финансовый план."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Дмитрий Козлов">
+                        </div>
+                        <div class="author-info">
+                            <h4>Дмитрий Козлов</h4>
+                            <p>Инженер, 34 года</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Начала использовать FinSkills, когда готовилась взять свой первый кредит. Благодаря тесту по кредитам я узнала о подводных камнях и смогла выбрать наиболее выгодное предложение. Теперь рекомендую эту платформу всем своим студентам как основу для развития финансовой грамотности."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Елена Петрова">
+                        </div>
+                        <div class="author-info">
+                            <h4>Елена Петрова</h4>
+                            <p>Преподаватель экономики, 41 год</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div id="result-message"></div>
-            
-            <button class="btn btn-accent" onclick="location.reload()">
-                Пройти тест заново
-            </button>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title">Готовы повысить свою финансовую грамотность?</h2>
+            <div class="section-subtitle">Присоединяйтесь к тысячам людей, которые уже сделали шаг к финансовой независимости</div>
+            <a href="#tests" class="cta-btn">Пройти первый тест</a>
+        </div>
+    </section>
+
+    <footer class="footer" id="about">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>О FinSkills</h3>
+                    <p>Наша миссия — сделать финансовое образование доступным для каждого и помочь людям принимать осознанные финансовые решения.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Тесты</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Основы финансов</a></li>
+                        <li><a href="#">Личный бюджет</a></li>
+                        <li><a href="#">Инвестиции</a></li>
+                        <li><a href="#">Кредиты и займы</a></li>
+                        <li><a href="#">Налоги</a></li>
+                        <li><a href="#">Финансовая безопасность</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Ресурсы</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Вебинары</a></li>
+                        <li><a href="#">Подкасты</a></li>
+                        <li><a href="#">Финансовый словарь</a></li>
+                        <li><a href="#">Калькуляторы</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Поддержка</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Помощь</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Связаться с нами</a></li>
+                        <li><a href="#">Обратная связь</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">© 2025 FinSkills. Все права защищены.</div>
+                <div class="footer-secondary-links">
+                    <a href="#">Условия использования</a>
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для теста -->
+    <div class="modal" id="test-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="test-title">Основы финансовой грамотности</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="test-progress">
+                    <div class="progress-text">
+                        <span>Вопрос <span id="current-question">1</span> из <span id="total-questions">10</span></span>
+                        <span id="timer">Осталось: 15:00</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 10%;"></div>
+                    </div>
+                </div>
+
+                <div class="question-container" id="question-container">
+                    <h3 class="question-text" id="question-text">Что из перечисленного НЕ является финансовым активом?</h3>
+                    <div class="options-container" id="options-container">
+                        <div class="option-item" data-value="1">
+                            <div class="option-marker">A</div>
+                            <div class="option-text">Акции компании</div>
+                        </div>
+                        <div class="option-item" data-value="2">
+                            <div class="option-marker">B</div>
+                            <div class="option-text">Автомобиль</div>
+                        </div>
+                        <div class="option-item" data-value="3">
+                            <div class="option-marker">C</div>
+                            <div class="option-text">Облигации государственного займа</div>
+                        </div>
+                        <div class="option-item" data-value="4">
+                            <div class="option-marker">D</div>
+                            <div class="option-text">Депозит в банке</div>
+                        </div>
+                    </div>
+
+                    <div class="feedback-container" id="feedback-container">
+                        <div class="feedback-title">
+                            <i class="fas fa-check-circle"></i> Правильно!
+                        </div>
+                        <div class="feedback-text">
+                            Автомобиль является материальным активом (имуществом), а не финансовым активом. Финансовые активы — это инструменты, которые представляют собой требования к будущим денежным потокам, например, акции, облигации, депозиты.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="nav-btn prev-btn" id="prev-btn" disabled>Назад</button>
+                    <button class="nav-btn next-btn" id="next-btn">Следующий вопрос</button>
+                </div>
+
+                <div class="results-container" id="results-container">
+                    <div class="results-score" id="result-score">8/10</div>
+                    <div class="results-message" id="result-message">Отличный результат!</div>
+                    <p>Вы показали хорошее понимание основ финансовой грамотности. Продолжайте изучать эту тему, чтобы стать настоящим экспертом.</p>
+
+                    <div class="results-details" id="results-details">
+                        <div class="result-item">
+                            <div class="result-icon correct"><i class="fas fa-check-circle"></i></div>
+                            <div class="result-text">Вопрос 1: Что из перечисленного НЕ является финансовым активом?</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-icon incorrect"><i class="fas fa-times-circle"></i></div>
+                            <div class="result-text">Вопрос 2: Что такое инфляция?</div>
+                        </div>
+                        <!-- Остальные результаты будут добавлены динамически -->
+                    </div>
+
+                    <div class="share-results">
+                        <div class="share-title">Поделитесь своими результатами:</div>
+                        <div class="share-buttons">
+                            <div class="share-btn facebook"><i class="fab fa-facebook-f"></i></div>
+                            <div class="share-btn twitter"><i class="fab fa-twitter"></i></div>
+                            <div class="share-btn linkedin"><i class="fab fa-linkedin-in"></i></div>
+                            <div class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="actions-container">
+                        <button class="nav-btn next-btn" id="try-again-btn">Пройти еще раз</button>
+                        <button class="nav-btn submit-btn" id="next-test-btn">Следующий тест</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Прогресс-бар при скролле
-        window.addEventListener('scroll', function() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-        });
-        
-        // Переключение темы
+        // Вопросы для различных тестов
+        const tests = {
+            basics: {
+                title: "Основы финансовой грамотности",
+                questions: [
+                    {
+                        question: "Что из перечисленного НЕ является финансовым активом?",
+                        options: [
+                            "Акции компании",
+                            "Автомобиль",
+                            "Облигации государственного займа",
+                            "Депозит в банке"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Автомобиль является материальным активом (имуществом), а не финансовым активом. Финансовые активы — это инструменты, которые представляют собой требования к будущим денежным потокам, например, акции, облигации, депозиты."
+                    },
+                    {
+                        question: "Что такое инфляция?",
+                        options: [
+                            "Увеличение стоимости национальной валюты",
+                            "Общее повышение уровня цен на товары и услуги",
+                            "Снижение процентных ставок по кредитам",
+                            "Увеличение валового внутреннего продукта"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Инфляция — это общее повышение уровня цен на товары и услуги в экономике в течение определенного периода времени, что приводит к снижению покупательной способности денег."
+                    },
+                    {
+                        question: "Если инфляция составляет 8% годовых, а ваш банковский депозит приносит 6% годовых, то в реальном выражении вы:",
+                        options: [
+                            "Зарабатываете 2% годовых",
+                            "Теряете 2% годовых",
+                            "Зарабатываете 14% годовых",
+                            "Теряете 8% годовых"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "В условиях инфляции 8% и доходности депозита 6%, реальная доходность составляет примерно -2% (6% - 8% = -2%). Это означает, что в реальном выражении (с учетом покупательной способности) вы теряете около 2% ваших денег ежегодно."
+                    },
+                    {
+                        question: "Что из перечисленного является наиболее ликвидным активом?",
+                        options: [
+                            "Недвижимость",
+                            "Наличные деньги",
+                            "Акции компании",
+                            "Антиквариат"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Наличные деньги являются наиболее ликвидным активом, поскольку могут быть немедленно использованы для оплаты товаров и услуг без необходимости конвертации в другую форму."
+                    },
+                    {
+                        question: "Какой из следующих вариантов НЕ является источником пассивного дохода?",
+                        options: [
+                            "Дивиденды по акциям",
+                            "Заработная плата",
+                            "Доход от сдачи недвижимости в аренду",
+                            "Проценты по банковскому депозиту"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Заработная плата является активным доходом, поскольку требует непосредственного участия и затрат времени человека. Пассивный доход — это доход, который продолжает поступать без прямого участия человека (дивиденды, проценты, арендная плата и т.д.)."
+                    }
+                ]
+            },
+            budget: {
+                title: "Планирование личного бюджета",
+                questions: [
+                    {
+                        question: "Какой рекомендуемый размер финансовой подушки безопасности для покрытия непредвиденных расходов?",
+                        options: [
+                            "Месячный доход",
+                            "3-6 месячных расходов",
+                            "Годовой доход",
+                            "10% от годового дохода"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Эксперты рекомендуют иметь финансовую подушку безопасности, покрывающую 3-6 месяцев ваших обычных расходов. Этого достаточно, чтобы пережить большинство финансовых трудностей, таких как потеря работы или непредвиденные крупные расходы."
+                    },
+                    {
+                        question: "Рассчитайте, сколько денег вы сможете накопить за год, если будете откладывать 15% от ежемесячного дохода в 60,000 рублей?",
+                        options: [
+                            "9,000 рублей",
+                            "90,000 рублей",
+                            "108,000 рублей",
+                            "180,000 рублей"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Ежемесячные сбережения: 60,000 × 15% = 9,000 рублей. За год: 9,000 × 12 = 108,000 рублей."
+                    },
+                    {
+                        question: "Какое правило распределения бюджета рекомендует использовать 50% дохода на нужды, 30% на желания и 20% на сбережения?",
+                        options: [
+                            "Правило 70-20-10",
+                            "Правило 50-30-20",
+                            "Правило 60-30-10",
+                            "Правило 40-40-20"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Правило 50-30-20 — это популярный метод распределения бюджета, который предлагает тратить 50% дохода на базовые потребности (жилье, еда, транспорт), 30% на желания (развлечения, рестораны) и 20% откладывать на сбережения и инвестиции."
+                    },
+                    {
+                        question: "Семья тратит 30,000 рублей в месяц на питание из общего дохода в 120,000 рублей. Какой процент бюджета составляют расходы на питание?",
+                        options: [
+                            "25%",
+                            "30%",
+                            "20%",
+                            "40%"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Процент бюджета на питание: (30,000 ÷ 120,000) × 100% = 25%."
+                    },
+                    {
+                        question: "Что из перечисленного является признаком финансово здорового бюджета?",
+                        options: [
+                            "Расходы превышают доходы на 10-15%",
+                            "Все свободные средства идут на погашение кредитов",
+                            "Доходы превышают расходы, и часть средств регулярно откладывается",
+                            "Большая часть дохода тратится на предметы роскоши"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Один из ключевых признаков финансово здорового бюджета — это когда доходы превышают расходы, и человек может регулярно откладывать часть средств на сбережения, инвестиции или достижение финансовых целей."
+                    }
+                ]
+            },
+            invest: {
+                title: "Инвестиции для начинающих",
+                questions: [
+                    {
+                        question: "Какой принцип является основополагающим для снижения инвестиционного риска?",
+                        options: [
+                            "Инвестирование только в высокодоходные активы",
+                            "Диверсификация портфеля",
+                            "Регулярная покупка и продажа акций",
+                            "Вложение всех средств в один надежный актив"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Диверсификация портфеля — распределение инвестиций между различными активами — является ключевым принципом для снижения риска. Это позволяет минимизировать последствия негативной динамики отдельных активов на общую доходность портфеля."
+                    },
+                    {
+                        question: "Что из перечисленного обычно считается наиболее безопасным типом инвестиций?",
+                        options: [
+                            "Акции стартапов",
+                            "Государственные облигации",
+                            "Криптовалюты",
+                            "Фьючерсные контракты"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Государственные облигации обычно считаются одним из наиболее безопасных типов инвестиций, поскольку они поддерживаются государством и имеют низкий риск дефолта. Однако они обычно предлагают более низкую доходность по сравнению с более рискованными инвестициями."
+                    },
+                    {
+                        question: "Вы инвестировали 100,000 рублей в актив, который принес 15% годовой доход. Сколько составит ваш доход через год?",
+                        options: [
+                            "15,000 рублей",
+                            "115,000 рублей",
+                            "150,000 рублей",
+                            "1,500 рублей"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Доход от инвестиции: 100,000 × 15% = 15,000 рублей. Общая сумма через год: 100,000 + 15,000 = 115,000 рублей."
+                    },
+                    {
+                        question: "Что такое инфляционный риск для инвестора?",
+                        options: [
+                            "Риск того, что доходность инвестиций окажется ниже уровня инфляции",
+                            "Риск резкого падения стоимости акций",
+                            "Риск банкротства компании",
+                            "Риск повышения процентных ставок"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Инфляционный риск — это риск того, что реальная доходность инвестиций (с учетом инфляции) окажется отрицательной или ниже ожидаемой, что приведет к снижению покупательной способности инвестированных средств."
+                    },
+                    {
+                        question: "Какое утверждение об инвестировании и спекуляции верно?",
+                        options: [
+                            "Инвестирование и спекуляция — это синонимы",
+                            "Инвестирование направлено на долгосрочный рост, а спекуляция — на быструю прибыль",
+                            "Спекуляция всегда приносит более высокую доходность, чем инвестирование",
+                            "Инвестирование связано с более высоким риском, чем спекуляция"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Инвестирование обычно направлено на долгосрочный рост капитала и основывается на фундаментальном анализе ценности активов. Спекуляция же ориентирована на получение быстрой прибыли от краткосрочных колебаний цен и часто связана с более высоким риском."
+                    }
+                ]
+            },
+            credit: {
+                title: "Кредиты и займы",
+                questions: [
+                    {
+                        question: "Что такое полная стоимость кредита (ПСК)?",
+                        options: [
+                            "Сумма кредита плюс проценты по нему",
+                            "Процентная ставка по кредиту",
+                            "Все платежи заемщика по кредиту, включая комиссии и страховки, выраженные в годовых процентах",
+                            "Сумма штрафов при просрочке платежей"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Полная стоимость кредита (ПСК) — это все платежи заемщика по кредиту, включая основную сумму, проценты, комиссии, страховки и другие обязательные платежи, выраженные в годовых процентах. ПСК позволяет более объективно сравнивать различные кредитные предложения."
+                    },
+                    {
+                        question: "Вы взяли кредит на 300,000 рублей на 3 года под 12% годовых с аннуитетными платежами. Примерно сколько составит ежемесячный платеж?",
+                        options: [
+                            "8,333 рублей",
+                            "9,957 рублей",
+                            "12,000 рублей",
+                            "3,000 рублей"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "При кредите в 300,000 рублей на 3 года (36 месяцев) под 12% годовых с аннуитетными платежами ежемесячный платеж составит около 9,957 рублей. Эта сумма включает погашение части основного долга и проценты."
+                    },
+                    {
+                        question: "Что означает термин 'рефинансирование кредита'?",
+                        options: [
+                            "Увеличение суммы взятого кредита",
+                            "Получение нового кредита для погашения существующего на более выгодных условиях",
+                            "Досрочное погашение кредита без штрафов",
+                            "Продление срока кредита с увеличением процентной ставки"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Рефинансирование кредита — это получение нового кредита для погашения существующего, обычно на более выгодных условиях (с более низкой процентной ставкой, увеличенным сроком или меньшими ежемесячными платежами)."
+                    },
+                    {
+                        question: "Какой вид кредита обычно имеет самую низкую процентную ставку?",
+                        options: [
+                            "Потребительский кредит",
+                            "Ипотечный кредит",
+                            "Кредитная карта",
+                            "Микрозайм до зарплаты"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Ипотечные кредиты обычно имеют самые низкие процентные ставки среди перечисленных видов кредитов, поскольку они обеспечены залогом в виде недвижимости, что снижает риск для кредитора. Кроме того, ипотечные кредиты, как правило, выдаются на длительный срок."
+                    },
+                    {
+                        question: "Что из перечисленного может негативно повлиять на кредитную историю?",
+                        options: [
+                            "Досрочное погашение кредита",
+                            "Регулярные своевременные платежи по кредиту",
+                            "Просрочки платежей по кредиту",
+                            "Наличие зарплатной карты в банке"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Просрочки платежей по кредиту являются одним из основных факторов, негативно влияющих на кредитную историю. Они могут привести к снижению кредитного рейтинга и затруднить получение новых кредитов в будущем или повысить процентные ставки по ним."
+                    }
+                ]
+            },
+            tax: {
+                title: "Основы налогообложения",
+                questions: [
+                    {
+                        question: "Какая ставка НДФЛ (налога на доходы физических лиц) применяется в России к большинству доходов граждан?",
+                        options: [
+                            "10%",
+                            "13%",
+                            "15%",
+                            "20%"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "В России базовая ставка НДФЛ для большинства доходов физических лиц составляет 13%. Однако с 2021 года введена повышенная ставка 15% для доходов, превышающих 5 миллионов рублей в год."
+                    },
+                    {
+                        question: "Вы продали квартиру за 5 млн рублей, которой владели 5 лет. Приобретали вы ее за 3 млн рублей. Какой налог вам нужно заплатить с этой продажи?",
+                        options: [
+                            "260,000 рублей (13% от 2 млн рублей)",
+                            "650,000 рублей (13% от 5 млн рублей)",
+                            "0 рублей",
+                            "390,000 рублей (13% от 3 млн рублей)"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "При продаже жилой недвижимости, которой вы владели 5 лет или более, вы полностью освобождаетесь от уплаты НДФЛ с полученного дохода, независимо от суммы продажи. Это одно из условий налогового вычета при продаже недвижимости."
+                    },
+                    {
+                        question: "Что такое налоговый вычет?",
+                        options: [
+                            "Сумма налога, которую нужно заплатить государству",
+                            "Сумма, на которую уменьшается налогооблагаемая база, или возврат части уже уплаченного налога",
+                            "Штраф за неуплату налогов",
+                            "Скидка на оплату коммунальных услуг"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Налоговый вычет — это сумма, на которую уменьшается налогооблагаемая база, или возврат части уже уплаченного налога при определенных условиях. В России существуют различные виды налоговых вычетов: стандартные, социальные, имущественные, инвестиционные и профессиональные."
+                    },
+                    {
+                        question: "На какую максимальную сумму расходов на обучение можно получить социальный налоговый вычет в России?",
+                        options: [
+                            "50,000 рублей",
+                            "120,000 рублей",
+                            "250,000 рублей",
+                            "3,000,000 рублей"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Максимальная сумма расходов, с которой можно получить социальный налоговый вычет на обучение, составляет 120,000 рублей в год. Таким образом, максимальный возврат НДФЛ составит 15,600 рублей (13% от 120,000 рублей)."
+                    },
+                    {
+                        question: "Кто обязан подавать налоговую декларацию 3-НДФЛ?",
+                        options: [
+                            "Все граждане России ежегодно",
+                            "Только индивидуальные предприниматели",
+                            "Физические лица, получившие доходы, с которых не был удержан налог",
+                            "Только пенсионеры"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Налоговую декларацию 3-НДФЛ обязаны подавать физические лица, получившие доходы, с которых не был удержан налог (например, от продажи имущества, от сдачи в аренду, от выигрышей), а также индивидуальные предприниматели, нотариусы, адвокаты и другие лица, занимающиеся частной практикой."
+                    }
+                ]
+            },
+            security: {
+                title: "Финансовая безопасность",
+                questions: [
+                    {
+                        question: "Какой из следующих признаков может указывать на финансовое мошенничество?",
+                        options: [
+                            "Предложение инвестиций с гарантированной высокой доходностью",
+                            "Необходимость открыть банковский счет с минимальным начальным депозитом",
+                            "Возможность отслеживать свои инвестиции онлайн",
+                            "Наличие официального договора на оказание финансовых услуг"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Предложение инвестиций с гарантированной высокой доходностью часто является признаком мошенничества. В мире инвестиций высокая доходность обычно связана с высоким риском, и никто не может гарантировать определенную доходность, особенно если она значительно выше рыночной."
+                    },
+                    {
+                        question: "Что следует сделать, если вы подозреваете, что стали жертвой финансового мошенничества?",
+                        options: [
+                            "Подождать несколько дней, чтобы увидеть, решится ли проблема сама собой",
+                            "Немедленно связаться с вашим банком и правоохранительными органами",
+                            "Попытаться договориться с предполагаемыми мошенниками",
+                            "Игнорировать ситуацию, если сумма незначительна"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "При подозрении на финансовое мошенничество важно немедленно связаться с вашим банком, чтобы заблокировать счет или карту, а также обратиться в правоохранительные органы. Быстрые действия могут помочь предотвратить дальнейшие потери и повысить шансы на возврат средств."
+                    },
+                    {
+                        question: "Какой из следующих методов является наиболее безопасным для хранения паролей от финансовых сервисов?",
+                        options: [
+                            "Записать все пароли в блокнот и хранить его в надежном месте",
+                            "Использовать один и тот же пароль для всех сервисов, чтобы легко его запомнить",
+                            "Использовать специализированный менеджер паролей с надежным мастер-паролем",
+                            "Сохранять пароли в текстовом файле на компьютере"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Специализированные менеджеры паролей считаются наиболее безопасным способом хранения паролей. Они шифруют ваши пароли, генерируют сложные уникальные пароли для каждого сервиса и защищены одним надежным мастер-паролем, который нужно запомнить."
+                    },
+                    {
+                        question: "Что из перечисленного НЕ является безопасной практикой при использовании онлайн-банкинга?",
+                        options: [
+                            "Регулярное обновление пароля",
+                            "Использование двухфакторной аутентификации",
+                            "Сохранение данных банковской карты на веб-сайтах для удобства будущих покупок",
+                            "Проверка URL банковского сайта перед вводом учетных данных"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Сохранение данных банковской карты на веб-сайтах повышает риск компрометации этих данных в случае взлома сайта. Более безопасно вводить данные карты каждый раз заново или использовать специальные защищенные способы оплаты, такие как Apple Pay, Google Pay или виртуальные карты."
+                    },
+                    {
+                        question: "Какие действия следует предпринять, если вы получили подозрительное сообщение с просьбой предоставить финансовую информацию?",
+                        options: [
+                            "Перейти по ссылке и проверить, что от вас требуется",
+                            "Ответить на сообщение, чтобы уточнить, от кого оно",
+                            "Предоставить минимальную информацию, чтобы проверить легитимность запроса",
+                            "Игнорировать сообщение и связаться напрямую с организацией по официальным контактам"
+                        ],
+                        correctAnswer: 3,
+                        explanation: "При получении подозрительного сообщения лучше всего игнорировать его и не переходить по ссылкам. Если вы считаете, что сообщение может быть связано с реальным вопросом, свяжитесь с организацией напрямую по официальным контактам (например, позвоните в банк по номеру, указанному на обратной стороне вашей карты)."
+                    }
+                ]
+            }
+        };
+
+        // Темный режим
         const themeToggle = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-        
-        themeToggle.addEventListener('click', function() {
-            if (htmlElement.getAttribute('data-theme') === 'light') {
-                htmlElement.setAttribute('data-theme', 'dark');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             } else {
-                htmlElement.setAttribute('data-theme', 'light');
                 themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
         });
-        
-        // Аккордеон
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
+
+        // Переключение категорий тестов
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const testCards = document.querySelectorAll('.test-card');
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.getAttribute('data-category');
                 
-                if (this.classList.contains('active')) {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                } else {
-                    content.style.maxHeight = "0";
-                }
+                // Активация вкладки
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Фильтрация тестов
+                testCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Открытие модального окна с тестом
+        const modal = document.getElementById('test-modal');
+        const closeModal = document.getElementById('close-modal');
+        const testStarts = document.querySelectorAll('.test-start');
+        
+        testStarts.forEach(button => {
+            button.addEventListener('click', () => {
+                const testType = button.getAttribute('data-test');
+                startTest(testType);
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Предотвращает прокрутку основной страницы
             });
         });
         
-        // Переход к тестам по клику на категории
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const accordionHeaders = document.querySelectorAll('.accordion-header');
-                const index = Array.from(document.querySelectorAll('.category-card')).indexOf(this);
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Восстанавливает прокрутку
+        });
+
+        // Переменные для текущего теста
+        let currentTest = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timerInterval = null;
+        let timeRemaining = 0;
+
+        // Функция запуска теста
+        function startTest(testType) {
+            currentTest = tests[testType];
+            currentQuestionIndex = 0;
+            userAnswers = new Array(currentTest.questions.length).fill(-1);
+            
+            // Обновление заголовка
+            document.getElementById('test-title').textContent = currentTest.title;
+            document.getElementById('total-questions').textContent = currentTest.questions.length;
+            
+            // Сброс таймера
+            clearInterval(timerInterval);
+            timeRemaining = currentTest.questions.length * 60; // 1 минута на вопрос
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Показать контейнер с вопросами, скрыть результаты
+            document.getElementById('question-container').style.display = 'block';
+            document.getElementById('results-container').style.display = 'none';
+            document.getElementById('nav-buttons').style.display = 'flex';
+            
+            // Обновить интерфейс
+            updateQuestion();
+        }
+
+        // Функция обновления таймера
+        function updateTimer() {
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                showResults();
+                return;
+            }
+            
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timer').textContent = `Осталось: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            timeRemaining--;
+        }
+
+        // Функция обновления вопроса
+        function updateQuestion() {
+            const question = currentTest.questions[currentQuestionIndex];
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('question-text').textContent = question.question;
+            
+            // Обновление прогресса
+            const progressPercent = ((currentQuestionIndex + 1) / currentTest.questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+            
+            // Создание вариантов ответов
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option-item';
+                if (userAnswers[currentQuestionIndex] === index) {
+                    optionElement.classList.add('selected');
+                }
+                optionElement.setAttribute('data-value', index);
                 
-                // Прокрутка к соответствующему тесту
-                if (index === 1) { // Если это категория "Защита от мошенничества"
-                    document.querySelector('.glass-card').scrollIntoView({ behavior: 'smooth' });
-                    // Откройте первый аккордеон
-                    setTimeout(() => {
-                        if (!accordionHeaders[0].classList.contains('active')) {
-                            accordionHeaders[0].click();
-                        }
-                    }, 800);
-                } else {
-                    alert("В этой демонстрации пока доступны только тесты по защите от мошенничества.");
+                optionElement.innerHTML = `
+                    <div class="option-marker">${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Скрыть обратную связь
+            const feedbackContainer = document.getElementById('feedback-container');
+            feedbackContainer.style.display = 'none';
+            
+            // Обновление кнопок навигации
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === currentTest.questions.length - 1) {
+                nextBtn.textContent = 'Завершить тест';
+                nextBtn.classList.add('submit-btn');
+            } else {
+                nextBtn.textContent = 'Следующий вопрос';
+                nextBtn.classList.remove('submit-btn');
+            }
+        }
+
+        // Функция выбора варианта ответа
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Визуальное обновление выбранного варианта
+            const options = document.querySelectorAll('.option-item');
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            options[optionIndex].classList.add('selected');
+            
+            // Показать обратную связь
+            const question = currentTest.questions[currentQuestionIndex];
+            const feedbackContainer = document.getElementById('feedback-container');
+            feedbackContainer.style.display = 'block';
+            
+            if (optionIndex === question.correctAnswer) {
+                feedbackContainer.className = 'feedback-container correct';
+                feedbackContainer.innerHTML = `
+                    <div class="feedback-title">
+                        <i class="fas fa-check-circle"></i> Правильно!
+                    </div>
+                    <div class="feedback-text">
+                        ${question.explanation}
+                    </div>
+                `;
+            } else {
+                feedbackContainer.className = 'feedback-container incorrect';
+                feedbackContainer.innerHTML = `
+                    <div class="feedback-title">
+                        <i class="fas fa-times-circle"></i> Неправильно
+                    </div>
+                    <div class="feedback-text">
+                        Правильный ответ: ${question.options[question.correctAnswer]}
+                        <br><br>
+                        ${question.explanation}
+                    </div>
+                `;
+            }
+        }
+
+        // Навигация по вопросам
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                updateQuestion();
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentQuestionIndex < currentTest.questions.length - 1) {
+                currentQuestionIndex++;
+                updateQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        // Функция отображения результатов
+        function showResults() {
+            clearInterval(timerInterval);
+            
+            // Скрыть контейнер с вопросами
+            document.getElementById('question-container').style.display = 'none';
+            document.getElementById('nav-buttons').style.display = 'none';
+            
+            // Подсчет правильных ответов
+            let correctCount = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === currentTest.questions[index].correctAnswer) {
+                    correctCount++;
                 }
             });
-        });
-        
-        // Глобальные переменные для отслеживания результатов
-        let quiz1Score = 0;
-        let quiz2Score = 0;
-        let quiz3Score = 0;
-        let quiz1Completed = false;
-        let quiz2Completed = false;
-        let quiz3Completed = false;
-        
-        // Функция проверки первого теста
-        function checkQuiz1() {
-            const form = document.getElementById('quiz-form-1');
-            const resultDiv = document.getElementById('quiz-result-1');
             
-            // Правильные ответы
-            const correctAnswers = {
-                q1: 'c',
-                q2: 'b'
-            };
+            // Отображение счета
+            const scorePercent = Math.round((correctCount / currentTest.questions.length) * 100);
+            document.getElementById('result-score').textContent = `${correctCount}/${currentTest.questions.length} (${scorePercent}%)`;
             
-            let score = 0;
-            const answers = {
-                q1: form.querySelector('input[name="q1"]:checked')?.value,
-                q2: form.querySelector('input[name="q2"]:checked')?.value
-            };
-            
-            // Проверка на заполнение всех полей
-            if (!answers.q1 || !answers.q2) {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пожалуйста, ответьте на все вопросы';
-                resultDiv.className = 'quiz-result error';
-                resultDiv.style.display = 'block';
-                return;
-            }
-            
-            // Подсчет правильных ответов
-            for (const [question, answer] of Object.entries(answers)) {
-                if (answer === correctAnswers[question]) {
-                    score++;
-                }
-            }
-            
-            // Сохранение результата
-            quiz1Score = score;
-            quiz1Completed = true;
-            
-            // Вывод результата
-            if (score === 2) {
-                resultDiv.innerHTML = '<i class="fas fa-check-circle"></i> Отлично! Вы правильно ответили на все вопросы.';
-                resultDiv.className = 'quiz-result success';
-            } else if (score === 1) {
-                resultDiv.innerHTML = '<i class="fas fa-info-circle"></i> Неплохо! Правильных ответов: 1 из 2.';
-                resultDiv.className = 'quiz-result partial';
+            // Сообщение на основе результата
+            let message = '';
+            if (scorePercent >= 90) {
+                message = 'Отличный результат!';
+            } else if (scorePercent >= 70) {
+                message = 'Хороший результат!';
+            } else if (scorePercent >= 50) {
+                message = 'Неплохой результат!';
             } else {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Рекомендуем повторить материал. Правильных ответов: 0 из 2.';
-                resultDiv.className = 'quiz-result error';
+                message = 'Есть куда расти!';
             }
+            document.getElementById('result-message').textContent = message;
             
-            resultDiv.style.display = 'block';
-        }
-        
-        // Функция проверки второго теста
-        function checkQuiz2() {
-            const form = document.getElementById('quiz-form-2');
-            const resultDiv = document.getElementById('quiz-result-2');
+            // Детальные результаты
+            const resultsDetails = document.getElementById('results-details');
+            resultsDetails.innerHTML = '';
             
-            // Правильные ответы
-            const correctAnswers = {
-                q1: 'b',
-                q2: 'b'
-            };
-            
-            let score = 0;
-            const answers = {
-                q1: form.querySelector('input[name="q1"]:checked')?.value,
-                q2: form.querySelector('input[name="q2"]:checked')?.value
-            };
-            
-            // Проверка на заполнение всех полей
-            if (!answers.q1 || !answers.q2) {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пожалуйста, ответьте на все вопросы';
-                resultDiv.className = 'quiz-result error';
-                resultDiv.style.display = 'block';
-                return;
-            }
-            
-            // Подсчет правильных ответов
-            for (const [question, answer] of Object.entries(answers)) {
-                if (answer === correctAnswers[question]) {
-                    score++;
-                }
-            }
-            
-            // Сохранение результата
-            quiz2Score = score;
-            quiz2Completed = true;
-            
-            // Вывод результата
-            if (score === 2) {
-                resultDiv.innerHTML = '<i class="fas fa-check-circle"></i> Отлично! Вы правильно ответили на все вопросы.';
-                resultDiv.className = 'quiz-result success';
-            } else if (score === 1) {
-                resultDiv.innerHTML = '<i class="fas fa-info-circle"></i> Неплохо! Правильных ответов: 1 из 2.';
-                resultDiv.className = 'quiz-result partial';
-            } else {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Рекомендуем повторить материал. Правильных ответов: 0 из 2.';
-                resultDiv.className = 'quiz-result error';
-            }
-            
-            resultDiv.style.display = 'block';
-        }
-        
-        // Функция проверки третьего теста
-        function checkQuiz3() {
-            const form = document.getElementById('quiz-form-3');
-            const resultDiv = document.getElementById('quiz-result-3');
-            
-            // Правильные ответы
-            const correctAnswers = {
-                q1: 'a',
-                q2: 'b'
-            };
-            
-            let score = 0;
-            const answers = {
-                q1: form.querySelector('input[name="q1"]:checked')?.value,
-                q2: form.querySelector('input[name="q2"]:checked')?.value
-            };
-            
-            // Проверка на заполнение всех полей
-            if (!answers.q1 || !answers.q2) {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Пожалуйста, ответьте на все вопросы';
-                resultDiv.className = 'quiz-result error';
-                resultDiv.style.display = 'block';
-                return;
-            }
-            
-            // Подсчет правильных ответов
-            for (const [question, answer] of Object.entries(answers)) {
-                if (answer === correctAnswers[question]) {
-                    score++;
-                }
-            }
-            
-            // Сохранение результата
-            quiz3Score = score;
-            quiz3Completed = true;
-            
-            // Вывод результата
-            if (score === 2) {
-                resultDiv.innerHTML = '<i class="fas fa-check-circle"></i> Отлично! Вы правильно ответили на все вопросы.';
-                resultDiv.className = 'quiz-result success';
-            } else if (score === 1) {
-                resultDiv.innerHTML = '<i class="fas fa-info-circle"></i> Неплохо! Правильных ответов: 1 из 2.';
-                resultDiv.className = 'quiz-result partial';
-            } else {
-                resultDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Рекомендуем повторить материал. Правильных ответов: 0 из 2.';
-                resultDiv.className = 'quiz-result error';
-            }
-            
-            resultDiv.style.display = 'block';
-        }
-        
-        // Функция отображения итогового результата
-        document.getElementById('show-final-result').addEventListener('click', function() {
-            // Проверка прохождения минимум одного теста
-            const testsCompleted = [quiz1Completed, quiz2Completed, quiz3Completed].filter(Boolean).length;
-            
-            if (testsCompleted === 0) {
-                alert('Пожалуйста, пройдите хотя бы один тест перед просмотром итогового результата.');
-                return;
-            }
-            
-            const totalScore = quiz1Score + quiz2Score + quiz3Score;
-            const totalQuestions = (quiz1Completed ? 2 : 0) + (quiz2Completed ? 2 : 0) + (quiz3Completed ? 2 : 0);
-            const scorePercentage = Math.round((totalScore / totalQuestions) * 100);
-            
-            document.getElementById('correct-answers').textContent = totalScore;
-            document.getElementById('total-questions').textContent = totalQuestions;
-            document.getElementById('final-score').style.display = 'block';
-            document.querySelector('.score-display').textContent = scorePercentage + '%';
-            document.querySelector('.progress-bar').style.width = scorePercentage + '%';
-            
-            const resultMessage = document.getElementById('result-message');
-            
-            if (scorePercentage >= 80) {
-                resultMessage.innerHTML = '<p>Отличный результат! Вы обладаете высоким уровнем финансовой защиты и сможете уберечь себя от большинства видов мошенничества.</p>';
-            } else if (scorePercentage >= 50) {
-                resultMessage.innerHTML = '<p>Хороший результат, но есть темы, которые стоит изучить глубже. Особенно обратите внимание на распознавание фишинговых сайтов и безопасное взаимодействие с финансовыми организациями.</p>';
-            } else {
-                resultMessage.innerHTML = '<p>Рекомендуем более внимательно изучить материалы по финансовой безопасности. Это поможет защитить ваши средства от мошенников в будущем.</p>';
-            }
-            
-            // Плавная прокрутка к результатам
-            document.getElementById('final-score').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-        
-        // Анимация появления элементов при прокрутке
-        function reveal() {
-            const reveals = document.querySelectorAll('.neomorphic-card, .glass-card, .category-card');
-            
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 150;
+            currentTest.questions.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correctAnswer;
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
                 
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].style.transition = 'all 0.6s ease';
-                    reveals[i].style.transitionDelay = `${i * 0.1}s`;
-                    reveals[i].style.opacity = '1';
-                    reveals[i].style.transform = 'translateY(0)';
-                }
-            }
-        }
-        
-        // Применение начальных стилей для анимации
-        function applyInitialStyles() {
-            const elements = document.querySelectorAll('.neomorphic-card, .glass-card, .category-card');
-            
-            elements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
+                resultItem.innerHTML = `
+                    <div class="result-icon ${isCorrect ? 'correct' : 'incorrect'}">
+                        <i class="fas fa-${isCorrect ? 'check' : 'times'}-circle"></i>
+                    </div>
+                    <div class="result-text">
+                        Вопрос ${index + 1}: ${question.question}
+                        ${!isCorrect ? `<br><small>Правильный ответ: ${question.options[question.correctAnswer]}</small>` : ''}
+                    </div>
+                `;
+                
+                resultsDetails.appendChild(resultItem);
             });
+            
+            // Показать результаты
+            document.getElementById('results-container').style.display = 'block';
         }
-        
-        // Инициализация и событие скролла
-        window.addEventListener('scroll', reveal);
-        window.addEventListener('load', function() {
-            applyInitialStyles();
-            setTimeout(reveal, 300);
+
+        // Кнопки на экране результатов
+        document.getElementById('try-again-btn').addEventListener('click', () => {
+            startTest(Object.keys(tests).find(key => tests[key] === currentTest));
+        });
+
+        document.getElementById('next-test-btn').addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         });
     </script>
 </body>

@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-     :root {
+        :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
             --accent: #818cf8;
+            --accent-light: #c7d2fe;
             --background: #f8fafc;
+            --card-bg: #ffffff;
             --text-dark: #1e293b;
             --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.95);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
             --success: #10b981;
+            --warning: #f59e0b;
             --error: #ef4444;
+            --info: #3b82f6;
+            --border-radius: 1.25rem;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -41,18 +49,90 @@
             padding: 2rem;
         }
 
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero-section {
             position: relative;
             margin: 2rem 0 4rem;
             padding: 4rem 2rem;
             background: var(--gradient);
-            border-radius: 2rem;
+            border-radius: var(--border-radius);
             color: white;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
         }
 
         .hero-content {
@@ -61,42 +141,68 @@
         }
 
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
         }
 
         .hero-description {
             font-size: 1.2rem;
             opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .hero-image {
             width: 400px;
             filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
             transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-10px);
         }
 
         /* Sections */
         .section-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
         .section-title {
             color: var(--text-dark);
             margin-bottom: 1.5rem;
             position: relative;
+            font-weight: 700;
         }
 
         .section-title::after {
@@ -107,6 +213,7 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
         }
 
         /* Features List */
@@ -114,43 +221,55 @@
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .features-item {
-            padding: 1.2rem;
+            padding: 1.5rem;
             background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: 1.25rem;
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .features-item:hover {
             transform: translateX(5px);
+            background: rgba(99, 102, 241, 0.08);
         }
 
         .features-item i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-top: 3px;
             flex-shrink: 0;
+            background: var(--accent-light);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
         }
 
         /* Accordion */
         .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
         }
 
         .accordion-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
         }
 
         .accordion-header {
@@ -159,19 +278,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(99, 102, 241, 0.05);
+            transition: var(--transition);
+            font-weight: 600;
+            border-radius: 0.75rem;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-header .icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .icon {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: white;
+            border-radius: 0 0 0.75rem 0.75rem;
         }
 
         .accordion-content.active {
@@ -188,16 +319,32 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
         }
 
         input[type="number"],
-        input[type="text"] {
+        input[type="text"],
+        select {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
         button {
@@ -207,13 +354,15 @@
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
         }
 
         button:hover {
             background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         /* Results */
@@ -222,16 +371,19 @@
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            display: none;
         }
 
         .success {
             background: #d1fae5;
             color: var(--success);
+            display: block;
         }
 
         .error {
             background: #fee2e2;
             color: var(--error);
+            display: block;
         }
 
         /* Tips Section */
@@ -241,18 +393,33 @@
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
             background: rgba(248, 249, 255, 0.8);
             border-radius: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            transform: translateX(5px);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            background: var(--accent-light);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
         }
 
         /* Mobile Adaptation */
@@ -261,14 +428,47 @@
                 padding: 1rem;
             }
 
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: var(--glass);
+                padding: 1rem;
+                border-radius: 0 0 1rem 1rem;
+                box-shadow: var(--shadow);
+                z-index: 100;
+                backdrop-filter: blur(10px);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .hero-section {
                 flex-direction: column;
                 text-align: center;
                 padding: 2rem 1rem;
             }
 
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
             .hero-image {
-                width: 30%;
+                width: 80%;
                 margin-top: 2rem;
             }
 
@@ -276,8 +476,17 @@
                 padding: 1.5rem;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                text-align: center;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
@@ -291,6 +500,7 @@
                 align-items: flex-start;
             }
         }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -300,26 +510,6 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .calculator {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .calculator h4 {
-            margin-bottom: 1rem;
-        }
-
-        .calculator input {
-            margin-bottom: 1rem;
-        }
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -327,39 +517,417 @@
 
         .animated-icon {
             animation: pulse 2s ease-in-out infinite;
-        }
-
-        .info-card {
-            background: var(--glass);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-        }
-
-        .info-card i {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            display: inline-block;
         }
 
         .interactive-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
+            margin: 2rem 0;
         }
 
-        .accordion-item {
+        .info-card {
+            background: var(--card-bg);
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .info-card i {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            background: var(--accent-light);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .info-card p {
+            text-align: center;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 30px;
+            right: 30px;
+            height: 3px;
+            background: var(--accent-light);
+            z-index: 1;
+        }
+
+        .process-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 0 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.2rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 4px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-left {
+            left: 0;
+        }
+
+        .timeline-right {
+            left: 50%;
+        }
+
+        .timeline-right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 1.2rem;
+            background-color: white;
+            position: relative;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Calculator */
+        .calculator {
+            background: var(--card-bg);
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .calculator h4 {
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .calculator input, .calculator select {
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            background: var(--gradient);
+            color: white;
+            padding: 3rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.9;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--info);
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+        }
+
+        .alert i {
+            margin-right: 0.5rem;
+            color: var(--info);
+        }
+
+        .alert-warning i {
+            color: var(--warning);
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-piggy-bank"></i>
+                ФинГрамотность
+            </a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
         <header class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title">3.3. Система страхования банковских вкладов</h1>
-                <p class="hero-description">Узнайте, как защищены ваши вклады и как получить компенсацию.</p>
+                <p class="hero-description">Узнайте, как защищены ваши вклады в российских банках и как получить компенсацию в случае отзыва лицензии у банка.</p>
+                <a href="#calculator" class="hero-btn">Рассчитать страховку</a>
             </div>
             <img src="insurance.png" alt="Страхование вкладов" class="hero-image animated-image">
         </header>
@@ -367,14 +935,122 @@
         <main>
             <section class="section-card">
                 <h2 class="section-title">Что такое система страхования вкладов?</h2>
-                <p>Государство гарантирует возврат ваших вкладов до 1,4 млн рублей через Агентство по страхованию вкладов (АСВ).</p>
-                <div class="info-card">
-                    <i class="fas fa-shield-alt animated-icon"></i>
-                    <p><strong>Максимальная компенсация:</strong> 1,4 млн рублей на одного вкладчика в одном банке.</p>
+                <p>Система страхования вкладов (ССВ) – это государственная программа защиты средств вкладчиков в российских банках. При наступлении страхового случая (отзыв лицензии, банкротство банка) вкладчик получает возмещение своих средств в установленных законом пределах.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1,4 млн ₽</div>
+                        <div class="stat-description">Максимальная сумма страхового возмещения на одного вкладчика в одном банке</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">10 млн ₽</div>
+                        <div class="stat-description">Повышенное страховое возмещение в особых случаях</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">714</div>
+                        <div class="stat-description">Банков-участников системы страхования вкладов</div>
+                    </div>
                 </div>
-                <div class="info-card">
-                    <i class="fas fa-money-bill-wave animated-icon"></i>
-                    <p><strong>Особые случаи:</strong> Компенсация может быть увеличена до 10 млн рублей для наследства, социальных выплат и других особых обстоятельств.</p>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Систему страхования вкладов в России администрирует государственная корпорация «Агентство по страхованию вкладов» (АСВ).</p>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h3 class="section-title">Особенности системы страхования вкладов</h3>
+                <div class="interactive-grid">
+                    <div class="info-card">
+                        <i class="fas fa-shield-alt animated-icon"></i>
+                        <p><strong>Максимальная компенсация:</strong> 1,4 млн рублей на одного вкладчика в одном банке (включая проценты, начисленные на дату страхового случая).</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-money-bill-wave animated-icon"></i>
+                        <p><strong>Особые случаи:</strong> Компенсация может быть увеличена до 10 млн рублей для средств от продажи недвижимости, наследства, социальных выплат и других особых обстоятельств.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-business-time animated-icon"></i>
+                        <p><strong>Счета ИП:</strong> Страхуются счета индивидуальных предпринимателей в пределах 1,4 млн рублей (с 2019 года). Если у вас есть и личные вклады, и счета ИП в одном банке, возмещение рассчитывается отдельно.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-building animated-icon"></i>
+                        <p><strong>Малый бизнес:</strong> С октября 2008 года страхуются средства малых предприятий (до 15 сотрудников) в пределах 1,4 млн рублей.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h3 class="section-title">Какие вклады страхуются?</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Тип счета/вклада</th>
+                            <th>Страхуется?</th>
+                            <th>Комментарий</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Вклады в рублях</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>В пределах 1,4 млн руб.</td>
+                        </tr>
+                        <tr>
+                            <td>Вклады в иностранной валюте</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>В пределах 1,4 млн руб. по курсу ЦБ на день наступления страхового случая</td>
+                        </tr>
+                        <tr>
+                            <td>Текущие счета физических лиц</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>Включая дебетовые карты</td>
+                        </tr>
+                        <tr>
+                            <td>Счета ИП</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>С 2019 года, в пределах 1,4 млн руб.</td>
+                        </tr>
+                        <tr>
+                            <td>Счета малых предприятий</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>С 2008 года, для предприятий до 15 сотрудников</td>
+                        </tr>
+                        <tr>
+                            <td>Счета эскроу для покупки недвижимости</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>До 10 млн руб.</td>
+                        </tr>
+                        <tr>
+                            <td>Средства на счетах адвокатов и нотариусов</td>
+                            <td><i class="fas fa-check" style="color: var(--success);"></i> Да</td>
+                            <td>Если они открыты для профессиональной деятельности</td>
+                        </tr>
+                        <tr>
+                            <td>Средства на счетах юридических лиц (кроме малых предприятий)</td>
+                            <td><i class="fas fa-times" style="color: var(--error);"></i> Нет</td>
+                            <td>Полностью не страхуются</td>
+                        </tr>
+                        <tr>
+                            <td>Вклады на предъявителя</td>
+                            <td><i class="fas fa-times" style="color: var(--error);"></i> Нет</td>
+                            <td>Включая сберегательные сертификаты на предъявителя</td>
+                        </tr>
+                        <tr>
+                            <td>Средства, переданные банку в доверительное управление</td>
+                            <td><i class="fas fa-times" style="color: var(--error);"></i> Нет</td>
+                            <td>Инвестиционные продукты не застрахованы</td>
+                        </tr>
+                        <tr>
+                            <td>Электронные денежные средства</td>
+                            <td><i class="fas fa-times" style="color: var(--error);"></i> Нет</td>
+                            <td>Средства в электронных кошельках</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Важно: убедитесь, что ваш банк является участником системы страхования вкладов. Список банков-участников можно найти на официальном сайте АСВ.</p>
                 </div>
             </section>
 
@@ -384,174 +1060,358 @@
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Когда наступает страховой случай?</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
+                            <p>Страховой случай наступает при одном из следующих событий:</p>
                             <ul>
-                                <li>Отзыв лицензии у банка.</li>
-                                <li>Введение моратория на выполнение обязательств перед вкладчиками.</li>
+                                <li>Отзыв у банка лицензии на осуществление банковских операций</li>
+                                <li>Введение моратория на удовлетворение требований кредиторов банка</li>
                             </ul>
+                            <p>После наступления страхового случая, АСВ в течение 14 дней объявляет о начале выплат и назначает банк-агент, через который будут осуществляться выплаты.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
                             <span>Как получить компенсацию?</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
+                            <p>Для получения страхового возмещения вкладчику необходимо:</p>
                             <ol>
-                                <li>Подайте заявление через сайт АСВ или портал «Госуслуги».</li>
-                                <li>Обратитесь в банк-агент, назначенный АСВ.</li>
-                                <li>Получите выплату в течение 14 рабочих дней.</li>
+                                <li>Подать заявление через сайт АСВ, портал «Госуслуги» или в банк-агент</li>
+                                <li>Предоставить паспорт или иной документ, удостоверяющий личность</li>
+                                <li>В случае особых обстоятельств (повышенное страховое возмещение) – предоставить подтверждающие документы</li>
                             </ol>
+                            <p>Выплата осуществляется в течение 14 рабочих дней со дня представления вкладчиком необходимых документов, но не ранее 14 дней со дня наступления страхового случая.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Какие вклады страхуются?</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <span>Как рассчитывается возмещение?</span>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
+                            <p>Расчет страхового возмещения производится следующим образом:</p>
                             <ul>
-                                <li>Вклады в рублях и иностранной валюте.</li>
-                                <li>Срочные вклады и вклады до востребования.</li>
-                                <li>Счета для расчетов по банковским картам.</li>
+                                <li>Суммируются все вклады (включая проценты) одного вкладчика в банке</li>
+                                <li>Если общая сумма вкладов не превышает 1,4 млн рублей, возмещается 100% средств</li>
+                                <li>Если общая сумма вкладов превышает 1,4 млн рублей, возмещается 1,4 млн рублей, а остаток может быть получен в ходе ликвидации банка</li>
+                                <li>Вклады в иностранной валюте пересчитываются в рубли по курсу ЦБ на день наступления страхового случая</li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Какие вклады не страхуются?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <ul>
-                                <li>Средства на счетах ИП.</li>
-                                <li>Депозиты на предъявителя.</li>
-                                <li>Средства, переданные в доверительное управление.</li>
-                            </ul>
+                            <p>В случае особых обстоятельств (продажа жилья, наследство и т.д.) максимальная сумма страхового возмещения может достигать 10 млн рублей.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <div class="section-card">
-                        <h4>Проверка знаний</h4>
-                        <form id="insurance-test">
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="insurance" value="limit"> Максимальная компенсация — 1,4 млн рублей.
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="insurance" value="cases"> Страховой случай наступает только при банкротстве банка.
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="insurance" value="time"> Выплаты производятся в течение 14 рабочих дней.
-                                </label>
-                            </div>
-                            <button type="button" id="check-insurance-btn">Проверить</button>
-                            <div id="insurance-result" class="result"></div>
-                        </form>
+                <h3 class="section-title">Процесс получения страхового возмещения</h3>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Страховой случай</div>
+                        <p>Отзыв лицензии у банка или введение моратория</p>
                     </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Объявление о выплатах</div>
+                        <p>АСВ объявляет о начале выплат и назначает банк-агент</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Подача заявления</div>
+                        <p>Вкладчик подает заявление через АСВ, Госуслуги или банк-агент</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Получение возмещения</div>
+                        <p>Выплата производится в течение 14 рабочих дней</p>
+                    </div>
+                </div>
 
-                    <div class="section-card">
-                        <h4>Калькулятор компенсации</h4>
-                        <form id="compensation-calculator">
-                            <div class="form-group">
-                                <label for="deposit-amount">Сумма вклада (руб):</label>
-                                <input type="number" id="deposit-amount" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="interest-amount">Начисленные проценты (руб):</label>
-                                <input type="number" id="interest-amount" required>
-                            </div>
-                            <button type="button" id="calculate-compensation-btn">Рассчитать</button>
-                            <div id="compensation-result" class="result"></div>
-                        </form>
+                <div class="timeline">
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">День 0</div>
+                            <p>Наступление страхового случая (отзыв лицензии)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">До 14 дней</div>
+                            <p>АСВ определяет порядок выплат и банк-агент</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">С 14 дня</div>
+                            <p>Начало выплат страхового возмещения</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">До 2-х лет</div>
+                            <p>Срок для обращения за страховым возмещением</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section class="section-card">
-                <h3 class="section-title">Полезные советы</h3>
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Всегда проверяйте, входит ли банк в систему страхования вкладов.
+                <h3 class="section-title">Особые случаи повышенного страхового возмещения</h3>
+                <p>С 2019 года в законодательство был внесен ряд изменений, предусматривающих повышенное страховое возмещение (до 10 млн рублей) в следующих случаях:</p>
+                
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-home"></i>
+                        <div>
+                            <strong>Продажа жилья:</strong>
+                            <p>Средства от продажи жилого помещения или земельного участка под жилье, внесенные на счет в банке в течение 3 месяцев до наступления страхового случая.</p>
+                        </div>
                     </li>
-                    <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Храните копии договоров вкладов в надежном месте.
+                    <li class="features-item">
+                        <i class="fas fa-scroll"></i>
+                        <div>
+                            <strong>Наследство:</strong>
+                            <p>Денежные средства, полученные в качестве наследства и зачисленные на счет в течение 6 месяцев до наступления страхового случая.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-award"></i>
+                        <div>
+                            <strong>Социальные выплаты:</strong>
+                            <p>Социальные выплаты, компенсации, субсидии и иные выплаты, перечисленные от государства в связи с социально значимыми обстоятельствами.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-gavel"></i>
+                        <div>
+                            <strong>Судебные решения:</strong>
+                            <p>Средства, выплаченные по решению суда и зачисленные на счет в течение 3 месяцев до наступления страхового случая.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-key"></i>
+                        <div>
+                            <strong>Счета эскроу:</strong>
+                            <p>Средства на счетах эскроу, открытых для расчетов по сделкам купли-продажи недвижимости.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
-        </main>
 
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
+            <section id="calculator" class="section-card">
+                <h3 class="section-title">Калькулятор страхового возмещения</h3>
+                <div class="calculator">
+                    <h4>Рассчитайте сумму страхового возмещения</h4>
+                    <div class="form-group">
+                        <label for="deposit-amount">Сумма вклада в рублях</label>
+                        <input type="number" id="deposit-amount" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="foreign-deposit">Сумма вклада в иностранной валюте (в рублевом эквиваленте)</label>
+                        <input type="number" id="foreign-deposit" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="special-case">Есть особый случай?</label>
+                        <select id="special-case">
+                            <option value="no">Нет</option>
+                            <option value="house">Продажа жилья</option>
+                            <option value="inheritance">Наследство</option>
+                            <option value="social">Социальные выплаты</option>
+                            <option value="court">Судебное решение</option>
+                            <option value="escrow">Счет эскроу</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="special-amount-container" style="display: none;">
+                        <label for="special-amount">Сумма по особому случаю</label>
+                        <input type="number" id="special-amount" min="0" value="0">
+                    </div>
+                    <button type="button" id="calculate-insurance-btn">Рассчитать</button>
+                    <div id="insurance-result" class="result">
+                        <!-- Результат будет здесь -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h3 class="section-title">Советы по безопасности банковских вкладов</h3>
+                <ul class="tips-list">
+                    <li class="tips-item">
+                        <i class="fas fa-check-double"></i>
+                        <div>
+                            <strong>Проверяйте участие банка в ССВ</strong>
+                            <p>Перед открытием вклада убедитесь, что банк участвует в системе страхования вкладов. Список участников доступен на сайте АСВ.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-coins"></i>
+                        <div>
+                            <strong>Распределяйте крупные суммы</strong>
+                            <p>Если сумма ваших сбережений превышает 1,4 млн рублей, распределите их между несколькими банками для полного страхового покрытия.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-file-contract"></i>
+                        <div>
+                            <strong>Храните документы</strong>
+                            <p>Сохраняйте договор банковского вклада, выписки по счету и другие документы, подтверждающие наличие вклада и его сумму.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-percent"></i>
+                        <div>
+                            <strong>Остерегайтесь слишком высоких ставок</strong>
+                            <p>Необычно высокие процентные ставки могут быть признаком финансовых проблем банка. Будьте осторожны с банками, предлагающими ставки значительно выше рыночных.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-newspaper"></i>
+                        <div>
+                            <strong>Следите за новостями</strong>
+                            <p>Регулярно проверяйте новости о вашем банке и финансовом секторе в целом, чтобы оперативно реагировать на возможные проблемы.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="section-card">
+                <h3 class="section-title">Часто задаваемые вопросы</h3>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как узнать, участвует ли мой банк в системе страхования вкладов?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Проверить участие банка в системе страхования вкладов можно на официальном сайте Агентства по страхованию вкладов (www.asv.org.ru) в разделе «Банки-участники ССВ». Также эта информация должна быть размещена в отделениях банка.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Что делать, если сумма моего вклада превышает 1,4 млн рублей?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Если сумма вашего вклада превышает 1,4 млн рублей, то при наступлении страхового случая вы получите страховое возмещение в размере 1,4 млн рублей. Оставшуюся сумму вы сможете получить в ходе конкурсного производства (ликвидации) банка в порядке очередности, установленной законом. Чтобы избежать риска, рекомендуется распределять крупные суммы между разными банками.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Страхуются ли вклады ИП и малого бизнеса?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Да, с октября 2008 года страхуются средства индивидуальных предпринимателей в пределах 1,4 млн рублей. Также с 2019 года страхуются средства малых предприятий (до 15 сотрудников, включенных в единый реестр субъектов малого и среднего предпринимательства) в пределах 1,4 млн рублей.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Страхуются ли средства на металлических счетах?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Нет, средства на обезличенных металлических счетах (ОМС) не подлежат страхованию в рамках системы страхования вкладов. Также не страхуются драгоценные металлы, переданные банку на хранение.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Как быстро я получу страховое возмещение?</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Выплата страхового возмещения начинается не позднее 14 дней со дня наступления страхового случая. После подачи заявления и необходимых документов, возмещение выплачивается в течение 3-5 рабочих дней. В большинстве случаев вкладчики получают свои деньги в течение 2-3 недель после отзыва лицензии у банка.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
-        // JavaScript для интерактивных заданий
-        document.getElementById('check-insurance-btn').addEventListener('click', () => {
-            const selected = Array.from(document.querySelectorAll('input[name="insurance"]:checked'))
-                                .map(input => input.value);
-            const correctAnswers = ['limit', 'time'];
-            const result = document.getElementById('insurance-result');
-
-            if (selected.length === 0) {
-                result.textContent = '❌ Выберите хотя бы один вариант';
-                result.className = 'result error';
-                return;
-            }
-
-            const isCorrect = selected.every(answer => correctAnswers.includes(answer)) 
-                            && selected.length === correctAnswers.length;
-
-            if (isCorrect) {
-                result.textContent = '✅ Все верно! Вы хорошо разбираетесь в страховании вкладов.';
-                result.className = 'result success';
-            } else {
-                result.textContent = '❌ Не все ответы правильные';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('calculate-compensation-btn').addEventListener('click', () => {
-            const deposit = parseFloat(document.getElementById('deposit-amount').value);
-            const interest = parseFloat(document.getElementById('interest-amount').value);
-            const result = document.getElementById('compensation-result');
-
-            if (!isNaN(deposit) && !isNaN(interest)) {
-                const total = deposit + interest;
-                const compensation = Math.min(total, 1400000);
-                result.textContent = `💰 Компенсация: ${compensation.toFixed(2)} руб.`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
-        // Аккордеон
+        // Accordion functionality
         document.querySelectorAll('.accordion-header').forEach(header => {
             header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                
                 header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+                const content = header.nextElementSibling;
+                
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Special case selector
+        document.getElementById('special-case').addEventListener('change', function() {
+            const specialContainer = document.getElementById('special-amount-container');
+            if (this.value === 'no') {
+                specialContainer.style.display = 'none';
+            } else {
+                specialContainer.style.display = 'block';
+            }
+        });
+
+        // Insurance calculator
+        document.getElementById('calculate-insurance-btn').addEventListener('click', () => {
+            const depositAmount = parseFloat(document.getElementById('deposit-amount').value) || 0;
+            const foreignDeposit = parseFloat(document.getElementById('foreign-deposit').value) || 0;
+            const specialCase = document.getElementById('special-case').value;
+            const specialAmount = parseFloat(document.getElementById('special-amount').value) || 0;
+            
+            const resultDiv = document.getElementById('insurance-result');
+            
+            // Standard insurance limit
+            const standardLimit = 1400000;
+            // Special case limit
+            const specialLimit = 10000000;
+            
+            // Total deposit amount
+            const totalDeposit = depositAmount + foreignDeposit;
+            let totalInsurance = 0;
+            let totalLoss = 0;
+            
+            // Calculate standard insurance
+            if (specialCase === 'no') {
+                if (totalDeposit <= standardLimit) {
+                    totalInsurance = totalDeposit;
+                    totalLoss = 0;
+                } else {
+                    totalInsurance = standardLimit;
+                    totalLoss = totalDeposit - standardLimit;
+                }
+                
+                resultDiv.innerHTML = `
+                    <p>Общая сумма вкладов: <strong>${totalDeposit.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Страховое возмещение: <strong>${totalInsurance.toLocaleString('ru-RU')} ₽</strong></p>
+                    ${totalLoss > 0 ? `<p>Не застраховано: <strong>${totalLoss.toLocaleString('ru-RU')} ₽</strong> (можно получить в ходе ликвидации банка)</p>` : ''}
+                `;
+            } else {
+                // Calculate special case insurance
+                let regularDeposit = totalDeposit - specialAmount;
+                let regularInsurance = Math.min(regularDeposit, standardLimit);
+                let specialInsurance = Math.min(specialAmount, specialLimit);
+                totalInsurance = regularInsurance + specialInsurance;
+                totalLoss = Math.max(0, totalDeposit - totalInsurance);
+                
+                resultDiv.innerHTML = `
+                    <p>Общая сумма вкладов: <strong>${totalDeposit.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Сумма по особому случаю: <strong>${specialAmount.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Базовое страховое возмещение: <strong>${regularInsurance.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Повышенное страховое возмещение: <strong>${specialInsurance.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Общее страховое возмещение: <strong>${totalInsurance.toLocaleString('ru-RU')} ₽</strong></p>
+                    ${totalLoss > 0 ? `<p>Не застраховано: <strong>${totalLoss.toLocaleString('ru-RU')} ₽</strong> (можно получить в ходе ликвидации банка)</p>` : ''}
+                `;
+            }
+            
+            resultDiv.className = 'result success';
         });
     </script>
 </body>

@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2.1. Откуда берутся доходы и какие они бывают</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet">
-  <style>
-       :root {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.1. Откуда берутся доходы и какие они бывают</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
             --primary: #6366f1;
             --secondary: #4f46e5;
             --accent: #818cf8;
+            --accent-light: #c7d2fe;
             --background: #f8fafc;
-            --text: #1e293b;
-            --text-light: #64748b;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.95);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --radius-lg: 1.5rem;
-            --radius-md: 1rem;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --border-radius: 1.25rem;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -29,9 +37,10 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
+            line-height: 1.7;
             background: var(--background);
-            color: var(--text);
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
         .container {
@@ -40,137 +49,520 @@
             padding: 2rem;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 4rem;
-            padding: 6rem 2rem;
-            background: var(--gradient);
-            border-radius: var(--radius-lg);
-            color: white;
-            box-shadow: var(--shadow-sm);
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
             position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            margin: 2rem 0 4rem;
+            padding: 4rem 2rem;
+            background: var(--gradient);
+            border-radius: var(--border-radius);
+            color: white;
             overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
         }
 
         .header__icon {
             position: absolute;
             top: 1rem;
             right: 1rem;
-            font-size: 4rem;
+            font-size: 6rem;
             opacity: 0.1;
-            animation: pulse 2s infinite;
+            animation: float 3s ease-in-out infinite;
+            z-index: 1;
         }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            line-height: 1.2;
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* Content Sections */
+        /* Content Grid */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 350px;
-            gap: 3rem;
+            gap: 2rem;
             margin-bottom: 4rem;
         }
 
         .main-content {
             display: grid;
-            gap: 3rem;
+            gap: 2rem;
         }
 
         /* Cards */
         .card {
-            background: white;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-xs);
-            transition: transform 0.2s;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
-        h2 {
-            font-size: 1.75rem;
-            margin-bottom: 2rem;
+        .card h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            color: var(--secondary);
+            gap: 0.75rem;
         }
 
-        h2 i {
-            font-size: 1.5em;
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .card h2 i {
             color: var(--primary);
+            font-size: 1.5rem;
+            background: var(--accent-light);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
         }
 
-        /* Financial Instruments */
+        /* Instrument Cards */
         .instrument-card {
-            border-left: 4px solid var(--primary);
-            padding-left: 2rem;
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 1rem;
+            padding: 1.5rem 1.5rem 1.5rem 2rem;
             margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .instrument-card:hover {
+            transform: translateX(5px);
+            background: rgba(99, 102, 241, 0.08);
         }
 
         .instrument-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .instrument-card ul {
+            padding-left: 1.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .instrument-card li {
+            margin-bottom: 0.5rem;
         }
 
         /* Test Section */
         .test-section {
             background: var(--background);
-            padding: 2rem;
-            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
             position: sticky;
             top: 2rem;
         }
 
         .test-card {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 2rem;
-            border: 1px solid #e2e8f0;
+            background: var(--card-bg);
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
         .test-card h3 {
-            margin-bottom: 1.5rem;
-            color: var(--secondary);
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.2rem;
         }
 
         .question {
             margin: 1.5rem 0;
         }
 
+        .question p {
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
         .question label {
-            display: block;
+            display: flex;
+            align-items: center;
             margin: 0.75rem 0;
             cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .question label:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .question input[type="radio"],
+        .question input[type="checkbox"] {
+            margin-right: 0.75rem;
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        .question input[type="number"] {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            margin: 1rem 0;
+        }
+
+        .question input[type="number"]:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
         .button {
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: var(--radius-md);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
             cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            font-weight: 500;
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            transition: transform 0.2s;
+            gap: 0.5rem;
         }
 
         .button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
-        @media (max-width: 1024px) {
+        /* Income Types Grid */
+        .income-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .income-type-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+        .income-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .income-type-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .income-type-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            background: var(--gradient);
+            color: white;
+            padding: 3rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.9;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Adaptation */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: var(--glass);
+                padding: 1rem;
+                border-radius: 0 0 1rem 1rem;
+                box-shadow: var(--shadow);
+                z-index: 100;
+                backdrop-filter: blur(10px);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-section {
+                text-align: center;
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
             .content-grid {
                 grid-template-columns: 1fr;
             }
@@ -178,260 +570,384 @@
             .test-section {
                 position: static;
             }
-        }
-    :root {
-      --primary: #6366f1;
-      --secondary: #4f46e5;
-      --accent: #818cf8;
-      --background: #f8fafc;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-      --radius-lg: 1.5rem;
-      --radius-md: 1rem;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      background: var(--background);
-      color: var(--text);
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 4rem;
-      padding: 6rem 2rem;
-      background: var(--gradient);
-      border-radius: var(--radius-lg);
-      color: white;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      overflow: hidden;
-    }
-    .header__icon {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 4rem;
-      opacity: 0.1;
-      animation: pulse 2s infinite;
-    }
-    .header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 3rem;
-      margin-bottom: 4rem;
-    }
-    .main-content {
-      display: grid;
-      gap: 3rem;
-    }
-    .card {
-      background: white;
-      padding: 2.5rem;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-xs);
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    h2 {
-      font-size: 1.75rem;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      color: var(--secondary);
-    }
-    h2 i {
-      font-size: 1.5em;
-      color: var(--primary);
-    }
-    .instrument-card {
-      border-left: 4px solid var(--primary);
-      padding-left: 2rem;
-      margin: 2rem 0;
-    }
-    .instrument-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .test-section {
-      background: var(--background);
-      padding: 2rem;
-      border-radius: var(--radius-lg);
-      position: sticky;
-      top: 2rem;
-    }
-    .test-card {
-      background: white;
-      padding: 2rem;
-      border-radius: var(--radius-md);
-      margin-bottom: 2rem;
-      border: 1px solid #e2e8f0;
-    }
-    .test-card h3 {
-      margin-bottom: 1.5rem;
-      color: var(--secondary);
-    }
-    .question {
-      margin: 1.5rem 0;
-    }
-    .question label {
-      display: block;
-      margin: 0.75rem 0;
-      cursor: pointer;
-    }
-    .button {
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      transition: transform 0.2s;
-    }
-    .button:hover {
-      transform: translateY(-2px);
-    }
-    @media (max-width: 1024px) {
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-      .test-section {
-        position: static;
-      }
-    }
 
-  </style>
+            .card {
+                padding: 1.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .instrument-card {
+                padding: 1.2rem;
+            }
+
+            .income-types-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <header class="header">
-      <i class="fa-solid fa-hand-holding-dollar header__icon"></i>
-      <h1>Откуда берутся доходы и какие они бывают</h1>
-      <p>Основные источники и виды доходов</p>
-    </header>
-
-    <!-- Content Grid -->
-    <div class="content-grid">
-      <!-- Main Content -->
-      <div class="main-content">
-        <!-- Что такое доход -->
-        <div class="card">
-          <h2><i class="fa-solid fa-money-bill"></i> Что такое доход</h2>
-          <p>Доход – это безвозвратные денежные поступления в собственность лица, получаемые от деятельности или в порядке дарения.</p>
-          <div class="instrument-card">
-            <h3>Основной источник доходов</h3>
-            <p>Заработная плата – форма вознаграждения, выплачиваемая работодателем наемному работнику за его труд.</p>
-            <ul>
-              <li>Фиксируется в трудовом соглашении.</li>
-              <li>Не должна быть меньше МРОТ.</li>
-            </ul>
-          </div>
-          <div class="instrument-card">
-            <h3>Минимальный размер оплаты труда (МРОТ)</h3>
-            <p>МРОТ регулируется федеральным законом и устанавливается на основе медианной заработной платы по стране.</p>
-            <ul>
-              <li>Не может быть ниже прожиточного минимума.</li>
-              <li>Ежегодно индексируется.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Виды доходов -->
-        <div class="card">
-          <h2><i class="fa-solid fa-coins"></i> Виды доходов</h2>
-          <p>Доходы можно разделить на активные и пассивные:</p>
-          <div class="instrument-card">
-            <h3>Активные доходы</h3>
-            <p>Зависят от трудовой и предпринимательской деятельности:</p>
-            <ul>
-              <li>Заработная плата.</li>
-              <li>Предпринимательская деятельность.</li>
-              <li>Продажа продукции с приусадебного участка.</li>
-            </ul>
-          </div>
-          <div class="instrument-card">
-            <h3>Пассивные доходы</h3>
-            <p>Не связаны с непосредственной деятельностью человека:</p>
-            <ul>
-              <li>Сдача имущества в аренду.</li>
-              <li>Доходы от банковских вкладов.</li>
-              <li>Инвестиции в ценные бумаги.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Test Section -->
-      <div class="test-section">
-        <div class="test-card">
-          <h3>Тест 1: Основные понятия</h3>
-          <div class="question">
-            <p>Что такое МРОТ?</p>
-            <label>
-              <input type="radio" name="question1"> Минимальный размер оплаты труда
-            </label>
-            <label>
-              <input type="radio" name="question1"> Прожиточный минимум
-            </label>
-            <button class="button">
-              <i class="fa-solid fa-check"></i> Проверить
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-piggy-bank"></i>
+                ФинГрамотность
+            </a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
-          </div>
-        </div>
+        </nav>
 
-        <div class="test-card">
-          <h3>Тест 2: Активные и пассивные доходы</h3>
-          <div class="question">
-            <p>Какой доход является пассивным?</p>
-            <label>
-              <input type="checkbox"> Заработная плата
-            </label>
-            <label>
-              <input type="checkbox"> Доходы от аренды имущества
-            </label>
-            <button class="button">
-              <i class="fa-solid fa-graduation-cap"></i> Ответить
-            </button>
-          </div>
-        </div>
+        <header class="hero-section">
+            <i class="fa-solid fa-hand-holding-dollar header__icon"></i>
+            <div class="hero-content">
+                <h1 class="hero-title">2.1. Откуда берутся доходы и какие они бывают</h1>
+                <p class="hero-description">Изучите основные источники доходов и их классификацию для эффективного финансового планирования</p>
+            </div>
+        </header>
 
-        <div class="test-card">
-          <h3>Тест 3: Расчёт доходов</h3>
-          <div class="question">
-            <p>Рассчитайте реально располагаемый доход, если номинальный доход составляет 85 000 рублей, а индекс потребительских цен равен 1,012:</p>
-            <input type="number" placeholder="Введите ответ" style="width: 100%; margin: 1rem 0;">
-            <button class="button">
-              <i class="fa-solid fa-calculator"></i> Рассчитать
-            </button>
-          </div>
+        <div class="content-grid">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Что такое доход -->
+                <div class="card">
+                    <h2><i class="fa-solid fa-money-bill"></i> Что такое доход</h2>
+                    <p>Доход – это безвозвратные денежные поступления в собственность лица, получаемые от деятельности или в порядке дарения. Доходы составляют основу бюджета человека и позволяют ему удовлетворять свои потребности.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-description">Доля зарплаты в структуре доходов среднего россиянина</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">15%</div>
+                            <div class="stat-description">Доля других источников дохода у среднего россиянина</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">13%</div>
+                            <div class="stat-description">Подоходный налог с большинства доходов физлиц</div>
+                        </div>
+                    </div>
+
+                    <div class="instrument-card">
+                        <h3>Основной источник доходов</h3>
+                        <p>Заработная плата – форма вознаграждения, выплачиваемая работодателем наемному работнику за его труд.</p>
+                        <ul>
+                            <li>Фиксируется в трудовом соглашении.</li>
+                            <li>Не должна быть меньше МРОТ.</li>
+                            <li>Может быть фиксированной или переменной (оклад + премии/бонусы).</li>
+                            <li>Выплачивается регулярно (обычно 2 раза в месяц).</li>
+                        </ul>
+                    </div>
+
+                    <div class="instrument-card">
+                        <h3>Минимальный размер оплаты труда (МРОТ)</h3>
+                        <p>МРОТ регулируется федеральным законом и устанавливается на основе медианной заработной платы по стране.</p>
+                        <ul>
+                            <li>Не может быть ниже прожиточного минимума.</li>
+                            <li>Ежегодно индексируется.</li>
+                            <li>Служит ориентиром для установления заработных плат.</li>
+                            <li>Региональный МРОТ может быть выше федерального.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Виды доходов -->
+                <div class="card">
+                    <h2><i class="fa-solid fa-coins"></i> Виды доходов</h2>
+                    <p>Доходы можно классифицировать по разным критериям. Одна из основных классификаций - разделение на активные и пассивные доходы, в зависимости от необходимости постоянного участия человека в их получении.</p>
+
+                    <div class="income-types-grid">
+                        <div class="income-type-card">
+                            <div class="income-type-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h4 class="income-type-title">Активные доходы</h4>
+                            <p>Зависят от трудовой и предпринимательской деятельности человека, требуют постоянных временных затрат:</p>
+                            <ul>
+                                <li>Заработная плата</li>
+                                <li>Доходы от предпринимательской деятельности</li>
+                                <li>Гонорары и разовые выплаты</li>
+                                <li>Продажа продукции с приусадебного участка</li>
+                                <li>Доходы от самозанятости</li>
+                            </ul>
+                        </div>
+
+                        <div class="income-type-card">
+                            <div class="income-type-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <h4 class="income-type-title">Пассивные доходы</h4>
+                            <p>Не связаны с непосредственной деятельностью человека, продолжают поступать даже без регулярного участия:</p>
+                            <ul>
+                                <li>Сдача имущества в аренду</li>
+                                <li>Доходы от банковских вкладов</li>
+                                <li>Инвестиции в ценные бумаги (дивиденды)</li>
+                                <li>Роялти за интеллектуальную собственность</li>
+                                <li>Доходы от партнерских программ</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="instrument-card">
+                        <h3>Другие классификации доходов</h3>
+                        <ul>
+                            <li><strong>По периодичности:</strong> регулярные (зарплата) и нерегулярные (премии, подарки)</li>
+                            <li><strong>По форме получения:</strong> денежные и натуральные (оплата жилья работодателем)</li>
+                            <li><strong>По источнику:</strong> трудовые, от капитала, от государства (пенсии, пособия)</li>
+                            <li><strong>По налогообложению:</strong> облагаемые налогом и необлагаемые</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fa-solid fa-chart-line"></i> Реальные и номинальные доходы</h2>
+
+                    <div class="instrument-card">
+                        <h3>Номинальный доход</h3>
+                        <p>Фактическая сумма денег, полученная за определенный период времени. Номинальный доход не учитывает изменения цен и инфляцию.</p>
+                        <p><strong>Пример:</strong> Если ваша зарплата увеличилась с 50 000 ₽ до 55 000 ₽, то номинальный доход вырос на 10%.</p>
+                    </div>
+
+                    <div class="instrument-card">
+                        <h3>Реальный доход</h3>
+                        <p>Показывает, что можно купить на полученные деньги. Учитывает изменение цен и отражает реальную покупательную способность.</p>
+                        <p><strong>Пример:</strong> Если ваша зарплата увеличилась на 10%, но инфляция составила 12%, то ваш реальный доход снизился примерно на 2%.</p>
+                        <p><strong>Формула расчета:</strong> Реальный доход = (Номинальный доход / Индекс потребительских цен) × 100%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Section -->
+            <div class="test-section">
+                <div class="test-card">
+                    <h3>Тест 1: Основные понятия</h3>
+                    <div class="question">
+                        <p>Что такое МРОТ?</p>
+                        <label>
+                            <input type="radio" name="question1"> Минимальный размер оплаты труда
+                        </label>
+                        <label>
+                            <input type="radio" name="question1"> Прожиточный минимум
+                        </label>
+                        <label>
+                            <input type="radio" name="question1"> Максимальный размер оплаты труда
+                        </label>
+                        <label>
+                            <input type="radio" name="question1"> Минимальная рыночная оценка труда
+                        </label>
+                        <button class="button">
+                            <i class="fa-solid fa-check"></i> Проверить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <h3>Тест 2: Активные и пассивные доходы</h3>
+                    <div class="question">
+                        <p>Какие доходы относятся к пассивным? (выберите все подходящие)</p>
+                        <label>
+                            <input type="checkbox"> Заработная плата
+                        </label>
+                        <label>
+                            <input type="checkbox"> Доходы от аренды имущества
+                        </label>
+                        <label>
+                            <input type="checkbox"> Дивиденды по акциям
+                        </label>
+                        <label>
+                            <input type="checkbox"> Предпринимательский доход
+                        </label>
+                        <label>
+                            <input type="checkbox"> Проценты по вкладам в банке
+                        </label>
+                        <button class="button">
+                            <i class="fa-solid fa-graduation-cap"></i> Ответить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <h3>Тест 3: Расчёт доходов</h3>
+                    <div class="question">
+                        <p>Рассчитайте реально располагаемый доход, если номинальный доход составляет 85 000 рублей, а индекс потребительских цен равен 1,012:</p>
+                        <input type="number" placeholder="Введите ответ">
+                        <button class="button">
+                            <i class="fa-solid fa-calculator"></i> Рассчитать
+                        </button>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <h3>Тест 4: Структура доходов</h3>
+                    <div class="question">
+                        <p>Что составляет основу доходов большинства россиян?</p>
+                        <label>
+                            <input type="radio" name="question4"> Пассивный доход от инвестиций
+                        </label>
+                        <label>
+                            <input type="radio" name="question4"> Заработная плата
+                        </label>
+                        <label>
+                            <input type="radio" name="question4"> Социальные выплаты
+                        </label>
+                        <label>
+                            <input type="radio" name="question4"> Предпринимательская деятельность
+                        </label>
+                        <button class="button">
+                            <i class="fa-solid fa-check"></i> Проверить
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Test 1 validation
+        document.querySelector('.test-card:nth-child(1) .button').addEventListener('click', () => {
+            const selected = document.querySelector('input[name="question1"]:checked');
+            const resultDiv = document.createElement('div');
+            resultDiv.style.marginTop = '1rem';
+            resultDiv.style.padding = '1rem';
+            resultDiv.style.borderRadius = '0.5rem';
+            
+            // Remove any existing result
+            const existingResult = document.querySelector('.test-card:nth-child(1) .result');
+            if (existingResult) existingResult.remove();
+            
+            if (!selected) {
+                resultDiv.textContent = 'Пожалуйста, выберите один из вариантов';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            } else if (selected.parentElement.textContent.trim() === 'Минимальный размер оплаты труда') {
+                resultDiv.textContent = 'Верно! МРОТ - это минимальный размер оплаты труда, установленный законом.';
+                resultDiv.style.background = '#d1fae5';
+                resultDiv.style.color = '#10b981';
+            } else {
+                resultDiv.textContent = 'Неверно. МРОТ - это минимальный размер оплаты труда, установленный законом.';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            }
+            
+            resultDiv.classList.add('result');
+            document.querySelector('.test-card:nth-child(1) .question').appendChild(resultDiv);
+        });
+
+        // Test 2 validation
+        document.querySelector('.test-card:nth-child(2) .button').addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('.test-card:nth-child(2) input[type="checkbox"]');
+            const resultDiv = document.createElement('div');
+            resultDiv.style.marginTop = '1rem';
+            resultDiv.style.padding = '1rem';
+            resultDiv.style.borderRadius = '0.5rem';
+            
+            // Remove any existing result
+            const existingResult = document.querySelector('.test-card:nth-child(2) .result');
+            if (existingResult) existingResult.remove();
+            
+            const correctAnswers = [false, true, true, false, true]; // Индексы правильных ответов
+            let correct = true;
+            
+            for (let i = 0; i < checkboxes.length; i++) {
+                if ((checkboxes[i].checked && !correctAnswers[i]) || (!checkboxes[i].checked && correctAnswers[i])) {
+                    correct = false;
+                    break;
+                }
+            }
+            
+            if (correct) {
+                resultDiv.textContent = 'Верно! К пассивным доходам относятся: доходы от аренды имущества, дивиденды по акциям и проценты по вкладам.';
+                resultDiv.style.background = '#d1fae5';
+                resultDiv.style.color = '#10b981';
+            } else {
+                resultDiv.textContent = 'Неверно. К пассивным доходам относятся: доходы от аренды имущества, дивиденды по акциям и проценты по вкладам.';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            }
+            
+            resultDiv.classList.add('result');
+            document.querySelector('.test-card:nth-child(2) .question').appendChild(resultDiv);
+        });
+
+        // Test 3 validation
+        document.querySelector('.test-card:nth-child(3) .button').addEventListener('click', () => {
+            const input = document.querySelector('.test-card:nth-child(3) input[type="number"]');
+            const resultDiv = document.createElement('div');
+            resultDiv.style.marginTop = '1rem';
+            resultDiv.style.padding = '1rem';
+            resultDiv.style.borderRadius = '0.5rem';
+            
+            // Remove any existing result
+            const existingResult = document.querySelector('.test-card:nth-child(3) .result');
+            if (existingResult) existingResult.remove();
+            
+            const nominalIncome = 85000;
+            const cpi = 1.012;
+            const correctAnswer = Math.round(nominalIncome / cpi);
+            const userAnswer = parseInt(input.value);
+            
+            if (!input.value) {
+                resultDiv.textContent = 'Пожалуйста, введите ответ';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            } else if (Math.abs(userAnswer - correctAnswer) <= 1) { // Допускаем погрешность в 1 рубль из-за округления
+                resultDiv.textContent = `Верно! Реальный доход составляет ${correctAnswer} рублей.`;
+                resultDiv.style.background = '#d1fae5';
+                resultDiv.style.color = '#10b981';
+            } else {
+                resultDiv.textContent = `Неверно. Правильный ответ: ${correctAnswer} рублей. Формула: Номинальный доход / ИПЦ = 85000 / 1.012 = ${correctAnswer} руб.`;
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            }
+            
+            resultDiv.classList.add('result');
+            document.querySelector('.test-card:nth-child(3) .question').appendChild(resultDiv);
+        });
+
+        // Test 4 validation
+        document.querySelector('.test-card:nth-child(4) .button').addEventListener('click', () => {
+            const selected = document.querySelector('input[name="question4"]:checked');
+            const resultDiv = document.createElement('div');
+            resultDiv.style.marginTop = '1rem';
+            resultDiv.style.padding = '1rem';
+            resultDiv.style.borderRadius = '0.5rem';
+            
+            // Remove any existing result
+            const existingResult = document.querySelector('.test-card:nth-child(4) .result');
+            if (existingResult) existingResult.remove();
+            
+            if (!selected) {
+                resultDiv.textContent = 'Пожалуйста, выберите один из вариантов';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            } else if (selected.parentElement.textContent.trim() === 'Заработная плата') {
+                resultDiv.textContent = 'Верно! Заработная плата составляет основу доходов большинства россиян.';
+                resultDiv.style.background = '#d1fae5';
+                resultDiv.style.color = '#10b981';
+            } else {
+                resultDiv.textContent = 'Неверно. Заработная плата составляет основу доходов большинства россиян.';
+                resultDiv.style.background = '#fee2e2';
+                resultDiv.style.color = '#ef4444';
+            }
+            
+            resultDiv.classList.add('result');
+            document.querySelector('.test-card:nth-child(4) .question').appendChild(resultDiv);
+        });
+    </script>
 </body>
 </html>

@@ -238,11 +238,213 @@
             cursor: pointer;
             display: none;
             transition: background 0.3s ease, transform 0.2s ease;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
         }
 
         #to-top-btn:hover {
             background: var(--secondary);
             transform: scale(1.1);
+        }
+
+        /* Таблица сравнения */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .comparison-table thead th {
+            background: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 1rem;
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* График */
+        .chart-container {
+            margin: 2rem 0;
+            height: 300px;
+            position: relative;
+            background: rgba(248, 249, 255, 0.5);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+        }
+
+        .risk-reward-line {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            width: calc(100% - 80px);
+            height: 2px;
+            background: var(--text-light);
+        }
+
+        .instrument-point {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: translate(-50%, -50%);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .instrument-point:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .instrument-point[data-risk="1"] { left: 20%; bottom: 70%; background: #10b981; }
+        .instrument-point[data-risk="2"] { left: 40%; bottom: 50%; background: #0ea5e9; }
+        .instrument-point[data-risk="3"] { left: 60%; bottom: 30%; background: #8b5cf6; }
+        .instrument-point[data-risk="4"] { left: 80%; bottom: 10%; background: #ef4444; }
+
+        .axis-label {
+            position: absolute;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .x-axis-label {
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .y-axis-label {
+            transform: rotate(-90deg);
+            left: -30px;
+            top: 50%;
+        }
+
+        /* Инвестиционные профили */
+        .profile-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-card {
+            background: var(--glass);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-xs);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .profile-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        /* Прогресс в инвестировании */
+        .progress-bar-container {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 1rem;
+            height: 0.75rem;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 1rem;
+            transition: width 1s ease;
+        }
+
+        /* Калькулятор накоплений */
+        .calculator {
+            background: var(--glass);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calculator-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .calculator-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .calculator-field input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .calculator-result {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: var(--radius-md);
+            display: none;
+        }
+
+        .calculator-result.active {
+            display: block;
+        }
+
+        /* Тестовые результаты */
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            display: none;
+        }
+
+        .test-result.correct {
+            display: block;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .test-result.incorrect {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
         }
 
         /* Анимации */
@@ -277,6 +479,10 @@
 
             .card {
                 padding: 1.5rem;
+            }
+
+            .profile-cards {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -350,6 +556,134 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="chart-container">
+                        <div class="risk-reward-line"></div>
+                        <div class="instrument-point" data-risk="1" title="Банковские вклады">Вклады</div>
+                        <div class="instrument-point" data-risk="2" title="Облигации">ОФЗ</div>
+                        <div class="instrument-point" data-risk="3" title="Акции">Акции</div>
+                        <div class="instrument-point" data-risk="4" title="Криптовалюты">Крипто</div>
+                        <div class="axis-label x-axis-label">Риск</div>
+                        <div class="axis-label y-axis-label">Доходность</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fa-solid fa-user-shield"></i> Инвестиционные профили</h2>
+                    <p>Выбор инструментов зависит от вашего личного инвестиционного профиля:</p>
+                    
+                    <div class="profile-cards">
+                        <div class="profile-card">
+                            <div class="profile-icon">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div class="profile-title">Консервативный</div>
+                            <p>Минимальный риск, низкая доходность, горизонт 1-3 года</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-icon">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div class="profile-title">Умеренный</div>
+                            <p>Средний риск, сбалансированная доходность, горизонт 3-5 лет</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-icon">
+                                <i class="fa-solid fa-rocket"></i>
+                            </div>
+                            <div class="profile-title">Агрессивный</div>
+                            <p>Высокий риск, максимальная доходность, горизонт от 5 лет</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fa-solid fa-table-list"></i> Сравнение инструментов</h2>
+                    <p>Выбор инструментов инвестирования зависит от ваших финансовых целей, склонности к риску и инвестиционного горизонта:</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Инструмент</th>
+                                <th>Доходность</th>
+                                <th>Риски</th>
+                                <th>Ликвидность</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Банковские вклады</td>
+                                <td>6-8%</td>
+                                <td>Минимальные</td>
+                                <td>Средняя</td>
+                            </tr>
+                            <tr>
+                                <td>Государственные облигации</td>
+                                <td>7-9%</td>
+                                <td>Низкие</td>
+                                <td>Высокая</td>
+                            </tr>
+                            <tr>
+                                <td>Корпоративные облигации</td>
+                                <td>8-12%</td>
+                                <td>Средние</td>
+                                <td>Средняя</td>
+                            </tr>
+                            <tr>
+                                <td>Акции российских компаний</td>
+                                <td>10-15%</td>
+                                <td>Высокие</td>
+                                <td>Высокая</td>
+                            </tr>
+                            <tr>
+                                <td>ETF фонды</td>
+                                <td>8-12%</td>
+                                <td>Средние</td>
+                                <td>Высокая</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="card">
+                    <h2><i class="fa-solid fa-calculator"></i> Калькулятор накоплений</h2>
+                    <p>Рассчитайте потенциальный рост ваших вложений с учетом сложного процента:</p>
+                    
+                    <div class="calculator">
+                        <div class="calculator-field">
+                            <label for="initial-amount">Начальная сумма (руб.)</label>
+                            <input type="number" id="initial-amount" placeholder="100000">
+                        </div>
+                        <div class="calculator-field">
+                            <label for="monthly-contribution">Ежемесячное пополнение (руб.)</label>
+                            <input type="number" id="monthly-contribution" placeholder="5000">
+                        </div>
+                        <div class="calculator-field">
+                            <label for="annual-rate">Годовая ставка (%)</label>
+                            <input type="number" id="annual-rate" placeholder="8">
+                        </div>
+                        <div class="calculator-field">
+                            <label for="investment-period">Срок инвестирования (лет)</label>
+                            <input type="number" id="investment-period" placeholder="10">
+                        </div>
+                        
+                        <button class="button" onclick="calculateInvestment()">
+                            <i class="fa-solid fa-calculator"></i> Рассчитать
+                        </button>
+                        
+                        <div id="calculator-result" class="calculator-result"></div>
+                    </div>
                 </div>
             </div>
 
@@ -361,6 +695,8 @@
                         <p>Какие инструменты защищены государством?</p>
                         <label><input type="checkbox" name="q1-1"> Банковские вклады</label>
                         <label><input type="checkbox" name="q1-2"> Акции компаний</label>
+                        <label><input type="checkbox" name="q1-3"> Облигации федерального займа</label>
+                        <label><input type="checkbox" name="q1-4"> Паи ПИФов</label>
                         <button class="button" onclick="checkTest1(this)"><i class="fa-solid fa-check"></i> Проверить</button>
                         <div class="test-result"></div>
                     </div>
@@ -377,83 +713,185 @@
                 </div>
 
                 <div class="test-card">
-                    <h3>Тест 3: Терминология</h3>
+                    <h3>Тест 3: Инвестиционные профили</h3>
                     <div class="question">
-                        <p>Что означает термин "диверсификация"?</p>
-                        <label><input type="radio" name="q3" value="a"> Вложение в один актив</label>
-                        <label><input type="radio" name="q3" value="b"> Распределение инвестиций</label>
-                        <button class="button" onclick="checkTest3(this)"><i class="fa-solid fa-graduation-cap"></i> Ответить</button>
+                        <p>Какие инструменты подходят для консервативного инвестора?</p>
+                        <label><input type="radio" name="q3" value="a"> Акции, ETF, иностранная валюта</label>
+                        <label><input type="radio" name="q3" value="b"> Банковские вклады, ОФЗ, консервативные фонды</label>
+                        <label><input type="radio" name="q3" value="c"> Криптовалюты, венчурные инвестиции</label>
+                        <button class="button" onclick="checkTest3(this)"><i class="fa-solid fa-check"></i> Проверить</button>
+                        <div class="test-result"></div>
+                    </div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Тест 4: Риски инвестирования</h3>
+                    <div class="question">
+                        <p>Какой принцип помогает снизить риски при инвестировании?</p>
+                        <label><input type="radio" name="q4" value="a"> Вложение всех средств в один перспективный актив</label>
+                        <label><input type="radio" name="q4" value="b"> Частые переходы между стратегиями</label>
+                        <label><input type="radio" name="q4" value="c"> Диверсификация активов между различными классами</label>
+                        <button class="button" onclick="checkTest4(this)"><i class="fa-solid fa-check"></i> Проверить</button>
                         <div class="test-result"></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <button id="to-top-btn" aria-label="Наверх">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
     </div>
-    <button id="to-top-btn"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
-        // Прогресс-бар
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.getElementById('progress-bar').style.width = `${scrollPercent}%`;
-        });
-
-        // Анимация появления
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // Анимация появления карточек при прокрутке
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.card');
+            const toTopBtn = document.getElementById('to-top-btn');
+            
+            // Прогресс-бар
+            window.addEventListener('scroll', function() {
+                let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                let scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + '%';
+                
+                // Показываем кнопку "Наверх" при прокрутке
+                if (winScroll > 300) {
+                    toTopBtn.style.display = 'flex';
+                } else {
+                    toTopBtn.style.display = 'none';
                 }
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.card').forEach(card => observer.observe(card));
-
-        // Проверка тестов
-        function showResult(card, message, isCorrect) {
-            const resultDiv = card.querySelector('.test-result');
-            resultDiv.style.padding = '1rem';
-            resultDiv.style.marginTop = '1rem';
-            resultDiv.style.borderRadius = '8px';
-            resultDiv.textContent = message;
-            resultDiv.style.background = isCorrect ? '#dcfce7' : '#fee2e2';
-            resultDiv.style.color = isCorrect ? 'var(--success)' : 'var(--error)';
-        }
-
+            
+            // Анимация появления карточек
+            function checkVisibility() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    if (rect.top <= windowHeight * 0.8) {
+                        card.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Прокрутка наверх
+            toTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Вызываем проверку видимости при загрузке и прокрутке
+            window.addEventListener('scroll', checkVisibility);
+            checkVisibility();
+        });
+        
+        // Функция проверки теста 1
         function checkTest1(button) {
-            const card = button.closest('.test-card');
-            const checks = card.querySelectorAll('input[type="checkbox"]');
-            const correct = checks[0].checked && !checks[1].checked;
-            showResult(card, correct ? '✓ Правильно!' : '✕ Неверно. Правильный ответ: Банковские вклады', correct);
+            const resultElement = button.nextElementSibling;
+            const q1 = document.querySelector('input[name="q1-1"]').checked;
+            const q2 = document.querySelector('input[name="q1-2"]').checked;
+            const q3 = document.querySelector('input[name="q1-3"]').checked;
+            const q4 = document.querySelector('input[name="q1-4"]').checked;
+            
+            if (q1 && !q2 && q3 && !q4) {
+                resultElement.textContent = "Верно! Государство защищает банковские вклады (через систему страхования вкладов) и облигации федерального займа (ОФЗ).";
+                resultElement.className = "test-result correct";
+            } else {
+                resultElement.textContent = "Неверно. Государственная защита распространяется на банковские вклады (до 1.4 млн рублей) и облигации федерального займа. Акции и ПИФы не имеют государственных гарантий возврата.";
+                resultElement.className = "test-result incorrect";
+            }
         }
-
+        
+        // Функция проверки теста 2
         function checkTest2(button) {
-            const card = button.closest('.test-card');
-            const input = card.querySelector('input[type="number"]').value;
-            const correctAnswer = 500000 * Math.pow(1 + 0.07, 3); // 607,981 ₽
-            const userAnswer = parseFloat(input);
-            const isCorrect = Math.abs(correctAnswer - userAnswer) < 1000; // Допустимая погрешность
-            showResult(card, isCorrect ? '✓ Правильно!' : `✕ Неверно. Правильный ответ: ${Math.round(correctAnswer)} ₽`, isCorrect);
+            const resultElement = button.nextElementSibling;
+            const input = button.previousElementSibling;
+            const answer = parseFloat(input.value);
+            
+            // Расчет суммы через 3 года: 500000 * (1 + 0.07)^3
+            const correctAnswer = 500000 * Math.pow(1.07, 3);
+            const roundedCorrectAnswer = Math.round(correctAnswer);
+            
+            if (Math.abs(answer - roundedCorrectAnswer) <= roundedCorrectAnswer * 0.01) {
+                resultElement.textContent = `Верно! 500 000 × (1 + 0.07)³ = ${roundedCorrectAnswer.toLocaleString()} ₽`;
+                resultElement.className = "test-result correct";
+            } else {
+                resultElement.textContent = `Неверно. Правильный ответ: ${roundedCorrectAnswer.toLocaleString()} ₽. Формула: Начальная сумма × (1 + Годовая ставка)^Количество лет`;
+                resultElement.className = "test-result incorrect";
+            }
         }
-
+        
+        // Функция проверки теста 3
         function checkTest3(button) {
-            const card = button.closest('.test-card');
-            const selected = card.querySelector('input[name="q3"]:checked');
-            const isCorrect = selected && selected.value === 'b';
-            showResult(card, isCorrect ? '✓ Правильно!' : '✕ Неверно. Правильный ответ: Распределение инвестиций', isCorrect);
+            const resultElement = button.nextElementSibling;
+            const selectedOption = document.querySelector('input[name="q3"]:checked');
+            
+            if (!selectedOption) {
+                resultElement.textContent = "Пожалуйста, выберите вариант ответа";
+                resultElement.className = "test-result";
+                return;
+            }
+            
+            if (selectedOption.value === 'b') {
+                resultElement.textContent = "Верно! Консервативному инвестору подходят инструменты с низким риском: банковские вклады, ОФЗ и консервативные инвестиционные фонды.";
+                resultElement.className = "test-result correct";
+            } else {
+                resultElement.textContent = "Неверно. Консервативному инвестору подходят низкорисковые инструменты: банковские вклады, ОФЗ и консервативные инвестиционные фонды.";
+                resultElement.className = "test-result incorrect";
+            }
         }
-
-        // Кнопка "Наверх"
-        const toTopBtn = document.getElementById('to-top-btn');
-        window.addEventListener('scroll', () => {
-            toTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-        });
-
-        toTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        
+        // Функция проверки теста 4
+        function checkTest4(button) {
+            const resultElement = button.nextElementSibling;
+            const selectedOption = document.querySelector('input[name="q4"]:checked');
+            
+            if (!selectedOption) {
+                resultElement.textContent = "Пожалуйста, выберите вариант ответа";
+                resultElement.className = "test-result";
+                return;
+            }
+            
+            if (selectedOption.value === 'c') {
+                resultElement.textContent = "Верно! Диверсификация активов между различными классами снижает общий риск инвестиционного портфеля.";
+                resultElement.className = "test-result correct";
+            } else {
+                resultElement.textContent = "Неверно. Диверсификация активов между различными классами помогает снизить общий риск инвестиционного портфеля.";
+                resultElement.className = "test-result incorrect";
+            }
+        }
+        
+        // Калькулятор инвестиций
+        function calculateInvestment() {
+            const initialAmount = parseFloat(document.getElementById('initial-amount').value) || 100000;
+            const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 0;
+            const annualRate = parseFloat(document.getElementById('annual-rate').value) || 8;
+            const years = parseInt(document.getElementById('investment-period').value) || 10;
+            
+            const monthlyRate = annualRate / 12 / 100;
+            const months = years * 12;
+            
+            let futureValue = initialAmount;
+            for (let i = 0; i < months; i++) {
+                futureValue = futureValue * (1 + monthlyRate) + monthlyContribution;
+            }
+            
+            const totalContributions = initialAmount + (monthlyContribution * months);
+            const interestEarned = futureValue - totalContributions;
+            
+            const resultElement = document.getElementById('calculator-result');
+            resultElement.innerHTML = `
+                <h4>Результаты расчета:</h4>
+                <p><strong>Итоговая сумма:</strong> ${Math.round(futureValue).toLocaleString()} ₽</p>
+                <p><strong>Внесено средств:</strong> ${Math.round(totalContributions).toLocaleString()} ₽</p>
+                <p><strong>Заработано на процентах:</strong> ${Math.round(interestEarned).toLocaleString()} ₽</p>
+                <p><strong>Прирост капитала:</strong> ${Math.round((interestEarned / totalContributions) * 100)}%</p>
+            `;
+            resultElement.classList.add('active');
+        }
     </script>
 </body>
 </html>

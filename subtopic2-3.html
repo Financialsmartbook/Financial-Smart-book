@@ -11,14 +11,22 @@
             --primary: #6366f1;
             --secondary: #4f46e5;
             --accent: #818cf8;
+            --accent-light: #c7d2fe;
             --background: #f8fafc;
+            --card-bg: #ffffff;
             --text-dark: #1e293b;
             --text-light: #f1f5f9;
-            --glass: rgba(255, 255, 255, 0.9);
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.95);
             --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
             --success: #10b981;
+            --warning: #f59e0b;
             --error: #ef4444;
+            --info: #3b82f6;
+            --border-radius: 1.25rem;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -41,18 +49,90 @@
             padding: 2rem;
         }
 
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero-section {
             position: relative;
             margin: 2rem 0 4rem;
             padding: 4rem 2rem;
             background: var(--gradient);
-            border-radius: 2rem;
+            border-radius: var(--border-radius);
             color: white;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
         }
 
         .hero-content {
@@ -61,42 +141,74 @@
         }
 
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
         }
 
         .hero-description {
             font-size: 1.2rem;
             opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .hero-image {
             width: 400px;
             filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
             transition: transform 0.4s ease;
+            z-index: 2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         /* Sections */
         .section-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
 
         .section-title {
             color: var(--text-dark);
             margin-bottom: 1.5rem;
             position: relative;
+            font-weight: 700;
         }
 
         .section-title::after {
@@ -107,6 +219,7 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
+            border-radius: 3px;
         }
 
         /* Features List */
@@ -114,39 +227,49 @@
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .features-item {
-            padding: 1.2rem;
+            padding: 1.5rem;
             background: rgba(248, 249, 255, 0.8);
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            gap: 1.25rem;
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .features-item:hover {
             transform: translateX(5px);
+            background: rgba(99, 102, 241, 0.08);
         }
 
         .features-item i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-top: 3px;
             flex-shrink: 0;
+            background: var(--accent-light);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
         }
 
         /* Accordion */
         .accordion {
-            background: var(--glass);
-            border-radius: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .accordion-item:last-child {
@@ -159,19 +282,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(99, 102, 241, 0.1);
-            transition: background 0.3s ease;
+            background: rgba(99, 102, 241, 0.05);
+            transition: var(--transition);
+            font-weight: 600;
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-header .icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .icon {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
         .accordion-content.active {
@@ -188,16 +320,50 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: var(--primary);
         }
 
         input[type="number"],
-        input[type="text"] {
+        input[type="text"],
+        select {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.8rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 0.5rem;
             font-family: inherit;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            border-radius: 0.5rem 0 0 0.5rem;
+            border-right: none;
+        }
+
+        .input-group-append {
+            background: #e2e8f0;
+            padding: 0.8rem 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         button {
@@ -207,13 +373,15 @@
             padding: 0.8rem 1.5rem;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: var(--transition);
             font-size: 1rem;
             font-weight: 500;
         }
 
         button:hover {
             background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         /* Results */
@@ -222,16 +390,19 @@
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
+            display: none;
         }
 
         .success {
             background: #d1fae5;
             color: var(--success);
+            display: block;
         }
 
         .error {
             background: #fee2e2;
             color: var(--error);
+            display: block;
         }
 
         /* Tips Section */
@@ -241,18 +412,249 @@
         }
 
         .tips-item {
-            padding: 1rem;
+            padding: 1.25rem;
             margin-bottom: 1rem;
             background: rgba(248, 249, 255, 0.8);
             border-radius: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            transform: translateX(5px);
         }
 
         .tips-item i {
             color: var(--primary);
             font-size: 1.2rem;
+            background: var(--accent-light);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Budget Types */
+        .budget-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .budget-type {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .budget-type:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .budget-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .budget-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        /* Calculator */
+        .calculator {
+            background: var(--card-bg);
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .calculator h3 {
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .calculator input, .calculator select {
+            margin-bottom: 1rem;
+        }
+
+        /* Budget Steps */
+        .budget-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .budget-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 30px;
+            right: 30px;
+            height: 3px;
+            background: var(--accent-light);
+            z-index: 1;
+        }
+
+        .budget-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 0 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Chart */
+        .budget-chart {
+            width: 100%;
+            height: 300px;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            background: var(--gradient);
+            color: white;
+            padding: 3rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: white;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.9;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
         }
 
         /* Mobile Adaptation */
@@ -261,10 +663,43 @@
                 padding: 1rem;
             }
 
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: var(--glass);
+                padding: 1rem;
+                border-radius: 0 0 1rem 1rem;
+                box-shadow: var(--shadow);
+                z-index: 100;
+                backdrop-filter: blur(10px);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .hero-section {
                 flex-direction: column;
                 text-align: center;
                 padding: 2rem 1rem;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
             }
 
             .hero-image {
@@ -276,14 +711,17 @@
                 padding: 1.5rem;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .budget-steps::before {
+                display: none;
             }
-        }
 
-        @media (max-width: 480px) {
-            .hero-image {
-                width: 100%;
+            .budget-types {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .features-item {
@@ -291,14 +729,37 @@
                 align-items: flex-start;
             }
         }
+
+        @media (max-width: 480px) {
+            .hero-image {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-piggy-bank"></i>
+                ФинГрамотность
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Главная</a>
+                <a href="#" class="nav-link">Курсы</a>
+                <a href="#" class="nav-link">Статьи</a>
+                <a href="#" class="nav-link">О проекте</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
         <header class="hero-section">
             <div class="hero-content">
                 <h1 class="hero-title">2.3. Что такое бюджет и зачем его вести</h1>
-                <p class="hero-description">Узнайте о группах расходов, их контроле и планировании.</p>
+                <p class="hero-description">Узнайте, как планировать и контролировать свои финансы для достижения финансового благополучия.</p>
+                <a href="#calculator" class="hero-btn">Рассчитать свой бюджет</a>
             </div>
             <img src="budget.png" alt="Планирование бюджета" class="hero-image">
         </header>
@@ -307,273 +768,463 @@
             <section class="section-card">
                 <h2 class="section-title">Что такое бюджет?</h2>
                 <p>Бюджет — это роспись (план) доходов и расходов конкретного субъекта (индивида) или домохозяйства (семьи) на определенный период или их учет за определенный период времени.</p>
-            </section>
-
-            <section class="section-card">
-                <h3 class="section-title">Группы расходов</h3>
+                <p>Правильно составленный бюджет помогает:</p>
                 <ul class="features-list">
                     <li class="features-item">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Потребительские расходы:</strong>
-                            <p>Продукты, услуги, медицина, транспорт</p>
+                            <strong>Контролировать расходы</strong>
+                            <p>Видеть, куда уходят деньги, и выявлять ненужные траты</p>
                         </div>
                     </li>
                     <li class="features-item">
-                        <i class="fas fa-file-invoice-dollar"></i>
+                        <i class="fas fa-piggy-bank"></i>
                         <div>
-                            <strong>Обязательные расходы:</strong>
-                            <p>Налоги, штрафы, страховка, кредитные платежи</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-theater-masks"></i>
-                        <div>
-                            <strong>Культура и досуг:</strong>
-                            <p>Путешествия, театры, рестораны</p>
-                        </div>
-                    </li>
-                    <li class="features-item">
-                        <i class="fas fa-gift"></i>
-                        <div>
-                            <strong>Подарки и благотворительность:</strong>
-                            <p>Подарки близким, друзьям, коллегам</p>
+                            <strong>Формировать сбережения</strong>
+                            <p>Накапливать средства на важные цели и создавать подушку безопасности</p>
                         </div>
                     </li>
                     <li class="features-item">
                         <i class="fas fa-chart-line"></i>
                         <div>
-                            <strong>Инвестиции:</strong>
-                            <p>Недвижимость, автомобили, произведения искусства</p>
+                            <strong>Планировать будущее</strong>
+                            <p>Ставить финансовые цели и достигать их в заданные сроки</p>
                         </div>
                     </li>
                     <li class="features-item">
-                        <i class="fas fa-money-bill-wave"></i>
+                        <i class="fas fa-shield-alt"></i>
                         <div>
-                            <strong>Сбережения:</strong>
-                            <p>Иностранная валюта, банковские депозиты</p>
+                            <strong>Избегать долгов</strong>
+                            <p>Предотвращать ситуации, когда расходы превышают доходы</p>
                         </div>
                     </li>
                 </ul>
             </section>
 
             <section class="section-card">
+                <h2 class="section-title">Типы бюджетов</h2>
+                <p>Существует несколько подходов к составлению личного или семейного бюджета:</p>
+                
+                <div class="budget-types">
+                    <div class="budget-type">
+                        <div class="budget-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3 class="budget-title">Сбалансированный</h3>
+                        <p>Доходы равны расходам. Такой бюджет позволяет жить по средствам, но не формирует накоплений.</p>
+                    </div>
+                    
+                    <div class="budget-type">
+                        <div class="budget-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3 class="budget-title">Профицитный</h3>
+                        <p>Доходы превышают расходы. Это позволяет формировать сбережения и инвестировать.</p>
+                    </div>
+                    
+                    <div class="budget-type">
+                        <div class="budget-icon">
+                            <i class="fas fa-minus-circle"></i>
+                        </div>
+                        <h3 class="budget-title">Дефицитный</h3>
+                        <p>Расходы превышают доходы. Опасная ситуация, которая ведет к долгам и финансовым проблемам.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h2 class="section-title">Как составить личный бюджет</h2>
+                
+                <div class="budget-steps">
+                    <div class="budget-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Учет доходов</div>
+                        <p>Запишите все источники доходов: зарплата, подработки, социальные выплаты, доходы от инвестиций</p>
+                    </div>
+                    <div class="budget-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Учет расходов</div>
+                        <p>Выпишите все ваши расходы, разделив их на обязательные и желательные</p>
+                    </div>
+                    <div class="budget-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Анализ</div>
+                        <p>Сравните доходы и расходы, определите, сбалансирован ли ваш бюджет</p>
+                    </div>
+                    <div class="budget-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Планирование</div>
+                        <p>Создайте план бюджета на следующий период, учитывая результаты анализа</p>
+                    </div>
+                </div>
+                
+                <div class="budget-chart">
+                    <!-- Здесь будет canvas для диаграммы -->
+                    <canvas id="budgetChart"></canvas>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h2 class="section-title">Методы ведения бюджета</h2>
                 <div class="accordion">
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Как правильно планировать бюджет?</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <span>Правило 50/30/20</span>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <ol>
-                                <li>Запишите все источники доходов: зарплата, социальные выплаты, подработки</li>
-                                <li>Выпишите обязательные расходы: коммунальные платежи, кредиты, страховки</li>
-                                <li>Определите желательные расходы: развлечения, путешествия, хобби</li>
-                                <li>Создайте резервный фонд (рекомендуется 10% от дохода)</li>
-                                <li>Регулярно анализируйте и корректируйте план</li>
-                            </ol>
+                            <p>Согласно этому правилу, ваш бюджет должен распределяться следующим образом:</p>
+                            <ul>
+                                <li><strong>50% на необходимые расходы</strong> - оплата жилья, питание, транспорт, медицина</li>
+                                <li><strong>30% на желательные расходы</strong> - развлечения, путешествия, подарки, рестораны</li>
+                                <li><strong>20% на сбережения и инвестиции</strong> - накопления, погашение долгов, вложения</li>
+                            </ul>
+                            <p>Этот метод позволяет сбалансировать бюджет и достичь финансовых целей, не отказываясь от приятных трат.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <span>Советы по экономии денег</span>
-                            <i class="fas fa-chevron-down"></i>
+                            <span>Метод конвертов</span>
+                            <i class="fas fa-chevron-down icon"></i>
                         </div>
                         <div class="accordion-content">
-                            <ul>
-                                <li>Откажитесь от ненужных подписок</li>
-                                <li>Используйте программы лояльности</li>
-                                <li>Планируйте крупные покупки заранее</li>
-                                <li>Готовьте еду дома</li>
-                                <li>Ищите бесплатные развлечения</li>
-                            </ul>
+                            <p>Простой и эффективный способ контроля расходов:</p>
+                            <ol>
+                                <li>Разделите все расходы по категориям: питание, транспорт, развлечения и т.д.</li>
+                                <li>Определите бюджет на каждую категорию</li>
+                                <li>Разложите наличные деньги по конвертам, соответствующим каждой категории</li>
+                                <li>Тратьте только деньги из соответствующего конверта на соответствующие нужды</li>
+                            </ol>
+                            <p>Современная версия - использование отдельных виртуальных счетов или специальных приложений для ведения бюджета.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Метод "Сначала заплати себе"</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Суть этого метода заключается в том, чтобы в первую очередь откладывать определенную сумму (обычно 10-20% дохода) на сбережения, а уже потом планировать текущие расходы:</p>
+                            <ol>
+                                <li>Получив доход, сразу отложите 10-20% на сбережения</li>
+                                <li>Оплатите обязательные расходы (коммунальные услуги, кредиты)</li>
+                                <li>Оставшуюся сумму можно распределить на повседневные нужды</li>
+                            </ol>
+                            <p>Этот метод формирует правильную привычку сберегать деньги и жить по средствам.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>Метод нулевого бюджетирования</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>При этом методе каждому рублю дохода назначается конкретная "работа":</p>
+                            <ol>
+                                <li>Рассчитайте ваш общий доход на период</li>
+                                <li>Распределите его по всем необходимым категориям расходов</li>
+                                <li>Добавьте категорию сбережений</li>
+                                <li>В итоге разница между доходами и суммой всех запланированных расходов и сбережений должна быть равна нулю</li>
+                            </ol>
+                            <p>Этот метод требует дисциплины, но позволяет максимально эффективно использовать ваши доходы.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="section-card">
-                <h3 class="section-title">Практические задания</h3>
-                <div class="interactive-grid">
-                    <div class="section-card">
-                        <h4>Составьте свой бюджет на месяц</h4>
-                        <form id="budget-form">
-                            <div class="form-group">
-                                <label for="income">Доходы (руб):</label>
-                                <input type="number" id="income" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="expenses">Расходы (руб):</label>
-                                <input type="number" id="expenses" required>
-                            </div>
-                            <button type="button" id="analyze-btn">Анализировать</button>
-                            <div id="budget-result" class="result"></div>
-                        </form>
+            <section id="calculator" class="section-card">
+                <h2 class="section-title">Калькулятор бюджета</h2>
+                <p>Используйте этот простой калькулятор, чтобы оценить состояние вашего бюджета.</p>
+                
+                <div class="calculator">
+                    <h3>Введите данные о доходах и расходах</h3>
+                    <div class="form-group">
+                        <label for="total-income">Общий доход (₽)</label>
+                        <input type="number" id="total-income" min="0" placeholder="Например, 80000">
                     </div>
-
-                    <div class="section-card">
-                        <h4>Рассчитайте время для накопления</h4>
-                        <form id="savings-form">
-                            <div class="form-group">
-                                <label for="target-amount">Целевая сумма (руб):</label>
-                                <input type="number" id="target-amount" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="monthly-savings">Ежемесячные накопления (руб):</label>
-                                <input type="number" id="monthly-savings" required>
-                            </div>
-                            <button type="button" id="calculate-btn">Рассчитать</button>
-                            <div id="savings-result" class="result"></div>
-                        </form>
+                    
+                    <div class="form-group">
+                        <label for="necessary-expenses">Обязательные расходы (₽)</label>
+                        <input type="number" id="necessary-expenses" min="0" placeholder="Например, 40000">
                     </div>
-
-                    <div class="section-card">
-                        <h4>Финансовые цели</h4>
-                        <form id="goals-form">
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="goal" value="car"> Покупка автомобиля
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="goal" value="education"> Образование
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="goal" value="travel"> Путешествие
-                                </label>
-                            </div>
-                            <button type="button" id="check-goals-btn">Проверить</button>
-                            <div id="goals-result" class="result"></div>
-                        </form>
+                    
+                    <div class="form-group">
+                        <label for="optional-expenses">Желательные расходы (₽)</label>
+                        <input type="number" id="optional-expenses" min="0" placeholder="Например, 25000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="savings">Сбережения (₽)</label>
+                        <input type="number" id="savings" min="0" placeholder="Например, 15000">
+                    </div>
+                    
+                    <button type="button" id="calculate-budget-btn">Рассчитать</button>
+                    
+                    <div id="budget-result" class="result">
+                        <!-- Результат будет здесь -->
                     </div>
                 </div>
             </section>
 
             <section class="section-card">
-                <h3 class="section-title">Знаете ли вы?</h3>
+                <h2 class="section-title">Советы по эффективному ведению бюджета</h2>
                 <ul class="tips-list">
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Цифровой рубль позволяет совершать мгновенные переводы с повышенной безопасностью
+                        <i class="fas fa-sync-alt"></i>
+                        <div>
+                            <strong>Регулярность</strong>
+                            <p>Ведите учет регулярно, желательно ежедневно. Это поможет не забывать о мелких расходах, которые в сумме могут составлять значительную часть бюджета.</p>
+                        </div>
                     </li>
                     <li class="tips-item">
-                        <i class="fas fa-info-circle"></i>
-                        Мобильные приложения банков автоматически анализируют ваши расходы
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>
+                            <strong>Используйте технологии</strong>
+                            <p>Существует множество приложений для учета финансов, которые упрощают процесс ведения бюджета. Многие банки также предлагают аналитику расходов в своих мобильных приложениях.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-flag"></i>
+                        <div>
+                            <strong>Ставьте финансовые цели</strong>
+                            <p>Определите, для чего вы ведете бюджет: накопить на отпуск, выплатить кредит, создать финансовую подушку безопасности. Ясные цели мотивируют к соблюдению бюджета.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <strong>Вовлекайте семью</strong>
+                            <p>Если вы ведете семейный бюджет, важно, чтобы все члены семьи понимали его принципы и участвовали в процессе. Проводите регулярные "финансовые собрания" для обсуждения.</p>
+                        </div>
+                    </li>
+                    <li class="tips-item">
+                        <i class="fas fa-balance-scale-right"></i>
+                        <div>
+                            <strong>Баланс между экономией и качеством жизни</strong>
+                            <p>Бюджет не должен превращаться в самоцель и заставлять вас отказываться от всех радостей жизни. Найдите баланс между экономией и расходами на то, что действительно важно для вас.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="section-card">
+                <h2 class="section-title">Частые ошибки при ведении бюджета</h2>
+                <ul class="features-list">
+                    <li class="features-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <strong>Недоучет мелких расходов</strong>
+                            <p>Небольшие ежедневные траты могут накапливаться и составлять значительную сумму. Не забывайте учитывать кофе, перекусы и прочие мелкие расходы.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <strong>Отсутствие категории "непредвиденные расходы"</strong>
+                            <p>Всегда закладывайте в бюджет 5-10% на непредвиденные расходы - ремонт техники, лечение, экстренные поездки.</p>
+                        </div>
+                    </li>
+                    <li class="features-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <strong>Забывание о сезонных и редких расходах</strong>
+                            <p>Помните о расходах, которые случаются реже, чем раз в месяц: подарки к праздникам, сезонная одежда, годовые подписки и т.д.</p>
+                        </div>
                     </li>
                 </ul>
             </section>
         </main>
-
-        <footer class="section-card" style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
     </div>
 
-    <script>
-  // Анимации при скролле
-  const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">
+                    <i class="fas fa-piggy-bank"></i> ФинГрамотность
+                </div>
+                <p class="footer-description">Образовательный проект, направленный на повышение финансовой грамотности населения России.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Разделы</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Курсы</a></li>
+                    <li><a href="#">Статьи</a></li>
+                    <li><a href="#">Калькуляторы</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Темы</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Личные финансы</a></li>
+                    <li><a href="#">Банковские услуги</a></li>
+                    <li><a href="#">Инвестиции</a></li>
+                    <li><a href="#">Страхование</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Контакты</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:info@fingramotnost.ru">info@fingramotnost.ru</a></li>
+                    <li><a href="tel:+78001234567">8 (800) 123-45-67</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 ФинГрамотность. Все права защищены.</p>
+        </div>
+    </footer>
 
-        document.querySelectorAll('.section-card, .hero-section').forEach(el => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
 
-        // Аккордеон
+        // Accordion functionality
         document.querySelectorAll('.accordion-header').forEach(header => {
             header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('i');
-                
                 header.classList.toggle('active');
-                content.classList.toggle('active');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('fa-chevron-down');
+                const content = header.nextElementSibling;
+                
+                if (content.classList.contains('active')) {
+                    content.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                }
             });
         });
 
-        // Обработчики заданий
-        document.getElementById('analyze-btn').addEventListener('click', () => {
-            const income = parseFloat(document.getElementById('income').value);
-            const expenses = parseFloat(document.getElementById('expenses').value);
-            const result = document.getElementById('budget-result');
-
-            if (!isNaN(income) && !isNaN(expenses)) {
-                if (income > expenses) {
-                    result.textContent = '✅ Профицит бюджета!';
-                    result.className = 'result success';
-                } else if (income < expenses) {
-                    result.textContent = '❌ Дефицит бюджета!';
-                    result.className = 'result error';
-                } else {
-                    result.textContent = '⚖️ Сбалансированный бюджет';
-                    result.className = 'result';
+        // Budget Chart
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        const budgetChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Необходимые расходы', 'Желательные расходы', 'Сбережения'],
+                datasets: [{
+                    label: 'Распределение бюджета',
+                    data: [50, 30, 20],
+                    backgroundColor: [
+                        '#6366f1',
+                        '#818cf8',
+                        '#c7d2fe'
+                    ],
+                    borderColor: [
+                        '#ffffff',
+                        '#ffffff',
+                        '#ffffff'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Рекомендуемое распределение бюджета (правило 50/30/20)',
+                        font: {
+                            size: 16,
+                            family: 'Inter',
+                            weight: 'bold'
+                        }
+                    }
                 }
-            } else {
-                result.textContent = '⚠️ Введите корректные значения';
-                result.className = 'result error';
             }
         });
 
-        document.getElementById('calculate-btn').addEventListener('click', () => {
-            const target = parseFloat(document.getElementById('target-amount').value);
-            const monthly = parseFloat(document.getElementById('monthly-savings').value);
-            const inflation = parseFloat(document.getElementById('inflation').value)/100;
-            const result = document.getElementById('savings-result');
-
-            if (!isNaN(target) && !isNaN(monthly) && monthly > 0) {
-                let months = 0;
-                let current = 0;
-                let adjustedTarget = target;
-                
-                while(current < adjustedTarget) {
-                    months++;
-                    current += monthly;
-                    // Учет инфляции каждый год
-                    if(months % 12 === 0) adjustedTarget *= (1 + inflation);
-                }
-                
-                result.textContent = `⏳ Потребуется месяцев: ${months} (≈${Math.round(months/12)} лет)`;
-                result.className = 'result success';
-            } else {
-                result.textContent = '⚠️ Проверьте введенные значения';
-                result.className = 'result error';
-            }
-        });
-
-        document.getElementById('check-goals-btn').addEventListener('click', () => {
-            const selected = Array.from(document.querySelectorAll('input[name="goal"]:checked'))
-                                .map(input => input.value);
-            const result = document.getElementById('goals-result');
-            const correctAnswers = ['car', 'education', 'travel'];
+        // Budget Calculator
+        document.getElementById('calculate-budget-btn').addEventListener('click', function() {
+            const income = parseFloat(document.getElementById('total-income').value) || 0;
+            const necessaryExpenses = parseFloat(document.getElementById('necessary-expenses').value) || 0;
+            const optionalExpenses = parseFloat(document.getElementById('optional-expenses').value) || 0;
+            const savings = parseFloat(document.getElementById('savings').value) || 0;
             
-            if(selected.length === 0) {
-                result.textContent = '❌ Выберите хотя бы одну цель';
-                result.className = 'result error';
+            const resultDiv = document.getElementById('budget-result');
+            
+            if (income <= 0) {
+                resultDiv.innerHTML = '<div class="result error">Пожалуйста, введите корректную сумму дохода</div>';
                 return;
             }
-
-            const isCorrect = selected.every(goal => correctAnswers.includes(goal)) 
-                            && selected.length === correctAnswers.length;
-
-            if(isCorrect) {
-                result.textContent = '✅ Все верно! Это типичные финансовые цели';
-                result.className = 'result success';
+            
+            const totalExpenses = necessaryExpenses + optionalExpenses + savings;
+            const balance = income - totalExpenses;
+            
+            // Рассчитываем процентные соотношения
+            const necessaryPercent = (necessaryExpenses / income * 100).toFixed(1);
+            const optionalPercent = (optionalExpenses / income * 100).toFixed(1);
+            const savingsPercent = (savings / income * 100).toFixed(1);
+            
+            let status = '';
+            let statusClass = '';
+            
+            if (balance > 0) {
+                status = 'Профицитный';
+                statusClass = 'success';
+            } else if (balance < 0) {
+                status = 'Дефицитный';
+                statusClass = 'error';
             } else {
-                result.textContent = '❌ Не все правильные цели выбраны';
-                result.className = 'result error';
+                status = 'Сбалансированный';
+                statusClass = 'success';
             }
+            
+            // Рекомендации по распределению
+            let recommendations = [];
+            
+            if (necessaryPercent > 60) {
+                recommendations.push('Обязательные расходы превышают рекомендуемые 50%. Рассмотрите возможности их оптимизации.');
+            }
+            
+            if (savingsPercent < 10) {
+                recommendations.push('Доля сбережений меньше рекомендуемых 20%. По возможности увеличьте объем накоплений.');
+            }
+            
+            if (optionalPercent > 40) {
+                recommendations.push('Желательные расходы превышают рекомендуемые 30%. Рассмотрите возможность перенаправить часть этих средств на сбережения.');
+            }
+            
+            // Обновляем диаграмму
+            budgetChart.data.datasets[0].data = [necessaryExpenses, optionalExpenses, savings];
+            budgetChart.options.plugins.title.text = 'Ваше распределение бюджета';
+            budgetChart.update();
+            
+            // Формируем HTML для результата
+            let html = `
+                <div class="result ${balance >= 0 ? 'success' : 'error'}">
+                    <h4>Анализ бюджета:</h4>
+                    <p>Тип бюджета: <strong>${status}</strong></p>
+                    <p>Общий доход: <strong>${income.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Общие расходы: <strong>${totalExpenses.toLocaleString('ru-RU')} ₽</strong></p>
+                    <p>Баланс: <strong>${balance.toLocaleString('ru-RU')} ₽</strong></p>
+                    
+                    <h4>Распределение:</h4>
+                    <p>Обязательные расходы: <strong>${necessaryPercent}%</strong> (рекомендуется около 50%)</p>
+                    <p>Желательные расходы: <strong>${optionalPercent}%</strong> (рекомендуется около 30%)</p>
+                    <p>Сбережения: <strong>${savingsPercent}%</strong> (рекомендуется около 20%)</p>
+            `;
+            
+            if (recommendations.length > 0) {
+                html += '<h4>Рекомендации:</h4><ul>';
+                recommendations.forEach(rec => {
+                    html += `<li>${rec}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            html += '</div>';
+            
+            resultDiv.innerHTML = html;
         });
     </script>
 </body>

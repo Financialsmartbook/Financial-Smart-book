@@ -11,10 +11,21 @@
             --primary: #4361ee;
             --secondary: #3f37c9;
             --accent: #4895ef;
+            --accent-secondary: #f72585;
             --text-dark: #2b2d42;
+            --text-medium: #4a5568;
             --text-light: #edf2f4;
+            --bg-light: #f8f9ff;
+            --bg-white: #ffffff;
             --gradient: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --gradient-secondary: linear-gradient(135deg, #f72585 0%, #7209b7 100%);
+            --gradient-banner: linear-gradient(135deg, #4361ee 0%, #3a0ca3 75%, #480ca8 100%);
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 25px rgba(67, 97, 238, 0.2);
+            --border-radius: 1.2rem;
+            --border-radius-sm: 0.8rem;
+            --transition: all 0.3s ease;
+            --content-width: 1200px;
         }
 
         * {
@@ -26,48 +37,180 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            background: #f8f9ff;
+            background: var(--bg-light);
             color: var(--text-dark);
+            font-size: 16px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: var(--content-width);
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 3rem 2rem;
+            width: 100%;
         }
 
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 3rem;
-            padding: 3rem 2rem;
-            background: var(--gradient);
-            border-radius: 1.5rem;
+            margin-bottom: 4rem;
+            padding: 5rem 3rem;
+            background: var(--gradient-banner);
+            border-radius: var(--border-radius);
             color: white;
-            box-shadow: var(--shadow);
+            box-shadow: 0 15px 30px rgba(58, 12, 163, 0.3);
+            position: relative;
+            overflow: hidden;
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
         }
 
         .header h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
             font-weight: 700;
+            position: relative;
+            z-index: 2;
+            line-height: 1.3;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.5px;
         }
 
         .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 1.35rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #ffffff;
+            font-weight: 400;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulse 15s infinite alternate;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulse 12s infinite alternate-reverse;
+        }
+
+        /* Floating items in banner */
+        .banner-decoration {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .decoration-card-1 {
+            top: 15%;
+            left: 10%;
+            width: 80px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            transform: rotate(-15deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .decoration-card-2 {
+            bottom: 20%;
+            right: 10%;
+            width: 90px;
+            height: 140px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transform: rotate(10deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: float 6s ease-in-out infinite 1s;
+        }
+
+        .decoration-circle-1 {
+            top: 25%;
+            right: 15%;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatSmall 5s ease-in-out infinite;
+        }
+
+        .decoration-circle-2 {
+            bottom: 15%;
+            left: 18%;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatSmall 7s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-15deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+            100% { transform: translateY(0) rotate(-15deg); }
+        }
+
+        @keyframes floatSmall {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 5;
         }
 
         /* Sections */
         .section {
-            margin-bottom: 2.5rem;
+            margin-bottom: 4rem;
         }
 
         h2, h3 {
             color: var(--text-dark);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             position: relative;
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.75rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
         }
 
         h2::after, h3::after {
@@ -75,43 +218,53 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
-            height: 3px;
+            width: 80px;
+            height: 4px;
             background: var(--primary);
+            border-radius: 2px;
         }
 
         p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             line-height: 1.8;
-            color: #4a5568;
+            color: var(--text-medium);
+            font-size: 1.1rem;
         }
 
         /* Accordion */
         .accordion-item {
-            background: white;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+        }
+
+        .accordion-item:hover {
+            box-shadow: var(--shadow-hover);
         }
 
         .accordion-header {
-            padding: 1.5rem;
+            padding: 1.8rem 2rem;
             background: var(--primary);
             color: white;
             font-weight: 600;
+            font-size: 1.2rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 1rem;
             transition: background 0.3s ease;
+            position: relative;
         }
 
         .accordion-header::before {
             content: '\f078';
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
+            position: absolute;
+            right: 2rem;
             transition: transform 0.3s ease;
         }
 
@@ -120,15 +273,15 @@
         }
 
         .accordion-content {
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
         }
 
         .accordion-item.open .accordion-content {
             max-height: 1000px;
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         /* Lists */
@@ -138,102 +291,577 @@
         }
 
         .features li {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: #f8f9ff;
-            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            background: var(--bg-light);
+            border-radius: var(--border-radius-sm);
             display: flex;
-            align-items: start;
-            gap: 1rem;
-            transition: transform 0.2s ease;
+            align-items: flex-start;
+            gap: 1.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .features li:hover {
-            transform: translateX(5px);
+            transform: translateX(8px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
         }
 
         .features li i {
             color: var(--primary);
-            font-size: 1.2rem;
-            margin-top: 3px;
+            font-size: 1.3rem;
+            margin-top: 0.3rem;
+            flex-shrink: 0;
+        }
+
+        .features li div strong {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 1.1rem;
         }
 
         /* Interactive Tasks */
         .interactive-tasks {
             display: grid;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .task-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
 
         .task-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.15);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
 
         .task-card h4 {
             color: var(--text-dark);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .task-card label {
             display: block;
-            margin: 0.5rem 0;
+            margin: 1rem 0;
             cursor: pointer;
+            padding: 0.8rem;
+            border-radius: var(--border-radius-sm);
+            transition: background 0.2s ease;
+            font-size: 1.05rem;
+        }
+
+        .task-card label:hover {
+            background: rgba(67, 97, 238, 0.05);
         }
 
         .task-card input[type="radio"],
         .task-card input[type="checkbox"] {
-            margin-right: 0.8rem;
+            margin-right: 1rem;
+            transform: scale(1.2);
         }
 
         .task-card button {
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
-            transition: transform 0.2s ease;
-            margin-top: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 1.5rem;
+            font-weight: 500;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
         }
 
         .task-card button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
         }
 
-        .task-card input[type="number"] {
-            padding: 0.8rem;
+        .task-card input[type="number"], 
+        .task-card input[type="text"] {
+            padding: 1rem;
             border: 2px solid #e2e8f0;
-            border-radius: 0.75rem;
+            border-radius: var(--border-radius-sm);
             width: 100%;
-            margin: 0.5rem 0;
+            margin: 0.8rem 0;
+            transition: border-color 0.2s ease;
+            font-size: 1.05rem;
+        }
+
+        .task-card input[type="number"]:focus, 
+        .task-card input[type="text"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .result-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .result-correct {
+            background: rgba(72, 187, 120, 0.1);
+            color: #2f855a;
+        }
+
+        .result-incorrect {
+            background: rgba(245, 101, 101, 0.1);
+            color: #e53e3e;
+        }
+
+        /* Card types illustration */
+        .card-types {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            justify-content: center;
+        }
+
+        .card-visual {
+            flex: 0 1 380px;
+            height: 220px;
+            background: var(--gradient);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .card-visual:hover {
+            transform: translateY(-8px) rotate(2deg);
+            box-shadow: 0 20px 30px rgba(67, 97, 238, 0.25);
+        }
+
+        .card-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .card-visual h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .card-visual .chip {
+            width: 50px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card-visual .chip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 20px;
+            background: rgba(0,0,0,0.1);
+            transform: translate(-50%, -50%);
+            border-radius: 3px;
+        }
+
+        .card-visual .card-number {
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-visual .card-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .card-visual .card-logo {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .card-credit {
+            background: var(--gradient-secondary);
+        }
+
+        /* Tips section */
+        .tips-section {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .tips-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .tips-title i {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .tips-title h4 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .tip-item {
+            margin-bottom: 1.2rem;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .tip-item::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Card security section */
+        .security-section {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .security-item {
+            background: var(--bg-light);
+            padding: 1.8rem 1.8rem 1.8rem 3.5rem;
+            border-radius: var(--border-radius-sm);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .security-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .security-item i {
+            position: absolute;
+            left: 1.5rem;
+            top: 1.8rem;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2.5rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            font-size: 1.05rem;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .comparison-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 4rem;
-            padding: 2rem;
+            margin-top: 5rem;
+            padding: 3rem;
             background: var(--gradient);
             color: white;
-            border-radius: 1rem;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
 
-        @media (max-width: 640px) {
+        .footer p {
+            color: white;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+
+        .footer-social {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
             .container {
-                padding: 1rem;
+                max-width: 100%;
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header {
+                padding: 3rem 2rem;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                margin-bottom: 3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.6rem;
+            }
+
+            .card-visual {
+                flex: 0 1 340px;
+                height: 200px;
+            }
+            
+            .decoration-card-1, .decoration-card-2 {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .card-types {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card-visual {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .security-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .footer {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .footer-links {
+                gap: 1.5rem;
+            }
+            
+            .decoration-circle-1, .decoration-circle-2 {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem 1rem;
             }
 
             .header {
                 padding: 2rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .section {
+                margin-bottom: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            h3 {
+                font-size: 1.4rem;
+            }
+
+            .task-card {
+                padding: 1.5rem;
+            }
+
+            .card-visual {
+                height: 180px;
+                padding: 1.5rem;
+            }
+
+            .card-visual .card-number {
+                font-size: 1.2rem;
+            }
+
+            .footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .social-icon {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
@@ -242,15 +870,44 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>1.3. Банковские карты и их использование для платежей</h1>
-            <p>Узнайте о видах банковских карт, их преимуществах и способах использования.</p>
+            <div class="banner-decoration decoration-card-1"></div>
+            <div class="banner-decoration decoration-card-2"></div>
+            <div class="banner-decoration decoration-circle-1"></div>
+            <div class="banner-decoration decoration-circle-2"></div>
+            
+            <div class="header-content">
+                <h1>Банковские карты и их использование для платежей</h1>
+                <p>Узнайте о видах банковских карт, их преимуществах и способах безопасного использования в современном финансовом мире</p>
+            </div>
         </header>
 
         <!-- Main Content -->
         <main class="content">
             <section class="section">
                 <h2>Для чего нужна банковская карта?</h2>
-                <p>Банковская карта — это пластиковый или цифровой носитель, обеспечивающий доступ к счету, на котором хранятся денежные средства, и позволяющий распоряжаться этим счетом (платежи, переводы).</p>
+                <p>Банковская карта — это пластиковый или цифровой носитель, обеспечивающий доступ к счету, на котором хранятся денежные средства, и позволяющий распоряжаться этим счетом (платежи, переводы). Современные карты предоставляют широкие возможности управления финансами и делают ежедневные операции более удобными и безопасными.</p>
+                
+                <div class="card-types">
+                    <div class="card-visual">
+                        <h4>Дебетовая карта</h4>
+                        <div class="chip"></div>
+                        <div class="card-number">5678 **** **** 1234</div>
+                        <div class="card-info">
+                            <span>01/27</span>
+                            <span class="card-logo">МИР</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-visual card-credit">
+                        <h4>Кредитная карта</h4>
+                        <div class="chip"></div>
+                        <div class="card-number">4321 **** **** 8765</div>
+                        <div class="card-info">
+                            <span>05/28</span>
+                            <span class="card-logo">МИР</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Виды банковских карт -->
@@ -259,10 +916,43 @@
                     <div class="accordion-header">Виды банковских карт</div>
                     <div class="accordion-content">
                         <ul class="features">
-                            <li><i class="fas fa-credit-card"></i> <strong>Дебетовые карты:</strong> дают доступ к собственным средствам на счете.</li>
-                            <li><i class="fas fa-credit-card"></i> <strong>Кредитные карты:</strong> предоставляют доступ к кредитным средствам банка.</li>
+                            <li>
+                                <i class="fas fa-credit-card"></i> 
+                                <div>
+                                    <strong>Дебетовые карты</strong>
+                                    Дают доступ к собственным средствам на счете. Позволяют тратить только те деньги, которые уже есть на счете. Идеальны для ежедневных расходов и контроля бюджета.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-credit-card"></i>
+                                <div>
+                                    <strong>Кредитные карты</strong>
+                                    Предоставляют доступ к кредитным средствам банка. Позволяют совершать покупки в пределах установленного лимита с возможностью погашения задолженности позже.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-credit-card"></i>
+                                <div>
+                                    <strong>Виртуальные карты</strong>
+                                    Не имеют физического носителя, используются только для онлайн-платежей. Повышенная безопасность для интернет-покупок.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-credit-card"></i>
+                                <div>
+                                    <strong>Мультивалютные карты</strong>
+                                    Привязаны к счетам в нескольких валютах. Позволяют экономить на конвертации при путешествиях и международных покупках.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-credit-card"></i>
+                                <div>
+                                    <strong>Зарплатные карты</strong>
+                                    Выпускаются для получения заработной платы. Часто имеют специальные условия и привилегии от банка-эмитента.
+                                </div>
+                            </li>
                         </ul>
-                        <p>Дебетовые карты требуют предварительного пополнения счета, тогда как кредитные карты позволяют пользоваться деньгами банка в рамках установленного лимита.</p>
+                        <p>Дебетовые карты требуют предварительного пополнения счета, тогда как кредитные карты позволяют пользоваться деньгами банка в рамках установленного лимита с последующим возвратом в течение определенного периода.</p>
                     </div>
                 </div>
             </section>
@@ -270,17 +960,74 @@
             <!-- Платежные системы -->
             <section class="section">
                 <h3>Платежные системы</h3>
-                <p>Банковские карты работают через платежные системы. До 2022 года основными были Visa, Mastercard и Union Pay. После ухода международных систем из России основной стала национальная платежная система «Мир».</p>
+                <p>Банковские карты работают через платежные системы, которые обеспечивают техническую возможность проведения операций. До 2022 года основными были Visa, Mastercard и Union Pay. После ухода международных систем из России основной стала национальная платежная система «Мир».</p>
+                
+                <div class="tips-section">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Важная информация</h4>
+                    </div>
+                    <p>Карты национальной платежной системы «Мир» принимаются во всех банкоматах и терминалах на территории России. Для поездок за границу может потребоваться карта другой платежной системы, которая работает в данной стране. Рекомендуется заранее уточнять возможность использования вашей карты в стране назначения.</p>
+                    
+                    <div class="security-grid">
+                        <div class="security-item">
+                            <i class="fas fa-globe"></i>
+                            <p>Карты «Мир» работают в некоторых странах СНГ, Турции, Вьетнаме и ряде других стран</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-wallet"></i>
+                            <p>В приложениях СБП можно совершать платежи по QR-коду в большинстве торговых точек</p>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Преимущества -->
             <section class="section">
                 <h3>Преимущества банковских карт</h3>
                 <ul class="features">
-                    <li><i class="fas fa-check"></i> Минимизация использования наличных денег</li>
-                    <li><i class="fas fa-check"></i> Удобство оплаты покупок в интернете и офлайн</li>
-                    <li><i class="fas fa-check"></i> Оплата коммунальных услуг, налогов и штрафов через мобильные приложения</li>
-                    <li><i class="fas fa-check"></i> Возможность получения кэшбэка за покупки</li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <div>
+                            <strong>Минимизация использования наличных денег</strong>
+                            Снижает риски потери или кражи денег. Нет необходимости носить с собой крупные суммы, что повышает безопасность.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <div>
+                            <strong>Удобство оплаты покупок</strong>
+                            В интернете и офлайн магазинах. Бесконтактная оплата через NFC ускоряет процесс оплаты.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <div>
+                            <strong>Автоматические платежи</strong>
+                            Оплата коммунальных услуг, налогов и штрафов через мобильные приложения. Возможность настройки автоплатежей экономит время.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <div>
+                            <strong>Кэшбэк и бонусы</strong>
+                            Возможность получения части потраченных средств обратно в виде денег или бонусных баллов для будущих покупок.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <div>
+                            <strong>Отслеживание расходов</strong>
+                            Удобный контроль всех транзакций в мобильном приложении. Аналитика трат помогает планировать бюджет.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <div>
+                            <strong>Программы лояльности банков</strong>
+                            Скидки у партнеров, специальные предложения, повышенный кэшбэк в определенных категориях.
+                        </div>
+                    </li>
                 </ul>
             </section>
 
@@ -308,7 +1055,7 @@
                     <h4>Задание 2: Сколько заплатите процентов за снятие наличных с кредитной карты?</h4>
                     <p>Предположим, вы сняли 10 000 рублей с кредитной карты. Процент за снятие наличных составляет 3%. Сколько вы заплатите за эту операцию?</p>
                     <form id="cash-withdrawal-form">
-                        <input type="number" id="cash-withdrawal-answer" required>
+                        <input type="number" id="cash-withdrawal-answer" placeholder="Введите сумму в рублях" required>
                         <button type="button" onclick="checkTask2()">Проверить ответ</button>
                         <p id="cash-withdrawal-result"></p>
                     </form>
@@ -324,6 +1071,9 @@
                         <label>
                             <input type="radio" name="grace-period" value="b"> b) Период начисления повышенных процентов
                         </label>
+                        <label>
+                            <input type="radio" name="grace-period" value="c"> c) Время доставки новой карты после ее заказа
+                        </label>
                         <button type="button" onclick="checkTask3()">Проверить ответ</button>
                         <p id="grace-period-result"></p>
                     </form>
@@ -333,64 +1083,240 @@
             <!-- Цифровые карты -->
             <section class="section">
                 <h3>Цифровые карты</h3>
-                <p>Цифровые карты — это банковские карты в электронном формате без физического носителя. Они выпускаются через мобильное приложение банка и имеют те же функции, что и пластиковые карты.</p>
+                <p>Цифровые карты — это банковские карты в электронном формате без физического носителя. Они выпускаются через мобильное приложение банка и имеют те же функции, что и пластиковые карты, но с дополнительными преимуществами в плане удобства и безопасности.</p>
                 <ul class="features">
-                    <li><i class="fas fa-mobile-alt"></i> Могут быть привязаны к смартфону для бесконтактной оплаты</li>
-                    <li><i class="fas fa-wallet"></i> Поддерживают все современные способы оплаты (Mir Pay, Yandex Pay)</li>
+                    <li>
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>
+                            <strong>Мобильные платежи</strong>
+                            Могут быть привязаны к смартфону для бесконтактной оплаты через NFC. Оплата простым прикосновением телефона к терминалу.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-wallet"></i>
+                        <div>
+                            <strong>Поддержка платежных сервисов</strong>
+                            Работают со всеми современными способами оплаты (Mir Pay, SberPay, Yandex Pay) без необходимости иметь физический пластик.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <strong>Мгновенный выпуск</strong>
+                            Можно получить карту за несколько минут без посещения офиса банка и начать пользоваться сразу после выпуска.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Повышенная безопасность</strong>
+                            Нельзя потерять физический носитель или скопировать данные с чипа. Дополнительная защита через биометрию устройства.
+                        </div>
+                    </li>
                 </ul>
             </section>
 
             <!-- Оплата через интернет -->
             <section class="section">
                 <h3>Оплата через интернет</h3>
-                <p>Банковские карты позволяют совершать покупки в интернете, оплачивать коммунальные услуги, налоги и другие обязательства через мобильные приложения или сайты.</p>
+                <p>Банковские карты позволяют совершать покупки в интернете, оплачивать коммунальные услуги, налоги и другие обязательства через мобильные приложения или сайты. Это существенно экономит время и позволяет отслеживать все операции в одном месте.</p>
+                
+                <div class="security-section">
+                    <h4>Безопасность при онлайн-платежах:</h4>
+                    <div class="security-grid">
+                        <div class="security-item">
+                            <i class="fas fa-lock"></i>
+                            <p>Используйте только защищенные соединения (https) при вводе данных карты</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <p>Подключите 3D-Secure для дополнительной защиты при онлайн-покупках</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-credit-card"></i>
+                            <p>Для регулярных онлайн-платежей заведите отдельную виртуальную карту с ограниченным балансом</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-bell"></i>
+                            <p>Настройте SMS или push-уведомления о всех операциях по карте для мгновенного контроля</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-fingerprint"></i>
+                            <p>Используйте двухфакторную аутентификацию для подтверждения платежей</p>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-eye-slash"></i>
+                            <p>Никогда не сохраняйте данные карты на незнакомых и ненадежных сайтах</p>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Кэшбэк -->
             <section class="section">
-                <h3>Зарабатываем на платежах картой</h3>
-                <p>Многие банки предлагают программу кэшбэка — возврата части потраченных средств на карту. Размер кэшбэка зависит от условий банка и категории покупок.</p>
+                <h3>Кэшбэк и бонусные программы</h3>
+                <p>Многие банки предлагают программы лояльности, позволяющие возвращать часть потраченных средств в виде кэшбэка или бонусных баллов, которые можно использовать для будущих покупок. Это позволяет экономить значительные суммы при регулярном использовании карты.</p>
+                
+                <div class="tips-section">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Советы по максимизации кэшбэка:</h4>
+                    </div>
+                    <div class="tip-item">Выбирайте карты с повышенным кэшбэком в категориях, на которые вы тратите больше всего (продукты, транспорт, рестораны)</div>
+                    <div class="tip-item">Участвуйте в специальных акциях банков, предлагающих временное повышение кэшбэка до 15-20% у партнеров</div>
+                    <div class="tip-item">Регулярно проверяйте условия программы лояльности, они могут меняться в зависимости от сезона или политики банка</div>
+                    <div class="tip-item">Используйте разные карты для разных типов покупок, чтобы максимизировать возврат</div>
+                    <div class="tip-item">Некоторые банки предлагают повышенный кэшбэк при достижении определенной суммы трат за месяц</div>
+                </div>
+            </section>
+
+            <!-- Сравнение карт -->
+            <section class="section">
+                <h3>Сравнение дебетовых и кредитных карт</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Характеристика</th>
+                        <th>Дебетовая карта</th>
+                        <th>Кредитная карта</th>
+                    </tr>
+                    <tr>
+                        <td>Источник средств</td>
+                        <td>Собственные деньги</td>
+                        <td>Деньги банка (кредит)</td>
+                    </tr>
+                    <tr>
+                        <td>Проценты за использование</td>
+                        <td>Нет</td>
+                        <td>Есть (кроме грейс-периода)</td>
+                    </tr>
+                    <tr>
+                        <td>Лимит трат</td>
+                        <td>Ограничен суммой на счете</td>
+                        <td>Установлен банком (кредитный лимит)</td>
+                    </tr>
+                    <tr>
+                        <td>Комиссия за снятие наличных</td>
+                        <td>Обычно нет</td>
+                        <td>Обычно есть (3-5%)</td>
+                    </tr>
+                    <tr>
+                        <td>Кэшбэк и бонусы</td>
+                        <td>Обычно ниже (0.5-2%)</td>
+                        <td>Обычно выше (1-5%)</td>
+                    </tr>
+                    <tr>
+                        <td>Плата за обслуживание</td>
+                        <td>Часто отсутствует или небольшая</td>
+                        <td>Чаще всего есть, может быть выше</td>
+                    </tr>
+                    <tr>
+                        <td>Основное назначение</td>
+                        <td>Повседневные расходы, сбережения</td>
+                        <td>Крупные покупки или непредвиденные расходы</td>
+                    </tr>
+                </table>
             </section>
         </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2023 Смарт Учебник. Все права защищены.</p>
-        </footer>
     </div>
 
+    <!-- JavaScript -->
     <script>
-        // Аккордеон
-        document.querySelectorAll('.accordion-header').forEach(button => {
-            button.addEventListener('click', () => {
-                const item = button.closest('.accordion-item');
-                item.classList.toggle('open');
+        // Accordion functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const accordionItem = this.parentElement;
+                    accordionItem.classList.toggle('open');
+                });
+            });
+            
+            // Open the first accordion by default
+            const firstAccordion = document.querySelector('.accordion-item');
+            if (firstAccordion) {
+                firstAccordion.classList.add('open');
+            }
+            
+            // Add hover effects to cards
+            const cardVisuals = document.querySelectorAll('.card-visual');
+            cardVisuals.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const xRotation = ((y - rect.height / 2) / 10) * -1;
+                    const yRotation = (x - rect.width / 2) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.05)`;
+                });
+                
+                card.addEventListener('mouseout', function() {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                });
             });
         });
-
-        // Проверка заданий
+        
+        // Task 1 validation
         function checkTask1() {
-            const result = document.getElementById('card-type-result');
-            const selected = document.querySelector('input[name="card-type"]:checked');
-            result.textContent = selected?.value === 'credit' 
-                ? '✅ Верно! Кредитная карта позволяет использовать заемные средства' 
-                : '❌ Неверно. Попробуйте еще раз';
+            const selectedOption = document.querySelector('input[name="card-type"]:checked');
+            const resultElement = document.getElementById('card-type-result');
+            
+            if (!selectedOption) {
+                resultElement.textContent = 'Пожалуйста, выберите вариант ответа';
+                resultElement.className = 'result-message';
+                return;
+            }
+            
+            if (selectedOption.value === 'credit') {
+                resultElement.textContent = 'Верно! Кредитная карта позволяет пользоваться средствами банка.';
+                resultElement.className = 'result-message result-correct';
+            } else {
+                resultElement.textContent = 'Неверно! Подумайте еще раз. Кредитная карта позволяет пользоваться средствами банка.';
+                resultElement.className = 'result-message result-incorrect';
+            }
         }
-
+        
+        // Task 2 validation
         function checkTask2() {
-            const answer = parseInt(document.getElementById('cash-withdrawal-answer').value);
-            const result = document.getElementById('cash-withdrawal-result');
-            result.textContent = answer === 300 
-                ? '✅ Правильно! 3% от 10 000 рублей = 300 рублей' 
-                : '❌ Неверный расчет. 10 000 × 0.03 = 300';
+            const answer = document.getElementById('cash-withdrawal-answer').value;
+            const resultElement = document.getElementById('cash-withdrawal-result');
+            
+            if (!answer) {
+                resultElement.textContent = 'Пожалуйста, введите ваш ответ';
+                resultElement.className = 'result-message';
+                return;
+            }
+            
+            if (parseFloat(answer) === 300) {
+                resultElement.textContent = 'Верно! 3% от 10 000 = 300 рублей';
+                resultElement.className = 'result-message result-correct';
+            } else {
+                resultElement.textContent = 'Неверно! Подумайте еще раз. Нужно вычислить 3% от 10 000 рублей.';
+                resultElement.className = 'result-message result-incorrect';
+            }
         }
-
+        
+        // Task 3 validation
         function checkTask3() {
-            const result = document.getElementById('grace-period-result');
-            const selected = document.querySelector('input[name="grace-period"]:checked');
-            result.textContent = selected?.value === 'a' 
-                ? '✅ Верно! Грейс-период позволяет избежать процентов при своевременном погашении' 
-                : '❌ Неправильно. Это период бесплатного использования кредита';
+            const selectedOption = document.querySelector('input[name="grace-period"]:checked');
+            const resultElement = document.getElementById('grace-period-result');
+            
+            if (!selectedOption) {
+                resultElement.textContent = 'Пожалуйста, выберите вариант ответа';
+                resultElement.className = 'result-message';
+                return;
+            }
+            
+            if (selectedOption.value === 'a') {
+                resultElement.textContent = 'Верно! Грейс-период — это период, в течение которого вы можете пользоваться кредитными средствами без начисления процентов.';
+                resultElement.className = 'result-message result-correct';
+            } else {
+                resultElement.textContent = 'Неверно! Грейс-период — это период бесплатного пользования кредитными средствами, а не период начисления повышенных процентов или время доставки карты.';
+                resultElement.className = 'result-message result-incorrect';
+            }
         }
     </script>
 </body>
