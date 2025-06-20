@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.5. Долевое страхование</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #818cf8;
+            --background: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.9);
+            --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --border-radius: 1.5rem;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #818cf8;
+            --secondary: #6366f1;
+            --accent: #a5b4fc;
+            --background: #0f172a;
+            --text-dark: #f1f5f9;
+            --text-light: #1e293b;
+            --glass: rgba(30, 41, 59, 0.8);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            background: var(--background);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            transition: var(--transition);
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--background);
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+            background: var(--glass);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            margin: 2rem 0 4rem;
+            padding: 4rem 2rem;
+            background: var(--gradient);
+            border-radius: var(--border-radius);
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 400px;
+            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
+            transition: transform 0.4s ease;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-primary {
+            background: white;
+            color: var(--primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-secondary {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .cta-secondary i {
+            transition: var(--transition);
+        }
+
+        .cta-secondary:hover i {
+            transform: translateX(4px);
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+        }
+
+        /* Sections */
+        .section-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .section-card:hover .section-title::after {
+            width: 100%;
+        }
+
+        /* Features List */
+        .features-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .features-item {
+            padding: 1.2rem;
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .features-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent);
+        }
+
+        .features-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        /* Accordion */
+        .accordion {
+            background: var(--glass);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 1.5rem 0;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .accordion-header:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .accordion-icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .accordion-content.active {
+            padding: 1.5rem;
+            max-height: 1000px;
+        }
+
+        /* Example box */
+        .example-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .example-box::before {
+            content: 'Пример';
+            position: absolute;
+            top: -0.75rem;
+            left: 1rem;
+            background: var(--background);
+            padding: 0 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Table */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .info-table th, 
+        .info-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .info-table th {
+            background: rgba(99, 102, 241, 0.05);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-table tr:hover td {
+            background: rgba(99, 102, 241, 0.02);
+        }
+
+        /* Insurance cards */
+        .insurance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .insurance-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .insurance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .insurance-card-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .insurance-card-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        .insurance-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .insurance-card-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .insurance-card-body {
+            padding: 1.5rem;
+        }
+
+        .insurance-card-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .insurance-card-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insurance-card-features li i {
+            color: var(--primary);
+        }
+
+        /* Calculator */
+        .calculator {
+            margin-top: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .calculator input[type="number"],
+        .calculator input[type="text"],
+        .calculator select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .calculator input[type="number"]:focus,
+        .calculator input[type="text"]:focus,
+        .calculator select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+            margin: 1rem 0;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .range-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Tips list */
+        .tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .tips-item {
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent);
+        }
+
+        .tips-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        /* Chart container */
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        /* Results */
+        .result {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease;
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .result-label {
+            color: var(--text-dark);
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        button:hover::after {
+            left: 100%;
+        }
+
+        button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Term definitions */
+        .term {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .term-title {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Interactive grid */
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adaptation */
+        @media (max-width: 992px) {
+            .interactive-grid,
+            .insurance-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 3rem 1.5rem;
+            }
+            
+            .hero-content {
+                margin-bottom: 2rem;
+            }
+            
+            .hero-image {
+                width: 300px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .hero-section {
+                margin: 1.5rem 0 3rem;
+            }
+            
+            .section-card {
+                padding: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: var(--glass);
+                padding: 1rem;
+                gap: 1rem;
+                text-align: center;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .info-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-image {
+                width: 250px;
+            }
+            
+            .features-item {
+                flex-direction: column;
+            }
+            
+            .features-item i {
+                margin-bottom: 0.5rem;
+            }
+            
+            .info-table {
+                font-size: 0.9rem;
+            }
+            
+            .info-table th, 
+            .info-table td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                ФинГрамотность
+            </a>
+            <nav>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#what-is" class="nav-link">Что такое долевое страхование</a></li>
+                    <li><a href="#how-works" class="nav-link">Как это работает</a></li>
+                    <li><a href="#types" class="nav-link">Виды</a></li>
+                    <li><a href="#advantages" class="nav-link">Плюсы и минусы</a></li>
+                    <li><a href="#calculator" class="nav-link">Калькулятор</a></li>
+                    <li><a href="#tips" class="nav-link">Советы</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section" data-aos="fade-up">
+            <div class="hero-content">
+                <h1 class="hero-title">6.5. Долевое страхование</h1>
+                <p class="hero-description">Узнайте о долевом страховании, которое сочетает в себе защиту и возможность инвестирования, и как эффективно использовать этот финансовый инструмент.</p>
+                <div class="hero-cta">
+                    <a href="#calculator" class="cta-primary">Рассчитать программу</a>
+                    <a href="#what-is" class="cta-secondary">Узнать больше <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <img src="unit-linked-insurance.png" alt="Долевое страхование" class="hero-image">
+            <div class="hero-particles" id="particles"></div>
+        </section>
+
+        <!-- Что такое долевое страхование -->
+        <section class="section-card" data-aos="fade-up" id="what-is">
+            <h2 class="section-title">Что такое долевое страхование</h2>
+            <p>
+                Долевое страхование (unit-linked insurance) — это финансовый продукт, объединяющий в себе страхование жизни и инвестиционную составляющую. При таком страховании часть уплаченной страховой премии направляется на страховую защиту, а другая часть инвестируется в различные финансовые инструменты по выбору страхователя.
+            </p>
+            
+            <div class="term">
+                <span class="term-title">Долевое страхование</span>
+                <p>Гибридный финансовый продукт, сочетающий защитную и накопительную функции, при котором страховые взносы разделяются на две части: одна идет на страховую защиту, а вторая инвестируется в паи инвестиционных фондов или другие финансовые инструменты.</p>
+            </div>
+            
+            <p>
+                В отличие от классического накопительного страхования жизни, при котором страховая компания гарантирует фиксированную доходность, при долевом страховании инвестиционная доходность зависит от результатов управления выбранными активами и может быть как положительной, так и отрицательной.
+            </p>
+            
+            <p>
+                Этот вид страхования позволяет клиенту принимать активное участие в управлении своими накоплениями, выбирая наиболее подходящую для него инвестиционную стратегию в зависимости от собственных финансовых целей, отношения к риску и горизонта инвестирования.
+            </p>
+        </section>
+
+        <!-- Как работает долевое страхование -->
+        <section class="section-card" data-aos="fade-up" id="how-works">
+            <h2 class="section-title">Как работает долевое страхование</h2>
+            
+            <p>
+                Долевое страхование предоставляет гибкий механизм, позволяющий совместить страховую защиту с возможностью инвестирования средств. Разберем основные принципы его работы.
+            </p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Распределение страховых взносов</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            При долевом страховании ваш страховой взнос разделяется на несколько частей:
+                        </p>
+                        <ul>
+                            <li><strong>Страховая часть</strong> — используется для покрытия рисков страхования жизни и здоровья.</li>
+                            <li><strong>Инвестиционная часть</strong> — вкладывается в выбранные финансовые инструменты (паи инвестиционных фондов, акции, облигации и т.д.).</li>
+                            <li><strong>Административные расходы</strong> — оплата услуг страховой компании и управляющего фондом.</li>
+                        </ul>
+                        <p>
+                            Соотношение этих частей может меняться в зависимости от условий конкретной программы страхования и пожеланий клиента.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Инвестиционный механизм</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            Инвестиционная часть взносов конвертируется в паи или юниты (units), стоимость которых зависит от рыночной стоимости базовых активов. Страхователь может выбирать различные инвестиционные стратегии:
+                        </p>
+                        <ul>
+                            <li><strong>Консервативную</strong> — с преобладанием облигаций и других инструментов с фиксированной доходностью.</li>
+                            <li><strong>Сбалансированную</strong> — с равномерным распределением между акциями и облигациями.</li>
+                            <li><strong>Агрессивную</strong> — с преобладанием акций и более рискованных инструментов.</li>
+                        </ul>
+                        <p>
+                            Многие страховые компании предлагают несколько инвестиционных фондов на выбор, и клиент может перераспределять свои средства между ними в течение срока действия полиса.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Страховая защита</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            Страховая составляющая долевого страхования обычно включает следующие виды покрытия:
+                        </p>
+                        <ul>
+                            <li><strong>Смерть по любой причине</strong> — выплата бенефициарам в случае смерти застрахованного.</li>
+                            <li><strong>Дожитие</strong> — выплата застрахованному по окончании срока страхования.</li>
+                            <li><strong>Дополнительные риски</strong> — инвалидность, критические заболевания, травмы (приобретаются опционально).</li>
+                        </ul>
+                        <p>
+                            В случае наступления страхового случая выплата может состоять из страховой суммы и текущей стоимости инвестиционного портфеля, в зависимости от условий договора.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Пример:</strong> Иванов П.С. оформил полис долевого страхования со взносом 100 000 рублей в год на срок 15 лет. Структура распределения взноса:</p>
+                <ul>
+                    <li>10% — на страховую защиту от рисков смерти и инвалидности</li>
+                    <li>85% — на инвестиции (клиент выбрал сбалансированную стратегию)</li>
+                    <li>5% — на административные расходы страховой компании</li>
+                </ul>
+                <p>Страховая сумма на случай смерти составляет 1 500 000 рублей. По окончании срока страхования Иванов П.С. получит накопленную сумму, которая будет зависеть от результатов инвестирования.</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="premiumDistributionChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Виды долевого страхования -->
+        <section class="section-card" data-aos="fade-up" id="types">
+            <h2 class="section-title">Виды долевого страхования</h2>
+            <p>
+                Долевое страхование может иметь различные формы, отличающиеся по условиям инвестирования, уровню риска и защиты, а также периоду действия. Рассмотрим основные виды долевого страхования.
+            </p>
+            
+            <div class="insurance-cards">
+                <div class="insurance-card">
+                    <div class="insurance-card-header">
+                        <h3 class="insurance-card-title">Накопительное долевое страхование</h3>
+                        <p class="insurance-card-subtitle">Долгосрочное планирование</p>
+                        <i class="fas fa-piggy-bank insurance-card-icon"></i>
+                    </div>
+                    <div class="insurance-card-body">
+                        <p>Программа, направленная на формирование капитала к определенному сроку при одновременном обеспечении страховой защиты.</p>
+                        <ul class="insurance-card-features">
+                            <li><i class="fas fa-check-circle"></i> Срок действия от 5 до 30 лет</li>
+                            <li><i class="fas fa-check-circle"></i> Регулярные взносы</li>
+                            <li><i class="fas fa-check-circle"></i> Инвестирование с возможностью выбора стратегии</li>
+                            <li><i class="fas fa-check-circle"></i> Гарантированная выплата при дожитии</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="insurance-card">
+                    <div class="insurance-card-header">
+                        <h3 class="insurance-card-title">Инвестиционное долевое страхование</h3>
+                        <p class="insurance-card-subtitle">Фокус на инвестициях</p>
+                        <i class="fas fa-chart-line insurance-card-icon"></i>
+                    </div>
+                    <div class="insurance-card-body">
+                        <p>Программа с акцентом на максимизацию инвестиционного дохода при минимальной страховой защите.</p>
+                        <ul class="insurance-card-features">
+                            <li><i class="fas fa-check-circle"></i> Широкий выбор инвестиционных фондов</li>
+                            <li><i class="fas fa-check-circle"></i> Возможность активного управления портфелем</li>
+                            <li><i class="fas fa-check-circle"></i> Минимальная страховая часть</li>
+                            <li><i class="fas fa-check-circle"></i> Гибкие условия пополнения и изъятия средств</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="insurance-card">
+                    <div class="insurance-card-header">
+                        <h3 class="insurance-card-title">Пенсионное долевое страхование</h3>
+                        <p class="insurance-card-subtitle">Подготовка к пенсии</p>
+                        <i class="fas fa-user-shield insurance-card-icon"></i>
+                    </div>
+                    <div class="insurance-card-body">
+                        <p>Программа, направленная на формирование пенсионных накоплений с возможностью выплаты аннуитетов.</p>
+                        <ul class="insurance-card-features">
+                            <li><i class="fas fa-check-circle"></i> Долгосрочное инвестирование</li>
+                            <li><i class="fas fa-check-circle"></i> Регулярные пенсионные выплаты</li>
+                            <li><i class="fas fa-check-circle"></i> Защита от инфляции</li>
+                            <li><i class="fas fa-check-circle"></i> Налоговые льготы</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>Параметр</th>
+                        <th>Накопительное долевое</th>
+                        <th>Инвестиционное долевое</th>
+                        <th>Пенсионное долевое</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Основная цель</td>
+                        <td>Накопление капитала + защита</td>
+                        <td>Максимизация дохода</td>
+                        <td>Формирование пенсии</td>
+                    </tr>
+                    <tr>
+                        <td>Срок действия</td>
+                        <td>5-30 лет</td>
+                        <td>1-25 лет</td>
+                        <td>10-40 лет</td>
+                    </tr>
+                    <tr>
+                        <td>Страховая защита</td>
+                        <td>Средняя</td>
+                        <td>Минимальная</td>
+                        <td>Средняя</td>
+                    </tr>
+                    <tr>
+                        <td>Гибкость инвестиций</td>
+                        <td>Средняя</td>
+                        <td>Высокая</td>
+                        <td>Средняя</td>
+                    </tr>
+                    <tr>
+                        <td>Ликвидность</td>
+                        <td>Низкая</td>
+                        <td>Средняя</td>
+                        <td>Очень низкая</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Преимущества и недостатки -->
+        <section class="section-card" data-aos="fade-up" id="advantages">
+            <h2 class="section-title">Преимущества и недостатки долевого страхования</h2>
+            
+            <p>
+                Долевое страхование имеет ряд особенностей, которые могут быть как преимуществами, так и недостатками в зависимости от ваших финансовых целей и потребностей.
+            </p>
+            
+            <div class="interactive-grid">
+                <div>
+                    <h3>Преимущества</h3>
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <div>
+                                <strong>Сочетание защиты и инвестиций</strong>
+                                <p>Одновременное решение двух финансовых задач: обеспечение страховой защиты и инвестирование средств.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <div>
+                                <strong>Инвестиционная гибкость</strong>
+                                <p>Возможность выбора инвестиционных стратегий и их изменения в течение срока действия полиса.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <div>
+                                <strong>Потенциально высокая доходность</strong>
+                                <p>При благоприятной рыночной конъюнктуре доходность может значительно превышать гарантированную ставку по накопительному страхованию.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <div>
+                                <strong>Налоговые преимущества</strong>
+                                <p>В некоторых случаях предоставляются налоговые льготы, такие как налоговый вычет или освобождение от НДФЛ.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <div>
+                                <strong>Юридическая защита</strong>
+                                <p>Средства по страховым полисам часто защищены от взысканий и не подлежат разделу при разводе.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>Недостатки</h3>
+                    <ul class="features-list">
+                        <li class="features-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <div>
+                                <strong>Инвестиционный риск</strong>
+                                <p>Отсутствие гарантированной доходности — стоимость инвестиционной части может как расти, так и падать.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <div>
+                                <strong>Высокие административные расходы</strong>
+                                <p>Комиссии за управление и административные расходы могут быть выше, чем при прямом инвестировании.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <div>
+                                <strong>Низкая ликвидность</strong>
+                                <p>Досрочное расторжение договора обычно связано со значительными финансовыми потерями, особенно в первые годы.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <div>
+                                <strong>Сложность продукта</strong>
+                                <p>Долевое страхование сложнее для понимания, чем классические виды страхования или прямые инвестиции.</p>
+                            </div>
+                        </li>
+                        <li class="features-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <div>
+                                <strong>Ограниченный выбор фондов</strong>
+                                <p>Выбор инвестиционных фондов может быть ограничен предложением страховой компании.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="advantagesDisadvantagesChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Калькулятор долевого страхования -->
+        <section class="section-card" data-aos="fade-up" id="calculator">
+            <h2 class="section-title">Калькулятор долевого страхования</h2>
+            <p>
+                Используйте наш калькулятор, чтобы оценить потенциальные результаты программы долевого страхования с учетом различных параметров и инвестиционных стратегий.
+            </p>
+            
+            <div class="calculator">
+                <div class="form-group">
+                    <label for="insurance-amount">Ежегодный взнос (руб.)</label>
+                    <div class="range-value" id="amount-value">100 000 ₽</div>
+                    <input type="range" id="insurance-amount" class="range-slider" min="50000" max="1000000" step="10000" value="100000">
+                    <div class="range-labels">
+                        <span>50 000 ₽</span>
+                        <span>1 000 000 ₽</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="insurance-term">Срок страхования (лет)</label>
+                    <div class="range-value" id="term-value">15 лет</div>
+                    <input type="range" id="insurance-term" class="range-slider" min="5" max="30" step="1" value="15">
+                    <div class="range-labels">
+                        <span>5 лет</span>
+                        <span>30 лет</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="investment-strategy">Инвестиционная стратегия</label>
+                    <select id="investment-strategy">
+                        <option value="conservative">Консервативная (4-6% годовых)</option>
+                        <option value="balanced" selected>Сбалансированная (7-9% годовых)</option>
+                        <option value="aggressive">Агрессивная (10-12% годовых)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="insurance-percentage">Доля на страховую защиту (%)</label>
+                    <div class="range-value" id="insurance-percentage-value">10%</div>
+                    <input type="range" id="insurance-percentage" class="range-slider" min="5" max="30" step="1" value="10">
+                    <div class="range-labels">
+                        <span>5%</span>
+                        <span>30%</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-percentage">Административные расходы (%)</label>
+                    <div class="range-value" id="admin-percentage-value">5%</div>
+                    <input type="range" id="admin-percentage" class="range-slider" min="3" max="10" step="1" value="5">
+                    <div class="range-labels">
+                        <span>3%</span>
+                        <span>10%</span>
+                    </div>
+                </div>
+                
+                <button id="calculate-btn">
+                    <i class="fas fa-calculator"></i> Рассчитать
+                </button>
+                
+                <div id="calculation-result" class="result">
+                    <div class="result-item">
+                        <span class="result-label">Общая сумма взносов:</span>
+                        <span class="result-value" id="total-premiums">1 500 000 ₽</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Страховая защита:</span>
+                        <span class="result-value" id="insurance-coverage">1 500 000 ₽</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Ожидаемая накопленная сумма:</span>
+                        <span class="result-value" id="accumulated-amount">2 850 000 ₽</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Потенциальная доходность:</span>
+                        <span class="result-value" id="expected-return">8.5%</span>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="accumulationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Советы по выбору долевого страхования -->
+        <section class="section-card" data-aos="fade-up" id="tips">
+            <h2 class="section-title">Советы по выбору долевого страхования</h2>
+            <p>
+                Выбор программы долевого страхования — ответственное решение, требующее тщательного анализа. Вот несколько рекомендаций, которые помогут вам сделать правильный выбор.
+            </p>
+            
+            <ul class="tips-list">
+                <li class="tips-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <div>
+                        <strong>Оцените свои финансовые цели и возможности</strong>
+                        <p>Перед выбором программы долевого страхования четко определите свои финансовые цели (накопление на пенсию, образование детей и т.д.) и оцените свои возможности регулярного внесения взносов.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <strong>Анализируйте надежность страховщика</strong>
+                        <p>Выбирайте страховые компании с высоким рейтингом надежности, длительной историей работы на рынке и положительными отзывами клиентов.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-search-dollar"></i>
+                    <div>
+                        <strong>Изучите структуру расходов</strong>
+                        <p>Внимательно изучите все комиссии и сборы, включая вступительный взнос, плату за управление активами, административные расходы и комиссии за досрочное расторжение.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <div>
+                        <strong>Выбирайте подходящую инвестиционную стратегию</strong>
+                        <p>Стратегия должна соответствовать вашей склонности к риску и инвестиционному горизонту. Чем ближе срок достижения финансовой цели, тем консервативнее должна быть стратегия.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-file-contract"></i>
+                    <div>
+                        <strong>Внимательно читайте договор</strong>
+                        <p>Уделите особое внимание условиям досрочного расторжения, порядку осуществления выплат, ограничениям по страховым случаям и процедуре изменения инвестиционной стратегии.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-balance-scale"></i>
+                    <div>
+                        <strong>Сравнивайте альтернативы</strong>
+                        <p>Рассмотрите альтернативные варианты вложения средств — классическое накопительное страхование, индивидуальные инвестиционные счета или прямые инвестиции в ценные бумаги.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <div>
+                        <strong>Повышайте финансовую грамотность</strong>
+                        <p>Инвестируйте время в изучение основ инвестирования и страхования. Чем лучше вы понимаете финансовые продукты, тем более взвешенные решения сможете принимать.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Инициализация AOS (анимация при прокрутке)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Создание частиц для фона секции Hero
+            createParticles();
+            
+            // Инициализация графиков
+            initCharts();
+            
+            // Обработчики событий
+            setupEventListeners();
+        });
+        
+        // Создание плавающих частиц для Hero секции
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particlesCount = 20;
+            
+            for (let i = 0; i < particlesCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                particle.style.opacity = Math.random() * 0.5;
+                
+                // Анимация плавания
+                particle.style.animation = `float ${Math.random() * 10 + 5}s linear infinite`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Инициализация графиков
+        function initCharts() {
+            // График распределения премии
+            const premiumCtx = document.getElementById('premiumDistributionChart');
+            if (premiumCtx) {
+                const premiumChart = new Chart(premiumCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Страховая защита', 'Инвестиционная часть', 'Административные расходы'],
+                        datasets: [{
+                            data: [10, 85, 5],
+                            backgroundColor: [
+                                '#6366f1',
+                                '#10b981',
+                                '#f59e0b'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Распределение страхового взноса'
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // График преимуществ и недостатков
+            const advantagesCtx = document.getElementById('advantagesDisadvantagesChart');
+            if (advantagesCtx) {
+                const advantagesChart = new Chart(advantagesCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Потенциальная доходность', 'Гибкость', 'Страховая защита', 'Налоговые льготы', 'Ликвидность', 'Простота понимания'],
+                        datasets: [
+                            {
+                                label: 'Долевое страхование',
+                                data: [8, 7, 6, 7, 4, 3],
+                                backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                                borderColor: 'rgba(99, 102, 241, 1)',
+                                pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgba(99, 102, 241, 1)'
+                            },
+                            {
+                                label: 'Накопительное страхование',
+                                data: [4, 3, 8, 6, 3, 7],
+                                backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                                borderColor: 'rgba(16, 185, 129, 1)',
+                                pointBackgroundColor: 'rgba(16, 185, 129, 1)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgba(16, 185, 129, 1)'
+                            },
+                            {
+                                label: 'Прямые инвестиции',
+                                data: [9, 8, 1, 5, 9, 6],
+                                backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                                borderColor: 'rgba(245, 158, 11, 1)',
+                                pointBackgroundColor: 'rgba(245, 158, 11, 1)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgba(245, 158, 11, 1)'
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: true
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 10
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Пустой график накоплений, который будет заполняться при расчете
+            const accumulationCtx = document.getElementById('accumulationChart');
+            if (accumulationCtx) {
+                window.accumulationChart = new Chart(accumulationCtx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Накопления',
+                                data: [],
+                                borderColor: 'rgba(99, 102, 241, 1)',
+                                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                fill: true
+                            },
+                            {
+                                label: 'Сумма взносов',
+                                data: [],
+                                borderColor: 'rgba(245, 158, 11, 1)',
+                                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Прогноз накоплений'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Сумма (руб.)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Годы'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Переключение тем (светлая/темная)
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.hasAttribute('data-theme') 
+                    ? document.body.removeAttribute('data-theme') 
+                    : document.body.setAttribute('data-theme', 'dark');
+                
+                this.innerHTML = document.body.hasAttribute('data-theme') 
+                    ? '<i class="fas fa-sun"></i>' 
+                    : '<i class="fas fa-moon"></i>';
+            });
+            
+            // Мобильная навигация
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.innerHTML = navLinks.classList.contains('active')
+                    ? '<i class="fas fa-times"></i>'
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Навигация по ссылкам
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Обработка аккордеона
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const isActive = content.classList.contains('active');
+                    
+                    // Закрываем все аккордеоны
+                    document.querySelectorAll('.accordion-content').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    document.querySelectorAll('.accordion-header').forEach(head => {
+                        head.classList.remove('active');
+                    });
+                    
+                    // Сбрасываем все иконки
+                    document.querySelectorAll('.accordion-icon').forEach(icon => {
+                        icon.className = 'fas fa-chevron-down accordion-icon';
+                    });
+                    
+                    // Открываем выбранный аккордеон, если он был закрыт
+                    if (!isActive) {
+                        content.classList.add('active');
+                        this.classList.add('active');
+                        this.querySelector('.accordion-icon').className = 'fas fa-chevron-up accordion-icon';
+                    }
+                });
+            });
+            
+            // Обновление значений слайдеров
+            const insuranceAmount = document.getElementById('insurance-amount');
+            const insuranceTerm = document.getElementById('insurance-term');
+            const insurancePercentage = document.getElementById('insurance-percentage');
+            const adminPercentage = document.getElementById('admin-percentage');
+            
+            if (insuranceAmount) {
+                insuranceAmount.addEventListener('input', function() {
+                    document.getElementById('amount-value').textContent = Number(this.value).toLocaleString('ru-RU') + ' ₽';
+                });
+            }
+            
+            if (insuranceTerm) {
+                insuranceTerm.addEventListener('input', function() {
+                    document.getElementById('term-value').textContent = this.value + ' ' + getYearWord(this.value);
+                });
+            }
+            
+            if (insurancePercentage) {
+                insurancePercentage.addEventListener('input', function() {
+                    document.getElementById('insurance-percentage-value').textContent = this.value + '%';
+                });
+            }
+            
+            if (adminPercentage) {
+                adminPercentage.addEventListener('input', function() {
+                    document.getElementById('admin-percentage-value').textContent = this.value + '%';
+                });
+            }
+            
+            // Калькулятор долевого страхования
+            const calculateBtn = document.getElementById('calculate-btn');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculateInsurance);
+            }
+            
+            // Кнопка "вверх"
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // Функция расчета долевого страхования
+        function calculateInsurance() {
+            const amount = parseFloat(document.getElementById('insurance-amount').value);
+            const term = parseInt(document.getElementById('insurance-term').value);
+            const strategy = document.getElementById('investment-strategy').value;
+            const insurancePercentage = parseFloat(document.getElementById('insurance-percentage').value);
+            const adminPercentage = parseFloat(document.getElementById('admin-percentage').value);
+            
+            // Определение доходности в зависимости от выбранной стратегии
+            let returnRate;
+            switch(strategy) {
+                case 'conservative':
+                    returnRate = 0.05; // 5%
+                    break;
+                case 'balanced':
+                    returnRate = 0.08; // 8%
+                    break;
+                case 'aggressive':
+                    returnRate = 0.11; // 11%
+                    break;
+                default:
+                    returnRate = 0.08;
+            }
+            
+            // Расчет распределения премии
+            const investmentPercentage = 100 - insurancePercentage - adminPercentage;
+            const investmentAmount = amount * (investmentPercentage / 100);
+            const totalPremiums = amount * term;
+            
+            // Расчет страховой защиты (обычно в 10-15 раз больше годового взноса)
+            const insuranceCoverage = amount * 15;
+            
+            // Расчет накоплений
+            let accumulatedAmount = 0;
+            const accumulationData = [];
+            const premiumData = [];
+            const yearLabels = [];
+            
+            for (let year = 1; year <= term; year++) {
+                // Добавляем инвестиционную часть взноса
+                accumulatedAmount += investmentAmount;
+                
+                // Начисляем доходность на всю накопленную сумму
+                accumulatedAmount *= (1 + returnRate);
+                
+                // Сохраняем данные для графика
+                accumulationData.push(Math.round(accumulatedAmount));
+                premiumData.push(amount * year);
+                yearLabels.push('Год ' + year);
+            }
+            
+            // Обновляем результаты расчета
+            document.getElementById('total-premiums').textContent = totalPremiums.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('insurance-coverage').textContent = insuranceCoverage.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('accumulated-amount').textContent = Math.round(accumulatedAmount).toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('expected-return').textContent = (returnRate * 100).toFixed(1) + '%';
+            
+            // Обновляем график
+            window.accumulationChart.data.labels = yearLabels;
+            window.accumulationChart.data.datasets[0].data = accumulationData;
+            window.accumulationChart.data.datasets[1].data = premiumData;
+            window.accumulationChart.update();
+        }
+        
+        // Helper function for correct word form in Russian
+        function getYearWord(number) {
+            const lastDigit = number % 10;
+            const lastTwoDigits = number % 100;
+            
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+                return 'лет';
+            }
+            
+            if (lastDigit === 1) {
+                return 'год';
+            }
+            
+            if (lastDigit >= 2 && lastDigit <= 4) {
+                return 'года';
+            }
+            
+            return 'лет';
+        }
+        
+        // При загрузке страницы открываем первый аккордеон и запускаем калькулятор
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.querySelector('.accordion-header')) {
+                document.querySelector('.accordion-header').click();
+            }
+            
+            if (document.getElementById('calculate-btn')) {
+                document.getElementById('calculate-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>
