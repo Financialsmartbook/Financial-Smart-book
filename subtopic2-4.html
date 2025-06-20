@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2.4. Что такое финансовое положение и зачем его оценивать</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>2.4. Личный бюджет: как его составить и контролировать</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
@@ -22,6 +21,7 @@
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
+            --warning: #f59e0b;
             --border-radius: 1.5rem;
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -590,6 +590,11 @@
             color: var(--error);
         }
 
+        .warning {
+            background: #fff7ed;
+            color: var(--warning);
+        }
+
         /* Tips Section */
         .tips-list {
             list-style: none;
@@ -1087,18 +1092,18 @@
     <header class="header">
         <div class="nav-container">
             <a href="#" class="logo">
-                <i class="fas fa-chart-line"></i>
-                ФинАнализ
+                <i class="fas fa-wallet"></i>
+                ФинПланер
             </a>
             <nav>
                 <button class="mobile-toggle" id="mobileToggle">
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#concept" class="nav-link">Что такое финансовое положение</a></li>
-                    <li><a href="#importance" class="nav-link">Зачем оценивать</a></li>
+                    <li><a href="#concept" class="nav-link">Что такое личный бюджет</a></li>
+                    <li><a href="#importance" class="nav-link">Зачем его вести</a></li>
                     <li><a href="#calculator" class="nav-link">Калькулятор</a></li>
-                    <li><a href="#analytics" class="nav-link">Аналитика</a></li>
+                    <li><a href="#tips" class="nav-link">Советы</a></li>
                 </ul>
             </nav>
             <button class="theme-toggle" id="themeToggle">
@@ -1111,118 +1116,118 @@
         <!-- Hero Section -->
         <section class="hero-section" data-aos="fade-up">
             <div class="hero-content">
-                <h1 class="hero-title">Что такое финансовое положение и зачем его оценивать</h1>
-                <p class="hero-description">Узнайте, как правильно анализировать финансовое состояние компании и принимать обоснованные решения с помощью ключевых показателей.</p>
+                <h1 class="hero-title">Личный бюджет: как его составить и контролировать</h1>
+                <p class="hero-description">Узнайте, как правильно планировать личные финансы, достигать финансовых целей и создавать стабильное финансовое будущее.</p>
                 <div class="hero-cta">
-                    <a href="#calculator" class="cta-primary">Рассчитать показатели</a>
+                    <a href="#calculator" class="cta-primary">Составить бюджет</a>
                     <a href="#concept" class="cta-secondary">Узнать больше <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
-            <img src="floating-coin.png" alt="Финансовый анализ" class="hero-image">
+            <img src="budget-planning.png" alt="Планирование личного бюджета" class="hero-image">
             <div class="hero-particles" id="particles"></div>
         </section>
 
         <!-- Tabs Section -->
         <section class="section-card" data-aos="fade-up" id="concept">
-            <h2 class="section-title">Что такое финансовое положение</h2>
+            <h2 class="section-title">Что такое личный бюджет</h2>
             
             <div class="tabs">
                 <div class="tab-nav">
                     <button class="tab-button active" data-tab="tab1">Определение</button>
                     <button class="tab-button" data-tab="tab2">Компоненты</button>
-                    <button class="tab-button" data-tab="tab3">Подходы к оценке</button>
+                    <button class="tab-button" data-tab="tab3">Методы составления</button>
                 </div>
                 
                 <div class="tab-content active" id="tab1">
-                    <p>Финансовое положение - это комплексная характеристика состояния финансовых ресурсов компании, эффективности их использования и способности компании финансировать свою деятельность на текущий момент и в перспективе.</p>
+                    <p>Личный бюджет — это финансовый план, отражающий ваши доходы и расходы за определенный период времени. Это инструмент управления деньгами, который помогает контролировать финансовые потоки и достигать финансовых целей.</p>
                     
                     <div class="features-list">
                         <div class="features-item">
-                            <i class="fas fa-balance-scale"></i>
+                            <i class="fas fa-map"></i>
                             <div>
-                                <strong>Ключевой показатель устойчивости</strong>
-                                <p>Финансовое положение отражает способность компании оставаться стабильной в изменяющихся экономических условиях.</p>
+                                <strong>Финансовая карта</strong>
+                                <p>Бюджет показывает, откуда приходят деньги и куда они уходят, создавая полную картину ваших финансов.</p>
                             </div>
                         </div>
                         <div class="features-item">
-                            <i class="fas fa-chart-bar"></i>
+                            <i class="fas fa-compass"></i>
                             <div>
-                                <strong>Результат хозяйственной деятельности</strong>
-                                <p>Характеризует итоги всех управленческих решений за анализируемый период времени.</p>
+                                <strong>Инструмент планирования</strong>
+                                <p>Помогает правильно распределять средства, избегать лишних трат и откладывать на важные цели.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tab-content" id="tab2">
-                    <p>Финансовое положение компании складывается из нескольких ключевых компонентов, каждый из которых характеризует различные аспекты финансовой деятельности.</p>
+                    <p>Личный бюджет состоит из нескольких ключевых компонентов, которые необходимо учитывать при его составлении.</p>
                     
                     <div class="metrics-container">
                         <div class="metric-card">
                             <div class="metric-icon">
-                                <i class="fas fa-coins"></i>
+                                <i class="fas fa-arrow-down"></i>
                             </div>
-                            <h3 class="metric-title">Платежеспособность</h3>
-                            <p class="metric-description">Способность компании своевременно погашать свои обязательства перед контрагентами.</p>
+                            <h3 class="metric-title">Доходы</h3>
+                            <p class="metric-description">Все поступления денежных средств: зарплата, подработки, проценты по вкладам, пассивный доход.</p>
                         </div>
                         
                         <div class="metric-card">
                             <div class="metric-icon">
-                                <i class="fas fa-shield-alt"></i>
+                                <i class="fas fa-arrow-up"></i>
                             </div>
-                            <h3 class="metric-title">Финансовая устойчивость</h3>
-                            <p class="metric-description">Независимость от внешних источников финансирования и стабильность деятельности.</p>
+                            <h3 class="metric-title">Расходы</h3>
+                            <p class="metric-description">Все траты: обязательные платежи, повседневные нужды, развлечения и другие категории трат.</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <h3 class="metric-title">Сбережения</h3>
+                            <p class="metric-description">Часть дохода, которую вы откладываете на будущие цели, крупные покупки или создание финансовой подушки.</p>
                         </div>
                         
                         <div class="metric-card">
                             <div class="metric-icon">
                                 <i class="fas fa-chart-line"></i>
                             </div>
-                            <h3 class="metric-title">Рентабельность</h3>
-                            <p class="metric-description">Эффективность использования ресурсов и способность генерировать прибыль.</p>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <h3 class="metric-title">Деловая активность</h3>
-                            <p class="metric-description">Интенсивность использования ресурсов и скорость оборота средств.</p>
+                            <h3 class="metric-title">Инвестиции</h3>
+                            <p class="metric-description">Вложения в активы для получения дополнительного дохода и достижения долгосрочных финансовых целей.</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tab-content" id="tab3">
-                    <p>Существуют различные методики и подходы к оценке финансового положения компании. Они отличаются набором показателей, методами расчета и интерпретацией результатов.</p>
+                    <p>Существуют различные методы составления личного бюджета. Выбор подходящего метода зависит от ваших привычек, целей и финансовой ситуации.</p>
                     
                     <div class="accordion">
                         <div class="accordion-item">
                             <div class="accordion-header">
-                                <span>Коэффициентный анализ</span>
+                                <span>Метод 50/30/20</span>
                                 <i class="fas fa-chevron-down accordion-icon"></i>
                             </div>
                             <div class="accordion-content">
-                                <p>Расчет и интерпретация финансовых коэффициентов, характеризующих различные аспекты деятельности компании. Включает показатели ликвидности, рентабельности, финансовой устойчивости и деловой активности.</p>
+                                <p>Простое правило разделения дохода: 50% на основные нужды (жилье, еда, транспорт), 30% на желания (развлечения, хобби), 20% на сбережения и выплату долгов. Подходит для начинающих и тех, кто предпочитает простые решения.</p>
                             </div>
                         </div>
                         
                         <div class="accordion-item">
                             <div class="accordion-header">
-                                <span>Горизонтальный и вертикальный анализ</span>
+                                <span>Система конвертов</span>
                                 <i class="fas fa-chevron-down accordion-icon"></i>
                             </div>
                             <div class="accordion-content">
-                                <p>Изучение динамики показателей во времени и структуры активов, пассивов, доходов и расходов компании. Позволяет выявить тенденции изменения финансового состояния.</p>
+                                <p>Метод предполагает распределение наличных денег по конвертам для разных категорий расходов. Когда деньги в конверте заканчиваются, траты в этой категории прекращаются до следующего пополнения. Хорошо подходит для тех, кто склонен к импульсивным покупкам.</p>
                             </div>
                         </div>
                         
                         <div class="accordion-item">
                             <div class="accordion-header">
-                                <span>Интегральные методики</span>
+                                <span>Нулевой бюджет</span>
                                 <i class="fas fa-chevron-down accordion-icon"></i>
                             </div>
                             <div class="accordion-content">
-                                <p>Комплексная оценка финансового положения на основе агрегированных показателей, учитывающих взаимосвязь различных аспектов деятельности. Примеры: модель Альтмана, модель Бивера, скоринговые модели.</p>
+                                <p>Каждый рубль вашего дохода получает конкретное назначение, до последней копейки. Разница между доходами и запланированными расходами должна быть равна нулю. Этот метод требует более тщательного планирования, но обеспечивает максимальный контроль над финансами.</p>
                             </div>
                         </div>
                     </div>
@@ -1230,265 +1235,251 @@
             </div>
         </section>
 
-        <!-- Why Evaluate Section -->
+        <!-- Why Budget Section -->
         <section class="section-card" data-aos="fade-up" id="importance">
-            <h2 class="section-title">Зачем оценивать финансовое положение</h2>
+            <h2 class="section-title">Зачем вести личный бюджет</h2>
             
             <div class="features-list">
                 <div class="features-item">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-eye"></i>
                     <div>
-                        <strong>Выявление проблем на ранних стадиях</strong>
-                        <p>Регулярный анализ позволяет своевременно обнаружить негативные тенденции и принять меры до наступления кризиса.</p>
+                        <strong>Прозрачность финансов</strong>
+                        <p>Бюджет помогает точно видеть, сколько денег вы зарабатываете и на что их тратите, выявляя области для оптимизации.</p>
                     </div>
                 </div>
                 
                 <div class="features-item">
-                    <i class="fas fa-lightbulb"></i>
+                    <i class="fas fa-bullseye"></i>
                     <div>
-                        <strong>Обоснование управленческих решений</strong>
-                        <p>Оценка финансового положения предоставляет информационную базу для принятия стратегических и тактических решений.</p>
+                        <strong>Достижение финансовых целей</strong>
+                        <p>Планирование бюджета позволяет эффективно накапливать средства на важные цели: покупку жилья, образование, путешествия.</p>
                     </div>
                 </div>
                 
                 <div class="features-item">
-                    <i class="fas fa-handshake"></i>
+                    <i class="fas fa-shield-alt"></i>
                     <div>
-                        <strong>Привлечение инвесторов и кредиторов</strong>
-                        <p>Положительная оценка финансового состояния повышает инвестиционную привлекательность компании.</p>
+                        <strong>Финансовая безопасность</strong>
+                        <p>Бюджет помогает создать резервный фонд на случай непредвиденных ситуаций и снизить финансовую тревожность.</p>
                     </div>
                 </div>
                 
                 <div class="features-item">
-                    <i class="fas fa-chart-pie"></i>
+                    <i class="fas fa-exclamation-triangle"></i>
                     <div>
-                        <strong>Оптимизация структуры капитала</strong>
-                        <p>Анализ помогает определить оптимальное соотношение собственных и заемных средств.</p>
+                        <strong>Избегание долгов</strong>
+                        <p>Планирование расходов помогает жить по средствам и не прибегать к заимствованиям для покрытия текущих потребностей.</p>
                     </div>
                 </div>
             </div>
             
             <div class="chart-container" data-aos="fade-up">
                 <div class="chart-tabs">
-                    <div class="chart-tab active" data-chart="financialHealth">Финансовое здоровье</div>
-                    <div class="chart-tab" data-chart="stakeholders">Заинтересованные стороны</div>
+                    <div class="chart-tab active" data-chart="budgetBenefits">Преимущества ведения бюджета</div>
+                    <div class="chart-tab" data-chart="financialStress">Влияние на финансовый стресс</div>
                 </div>
-                <canvas id="financialChart"></canvas>
+                <canvas id="budgetChart"></canvas>
             </div>
             
-            <p>По данным исследований, компании, регулярно проводящие анализ своего финансового положения, на 35% чаще принимают эффективные управленческие решения и на 47% реже сталкиваются с кризисными ситуациями.</p>
+            <p>По данным исследований, люди, регулярно ведущие личный бюджет, на 53% чаще достигают своих финансовых целей и на 70% реже испытывают финансовый стресс по сравнению с теми, кто не планирует свои финансы.</p>
         </section>
 
         <!-- Calculator Section -->
         <section class="section-card" data-aos="fade-up" id="calculator">
-            <h2 class="section-title">Калькулятор финансового положения</h2>
+            <h2 class="section-title">Калькулятор личного бюджета</h2>
             
             <div class="calculator">
-                <p>Введите данные из отчетности вашей компании для расчета ключевых показателей финансового положения.</p>
+                <p>Введите данные о своих доходах и расходах, чтобы составить личный бюджет и получить финансовые рекомендации.</p>
                 
                 <div class="inputs-row">
                     <div class="form-group">
-                        <label for="currentAssets">Оборотные активы (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1200 бухгалтерского баланса</span></span></label>
-                        <input type="number" id="currentAssets" min="0" placeholder="Введите сумму">
+                        <label for="totalIncome">Ежемесячный доход (руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Общая сумма всех доходов за месяц</span></span></label>
+                        <input type="number" id="totalIncome" min="0" placeholder="Введите сумму">
                     </div>
                     
                     <div class="form-group">
-                        <label for="currentLiabilities">Краткосрочные обязательства (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1500 бухгалтерского баланса</span></span></label>
-                        <input type="number" id="currentLiabilities" min="0" placeholder="Введите сумму">
+                        <label for="fixedExpenses">Обязательные расходы (руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Аренда, коммунальные платежи, кредиты, и т.д.</span></span></label>
+                        <input type="number" id="fixedExpenses" min="0" placeholder="Введите сумму">
                     </div>
                 </div>
                 
                 <div class="inputs-row">
                     <div class="form-group">
-                        <label for="totalAssets">Общая сумма активов (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1600 бухгалтерского баланса</span></span></label>
-                        <input type="number" id="totalAssets" min="0" placeholder="Введите сумму">
+                        <label for="variableExpenses">Переменные расходы (руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Продукты, транспорт, развлечения и т.д.</span></span></label>
+                        <input type="number" id="variableExpenses" min="0" placeholder="Введите сумму">
                     </div>
                     
                     <div class="form-group">
-                        <label for="equity">Собственный капитал (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 1300 бухгалтерского баланса</span></span></label>
-                        <input type="number" id="equity" min="0" placeholder="Введите сумму">
-                    </div>
-                </div>
-                
-                <div class="inputs-row">
-                    <div class="form-group">
-                        <label for="revenue">Выручка (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 2110 отчета о финансовых результатах</span></span></label>
-                        <input type="number" id="revenue" min="0" placeholder="Введите сумму">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="netProfit">Чистая прибыль (тыс. руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Строка 2400 отчета о финансовых результатах</span></span></label>
-                        <input type="number" id="netProfit" min="0" placeholder="Введите сумму">
+                        <label for="savingsGoal">Цель накоплений (руб.) <span class="tooltip"><i class="fas fa-info-circle"></i><span class="tooltiptext">Сумма, которую вы хотите накопить</span></span></label>
+                        <input type="number" id="savingsGoal" min="0" placeholder="Введите сумму">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="riskLevel">Уровень риска отрасли</label>
-                    <input type="range" id="riskLevel" class="range-slider" min="1" max="5" value="3">
+                    <label for="financialSecurity">Насколько важна для вас финансовая безопасность</label>
+                    <input type="range" id="financialSecurity" class="range-slider" min="1" max="5" value="3">
                     <div class="range-labels">
-                        <span>Низкий</span>
-                        <span>Средний</span>
-                        <span>Высокий</span>
+                        <span>Менее важна</span>
+                        <span>Средне</span>
+                        <span>Очень важна</span>
                     </div>
                 </div>
                 
                 <button id="calculateBtn" class="cta-button">
-                    <i class="fas fa-calculator"></i> Рассчитать показатели
+                    <i class="fas fa-calculator"></i> Рассчитать бюджет
                 </button>
                 
                 <div id="calculationResults" style="display: none;">
-                    <h3 style="margin-top: 2rem;">Результаты расчета</h3>
+                    <h3 style="margin-top: 2rem;">Результаты анализа</h3>
                     
                     <div class="metrics-container">
                         <div class="metric-card">
                             <div class="metric-icon">
-                                <i class="fas fa-tint"></i>
+                                <i class="fas fa-coins"></i>
                             </div>
-                            <h3 class="metric-title">Коэффициент текущей ликвидности</h3>
-                            <div class="metric-value" id="currentRatio">0.00 <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Оборотные активы / Краткосрочные обязательства</span></i></div>
+                            <h3 class="metric-title">Остаток средств</h3>
+                            <div class="metric-value" id="disposableIncome">0 ₽ <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Доход - Обязательные расходы - Переменные расходы</span></i></div>
                             <div class="progress-container">
-                                <div class="progress-bar" id="currentRatioProgress" style="width: 0%"></div>
+                                <div class="progress-bar" id="disposableIncomeProgress" style="width: 0%"></div>
                             </div>
-                            <p class="metric-description" id="currentRatioStatus">Требуется расчет</p>
-                        </div>
-                        
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3 class="metric-title">Коэффициент автономии</h3>
-                            <div class="metric-value" id="equityRatio">0.00 <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Собственный капитал / Общая сумма активов</span></i></div>
-                            <div class="progress-container">
-                                <div class="progress-bar" id="equityRatioProgress" style="width: 0%"></div>
-                            </div>
-                            <p class="metric-description" id="equityRatioStatus">Требуется расчет</p>
+                            <p class="metric-description" id="disposableIncomeStatus">Требуется расчет</p>
                         </div>
                         
                         <div class="metric-card">
                             <div class="metric-icon">
                                 <i class="fas fa-percentage"></i>
                             </div>
-                            <h3 class="metric-title">Рентабельность продаж</h3>
-                            <div class="metric-value" id="profitMargin">0.00% <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Чистая прибыль / Выручка × 100%</span></i></div>
+                            <h3 class="metric-title">Норма сбережений</h3>
+                            <div class="metric-value" id="savingsRate">0% <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Остаток средств / Доход × 100%</span></i></div>
                             <div class="progress-container">
-                                <div class="progress-bar" id="profitMarginProgress" style="width: 0%"></div>
+                                <div class="progress-bar" id="savingsRateProgress" style="width: 0%"></div>
                             </div>
-                            <p class="metric-description" id="profitMarginStatus">Требуется расчет</p>
+                            <p class="metric-description" id="savingsRateStatus">Требуется расчет</p>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <h3 class="metric-title">Срок достижения цели</h3>
+                            <div class="metric-value" id="timeToGoal">0 мес. <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Цель накоплений / Ежемесячные сбережения</span></i></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="timeToGoalProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="metric-description" id="timeToGoalStatus">Требуется расчет</p>
                         </div>
                     </div>
                     
                     <div class="result" id="overallResult">
-                        <strong>Общая оценка: </strong> <span id="overallStatus">Требуется расчет</span>
+                        <strong>Оценка бюджета: </strong> <span id="overallStatus">Требуется расчет</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Analytics Section -->
-        <section class="section-card" data-aos="fade-up" id="analytics">
-            <h2 class="section-title">Аналитика и тренды</h2>
+        <!-- Tips Section -->
+        <section class="section-card" data-aos="fade-up" id="tips">
+            <h2 class="section-title">Советы по управлению личным бюджетом</h2>
             
             <div class="tabs">
                 <div class="tab-nav">
-                    <button class="tab-button active" data-tab="industryTab">Отраслевые тренды</button>
-                    <button class="tab-button" data-tab="recommendationsTab">Рекомендации</button>
+                    <button class="tab-button active" data-tab="savingTab">Экономия</button>
+                    <button class="tab-button" data-tab="incomeTab">Увеличение дохода</button>
                 </div>
                 
-                <div class="tab-content active" id="industryTab">
-                    <p>Средние показатели финансового положения компаний по отраслям (2024 г.):</p>
-                    
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Отрасль</th>
-                                    <th>Коэффициент текущей ликвидности</th>
-                                    <th>Коэффициент автономии</th>
-                                    <th>Рентабельность продаж</th>
-                                    <th>Тренд</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Торговля</td>
-                                    <td>1.36</td>
-                                    <td>0.35</td>
-                                    <td>2.8%</td>
-                                    <td><i class="fas fa-arrow-up trend-up"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>Производство</td>
-                                    <td>1.64</td>
-                                    <td>0.42</td>
-                                    <td>5.2%</td>
-                                    <td><i class="fas fa-arrow-down trend-down"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>Услуги</td>
-                                    <td>1.52</td>
-                                    <td>0.38</td>
-                                    <td>7.1%</td>
-                                    <td><i class="fas fa-arrow-up trend-up"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>IT и телекоммуникации</td>
-                                    <td>2.05</td>
-                                    <td>0.48</td>
-                                    <td>11.3%</td>
-                                    <td><i class="fas fa-arrow-up trend-up"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>Строительство</td>
-                                    <td>1.29</td>
-                                    <td>0.31</td>
-                                    <td>4.2%</td>
-                                    <td><i class="fas fa-arrow-down trend-down"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="recommendationsTab">
-                    <p>Рекомендации по улучшению финансового положения компании:</p>
+                <div class="tab-content active" id="savingTab">
+                    <p>Практические советы по оптимизации расходов и повышению эффективности личного бюджета:</p>
                     
                     <div class="tips-list">
                         <div class="tips-item">
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Оптимизация оборотного капитала</strong>
-                                <p>Управление запасами, дебиторской и кредиторской задолженностью для повышения ликвидности и эффективности использования средств.</p>
+                                <strong>Правило 24 часов</strong>
+                                <p>Перед любой незапланированной покупкой стоимостью выше определенной суммы, подождите 24 часа. Это помогает избежать импульсивных трат.</p>
                             </div>
                         </div>
                         
                         <div class="tips-item">
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Контроль затрат</strong>
-                                <p>Регулярный анализ и оптимизация расходов для повышения рентабельности и конкурентоспособности.</p>
+                                <strong>Приоритизация расходов</strong>
+                                <p>Разделите все расходы на "нужно", "хочется" и "можно отложить". Первыми сокращайте категории из последней группы.</p>
                             </div>
                         </div>
                         
                         <div class="tips-item">
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Диверсификация источников финансирования</strong>
-                                <p>Поиск оптимального соотношения собственных и заемных средств, использование различных финансовых инструментов.</p>
+                                <strong>Оптимизация фиксированных платежей</strong>
+                                <p>Регулярно пересматривайте подписки, тарифы, страховки и другие постоянные платежи - часто можно найти более выгодные условия.</p>
                             </div>
                         </div>
                         
                         <div class="tips-item">
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Внедрение системы финансового планирования</strong>
-                                <p>Разработка бюджетов, прогнозирование денежных потоков и контроль исполнения финансовых планов.</p>
+                                <strong>Автоматические сбережения</strong>
+                                <p>Настройте автоматический перевод части зарплаты на сберегательный счет в день получения. Это поможет сохранить средства до того, как возникнет соблазн их потратить.</p>
                             </div>
                         </div>
                         
-                        <button class="cta-button" id="showMoreTips">
-                            <i class="fas fa-plus-circle"></i> Показать больше рекомендаций
+                        <button class="cta-button" id="showMoreSavingTips">
+                            <i class="fas fa-plus-circle"></i> Показать больше советов по экономии
                         </button>
                     </div>
+                </div>
+                
+                <div class="tab-content" id="incomeTab">
+                    <p>Стратегии для увеличения доходной части вашего бюджета:</p>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Стратегия</th>
+                                    <th>Сложность</th>
+                                    <th>Потенциал дохода</th>
+                                    <th>Временные затраты</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Фриланс в свободное время</td>
+                                    <td>Средняя</td>
+                                    <td>+15-30% к основному доходу</td>
+                                    <td>10-15 часов в неделю</td>
+                                </tr>
+                                <tr>
+                                    <td>Монетизация хобби</td>
+                                    <td>Низкая</td>
+                                    <td>+5-15% к основному доходу</td>
+                                    <td>5-10 часов в неделю</td>
+                                </tr>
+                                <tr>
+                                    <td>Инвестиции в акции и облигации</td>
+                                    <td>Высокая</td>
+                                    <td>+8-12% годовых от вложений</td>
+                                    <td>1-2 часа в неделю</td>
+                                </tr>
+                                <tr>
+                                    <td>Повышение квалификации</td>
+                                    <td>Средняя</td>
+                                    <td>+20-40% к зарплате</td>
+                                    <td>3-6 месяцев обучения</td>
+                                </tr>
+                                <tr>
+                                    <td>Сдача недвижимости в аренду</td>
+                                    <td>Высокая</td>
+                                    <td>+50-100% к основному доходу</td>
+                                    <td>3-5 часов в месяц</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <button class="cta-button" id="showMoreIncomeTips">
+                        <i class="fas fa-plus-circle"></i> Показать больше стратегий увеличения дохода
+                    </button>
                 </div>
             </div>
         </section>
@@ -1499,12 +1490,12 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
-    <!-- Modal -->
-    <div class="modal" id="tipsModal">
+    <!-- Modal for Saving Tips -->
+    <div class="modal" id="savingTipsModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Дополнительные рекомендации</h3>
-                <button class="modal-close" id="closeModal">
+                <h3>Дополнительные советы по экономии</h3>
+                <button class="modal-close" id="closeSavingModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -1513,32 +1504,32 @@
                     <div class="tips-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Внедрение системы управления рисками</strong>
-                            <p>Идентификация, оценка и минимизация финансовых рисков для обеспечения стабильности компании.</p>
+                            <strong>Планирование питания</strong>
+                            <p>Составляйте меню на неделю и покупайте продукты по списку. Это уменьшает количество спонтанных покупок и потери продуктов из-за истечения срока годности.</p>
                         </div>
                     </div>
                     
                     <div class="tips-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Инвестиции в цифровизацию</strong>
-                            <p>Внедрение современных информационных технологий для автоматизации процессов и снижения затрат.</p>
+                            <strong>Энергоэффективность</strong>
+                            <p>Используйте энергосберегающие приборы и лампы, следите за потреблением воды и электричества для снижения коммунальных платежей.</p>
                         </div>
                     </div>
                     
                     <div class="tips-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Повышение эффективности использования активов</strong>
-                            <p>Регулярный анализ фондоотдачи и выявление незадействованных или неэффективно используемых активов.</p>
+                            <strong>Сезонные распродажи</strong>
+                            <p>Покупайте сезонные товары в конце сезона со значительными скидками, планируя покупки заранее.</p>
                         </div>
                     </div>
                     
                     <div class="tips-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong>Оптимизация налогообложения</strong>
-                            <p>Использование законных способов минимизации налоговой нагрузки и повышения чистой прибыли.</p>
+                            <strong>Кэшбэк и бонусные программы</strong>
+                            <p>Используйте карты с кэшбэком и участвуйте в бонусных программах магазинов, которыми регулярно пользуетесь.</p>
                         </div>
                     </div>
                 </div>
@@ -1546,17 +1537,52 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+    <!-- Modal for Income Tips -->
+    <div class="modal" id="incomeTipsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Дополнительные стратегии увеличения дохода</h3>
+                <button class="modal-close" id="closeIncomeModal">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <p>© 2025 ФинАнализ. Все права защищены.</p>
+            <div class="modal-body">
+                <div class="tips-list">
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Создание цифровых продуктов</strong>
+                            <p>Онлайн-курсы, электронные книги, шаблоны или приложения могут приносить пассивный доход после первоначальных инвестиций времени.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Партнерский маркетинг</strong>
+                            <p>Если у вас есть блог или активные социальные сети, можно зарабатывать на рекомендациях продуктов и услуг через партнерские программы.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Обучение и репетиторство</strong>
+                            <p>Если вы хорошо разбираетесь в какой-то области, можно проводить обучение или консультации онлайн или офлайн.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Оптимизация налогов</strong>
+                            <p>Изучите налоговые вычеты и льготы, на которые вы можете претендовать, чтобы уменьшить налоговые платежи.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <script>
         // Инициализация AOS (анимация при прокрутке)
@@ -1605,14 +1631,14 @@
         
         // Инициализация графиков
         function initCharts() {
-            const ctx = document.getElementById('financialChart').getContext('2d');
+            const ctx = document.getElementById('budgetChart').getContext('2d');
             
-            // Данные для первого графика (финансовое здоровье)
-            const financialHealthData = {
-                labels: ['Ликвидность', 'Платежеспособность', 'Финансовая устойчивость', 'Рентабельность', 'Деловая активность', 'Потенциал роста'],
+            // Данные для первого графика (преимущества ведения бюджета)
+            const budgetBenefitsData = {
+                labels: ['Финансовая безопасность', 'Достижение целей', 'Снижение стресса', 'Контроль расходов', 'Инвестиционные возможности', 'Финансовое образование'],
                 datasets: [{
-                    label: 'Среднеотраслевое значение',
-                    data: [70, 65, 60, 75, 80, 65],
+                    label: 'Преимущества ведения бюджета',
+                    data: [85, 90, 75, 95, 70, 80],
                     backgroundColor: 'rgba(99, 102, 241, 0.2)',
                     borderColor: 'rgba(99, 102, 241, 1)',
                     borderWidth: 2,
@@ -1625,12 +1651,12 @@
                 }]
             };
             
-            // Данные для второго графика (заинтересованные стороны)
-            const stakeholdersData = {
-                labels: ['Инвесторы', 'Кредиторы', 'Поставщики', 'Клиенты', 'Сотрудники', 'Гос. органы'],
+            // Данные для второго графика (влияние на финансовый стресс)
+            const financialStressData = {
+                labels: ['Денежная тревога', 'Неожиданные расходы', 'Долги', 'Планирование пенсии', 'Крупные покупки', 'Семейные финансы'],
                 datasets: [{
-                    label: 'Важность оценки для стейкхолдеров',
-                    data: [90, 85, 65, 40, 55, 75],
+                    label: 'Снижение финансового стресса при ведении бюджета',
+                    data: [70, 65, 75, 60, 80, 72],
                     backgroundColor: 'rgba(129, 140, 248, 0.2)',
                     borderColor: 'rgba(129, 140, 248, 1)',
                     borderWidth: 2,
@@ -1659,9 +1685,9 @@
             };
             
             // Создание экземпляра графика
-            window.financialChart = new Chart(ctx, {
+            window.budgetChart = new Chart(ctx, {
                 type: 'radar',
-                data: financialHealthData,
+                data: budgetBenefitsData,
                 options: chartOptions
             });
             
@@ -1671,13 +1697,13 @@
                     document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    if (this.dataset.chart === 'financialHealth') {
-                        window.financialChart.data = financialHealthData;
+                    if (this.dataset.chart === 'budgetBenefits') {
+                        window.budgetChart.data = budgetBenefitsData;
                     } else {
-                        window.financialChart.data = stakeholdersData;
+                        window.budgetChart.data = financialStressData;
                     }
                     
-                    window.financialChart.update();
+                    window.budgetChart.update();
                 });
             });
         }
@@ -1743,9 +1769,9 @@
                 });
             });
             
-            // Калькулятор финансового положения
+            // Калькулятор бюджета
             const calculateBtn = document.getElementById('calculateBtn');
-            calculateBtn.addEventListener('click', calculateFinancialIndicators);
+            calculateBtn.addEventListener('click', calculateBudget);
             
             // Кнопка "вверх"
             const backToTopBtn = document.getElementById('backToTop');
@@ -1764,141 +1790,199 @@
                 });
             });
             
-            // Модальное окно с дополнительными рекомендациями
-            const showMoreTipsBtn = document.getElementById('showMoreTips');
-            const tipsModal = document.getElementById('tipsModal');
-            const closeModalBtn = document.getElementById('closeModal');
+            // Модальные окна с дополнительными советами
+            const showMoreSavingTipsBtn = document.getElementById('showMoreSavingTips');
+            const savingTipsModal = document.getElementById('savingTipsModal');
+            const closeSavingModalBtn = document.getElementById('closeSavingModal');
             
-            showMoreTipsBtn.addEventListener('click', function() {
-                tipsModal.classList.add('active');
+            showMoreSavingTipsBtn.addEventListener('click', function() {
+                savingTipsModal.classList.add('active');
             });
             
-            closeModalBtn.addEventListener('click', function() {
-                tipsModal.classList.remove('active');
+            closeSavingModalBtn.addEventListener('click', function() {
+                savingTipsModal.classList.remove('active');
             });
             
             // Закрытие модального окна по клику вне него
-            tipsModal.addEventListener('click', function(e) {
-                if (e.target === tipsModal) {
-                    tipsModal.classList.remove('active');
+            savingTipsModal.addEventListener('click', function(e) {
+                if (e.target === savingTipsModal) {
+                    savingTipsModal.classList.remove('active');
+                }
+            });
+            
+            // Модальное окно с советами по увеличению дохода
+            const showMoreIncomeTipsBtn = document.getElementById('showMoreIncomeTips');
+            const incomeTipsModal = document.getElementById('incomeTipsModal');
+            const closeIncomeModalBtn = document.getElementById('closeIncomeModal');
+            
+            showMoreIncomeTipsBtn.addEventListener('click', function() {
+                incomeTipsModal.classList.add('active');
+            });
+            
+            closeIncomeModalBtn.addEventListener('click', function() {
+                incomeTipsModal.classList.remove('active');
+            });
+            
+            // Закрытие модального окна по клику вне него
+            incomeTipsModal.addEventListener('click', function(e) {
+                if (e.target === incomeTipsModal) {
+                    incomeTipsModal.classList.remove('active');
                 }
             });
         }
         
-        // Расчет финансовых показателей
-        function calculateFinancialIndicators() {
+        // Расчет бюджета
+        function calculateBudget() {
             // Получение значений из формы
-            const currentAssets = parseFloat(document.getElementById('currentAssets').value) || 0;
-            const currentLiabilities = parseFloat(document.getElementById('currentLiabilities').value) || 0;
-            const totalAssets = parseFloat(document.getElementById('totalAssets').value) || 0;
-            const equity = parseFloat(document.getElementById('equity').value) || 0;
-            const revenue = parseFloat(document.getElementById('revenue').value) || 0;
-            const netProfit = parseFloat(document.getElementById('netProfit').value) || 0;
-            const riskLevel = parseInt(document.getElementById('riskLevel').value) || 3;
+            const totalIncome = parseFloat(document.getElementById('totalIncome').value) || 0;
+            const fixedExpenses = parseFloat(document.getElementById('fixedExpenses').value) || 0;
+            const variableExpenses = parseFloat(document.getElementById('variableExpenses').value) || 0;
+            const savingsGoal = parseFloat(document.getElementById('savingsGoal').value) || 0;
+            const financialSecurity = parseInt(document.getElementById('financialSecurity').value) || 3;
             
             // Проверка на наличие данных
-            if (currentAssets === 0 || currentLiabilities === 0 || totalAssets === 0 || 
-                equity === 0 || revenue === 0) {
-                alert('Пожалуйста, заполните все поля формы для расчета показателей.');
+            if (totalIncome === 0) {
+                alert('Пожалуйста, введите ваш ежемесячный доход для расчета бюджета.');
                 return;
             }
             
             // Расчет показателей
-            const currentRatio = currentAssets / currentLiabilities;
-            const equityRatio = equity / totalAssets;
-            const profitMargin = (netProfit / revenue) * 100;
+            const disposableIncome = totalIncome - fixedExpenses - variableExpenses;
+            const savingsRate = (disposableIncome / totalIncome) * 100;
+            let timeToGoal = savingsGoal / disposableIncome;
+            
+            if (disposableIncome <= 0) {
+                timeToGoal = Infinity;
+            }
             
             // Отображение результатов
-            document.getElementById('currentRatio').innerHTML = 
-                currentRatio.toFixed(2) + ' <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Оборотные активы / Краткосрочные обязательства</span></i>';
-            document.getElementById('equityRatio').innerHTML = 
-                equityRatio.toFixed(2) + ' <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Собственный капитал / Общая сумма активов</span></i>';
-            document.getElementById('profitMargin').innerHTML = 
-                profitMargin.toFixed(2) + '% <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Чистая прибыль / Выручка × 100%</span></i>';
+            document.getElementById('disposableIncome').innerHTML = 
+                Math.round(disposableIncome).toLocaleString() + ' ₽ <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Доход - Обязательные расходы - Переменные расходы</span></i>';
+            document.getElementById('savingsRate').innerHTML = 
+                savingsRate.toFixed(1) + '% <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Остаток средств / Доход × 100%</span></i>';
+            
+            if (timeToGoal === Infinity || isNaN(timeToGoal)) {
+                document.getElementById('timeToGoal').innerHTML = 
+                    '∞ <i class="fas fa-info-circle tooltip"><span class="tooltiptext">При текущем бюджете цель недостижима</span></i>';
+            } else {
+                document.getElementById('timeToGoal').innerHTML = 
+                    Math.ceil(timeToGoal) + ' мес. <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Цель накоплений / Ежемесячные сбережения</span></i>';
+            }
             
             // Установка прогресс-баров
-            const currentRatioProgress = document.getElementById('currentRatioProgress');
-            const equityRatioProgress = document.getElementById('equityRatioProgress');
-            const profitMarginProgress = document.getElementById('profitMarginProgress');
+            const disposableIncomeProgress = document.getElementById('disposableIncomeProgress');
+            const savingsRateProgress = document.getElementById('savingsRateProgress');
+            const timeToGoalProgress = document.getElementById('timeToGoalProgress');
             
-            currentRatioProgress.style.width = Math.min(currentRatio * 33, 100) + '%';
-            equityRatioProgress.style.width = Math.min(equityRatio * 100, 100) + '%';
-            profitMarginProgress.style.width = Math.min(profitMargin * 5, 100) + '%';
+            // Прогресс для остатка средств (считаем хорошим результатом, если остается 20% от дохода)
+            const disposableIncomePercent = Math.min((disposableIncome / totalIncome) * 100 * 5, 100);
+            disposableIncomeProgress.style.width = disposableIncomePercent + '%';
+            
+            // Прогресс для нормы сбережений (считаем 100% при 20% сбережений от дохода)
+            const savingsRatePercent = Math.min(savingsRate * 5, 100);
+            savingsRateProgress.style.width = savingsRatePercent + '%';
+            
+            // Прогресс для срока достижения цели (считаем хорошим сроком до 12 месяцев)
+            let timeToGoalPercent;
+            if (timeToGoal === Infinity || isNaN(timeToGoal)) {
+                timeToGoalPercent = 0;
+            } else {
+                timeToGoalPercent = Math.min(100, Math.max(0, 100 - (timeToGoal / 12) * 100));
+            }
+            timeToGoalProgress.style.width = timeToGoalPercent + '%';
             
             // Оценка показателей
-            const currentRatioStatus = document.getElementById('currentRatioStatus');
-            const equityRatioStatus = document.getElementById('equityRatioStatus');
-            const profitMarginStatus = document.getElementById('profitMarginStatus');
+            const disposableIncomeStatus = document.getElementById('disposableIncomeStatus');
+            const savingsRateStatus = document.getElementById('savingsRateStatus');
+            const timeToGoalStatus = document.getElementById('timeToGoalStatus');
             
-            // Оценка коэффициента текущей ликвидности
-            if (currentRatio < 1) {
-                currentRatioStatus.textContent = 'Низкая ликвидность, возможны проблемы с платежеспособностью';
-                currentRatioProgress.style.backgroundColor = '#ef4444';
-            } else if (currentRatio >= 1 && currentRatio < 2) {
-                currentRatioStatus.textContent = 'Нормальная ликвидность, компания способна погашать обязательства';
-                currentRatioProgress.style.backgroundColor = '#f59e0b';
+            // Оценка остатка средств
+            if (disposableIncome < 0) {
+                disposableIncomeStatus.textContent = 'Дефицит бюджета! Необходимо сократить расходы или увеличить доход.';
+                disposableIncomeProgress.style.backgroundColor = '#ef4444';
+            } else if (disposableIncome === 0) {
+                disposableIncomeStatus.textContent = 'Бюджет сбалансирован, но нет возможности для накоплений.';
+                disposableIncomeProgress.style.backgroundColor = '#f59e0b';
+            } else if ((disposableIncome / totalIncome) < 0.1) {
+                disposableIncomeStatus.textContent = 'Низкий остаток. Рекомендуется оптимизировать расходы.';
+                disposableIncomeProgress.style.backgroundColor = '#f59e0b';
             } else {
-                currentRatioStatus.textContent = 'Высокая ликвидность, компания имеет запас прочности';
-                currentRatioProgress.style.backgroundColor = '#10b981';
+                disposableIncomeStatus.textContent = 'Хороший остаток средств для накоплений и инвестиций.';
+                disposableIncomeProgress.style.backgroundColor = '#10b981';
             }
             
-            // Оценка коэффициента автономии
-            if (equityRatio < 0.3) {
-                equityRatioStatus.textContent = 'Низкая финансовая устойчивость, высокая зависимость от заемных средств';
-                equityRatioProgress.style.backgroundColor = '#ef4444';
-            } else if (equityRatio >= 0.3 && equityRatio < 0.5) {
-                equityRatioStatus.textContent = 'Средняя финансовая устойчивость, допустимая зависимость от заемных средств';
-                equityRatioProgress.style.backgroundColor = '#f59e0b';
+            // Оценка нормы сбережений
+            if (savingsRate < 0) {
+                savingsRateStatus.textContent = 'Отрицательные сбережения. Расходы превышают доходы.';
+                savingsRateProgress.style.backgroundColor = '#ef4444';
+            } else if (savingsRate === 0) {
+                savingsRateStatus.textContent = 'Нет сбережений. Весь доход расходуется.';
+                savingsRateProgress.style.backgroundColor = '#f59e0b';
+            } else if (savingsRate < 10) {
+                savingsRateStatus.textContent = 'Низкая норма сбережений. Рекомендуется увеличить до 10-20%.';
+                savingsRateProgress.style.backgroundColor = '#f59e0b';
+            } else if (savingsRate < 20) {
+                savingsRateStatus.textContent = 'Нормальная норма сбережений. Хороший баланс.';
+                savingsRateProgress.style.backgroundColor = '#10b981';
             } else {
-                equityRatioStatus.textContent = 'Высокая финансовая устойчивость, низкая зависимость от заемных средств';
-                equityRatioProgress.style.backgroundColor = '#10b981';
+                savingsRateStatus.textContent = 'Отличная норма сбережений! Возможны инвестиции.';
+                savingsRateProgress.style.backgroundColor = '#10b981';
             }
             
-            // Оценка рентабельности продаж
-            if (profitMargin < 3) {
-                profitMarginStatus.textContent = 'Низкая рентабельность, необходимо оптимизировать расходы';
-                profitMarginProgress.style.backgroundColor = '#ef4444';
-            } else if (profitMargin >= 3 && profitMargin < 8) {
-                profitMarginStatus.textContent = 'Средняя рентабельность, соответствует отраслевым нормам';
-                profitMarginProgress.style.backgroundColor = '#f59e0b';
+            // Оценка срока достижения цели
+            if (disposableIncome <= 0) {
+                timeToGoalStatus.textContent = 'При текущем бюджете цель недостижима.';
+                timeToGoalProgress.style.backgroundColor = '#ef4444';
+            } else if (timeToGoal > 36) {
+                timeToGoalStatus.textContent = 'Длительный срок достижения цели. Рассмотрите возможности ускорения.';
+                timeToGoalProgress.style.backgroundColor = '#f59e0b';
+            } else if (timeToGoal > 12) {
+                timeToGoalStatus.textContent = 'Средний срок достижения цели.';
+                timeToGoalProgress.style.backgroundColor = '#f59e0b';
             } else {
-                profitMarginStatus.textContent = 'Высокая рентабельность, эффективное управление затратами';
-                profitMarginProgress.style.backgroundColor = '#10b981';
+                timeToGoalStatus.textContent = 'Отличный срок достижения цели!';
+                timeToGoalProgress.style.backgroundColor = '#10b981';
             }
             
-            // Общая оценка финансового положения
+            // Общая оценка бюджета
             const overallResult = document.getElementById('overallResult');
             const overallStatus = document.getElementById('overallStatus');
             
-            // Рассчитываем интегральный показатель с учетом уровня риска отрасли
+            // Рассчитываем интегральный показатель с учетом важности финансовой безопасности
             let score = 0;
             
-            if (currentRatio < 1) score += 1;
-            else if (currentRatio >= 1 && currentRatio < 2) score += 2;
+            // Оценка по остатку средств
+            if (disposableIncome < 0) score += 0;
+            else if ((disposableIncome / totalIncome) < 0.1) score += 1;
+            else if ((disposableIncome / totalIncome) < 0.2) score += 2;
             else score += 3;
             
-            if (equityRatio < 0.3) score += 1;
-            else if (equityRatio >= 0.3 && equityRatio < 0.5) score += 2;
+            // Оценка по норме сбережений
+            if (savingsRate < 0) score += 0;
+            else if (savingsRate < 10) score += 1;
+            else if (savingsRate < 20) score += 2;
             else score += 3;
             
-            if (profitMargin < 3) score += 1;
-            else if (profitMargin >= 3 && profitMargin < 8) score += 2;
+            // Оценка по сроку достижения цели
+            if (disposableIncome <= 0) score += 0;
+            else if (timeToGoal > 36) score += 1;
+            else if (timeToGoal > 12) score += 2;
             else score += 3;
             
-            // Корректировка с учетом риска отрасли
-            score = score - (riskLevel - 3) * 0.5;
+            // Корректировка с учетом важности финансовой безопасности
+            score = score + (financialSecurity - 3) * 0.3;
             
-            if (score < 4) {
-                overallStatus.textContent = 'Кризисное финансовое положение. Требуются срочные меры по стабилизации.';
+            if (score < 3) {
+                overallStatus.textContent = 'Критическое состояние бюджета. Необходимы срочные меры по сокращению расходов или увеличению доходов.';
                 overallResult.className = 'result error';
-            } else if (score >= 4 && score < 6) {
-                overallStatus.textContent = 'Неустойчивое финансовое положение. Необходимо обратить внимание на проблемные показатели.';
-                overallResult.className = 'result error';
-            } else if (score >= 6 && score < 8) {
-                overallStatus.textContent = 'Нормальное финансовое положение с отдельными проблемными зонами.';
+            } else if (score < 5) {
+                overallStatus.textContent = 'Неустойчивый бюджет. Рекомендуется пересмотреть структуру расходов и поискать возможности для увеличения дохода.';
+                overallResult.className = 'result warning';
+            } else if (score < 7) {
+                overallStatus.textContent = 'Сбалансированный бюджет. Хорошая основа для достижения финансовых целей, но есть возможности для улучшения.';
                 overallResult.className = 'result success';
             } else {
-                overallStatus.textContent = 'Устойчивое финансовое положение. Компания эффективно управляет ресурсами.';
+                overallStatus.textContent = 'Отличный бюджет! Вы эффективно управляете своими финансами и имеете хорошие перспективы для достижения целей.';
                 overallResult.className = 'result success';
             }
             
