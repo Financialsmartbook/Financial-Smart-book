@@ -2,54 +2,41 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4.4. Проценты и платежи по кредиту</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
         :root {
-            /* Основная цветовая палитра - современные цвета */
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --secondary: #6366f1;
+            --primary: #6366f1;
+            --secondary: #4f46e5;
             --accent: #818cf8;
-            --background: #f9fafb;
-            --background-card: #ffffff;
-            --text-dark: #111827;
-            --text-medium: #4b5563;
-            --text-light: #f3f4f6;
-            --text-muted: #9ca3af;
-            --gradient: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
-            
-            /* Семантические цвета */
+            --background: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.9);
+            --gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --success: #10b981;
             --error: #ef4444;
             --warning: #f59e0b;
-            --info: #3b82f6;
-            
-            /* Эффекты */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-            
-            /* Размеры */
-            --container-max-width: 1440px;
-            --header-height: 70px;
-            --sidebar-width: 300px;
-            --border-radius-sm: 0.375rem;
-            --border-radius: 0.75rem;
-            --border-radius-lg: 1.5rem;
-            
-            /* Анимация */
-            --transition-fast: 150ms ease;
-            --transition: 300ms ease;
-            --transition-slow: 500ms ease;
-            --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
-            
-            /* Переменная для мобильной высоты окна */
-            --vh: 1vh;
+            --border-radius: 1.5rem;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #818cf8;
+            --secondary: #6366f1;
+            --accent: #a5b4fc;
+            --background: #0f172a;
+            --text-dark: #f1f5f9;
+            --text-light: #1e293b;
+            --glass: rgba(30, 41, 59, 0.8);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -58,176 +45,141 @@
             padding: 0;
         }
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-            scroll-padding-top: var(--header-height);
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.7;
             background: var(--background);
             color: var(--text-dark);
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+            transition: var(--transition);
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--background);
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 20px;
         }
 
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color var(--transition-fast);
-        }
-
-        a:hover {
-            color: var(--primary-hover);
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            line-height: 1.2;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        button, .button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius-sm);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-size: 1rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        button:hover, .button:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        button:active, .button:active {
-            transform: translateY(0);
-        }
-
-        /* Layout */
         .container {
-            width: 100%;
-            max-width: var(--container-max-width);
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* Header */
+        /* Header & Navigation */
         .header {
             position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: var(--header-height);
-            background: var(--background-card);
+            z-index: 1000;
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+            background: var(--glass);
             box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1.5rem;
-            z-index: 50;
+            transition: var(--transition);
         }
 
-        .header-logo {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary);
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
         }
 
-        .header-nav {
+        .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
+            list-style: none;
         }
 
         .nav-link {
-            color: var(--text-medium);
+            text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color var(--transition-fast);
+            transition: var(--transition);
             position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
         }
 
         .nav-link:hover {
-            color: var(--text-dark);
-        }
-
-        .nav-link.active {
             color: var(--primary);
         }
 
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -0.35rem;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-            border-radius: 1px;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: transparent;
+        .theme-toggle {
+            background: none;
             border: none;
-            color: var(--text-medium);
-            font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.5rem;
-            box-shadow: none;
-        }
-
-        .mobile-menu-btn:hover {
             color: var(--text-dark);
-            background: transparent;
-            box-shadow: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
         }
 
-        /* Hero section */
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
         .hero-section {
-            background: var(--gradient);
-            padding: 4rem 2rem;
-            border-radius: var(--border-radius-lg);
-            margin: 2rem 0 4rem;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             position: relative;
+            margin: 2rem 0 4rem;
+            padding: 4rem 2rem;
+            background: var(--gradient);
+            border-radius: var(--border-radius);
+            color: white;
             overflow: hidden;
-            box-shadow: var(--shadow-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--card-shadow);
         }
 
         .hero-content {
             max-width: 600px;
-            position: relative;
             z-index: 2;
         }
 
@@ -241,68 +193,91 @@
         .hero-description {
             font-size: 1.2rem;
             opacity: 0.95;
+            margin-bottom: 2rem;
         }
 
         .hero-image {
             width: 400px;
-            filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.3));
-            animation: float 6s ease-in-out infinite;
-            position: relative;
-            z-index: 2;
+            filter: drop-shadow(20px 20px 30px rgba(0, 0, 0, 0.2));
+            transition: transform 0.4s ease;
         }
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.3;
-            z-index: 1;
+        .hero-image:hover {
+            transform: translateY(-10px) scale(1.02);
         }
 
-        .hero-icons {
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-primary {
+            background: white;
+            color: var(--primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-secondary {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .cta-secondary i {
+            transition: var(--transition);
+        }
+
+        .cta-secondary:hover i {
+            transform: translateX(4px);
+        }
+
+        .hero-particles {
             position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
-            z-index: 1;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+            z-index: 1;
         }
 
-        .hero-icon {
+        .particle {
             position: absolute;
-            font-size: 2rem;
-            color: rgba(255, 255, 255, 0.2);
-            animation: floatIcon 15s linear infinite;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes floatIcon {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-
-        /* Section cards */
+        /* Sections */
         .section-card {
-            background: var(--background-card);
-            padding: 2.5rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
             border-radius: var(--border-radius);
+            padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform var(--transition), box-shadow var(--transition);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .section-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
         }
 
         .section-title {
@@ -320,23 +295,65 @@
             width: 60px;
             height: 3px;
             background: var(--primary);
-            border-radius: 3px;
+            transition: var(--transition);
         }
 
-        .justify-text {
-            text-align: justify;
+        .section-card:hover .section-title::after {
+            width: 100%;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Accordion */
         .accordion {
-            background: var(--background-card);
+            background: var(--glass);
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow);
         }
 
         .accordion-item {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .accordion-item:last-child {
@@ -344,149 +361,38 @@
         }
 
         .accordion-header {
-            padding: 1.25rem 1.5rem;
+            padding: 1.5rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
             font-weight: 500;
-            background: rgba(99, 102, 241, 0.05);
-            transition: background var(--transition-fast);
         }
 
         .accordion-header:hover {
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(99, 102, 241, 0.2);
         }
 
-        .accordion-header.active {
-            background: rgba(99, 102, 241, 0.15);
+        .accordion-icon {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
             padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: all var(--transition);
-        }
-
-        .accordion-content-inner {
-            padding: 1.5rem;
+            transition: var(--transition);
         }
 
         .accordion-content.active {
-            max-height: 1000px;
-        }
-
-        /* Calculator */
-        .calculator {
-            background: var(--background-card);
             padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-medium);
-        }
-
-        .calculator input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 3px;
-            margin: 1rem 0;
-        }
-
-        .calculator input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: all var(--transition-fast);
-        }
-
-        .calculator input[type="range"]::-webkit-slider-thumb:hover {
-            background: var(--primary-hover);
-            transform: scale(1.1);
-        }
-
-        .calculator input, .calculator select {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: var(--border-radius-sm);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color var(--transition-fast);
-            background: white;
-        }
-
-        .calculator input:focus, .calculator select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .slider-values {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.25rem;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .range-value {
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .result {
-            margin-top: 1.5rem;
-            padding: 1.25rem;
-            border-radius: var(--border-radius-sm);
-            font-weight: 500;
-            background: #f3f4f6;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-        }
-
-        .result-item:last-child {
-            margin-bottom: 0;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .result-label {
-            color: var(--text-medium);
-        }
-
-        .result-value {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        /* Interactive grid */
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            max-height: 1000px;
         }
 
         /* Formula box */
@@ -507,7 +413,7 @@
         
         .formula-caption {
             font-size: 0.875rem;
-            color: var(--text-medium);
+            color: var(--text-dark);
             margin-top: 0.5rem;
         }
 
@@ -526,47 +432,120 @@
             position: absolute;
             top: -0.75rem;
             left: 1rem;
-            background: var(--background-card);
+            background: var(--background);
             padding: 0 0.5rem;
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--info);
-        }
-
-        /* Tips list */
-        .tips-list {
-            list-style: none;
-            padding: 0;
-            margin: 1.5rem 0;
-        }
-
-        .tips-item {
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            background: var(--background-card);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-        }
-
-        .tips-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow);
-        }
-
-        .tips-item i {
             color: var(--primary);
-            font-size: 1.2rem;
-            margin-top: 0.25rem;
         }
 
-        .tips-item strong {
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
             display: block;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 0.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
             color: var(--text-dark);
+            text-align: center;
+            border-radius: 0.5rem;
+            padding: 0.8rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        button:hover::after {
+            left: 100%;
+        }
+
+        button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         /* Comparison table */
@@ -579,8 +558,9 @@
             overflow: hidden;
         }
 
-        .comparison-table th, .comparison-table td {
-            padding: 0.75rem 1rem;
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 1rem;
             text-align: left;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
@@ -598,40 +578,85 @@
             background-color: rgba(99, 102, 241, 0.02);
         }
 
-        /* Tab navigation for calculator */
-        .tab-nav {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+        /* Calculator */
+        .calculator {
+            margin-top: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
         }
 
-        .tab-button {
-            padding: 0.75rem 1.25rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: none;
-            border-radius: var(--border-radius-sm);
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+            margin: 1rem 0;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
             cursor: pointer;
-            font-weight: 500;
-            color: var(--text-medium);
-            transition: all var(--transition-fast);
+            transition: var(--transition);
         }
 
-        .tab-button:hover {
-            background: rgba(99, 102, 241, 0.2);
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .range-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Results */
+        .result {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease;
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .result-label {
             color: var(--text-dark);
         }
 
-        .tab-button.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
+        .result-value {
+            font-weight: 600;
+            color: var(--primary);
         }
 
         /* Payment chart */
@@ -644,37 +669,62 @@
             padding: 1rem;
         }
 
-        /* Progress bar */
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: var(--gradient);
-            z-index: 100;
-            width: 0;
-            transition: width var(--transition-fast);
+        /* Tips Section */
+        .tips-list {
+            list-style: none;
+            padding: 0;
         }
 
-        /* Back to top */
+        .tips-item {
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: var(--transition);
+        }
+
+        .tips-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent);
+        }
+
+        .tips-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+
+        /* Interactive grid */
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Back to top button */
         .back-to-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             width: 50px;
             height: 50px;
+            border-radius: 50%;
             background: var(--primary);
             color: white;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: var(--transition);
             opacity: 0;
             visibility: hidden;
-            transition: all var(--transition);
-            z-index: 99;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
         }
 
         .back-to-top.visible {
@@ -683,95 +733,77 @@
         }
 
         .back-to-top:hover {
-            background: var(--primary-hover);
+            background: var(--secondary);
             transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
         }
 
-        /* Media Queries */
-        @media (max-width: 1200px) {
-            .container {
-                max-width: 1140px;
-                padding: 1.75rem;
-            }
-        }
-
+        /* Mobile Adaptation */
         @media (max-width: 992px) {
-            html {
-                font-size: 15px;
-            }
-            
-            .container {
-                max-width: 960px;
-                padding: 1.5rem;
+            .interactive-grid {
+                grid-template-columns: 1fr;
             }
             
             .hero-section {
                 flex-direction: column;
                 text-align: center;
                 padding: 3rem 1.5rem;
-                gap: 2rem;
             }
             
             .hero-content {
-                max-width: 100%;
+                margin-bottom: 2rem;
             }
             
             .hero-image {
-                width: 320px;
-            }
-            
-            .hero-title {
-                font-size: 2.2rem;
-            }
-            
-            .section-title::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .interactive-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            html {
-                font-size: 14px;
-            }
-            
-            .container {
-                padding: 1.25rem;
-            }
-            
-            .hero-section {
-                padding: 2.5rem 1.25rem;
-                margin: 1.5rem 0 3rem;
-            }
-            
-            .hero-image {
-                width: 250px;
+                width: 300px;
             }
             
             .hero-title {
                 font-size: 2rem;
-                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
             }
             
-            .hero-description {
-                font-size: 1.1rem;
+            .hero-section {
+                margin: 1.5rem 0 3rem;
             }
             
             .section-card {
                 padding: 1.5rem;
             }
             
-            .accordion-header {
-                padding: 1rem 1.25rem;
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: var(--glass);
+                padding: 1rem;
+                gap: 1rem;
+                text-align: center;
+                box-shadow: var(--shadow);
             }
             
-            .accordion-content-inner {
-                padding: 1.25rem;
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .tabs-nav {
+                flex-wrap: wrap;
             }
             
             .comparison-table {
@@ -782,695 +814,651 @@
         }
 
         @media (max-width: 576px) {
-            html {
-                font-size: 13px;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .hero-section {
-                padding: 2rem 1rem;
-                margin: 1rem 0 2.5rem;
-                border-radius: var(--border-radius);
-            }
-            
-            .hero-image {
-                width: 200px;
-            }
-            
             .hero-title {
                 font-size: 1.8rem;
             }
             
-            .section-card {
-                padding: 1.25rem;
-                border-radius: var(--border-radius-sm);
+            .hero-description {
+                font-size: 1rem;
             }
             
-            .example-box, .formula-box {
-                padding: 1.25rem;
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-image {
+                width: 250px;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th, 
+            .comparison-table td {
+                padding: 0.75rem;
             }
             
             .tab-nav {
                 flex-direction: column;
-                gap: 0.5rem;
             }
             
             .tab-button {
                 width: 100%;
             }
-            
-            .tips-item {
-                padding: 1rem;
-            }
-        }
-
-        /* Print styles */
-        @media print {
-            body {
-                font-size: 12pt;
-                background: white;
-                color: black;
-            }
-            
-            .header, .back-to-top, button, #progress-bar {
-                display: none;
-            }
-            
-            .container {
-                width: 100%;
-                max-width: 100%;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .section-card, .accordion, .calculator, .tips-item {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ddd;
-                margin-bottom: 1cm;
-            }
-            
-            .comparison-table {
-                border: 1px solid #000;
-                white-space: normal;
-            }
-            
-            .comparison-table th, .comparison-table td {
-                border: 1px solid #000;
-            }
-            
-            a {
-                text-decoration: none;
-                color: black;
-            }
-            
-            .section-card:hover, 
-            .tips-item:hover {
-                transform: none;
-                box-shadow: none;
-            }
         }
     </style>
 </head>
 <body>
-    <div id="progress-bar"></div>
-    <a href="#top" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
-    
-    <header id="top" class="header">
-        <a href="#" class="header-logo">
-            <i class="fas fa-calculator"></i>
-            Финансовая грамотность
-        </a>
-        <nav class="header-nav" id="headerNav">
-            <a href="#basics" class="nav-link">Основы</a>
-            <a href="#payment-types" class="nav-link">Виды платежей</a>
-            <a href="#formulas" class="nav-link">Формулы</a>
-            <a href="#calculator" class="nav-link">Калькулятор</a>
-            <a href="#tips" class="nav-link">Советы</a>
-        </nav>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-calculator"></i>
+                ФинГрамотность
+            </a>
+            <nav>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#basics" class="nav-link">Основы процентов</a></li>
+                    <li><a href="#payment-types" class="nav-link">Виды платежей</a></li>
+                    <li><a href="#formulas" class="nav-link">Формулы расчета</a></li>
+                    <li><a href="#calculator" class="nav-link">Калькулятор</a></li>
+                    <li><a href="#tips" class="nav-link">Советы</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </header>
 
     <div class="container">
         <!-- Hero Section -->
-        <div class="hero-section">
+        <section class="hero-section" data-aos="fade-up">
             <div class="hero-content">
                 <h1 class="hero-title">4.4. Проценты и платежи по кредиту</h1>
-                <p class="hero-description">
-                    Узнайте, как начисляются проценты и рассчитайте платежи по кредиту.
-                </p>
+                <p class="hero-description">Узнайте, как начисляются проценты по кредиту, разберитесь в типах платежей и научитесь рассчитывать свою кредитную нагрузку.</p>
+                <div class="hero-cta">
+                    <a href="#calculator" class="cta-primary">Рассчитать кредит</a>
+                    <a href="#basics" class="cta-secondary">Узнать больше <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
             <img src="credit.png" alt="Проценты по кредиту" class="hero-image">
-            <div class="hero-icons">
-                <i class="fas fa-percentage hero-icon" style="left: 15%; animation-duration: 20s;"></i>
-                <i class="fas fa-chart-line hero-icon" style="left: 35%; animation-duration: 15s; animation-delay: 2s;"></i>
-                <i class="fas fa-money-bill-wave hero-icon" style="left: 55%; animation-duration: 18s; animation-delay: 4s;"></i>
-                <i class="fas fa-calculator hero-icon" style="left: 75%; animation-duration: 22s; animation-delay: 6s;"></i>
-                <i class="fas fa-coins hero-icon" style="left: 25%; animation-duration: 17s; animation-delay: 8s;"></i>
-                <i class="fas fa-piggy-bank hero-icon" style="left: 65%; animation-duration: 19s; animation-delay: 10s;"></i>
+            <div class="hero-particles" id="particles"></div>
+        </section>
+
+        <!-- Как начисляются проценты? -->
+        <section class="section-card" data-aos="fade-up" id="basics">
+            <h2 class="section-title">Как начисляются проценты?</h2>
+            <p>
+                Одной из важнейших обязательных характеристик кредита является процент, который вы платите за пользование заемными средствами. 
+                Процентная ставка по кредиту относится к существенным условиям кредитного договора. Ее размер и порядок определения, 
+                в том числе в зависимости от изменения предусмотренных в кредитном договоре условий, как правило, устанавливается кредитором 
+                по соглашению с заемщиком.
+            </p>
+            <p>
+                Процент по кредиту устанавливается как правило в форме простой годовой процентной ставки, которая фиксируется в кредитном договоре. 
+                Это означает, что процент на сумму взятого кредита будет начисляться за точное количество дней пользования средствами в течение года. 
+                Для расчета процентов по кредиту по простой процентной ставке берется фактическое число дней, составляющих срок, на который взяты 
+                кредитные средства. День выдачи кредита и день его возврата при этом считаются за один день.
+            </p>
+            <p>
+                В российской банковской практике количество дней в году считается по факту – 365 или 366, в зависимости от того, является ли данный год 
+                обыкновенным или високосным. В зарубежных банках возможен иной порядок расчета: так, в некоторых странах принято высчитывать процент 
+                с использованием приблизительных сроков. В этом случае считается, что в году 360 дней, а в каждом месяце – 30.
+            </p>
+
+            <div class="formula-box">
+                <div class="formula">I = P × r × t</div>
+                <div class="formula-caption">
+                    где: I — сумма процентов, P — основная сумма кредита, r — процентная ставка (в десятичной форме), t — срок кредита в годах
+                </div>
             </div>
-        </div>
 
-        <main>
-            <!-- Как начисляются проценты? -->
-            <section class="section-card" id="basics">
-                <h2 class="section-title">Как начисляются проценты?</h2>
-                <p class="justify-text">
-                    Одной из важнейших обязательных характеристик кредита является процент, который вы платите за пользование заемными средствами. 
-                    Процентная ставка по кредиту относится к существенным условиям кредитного договора. Ее размер и порядок определения, 
-                    в том числе в зависимости от изменения предусмотренных в кредитном договоре условий, как правило, устанавливается кредитором 
-                    по соглашению с заемщиком.
-                </p>
-                <p class="justify-text">
-                    Процент по кредиту устанавливается как правило в форме простой годовой процентной ставки, которая фиксируется в кредитном договоре. 
-                    Это означает, что процент на сумму взятого кредита будет начисляться за точное количество дней пользования средствами в течение года. 
-                    Для расчета процентов по кредиту по простой процентной ставке берется фактическое число дней, составляющих срок, на который взяты 
-                    кредитные средства. День выдачи кредита и день его возврата при этом считаются за один день. Точное количество дней вы можете посчитать, 
-                    взяв календарь или воспользовавшись специальной программой.
-                </p>
-                <p class="justify-text">
-                    В российской банковской практике количество дней в году считается по факту – 365 или 366, в зависимости от того, является ли данный год 
-                    обыкновенным или високосным. В зарубежных банках возможен иной порядок расчета: так, в некоторых странах принято высчитывать процент 
-                    с использованием приблизительных сроков. В этом случае считается, что в году 360 дней, а в каждом месяце – 30. Для больших сроков кредита 
-                    это удобно, поскольку в таком случае финансовые вычисления упрощаются.
-                </p>
+            <div class="example-box">
+                <p>Если вы берете кредит в размере 100 000 рублей под 12% годовых на 3 года, то общая сумма процентов за весь срок составит:</p>
+                <p>I = 100 000 × 0,12 × 3 = 36 000 рублей</p>
+                <p>Эта формула применима для расчета простых процентов, когда проценты начисляются только на первоначальную сумму кредита.</p>
+            </div>
+        </section>
 
-                <div class="formula-box">
-                    <div class="formula">I = P × r × t</div>
-                    <div class="formula-caption">
-                        где: I — сумма процентов, P — основная сумма кредита, r — процентная ставка (в десятичной форме), t — срок кредита в годах
+        <!-- Аннуитетный и дифференцированный платеж -->
+        <section class="section-card" data-aos="fade-up" id="payment-types">
+            <h2 class="section-title">Аннуитетный и дифференцированный платеж</h2>
+            <p>
+                В банковской практике существуют два основных способа погашения кредита: аннуитетный (равными платежами) и дифференцированный (уменьшающимися платежами). 
+                Каждый из них имеет свои особенности, преимущества и недостатки.
+            </p>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Аннуитетный платеж</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            При аннуитетном платеже задолженность по кредиту ежемесячно погашается равными фиксированными платежами на протяжении всего срока кредита. 
+                            В первую очередь уплачиваются проценты: каждый месяц они считаются от оставшегося долга по кредиту. Оставшаяся после уплаты процентов 
+                            часть фиксированного платежа направляется на погашение основного долга.
+                        </p>
+                        <p>
+                            При этом чем дольше срок кредитования, тем меньше будет обязательный платеж, но тем больше в итоге переплата. При длительном сроке 
+                            кредитования первое время большая часть из поступающего платежа будет идти именно на погашение процентов, а основной долг будет 
+                            уменьшаться медленно.
+                        </p>
+
+                        <h4>Преимущества аннуитетного платежа:</h4>
+                        <ul>
+                            <li>Удобство планирования бюджета благодаря одинаковым ежемесячным платежам</li>
+                            <li>Меньшая финансовая нагрузка в начале срока кредита</li>
+                            <li>Возможность взять кредит на большую сумму (по сравнению с дифференцированным) из-за равномерного распределения платежей</li>
+                        </ul>
+
+                        <h4>Недостатки аннуитетного платежа:</h4>
+                        <ul>
+                            <li>Большая общая переплата по кредиту</li>
+                            <li>Медленное погашение основного долга в начале срока</li>
+                            <li>При досрочном погашении в первой половине срока кредита — существенная переплата по процентам</li>
+                        </ul>
                     </div>
                 </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Дифференцированный платеж</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            При дифференцированном платеже сумма основного долга делится на равные части по количеству месяцев кредитования. Таким образом, 
+                            ежемесячно в счет погашения основного долга вносится одинаковая фиксированная сумма. Проценты же начисляются на остаток задолженности. 
+                            Поскольку остаток долга ежемесячно уменьшается, то и проценты каждый месяц начисляются в меньшем размере.
+                        </p>
+                        <p>
+                            В начале срока кредитования размер платежа будет максимальным, что создает большую нагрузку на бюджет заемщика. Однако с каждым месяцем 
+                            платеж становится меньше, и к концу срока кредитования размер платежа значительно снижается.
+                        </p>
 
-                <div class="example-box">
-                    <p>Если вы берете кредит в размере 100 000 рублей под 12% годовых на 3 года, то общая сумма процентов за весь срок составит:</p>
-                    <p>I = 100 000 × 0,12 × 3 = 36 000 рублей</p>
-                    <p>Эта формула применима для расчета простых процентов, когда проценты начисляются только на первоначальную сумму кредита.</p>
+                        <h4>Преимущества дифференцированного платежа:</h4>
+                        <ul>
+                            <li>Меньшая общая переплата по кредиту</li>
+                            <li>Быстрое погашение основного долга</li>
+                            <li>Снижение финансовой нагрузки со временем</li>
+                            <li>Экономия на процентах при досрочном погашении</li>
+                        </ul>
+
+                        <h4>Недостатки дифференцированного платежа:</h4>
+                        <ul>
+                            <li>Высокая финансовая нагрузка в начале срока кредита</li>
+                            <li>Необходимость планирования больших выплат в первые месяцы</li>
+                            <li>Сложности при получении кредита из-за высоких требований к платежеспособности заемщика</li>
+                        </ul>
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Аннуитетный и дифференцированный платеж -->
-            <section class="section-card" id="payment-types">
-                <h2 class="section-title">Аннуитетный и дифференцированный платеж</h2>
-                <p class="justify-text">
-                    В банковской практике существуют два основных способа погашения кредита: аннуитетный (равными платежами) и дифференцированный (уменьшающимися платежами). 
-                    Каждый из них имеет свои особенности, преимущества и недостатки.
-                </p>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Характеристика</th>
+                        <th>Аннуитетный платеж</th>
+                        <th>Дифференцированный платеж</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Размер ежемесячного платежа</td>
+                        <td>Одинаковый на протяжении всего срока</td>
+                        <td>Уменьшается к концу срока</td>
+                    </tr>
+                    <tr>
+                        <td>Финансовая нагрузка в начале срока</td>
+                        <td>Ниже</td>
+                        <td>Выше</td>
+                    </tr>
+                    <tr>
+                        <td>Общая переплата по кредиту</td>
+                        <td>Больше</td>
+                        <td>Меньше</td>
+                    </tr>
+                    <tr>
+                        <td>Скорость погашения основного долга</td>
+                        <td>Медленнее (особенно вначале)</td>
+                        <td>Быстрее (равномерно весь срок)</td>
+                    </tr>
+                    <tr>
+                        <td>Удобство планирования бюджета</td>
+                        <td>Удобнее (платеж известен заранее)</td>
+                        <td>Сложнее (платеж меняется каждый месяц)</td>
+                    </tr>
+                    <tr>
+                        <td>Эффективность досрочного погашения</td>
+                        <td>Ниже (особенно в начале срока)</td>
+                        <td>Выше</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Формулы расчета платежей -->
+        <section class="section-card" data-aos="fade-up" id="formulas">
+            <h2 class="section-title">Формулы расчета платежей</h2>
+            <p>
+                Для расчета платежей по кредиту используются различные формулы в зависимости от типа платежа. Ниже приведены формулы для расчета аннуитетных и дифференцированных платежей.
+            </p>
+
+            <h3>Аннуитетный платеж</h3>
+            <div class="formula-box">
+                <div class="formula">A = K × P</div>
+                <div class="formula">K = i × (1 + i)^n / ((1 + i)^n - 1)</div>
+                <div class="formula-caption">
+                    где: A — ежемесячный аннуитетный платеж, P — сумма кредита, i — месячная процентная ставка (годовая ставка / 12 / 100), 
+                    n — количество месяцев, K — коэффициент аннуитета
+                </div>
+            </div>
+
+            <h3>Дифференцированный платеж</h3>
+            <div class="formula-box">
+                <div class="formula">D = P/n + P × i × (1 - (m-1)/n)</div>
+                <div class="formula-caption">
+                    где: D — ежемесячный дифференцированный платеж, P — сумма кредита, i — месячная процентная ставка, 
+                    n — количество месяцев, m — номер месяца, за который рассчитывается платеж
+                </div>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Пример расчета:</strong> Кредит 300 000 рублей на 3 года (36 месяцев) под 12% годовых.</p>
                 
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Аннуитетный платеж</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p class="justify-text">
-                                    При аннуитетном платеже задолженность по кредиту ежемесячно погашается равными фиксированными платежами на протяжении всего срока кредита. 
-                                    В первую очередь уплачиваются проценты: каждый месяц они считаются от оставшегося долга по кредиту. Оставшаяся после уплаты процентов 
-                                    часть фиксированного платежа направляется на погашение основного долга. Соответственно, в следующем месяце остаток долга становится меньше, 
-                                    на него начисляется меньше процентов, а на погашение основного платежа идет чуть большая часть фиксированного платежа.
-                                </p>
-                                <p class="justify-text">
-                                    При этом чем дольше срок кредитования, тем меньше будет обязательный платеж, но тем больше в итоге переплата. При длительном сроке 
-                                    кредитования первое время большая часть из поступающего платежа будет идти именно на погашение процентов, а основной долг будет 
-                                    уменьшаться медленно.
-                                </p>
+                <p><strong>Аннуитетный платеж:</strong></p>
+                <p>i = 12% / 12 / 100 = 0,01</p>
+                <p>K = 0,01 × (1 + 0,01)^36 / ((1 + 0,01)^36 - 1) = 0,03321</p>
+                <p>A = 0,03321 × 300 000 = 9 963 рубля</p>
+                <p>Общая сумма выплат: 9 963 × 36 = 358 668 рублей</p>
+                <p>Переплата: 358 668 - 300 000 = 58 668 рублей</p>
+                
+                <p><strong>Дифференцированный платеж:</strong></p>
+                <p>Ежемесячное погашение основного долга: 300 000 / 36 = 8 333 рубля</p>
+                <p>Первый месяц: 8 333 + 300 000 × 0,01 = 11 333 рубля</p>
+                <p>Последний месяц: 8 333 + 8 333 × 0,01 = 8 417 рублей</p>
+                <p>Общая сумма выплат: около 355 500 рублей</p>
+                <p>Переплата: около 55 500 рублей</p>
+            </div>
+        </section>
 
-                                <h4>Преимущества аннуитетного платежа:</h4>
-                                <ul>
-                                    <li>Удобство планирования бюджета благодаря одинаковым ежемесячным платежам</li>
-                                    <li>Меньшая финансовая нагрузка в начале срока кредита</li>
-                                    <li>Возможность взять кредит на большую сумму (по сравнению с дифференцированным) из-за равномерного распределения платежей</li>
-                                </ul>
+        <!-- Калькулятор платежей -->
+        <section class="section-card" data-aos="fade-up" id="calculator">
+            <h2 class="section-title">Калькулятор платежей по кредиту</h2>
+            <p>
+                Используйте наш калькулятор, чтобы рассчитать платежи по кредиту и сравнить аннуитетную и дифференцированную схемы погашения.
+            </p>
 
-                                <h4>Недостатки аннуитетного платежа:</h4>
-                                <ul>
-                                    <li>Большая общая переплата по кредиту</li>
-                                    <li>Медленное погашение основного долга в начале срока</li>
-                                    <li>При досрочном погашении в первой половине срока кредита — существенная переплата по процентам</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <div class="accordion-header">
-                            <span>Дифференцированный платеж</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-content-inner">
-                                <p class="justify-text">
-                                    При дифференцированном платеже сумма основного долга делится на равные части по количеству месяцев кредитования. Таким образом, 
-                                    ежемесячно в счет погашения основного долга вносится одинаковая фиксированная сумма. Проценты же начисляются на остаток задолженности. 
-                                    Поскольку остаток долга ежемесячно уменьшается, то и проценты каждый месяц начисляются в меньшем размере. Таким образом, 
-                                    ежемесячный платеж постепенно уменьшается к концу срока кредитования.
-                                </p>
-                                <p class="justify-text">
-                                    В начале срока кредитования размер платежа будет максимальным, что создает большую нагрузку на бюджет заемщика. Однако с каждым месяцем 
-                                    платеж становится меньше, и к концу срока кредитования размер платежа значительно снижается.
-                                </p>
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="calculator-tab">Калькулятор</button>
+                <button class="tab-button" data-tab="comparison-tab">Сравнение платежей</button>
+            </div>
 
-                                <h4>Преимущества дифференцированного платежа:</h4>
-                                <ul>
-                                    <li>Меньшая общая переплата по кредиту</li>
-                                    <li>Быстрое погашение основного долга</li>
-                                    <li>Снижение финансовой нагрузки со временем</li>
-                                    <li>Экономия на процентах при досрочном погашении</li>
-                                </ul>
-
-                                <h4>Недостатки дифференцированного платежа:</h4>
-                                <ul>
-                                    <li>Высокая финансовая нагрузка в начале срока кредита</li>
-                                    <li>Необходимость планирования больших выплат в первые месяцы</li>
-                                    <li>Сложности при получении кредита из-за высоких требований к платежеспособности заемщика (банк оценивает возможность заемщика выплачивать максимальный, первый платеж)</li>
-                                </ul>
-                            </div>
+            <div class="tab-content active" id="calculator-tab">
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="loan-amount">Сумма кредита</label>
+                        <div class="range-value" id="amount-value">300 000 ₽</div>
+                        <input type="range" id="loan-amount" class="range-slider" min="10000" max="10000000" step="10000" value="300000">
+                        <div class="range-labels">
+                            <span>10 тыс.</span>
+                            <span>10 млн.</span>
                         </div>
                     </div>
-                </div>
-
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Характеристика</th>
-                            <th>Аннуитетный платеж</th>
-                            <th>Дифференцированный платеж</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Размер ежемесячного платежа</td>
-                            <td>Одинаковый на протяжении всего срока</td>
-                            <td>Уменьшается к концу срока</td>
-                        </tr>
-                        <tr>
-                            <td>Финансовая нагрузка в начале срока</td>
-                            <td>Ниже</td>
-                            <td>Выше</td>
-                        </tr>
-                        <tr>
-                            <td>Общая переплата по кредиту</td>
-                            <td>Больше</td>
-                            <td>Меньше</td>
-                        </tr>
-                        <tr>
-                            <td>Скорость погашения основного долга</td>
-                            <td>Медленнее (особенно вначале)</td>
-                            <td>Быстрее (равномерно весь срок)</td>
-                        </tr>
-                        <tr>
-                            <td>Удобство планирования бюджета</td>
-                            <td>Удобнее (платеж известен заранее)</td>
-                            <td>Сложнее (платеж меняется каждый месяц)</td>
-                        </tr>
-                        <tr>
-                            <td>Эффективность досрочного погашения</td>
-                            <td>Ниже (особенно в начале срока)</td>
-                            <td>Выше</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <!-- Формулы расчета платежей -->
-            <section class="section-card" id="formulas">
-                <h2 class="section-title">Формулы расчета платежей</h2>
-                <p class="justify-text">
-                    Для расчета платежей по кредиту используются различные формулы в зависимости от типа платежа. Ниже приведены формулы для расчета аннуитетных и дифференцированных платежей.
-                </p>
-
-                <h3>Аннуитетный платеж</h3>
-                <div class="formula-box">
-                    <div class="formula">A = K × P</div>
-                    <div class="formula">K = i × (1 + i)^n / ((1 + i)^n - 1)</div>
-                    <div class="formula-caption">
-                        где: A — ежемесячный аннуитетный платеж, P — сумма кредита, i — месячная процентная ставка (годовая ставка / 12 / 100), 
-                        n — количество месяцев, K — коэффициент аннуитета
-                    </div>
-                </div>
-
-                <h3>Дифференцированный платеж</h3>
-                <div class="formula-box">
-                    <div class="formula">D = P/n + P × i × (1 - (m-1)/n)</div>
-                    <div class="formula-caption">
-                        где: D — ежемесячный дифференцированный платеж, P — сумма кредита, i — месячная процентная ставка, 
-                        n — количество месяцев, m — номер месяца, за который рассчитывается платеж
-                    </div>
-                </div>
-
-                <div class="example-box">
-                    <p><strong>Пример расчета:</strong> Кредит 300 000 рублей на 3 года (36 месяцев) под 12% годовых.</p>
                     
-                    <p><strong>Аннуитетный платеж:</strong></p>
-                    <p>i = 12% / 12 / 100 = 0,01</p>
-                    <p>K = 0,01 × (1 + 0,01)^36 / ((1 + 0,01)^36 - 1) = 0,03321</p>
-                    <p>A = 0,03321 × 300 000 = 9 963 рубля</p>
-                    <p>Общая сумма выплат: 9 963 × 36 = 358 668 рублей</p>
-                    <p>Переплата: 358 668 - 300 000 = 58 668 рублей</p>
+                    <div class="form-group">
+                        <label for="loan-term">Срок кредита (лет)</label>
+                        <div class="range-value" id="term-value">3 года</div>
+                        <input type="range" id="loan-term" class="range-slider" min="1" max="30" step="1" value="3">
+                        <div class="range-labels">
+                            <span>1 год</span>
+                            <span>30 лет</span>
+                        </div>
+                    </div>
                     
-                    <p><strong>Дифференцированный платеж:</strong></p>
-                    <p>Ежемесячное погашение основного долга: 300 000 / 36 = 8 333 рубля</p>
-                    <p>Первый месяц: 8 333 + 300 000 × 0,01 = 11 333 рубля</p>
-                    <p>Последний месяц: 8 333 + 8 333 × 0,01 = 8 417 рублей</p>
-                    <p>Общая сумма выплат: около 355 500 рублей</p>
-                    <p>Переплата: около 55 500 рублей</p>
-                </div>
-            </section>
-
-            <!-- Калькулятор платежей -->
-            <section class="section-card" id="calculator">
-                <h2 class="section-title">Калькулятор платежей по кредиту</h2>
-                <p class="justify-text">
-                    Используйте наш калькулятор, чтобы рассчитать платежи по кредиту и сравнить аннуитетную и дифференцированную схемы погашения.
-                </p>
-
-                <div class="tab-nav">
-                    <button class="tab-button active" data-tab="calculator-tab">Калькулятор</button>
-                    <button class="tab-button" data-tab="comparison-tab">Сравнение платежей</button>
-                </div>
-
-                <div class="tab-content active" id="calculator-tab">
-                    <div class="calculator">
-                        <div class="form-group">
-                            <label for="loan-amount">Сумма кредита</label>
-                            <div class="range-value" id="amount-value">300 000 ₽</div>
-                            <input type="range" id="loan-amount" min="10000" max="10000000" step="10000" value="300000">
-                            <div class="slider-values">
-                                <span>10 тыс.</span>
-                                <span>10 млн.</span>
-                            </div>
+                    <div class="form-group">
+                        <label for="interest-rate">Процентная ставка (%)</label>
+                        <input type="number" id="interest-rate" min="1" max="30" step="0.1" value="12">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Тип платежа</label>
+                        <div style="display: flex; gap: 1rem;">
+                            <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <input type="radio" name="payment-type" value="annuity" checked>
+                                Аннуитетный
+                            </label>
+                            <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <input type="radio" name="payment-type" value="differentiated">
+                                Дифференцированный
+                            </label>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="loan-term">Срок кредита (лет)</label>
-                            <div class="range-value" id="term-value">3 года</div>
-                            <input type="range" id="loan-term" min="1" max="30" step="1" value="3">
-                            <div class="slider-values">
-                                <span>1 год</span>
-                                <span>30 лет</span>
-                            </div>
+                    </div>
+                    
+                    <button id="calculate-btn">
+                        <i class="fas fa-calculator"></i> Рассчитать
+                    </button>
+                    
+                    <div class="result" id="result">
+                        <div class="result-item">
+                            <span class="result-label">Ежемесячный платеж:</span>
+                            <span class="result-value" id="monthly-payment">9 963 ₽</span>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="interest-rate">Процентная ставка (%)</label>
-                            <input type="number" id="interest-rate" min="1" max="30" step="0.1" value="12">
+                        <div class="result-item">
+                            <span class="result-label">Общая сумма выплат:</span>
+                            <span class="result-value" id="total-payment">358 668 ₽</span>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>Тип платежа</label>
-                            <div style="display: flex; gap: 1rem;">
-                                <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                    <input type="radio" name="payment-type" value="annuity" checked>
-                                    Аннуитетный
-                                </label>
-                                <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                    <input type="radio" name="payment-type" value="differentiated">
-                                    Дифференцированный
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <button id="calculate-btn">Рассчитать</button>
-                        
-                        <div class="result" id="result">
-                            <div class="result-item">
-                                <span class="result-label">Ежемесячный платеж:</span>
-                                <span class="result-value" id="monthly-payment">9 963 ₽</span>
-                            </div>
-                            <div class="result-item">
-                                <span class="result-label">Общая сумма выплат:</span>
-                                <span class="result-value" id="total-payment">358 668 ₽</span>
-                            </div>
-                            <div class="result-item">
-                                <span class="result-label">Переплата по кредиту:</span>
-                                <span class="result-value" id="overpayment">58 668 ₽</span>
-                            </div>
+                        <div class="result-item">
+                            <span class="result-label">Переплата по кредиту:</span>
+                            <span class="result-value" id="overpayment">58 668 ₽</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="tab-content" id="comparison-tab">
-                    <div class="interactive-grid">
-                        <div>
-                            <h3>Сравнение платежей</h3>
-                            <p>График показывает, как меняются ежемесячные платежи при аннуитетной и дифференцированной схемах погашения кредита.</p>
-                            <div class="payment-chart" id="payment-chart">
-                                <!-- График будет отрисован с помощью JavaScript -->
-                            </div>
-                        </div>
-                        <div>
-                            <h3>Сравнение переплаты</h3>
-                            <p>Таблица сравнения аннуитетных и дифференцированных платежей для кредита в 300 000 ₽ на 3 года под 12% годовых.</p>
-                            <table class="comparison-table" id="comparison-table">
-                                <thead>
-                                    <tr>
-                                        <th>Параметр</th>
-                                        <th>Аннуитетный</th>
-                                        <th>Дифференцированный</th>
-                                        <th>Разница</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Первый платеж</td>
-                                        <td>9 963 ₽</td>
-                                        <td>11 333 ₽</td>
-                                        <td>-1 370 ₽</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Последний платеж</td>
-                                        <td>9 963 ₽</td>
-                                        <td>8 417 ₽</td>
-                                        <td>+1 546 ₽</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Общая сумма выплат</td>
-                                        <td>358 668 ₽</td>
-                                        <td>355 500 ₽</td>
-                                        <td>+3 168 ₽</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Переплата</td>
-                                        <td>58 668 ₽</td>
-                                        <td>55 500 ₽</td>
-                                        <td>+3 168 ₽</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+            <div class="tab-content" id="comparison-tab">
+                <div class="interactive-grid">
+                    <div>
+                        <h3>Сравнение платежей</h3>
+                        <p>График показывает, как меняются ежемесячные платежи при аннуитетной и дифференцированной схемах погашения кредита.</p>
+                        <div class="payment-chart" id="payment-chart">
+                            <!-- График будет отрисован с помощью JavaScript -->
                         </div>
                     </div>
+                    <div>
+                        <h3>Сравнение переплаты</h3>
+                        <p>Таблица сравнения аннуитетных и дифференцированных платежей для кредита в 300 000 ₽ на 3 года под 12% годовых.</p>
+                        <table class="comparison-table" id="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Аннуитетный</th>
+                                    <th>Дифференцированный</th>
+                                    <th>Разница</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Первый платеж</td>
+                                    <td>9 963 ₽</td>
+                                    <td>11 333 ₽</td>
+                                    <td>-1 370 ₽</td>
+                                </tr>
+                                <tr>
+                                    <td>Последний платеж</td>
+                                    <td>9 963 ₽</td>
+                                    <td>8 417 ₽</td>
+                                    <td>+1 546 ₽</td>
+                                </tr>
+                                <tr>
+                                    <td>Общая сумма выплат</td>
+                                    <td>358 668 ₽</td>
+                                    <td>355 500 ₽</td>
+                                    <td>+3 168 ₽</td>
+                                </tr>
+                                <tr>
+                                    <td>Переплата</td>
+                                    <td>58 668 ₽</td>
+                                    <td>55 500 ₽</td>
+                                    <td>+3 168 ₽</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Советы по выбору типа платежа -->
-            <section class="section-card" id="tips">
-                <h2 class="section-title">Советы по выбору типа платежа</h2>
-                <p class="justify-text">
-                    Выбор типа платежа зависит от вашей финансовой ситуации, целей и предпочтений. Вот несколько рекомендаций, которые помогут вам сделать правильный выбор.
-                </p>
+        <!-- Советы по выбору типа платежа -->
+        <section class="section-card" data-aos="fade-up" id="tips">
+            <h2 class="section-title">Советы по выбору типа платежа</h2>
+            <p>
+                Выбор типа платежа зависит от вашей финансовой ситуации, целей и предпочтений. Вот несколько рекомендаций, которые помогут вам сделать правильный выбор.
+            </p>
 
-                <ul class="tips-list">
-                    <li class="tips-item">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <div>
-                            <strong>Оцените свои текущие финансовые возможности</strong>
-                            Если ваш бюджет ограничен, аннуитетный платеж может быть более подходящим, так как вначале он меньше дифференцированного. Если же вы можете себе позволить более высокие платежи в начале срока, дифференцированный платеж поможет сэкономить на общей переплате.
-                        </div>
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-chart-line"></i>
-                        <div>
-                            <strong>Учитывайте перспективы роста дохода</strong>
-                            Если вы ожидаете рост своих доходов в будущем, дифференцированный платеж может быть выгоднее. Вы справитесь с высокими платежами вначале, а затем платежи будут снижаться, освобождая средства для других целей.
-                        </div>
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <strong>Учитывайте срок кредита</strong>
-                            Чем дольше срок кредита, тем больше преимущество дифференцированного платежа с точки зрения экономии на процентах. При коротких сроках (1-3 года) разница в переплате не так существенна.
-                        </div>
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-piggy-bank"></i>
-                        <div>
-                            <strong>Планируете досрочное погашение?</strong>
-                            Если вы планируете погасить кредит досрочно, дифференцированный платеж выгоднее. При аннуитетном платеже большая часть процентов уплачивается в начале срока кредита.
-                        </div>
-                    </li>
-                    <li class="tips-item">
-                        <i class="fas fa-search-dollar"></i>
-                        <div>
-                            <strong>Сравните предложения разных банков</strong>
-                            Некоторые банки предлагают только аннуитетную схему погашения. Если дифференцированный платеж для вас предпочтительнее, поищите банки, которые предоставляют такую возможность.
-                        </div>
-                    </li>
-                </ul>
-            </section>
-        </main>
+            <ul class="tips-list">
+                <li class="tips-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <div>
+                        <strong>Оцените свои текущие финансовые возможности</strong>
+                        <p>Если ваш бюджет ограничен, аннуитетный платеж может быть более подходящим, так как вначале он меньше дифференцированного. Если же вы можете себе позволить более высокие платежи в начале срока, дифференцированный платеж поможет сэкономить на общей переплате.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <strong>Учитывайте перспективы роста дохода</strong>
+                        <p>Если вы ожидаете рост своих доходов в будущем, дифференцированный платеж может быть выгоднее. Вы справитесь с высокими платежами вначале, а затем платежи будут снижаться, освобождая средства для других целей.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Учитывайте срок кредита</strong>
+                        <p>Чем дольше срок кредита, тем больше преимущество дифференцированного платежа с точки зрения экономии на процентах. При коротких сроках (1-3 года) разница в переплате не так существенна.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-piggy-bank"></i>
+                    <div>
+                        <strong>Планируете досрочное погашение?</strong>
+                        <p>Если вы планируете погасить кредит досрочно, дифференцированный платеж выгоднее. При аннуитетном платеже большая часть процентов уплачивается в начале срока кредита.</p>
+                    </div>
+                </li>
+                <li class="tips-item">
+                    <i class="fas fa-search-dollar"></i>
+                    <div>
+                        <strong>Сравните предложения разных банков</strong>
+                        <p>Некоторые банки предлагают только аннуитетную схему погашения. Если дифференцированный платеж для вас предпочтительнее, поищите банки, которые предоставляют такую возможность.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
     <script>
-        // Функция для обработки адаптивных элементов
-        function enhanceResponsiveness() {
-            // Устанавливаем --vh переменную для решения проблемы высоты на мобильных устройствах
-            function setVhVariable() {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-            }
-            
-            // Вызываем все функции оптимизации
-            setVhVariable();
-            
-            // События для поддержания адаптивности при изменении размеров
-            window.addEventListener('resize', function() {
-                setVhVariable();
+        // Инициализация AOS (анимация при прокрутке)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
             });
             
-            // Обработка ориентации устройства
-            window.addEventListener('orientationchange', function() {
-                setTimeout(function() {
-                    setVhVariable();
-                }, 200);
-            });
-        }
-
-        // Progress bar
-        window.addEventListener('scroll', function() {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercent = (scrollTop / scrollHeight) * 100;
-            document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            // Создание частиц для фона секции Hero
+            createParticles();
             
-            // Back to top button
-            if (scrollTop > 500) {
-                document.getElementById('backToTop').classList.add('visible');
-            } else {
-                document.getElementById('backToTop').classList.remove('visible');
-            }
+            // Обработчики событий
+            setupEventListeners();
         });
-
-        // Mobile menu toggle
-        if (document.getElementById('mobileMenuBtn')) {
-            document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-                document.getElementById('headerNav').classList.toggle('active');
-                this.querySelector('i').classList.toggle('fa-bars');
-                this.querySelector('i').classList.toggle('fa-times');
-            });
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        
+        // Создание плавающих частиц для Hero секции
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particlesCount = 20;
+            
+            for (let i = 0; i < particlesCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
                 
-                // Close mobile menu if open
-                if (document.getElementById('headerNav').classList.contains('active')) {
-                    document.getElementById('headerNav').classList.remove('active');
-                    document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                particle.style.opacity = Math.random() * 0.5;
+                
+                // Анимация плавания
+                particle.style.animation = `float ${Math.random() * 10 + 5}s linear infinite`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Переключение тем (светлая/темная)
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.hasAttribute('data-theme') 
+                    ? document.body.removeAttribute('data-theme') 
+                    : document.body.setAttribute('data-theme', 'dark');
+                
+                this.innerHTML = document.body.hasAttribute('data-theme') 
+                    ? '<i class="fas fa-sun"></i>' 
+                    : '<i class="fas fa-moon"></i>';
+            });
+            
+            // Мобильная навигация
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.innerHTML = navLinks.classList.contains('active')
+                    ? '<i class="fas fa-times"></i>'
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Навигация по ссылкам
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            // Обработка аккордеона
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                    
+                    // Изменение иконки
+                    const icon = this.querySelector('.accordion-icon');
+                    if (content.classList.contains('active')) {
+                        icon.className = 'fas fa-chevron-up accordion-icon';
+                    } else {
+                        icon.className = 'fas fa-chevron-down accordion-icon';
+                    }
+                });
+            });
+            
+            // Обработка табов
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Деактивация всех табов
+                    document.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Активация выбранного таба
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Калькулятор кредита
+            const amountSlider = document.getElementById('loan-amount');
+            const termSlider = document.getElementById('loan-term');
+            const amountValue = document.getElementById('amount-value');
+            const termValue = document.getElementById('term-value');
+            const interestRateInput = document.getElementById('interest-rate');
+            const calculateBtn = document.getElementById('calculate-btn');
+            
+            // Update slider values
+            amountSlider.addEventListener('input', function() {
+                amountValue.textContent = Number(this.value).toLocaleString('ru-RU') + ' ₽';
+            });
+            
+            termSlider.addEventListener('input', function() {
+                termValue.textContent = this.value + ' ' + getYearWord(this.value);
+            });
+            
+            // Calculate loan
+            calculateBtn.addEventListener('click', function() {
+                const amount = Number(amountSlider.value);
+                const term = Number(termSlider.value) * 12; // Convert to months
+                const rate = Number(interestRateInput.value) / 100 / 12; // Monthly rate
+                const isAnnuity = document.querySelector('input[name="payment-type"]:checked').value === 'annuity';
+                
+                let monthlyPayment, totalPayment, overpayment;
+                
+                if (isAnnuity) {
+                    // Аннуитетный платеж: P = S * (i * (1 + i)^n) / ((1 + i)^n - 1)
+                    monthlyPayment = amount * (rate * Math.pow(1 + rate, term)) / (Math.pow(1 + rate, term) - 1);
+                    totalPayment = monthlyPayment * term;
+                    overpayment = totalPayment - amount;
+                    
+                    document.getElementById('monthly-payment').textContent = Math.round(monthlyPayment).toLocaleString('ru-RU') + ' ₽';
+                } else {
+                    // Дифференцированный платеж: первый платеж
+                    const principalPayment = amount / term;
+                    const firstInterestPayment = amount * rate;
+                    const firstMonthlyPayment = principalPayment + firstInterestPayment;
+                    
+                    // Последний платеж
+                    const lastInterestPayment = principalPayment * rate;
+                    const lastMonthlyPayment = principalPayment + lastInterestPayment;
+                    
+                    // Общая сумма
+                    // Для дифференцированного платежа используем формулу арифметической прогрессии для суммы процентов
+                    const interestSum = (amount * rate * term + principalPayment * rate * term) / 2;
+                    totalPayment = amount + interestSum;
+                    overpayment = totalPayment - amount;
+                    
+                    document.getElementById('monthly-payment').textContent = 
+                        Math.round(firstMonthlyPayment).toLocaleString('ru-RU') + ' → ' + 
+                        Math.round(lastMonthlyPayment).toLocaleString('ru-RU') + ' ₽';
                 }
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                document.getElementById('total-payment').textContent = Math.round(totalPayment).toLocaleString('ru-RU') + ' ₽';
+                document.getElementById('overpayment').textContent = Math.round(overpayment).toLocaleString('ru-RU') + ' ₽';
+                
+                // Обновляем таблицу сравнения
+                updateComparisonTable(amount, term, rate);
+                
+                // Рисуем график
+                drawPaymentChart(amount, term, rate);
+            });
+            
+            // Кнопка "вверх"
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
                     behavior: 'smooth'
                 });
             });
-        });
-
-        // Accordion functionality
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                const isActive = content.classList.contains('active');
-                
-                // Close all accordion items
-                document.querySelectorAll('.accordion-content').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                document.querySelectorAll('.accordion-header').forEach(head => {
-                    head.classList.remove('active');
-                });
-                
-                // Reset all icons
-                document.querySelectorAll('.accordion-header i').forEach(icon => {
-                    icon.className = 'fas fa-chevron-down';
-                });
-                
-                // Open the clicked one if it wasn't already open
-                if (!isActive) {
-                    content.classList.add('active');
-                    this.classList.add('active');
-                    this.querySelector('i').className = 'fas fa-chevron-up';
-                }
-            });
-        });
-
-        // Tab navigation
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', function() {
-                // Deactivate all tabs
-                document.querySelectorAll('.tab-button').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Activate the selected tab
-                this.classList.add('active');
-                document.getElementById(this.getAttribute('data-tab')).classList.add('active');
-            });
-        });
-
-        // Loan calculator
-        const amountSlider = document.getElementById('loan-amount');
-        const termSlider = document.getElementById('loan-term');
-        const amountValue = document.getElementById('amount-value');
-        const termValue = document.getElementById('term-value');
-        const interestRateInput = document.getElementById('interest-rate');
-        const calculateBtn = document.getElementById('calculate-btn');
-        
-        // Update slider values
-        amountSlider.addEventListener('input', function() {
-            amountValue.textContent = Number(this.value).toLocaleString('ru-RU') + ' ₽';
-        });
-        
-        termSlider.addEventListener('input', function() {
-            termValue.textContent = this.value + ' ' + getYearWord(this.value);
-        });
-        
-        // Calculate loan
-        calculateBtn.addEventListener('click', function() {
-            const amount = Number(amountSlider.value);
-            const term = Number(termSlider.value) * 12; // Convert to months
-            const rate = Number(interestRateInput.value) / 100 / 12; // Monthly rate
-            const isAnnuity = document.querySelector('input[name="payment-type"]:checked').value === 'annuity';
-            
-            let monthlyPayment, totalPayment, overpayment;
-            
-            if (isAnnuity) {
-                // Аннуитетный платеж: P = S * (i * (1 + i)^n) / ((1 + i)^n - 1)
-                monthlyPayment = amount * (rate * Math.pow(1 + rate, term)) / (Math.pow(1 + rate, term) - 1);
-                totalPayment = monthlyPayment * term;
-                overpayment = totalPayment - amount;
-                
-                document.getElementById('monthly-payment').textContent = Math.round(monthlyPayment).toLocaleString('ru-RU') + ' ₽';
-            } else {
-                // Дифференцированный платеж: первый платеж
-                const principalPayment = amount / term;
-                const firstInterestPayment = amount * rate;
-                const firstMonthlyPayment = principalPayment + firstInterestPayment;
-                
-                // Последний платеж
-                const lastInterestPayment = principalPayment * rate;
-                const lastMonthlyPayment = principalPayment + lastInterestPayment;
-                
-                // Общая сумма
-                // Для дифференцированного платежа используем формулу арифметической прогрессии для суммы процентов
-                const interestSum = (amount * rate * term + principalPayment * rate * term) / 2;
-                totalPayment = amount + interestSum;
-                overpayment = totalPayment - amount;
-                
-                document.getElementById('monthly-payment').textContent = 
-                    Math.round(firstMonthlyPayment).toLocaleString('ru-RU') + ' → ' + 
-                    Math.round(lastMonthlyPayment).toLocaleString('ru-RU') + ' ₽';
-            }
-            
-            document.getElementById('total-payment').textContent = Math.round(totalPayment).toLocaleString('ru-RU') + ' ₽';
-            document.getElementById('overpayment').textContent = Math.round(overpayment).toLocaleString('ru-RU') + ' ₽';
-            
-            // Обновляем таблицу сравнения
-            updateComparisonTable(amount, term, rate);
-            
-            // Рисуем график
-            drawPaymentChart(amount, term, rate);
-        });
+        }
         
         // Функция обновления таблицы сравнения
         function updateComparisonTable(amount, term, rate) {
@@ -1586,7 +1574,7 @@
             }
             
             annuityPath.setAttribute("d", annuityD);
-            annuityPath.setAttribute("stroke", "#4f46e5");
+            annuityPath.setAttribute("stroke", "#6366f1");
             annuityPath.setAttribute("stroke-width", "2");
             annuityPath.setAttribute("fill", "none");
             svg.appendChild(annuityPath);
@@ -1609,7 +1597,7 @@
             const annuityLegend = document.createElementNS(svgNS, "text");
             annuityLegend.setAttribute("x", "60");
             annuityLegend.setAttribute("y", "30");
-            annuityLegend.setAttribute("fill", "#4f46e5");
+            annuityLegend.setAttribute("fill", "#6366f1");
             annuityLegend.setAttribute("font-size", "12");
             annuityLegend.textContent = "Аннуитетный платеж";
             svg.appendChild(annuityLegend);
@@ -1719,36 +1707,13 @@
             return 'лет';
         }
 
-        // Navigation highlight on scroll
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section.section-card');
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                const sectionHeight = section.offsetHeight;
-                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Initialize on page load
+        // Рассчитать кредит при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            // Improve responsiveness
-            enhanceResponsiveness();
+            if (document.getElementById('calculate-btn')) {
+                document.getElementById('calculate-btn').click();
+            }
             
-            // Calculate initial loan
-            calculateBtn.click();
-            
-            // Open first accordion item by default
+            // Открываем первый аккордеон по умолчанию
             if (document.querySelector('.accordion-header')) {
                 document.querySelector('.accordion-header').click();
             }
